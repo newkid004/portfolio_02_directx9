@@ -200,6 +200,7 @@
     <ClInclude Include="terrain.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="UIBase.h" />
+    <ClInclude Include="uiManager.h" />
     <ClInclude Include="windowManager.h" />
     <ClInclude Include="windowMessageHandler.h" />
   </ItemGroup>
@@ -244,6 +245,7 @@
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="uiManager.cpp" />
     <ClCompile Include="windowManager.cpp" />
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>

@@ -293,7 +293,7 @@ float terrain::getHeight(D3DXVECTOR2 pos)
 	return result;
 }
 
-bool terrain::getIntersectPoint(const pRay & ray, D3DXVECTOR3 & out_position)
+bool terrain::getIntersectPoint(const pick::ray & ray, D3DXVECTOR3 & out_position)
 {
 	BOOL isHit;
 	LPD3DXBUFFER bufIntersect = nullptr;

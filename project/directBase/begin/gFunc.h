@@ -1,5 +1,6 @@
 #pragma once
 #include "kGlobalDefine.h"
+#include "pickRay.h"
 
 class gFunc
 {
@@ -16,7 +17,7 @@ public :
 	static LPDIRECT3DINDEXBUFFER9	createIndexBuffer(int size, DWORD options, DWORD format);
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, DWORD FVF);
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, D3DVERTEXELEMENT9* elements);
-	static pRay						createPickRay(const POINT & clickPos);
+	static pick::ray				createPickRay(const POINT & clickPos);
 
 	// º¯È¯
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };

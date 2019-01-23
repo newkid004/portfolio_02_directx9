@@ -133,11 +133,4 @@ struct meshSet
 	std::vector<LPDIRECT3DTEXTURE9> vTextureList;
 };
 
-// 광선
-struct pRay
-{
-	D3DXVECTOR3 origin;
-	D3DXVECTOR3 direction;
-};
-
 // 웨이브 사운드

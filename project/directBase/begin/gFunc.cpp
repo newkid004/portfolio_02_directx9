@@ -126,7 +126,7 @@ LPD3DXMESH gFunc::createMesh(int faceSize, int vertexSize, DWORD options, D3DVER
 	return result;
 }
 
-pRay gFunc::createPickRay(const POINT & clickPos)
+pick::ray gFunc::createPickRay(const POINT & clickPos)
 {
 	// ºä -> Åõ¿µ º¯È¯
 	D3DVIEWPORT9 viewPort;
@@ -139,7 +139,7 @@ pRay gFunc::createPickRay(const POINT & clickPos)
 	// Åõ¿µ -> ºä º¯È¯
 	D3DXMATRIXA16 & mProjection = GET_CAMERA()->getMatrixProjection();
 
-	pRay ray;
+	pick::ray ray;
 	ZeroMemory(&ray, sizeof(ray));
 
 	ray.direction = D3DXVECTOR3(

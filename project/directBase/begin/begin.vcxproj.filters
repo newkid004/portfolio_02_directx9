@@ -193,6 +193,9 @@
     <Filter Include="main\scene\test">
       <UniqueIdentifier>{7ece4345-ee0b-4205-a5c6-495797f5ce21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\manager\UI">
+      <UniqueIdentifier>{87df888f-e93b-462e-a149-31fed18e35d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -333,6 +336,9 @@
     <ClInclude Include="sceneMapTool.h">
       <Filter>main\scene\01_mapTool</Filter>
     </ClInclude>
+    <ClInclude Include="uiManager.h">
+      <Filter>classes\global\utility\manager\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="c3DVector.cpp">
@@ -460,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="sceneMapTool.cpp">
       <Filter>main\scene\01_mapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="uiManager.cpp">
+      <Filter>classes\global\utility\manager\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
