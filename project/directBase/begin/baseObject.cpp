@@ -6,6 +6,15 @@
 #include "sceneManager.h"
 #include "sceneBase.h"
 
+void baseObject::putOffsetPosition(void)
+{
+	D3DXMATRIXA16 mRotation = getMatrixRotate();
+	D3DXVECTOR3 offset = getOffset();
+	D3DXVec3TransformCoord(&offset, &offset, &mRotation);
+
+	_offsetPosition = _position - offset;
+}
+
 baseObject::baseObject() :
 	_position(0.0f, 0.0f, 0.0f),
 	_scale(1.0f, 1.0f, 1.0f),
@@ -63,6 +72,16 @@ void baseObject::addChild(baseObject * input)
 	{
 		input->setParent(this);
 		_vChildren.push_back(input);
+	}
+}
+
+void baseObject::removeChild(baseObject * input)
+{
+	auto iter = std::find(_vChildren.begin(), _vChildren.end(), input);
+	if (iter != _vChildren.end())
+	{
+		input->setParent(NULL);
+		_vChildren.erase(iter);
 	}
 }
 
@@ -217,6 +236,18 @@ D3DXMATRIXA16 baseObject::getMatrixFinal(void)
 		return _mWorld;
 
 	return _mWorld * _parent->getMatrixFinal();
+}
+
+D3DXMATRIXA16 baseObject::getMatrixRotate(void)
+{
+	D3DXMATRIXA16 mRotation;
+	D3DXMatrixIdentity(&mRotation);
+
+	CopyMemory(&mRotation(0, 0), &_directionRight, sizeof(D3DXVECTOR3));
+	CopyMemory(&mRotation(1, 0), &_directionUp, sizeof(D3DXVECTOR3));
+	CopyMemory(&mRotation(2, 0), &_directionForward, sizeof(D3DXVECTOR3));
+
+	return mRotation;
 }
 
 void baseObject::setRotation(const D3DXVECTOR3 & input)

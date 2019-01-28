@@ -19,7 +19,7 @@ public :
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, DWORD FVF);
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, D3DVERTEXELEMENT9* elements);
 	static pick::ray				createPickRay(const POINT & clickPos);
-
+	
 	// 변환
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
 
@@ -30,6 +30,13 @@ public :
 	// 화면
 	static bool						isMouseInRange(const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size);
 
+	// 충돌
+	static boundingBox				createBoundingBox(LPD3DXMESH mesh);
+	static boundingSphere			createBoundingSphere(LPD3DXMESH mesh);
+
+	static bool						isIntersect(const boundingBox & boundA, const boundingBox & boundB);
+	static bool						isIntersect(const boundingSphere & boundA, const boundingSphere & boundB);
+	static void						obj2bound(boundingBox* outBoundingBox, objectBox* inObjectBox);
 
 private :
 	gFunc() {};

@@ -16,9 +16,6 @@
     <Filter Include="classes\global\utility">
       <UniqueIdentifier>{920c2b8c-2ad7-48a9-a5dd-40d9e4265dff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\global\utility\math">
-      <UniqueIdentifier>{72d2e760-0d7e-46fd-96c3-07d89a53005f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="classes\global\utility\interface">
       <UniqueIdentifier>{146dd1cb-8b93-4c2a-b982-33099fd15f7e}</UniqueIdentifier>
     </Filter>
@@ -229,16 +226,16 @@
     <Filter Include="classes\global\function\gManager">
       <UniqueIdentifier>{a69e9599-8fcd-48bd-ac01-8c1c32cc20ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\debug\draw">
+      <UniqueIdentifier>{6ab0d472-64b7-4a56-9846-914f8e3171e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\function\gJson">
+      <UniqueIdentifier>{acb8e828-516c-41f4-a82b-f020578d16ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
       <Filter>classes\global\define</Filter>
-    </ClInclude>
-    <ClInclude Include="c3DVector.h">
-      <Filter>classes\global\utility\math</Filter>
-    </ClInclude>
-    <ClInclude Include="c3DMatrix.h">
-      <Filter>classes\global\utility\math</Filter>
     </ClInclude>
     <ClInclude Include="windowManager.h">
       <Filter>classes\global\utility\manager\direct\window</Filter>
@@ -387,14 +384,14 @@
     <ClInclude Include="gMng.h">
       <Filter>classes\global\function\gManager</Filter>
     </ClInclude>
+    <ClInclude Include="debugDraw.h">
+      <Filter>classes\global\utility\debug\draw</Filter>
+    </ClInclude>
+    <ClInclude Include="gJson.h">
+      <Filter>classes\global\function\gJson</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="c3DVector.cpp">
-      <Filter>classes\global\utility\math</Filter>
-    </ClCompile>
-    <ClCompile Include="c3DMatrix.cpp">
-      <Filter>classes\global\utility\math</Filter>
-    </ClCompile>
     <ClCompile Include="windowManager.cpp">
       <Filter>classes\global\utility\manager\direct\window</Filter>
     </ClCompile>
@@ -523,6 +520,12 @@
     </ClCompile>
     <ClCompile Include="buttonBase.cpp">
       <Filter>main\classes\windowUI\button\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="debugDraw.cpp">
+      <Filter>classes\global\utility\debug\draw</Filter>
+    </ClCompile>
+    <ClCompile Include="gJson.cpp">
+      <Filter>classes\global\function\gJson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

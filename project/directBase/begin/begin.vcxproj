@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -162,10 +162,9 @@
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
+    <ClInclude Include="debugDraw.h" />
     <ClInclude Include="debugGizmo.h" />
     <ClInclude Include="debugGrid.h" />
-    <ClInclude Include="c3DMatrix.h" />
-    <ClInclude Include="c3DVector.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="cameraControlable.h" />
     <ClInclude Include="defaulteCube.h" />
@@ -173,6 +172,7 @@
     <ClInclude Include="direct3dApplication.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="gFunc.h" />
+    <ClInclude Include="gJson.h" />
     <ClInclude Include="gMng.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="iRenderable.h" />
@@ -214,10 +214,9 @@
     <ClCompile Include="animationController.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="buttonBase.cpp" />
+    <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
     <ClCompile Include="debugGrid.cpp" />
-    <ClCompile Include="c3DMatrix.cpp" />
-    <ClCompile Include="c3DVector.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="cameraControlable.cpp" />
     <ClCompile Include="defaulteCube.cpp" />
@@ -225,6 +224,7 @@
     <ClCompile Include="direct3dApplication.cpp" />
     <ClCompile Include="field.cpp" />
     <ClCompile Include="gFunc.cpp" />
+    <ClCompile Include="gJson.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="iWindowApplication.cpp" />
     <ClCompile Include="labelBase.cpp" />

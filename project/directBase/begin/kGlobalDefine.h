@@ -11,6 +11,7 @@
 #pragma comment(lib, "winmm.lib")	// window multi-media
 
 // 공용 헤더파일
+#include <fstream>
 #include <iostream>
 #include <cassert>
 #include <Windows.h>
@@ -37,10 +38,12 @@
 #include <dinput.h>
 #include <dsound.h>
 
+// 외부 포함 파일
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
+
 // 유틸리티 파일
 typedef double NUM_REAL;
-#include "c3DMatrix.h"
-#include "c3DVector.h"
 #include "dbList.h"
 
 // ----- 매크로 ------ //
@@ -127,6 +130,14 @@ enum class EParticleType
 	NONE
 };
 
+// 충돌 그리기 타입
+enum class EDebugDrawType
+{
+	BOX,
+	SPHERE,
+	NONE
+};
+
 // ----- struct ----- //
 
 // 정적 메쉬
@@ -139,4 +150,24 @@ struct meshSet
 	std::vector<LPDIRECT3DTEXTURE9> vTextureList;
 };
 
-// 웨이브 사운드
+// 경계 볼륨
+struct boundingBox
+{
+	D3DXVECTOR3 min;
+	D3DXVECTOR3 max;
+};
+
+struct boundingSphere
+{
+	D3DXVECTOR3 center;
+	float radius = 0.0f;
+};
+
+// 객체 볼륨
+struct objectBox
+{
+	float halfLength[3];
+
+	D3DXVECTOR3 center;
+	D3DXVECTOR3 direction[3];
+};
