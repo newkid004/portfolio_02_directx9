@@ -34,24 +34,6 @@
     <Filter Include="classes\global\utility\manager">
       <UniqueIdentifier>{25a43348-dc4b-4771-8789-9a73ab5f7399}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\global\utility\manager\window">
-      <UniqueIdentifier>{2fbe5327-b776-4fef-8e1b-e5bc83a68f1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\global\utility\manager\device">
-      <UniqueIdentifier>{cd084fbe-d1f8-453c-a75e-51cd2736c3dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\global\utility\manager\time">
-      <UniqueIdentifier>{ae3b0c8c-0d25-4f0b-a0b4-84c8a4c5e110}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\global\utility\manager\input">
-      <UniqueIdentifier>{61c473a9-9b44-4346-9b06-ec368efb7df3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\global\utility\manager\resource">
-      <UniqueIdentifier>{a5740d01-8e23-4862-8087-9c20ada45979}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\global\utility\manager\sound">
-      <UniqueIdentifier>{363f62e9-1556-4871-b78f-93101521c8ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="classes\global\utility\object">
       <UniqueIdentifier>{e54f91c4-5368-4d36-b395-be408554d5e0}</UniqueIdentifier>
     </Filter>
@@ -154,17 +136,8 @@
     <Filter Include="classes\global\function\pickRay">
       <UniqueIdentifier>{9733b38e-4c85-433b-95b2-5108ca373e44}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\scene">
-      <UniqueIdentifier>{cf76f83d-e5ee-4286-b653-3556964ad8dc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\winMain">
       <UniqueIdentifier>{19928304-3f92-453c-a3d3-421a2bc73842}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\global\utility\manager\scene">
-      <UniqueIdentifier>{ff3dd602-3c19-4a65-bd48-8cbd78674bb7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\scene\_base">
-      <UniqueIdentifier>{74e21291-8860-45a8-89d3-29971bcd9b2c}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\global\utility\particle\creater">
       <UniqueIdentifier>{40cbfdfd-93ab-476f-b6f4-e62e8c6432f5}</UniqueIdentifier>
@@ -184,17 +157,77 @@
     <Filter Include="classes\global\utility\object\renderObject\field">
       <UniqueIdentifier>{96df477a-0f90-43c6-b0a9-239518ac082a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\scene\00_mainGame">
+    <Filter Include="classes\global\utility\manager\direct">
+      <UniqueIdentifier>{8ab1ed18-0701-4c8f-8b5d-7503a11e5bf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\direct\input">
+      <UniqueIdentifier>{61c473a9-9b44-4346-9b06-ec368efb7df3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\direct\resource">
+      <UniqueIdentifier>{a5740d01-8e23-4862-8087-9c20ada45979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\direct\sound">
+      <UniqueIdentifier>{363f62e9-1556-4871-b78f-93101521c8ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\direct\time">
+      <UniqueIdentifier>{ae3b0c8c-0d25-4f0b-a0b4-84c8a4c5e110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\direct\window">
+      <UniqueIdentifier>{2fbe5327-b776-4fef-8e1b-e5bc83a68f1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\direct\device">
+      <UniqueIdentifier>{cd084fbe-d1f8-453c-a75e-51cd2736c3dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\common">
+      <UniqueIdentifier>{993314a7-7dd0-4e64-a618-1559317d7628}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\common\UI">
+      <UniqueIdentifier>{87df888f-e93b-462e-a149-31fed18e35d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\common\scene">
+      <UniqueIdentifier>{ff3dd602-3c19-4a65-bd48-8cbd78674bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes">
+      <UniqueIdentifier>{01261faf-7df9-4645-a5d3-43144407ab33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene">
+      <UniqueIdentifier>{cf76f83d-e5ee-4286-b653-3556964ad8dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\_base">
+      <UniqueIdentifier>{74e21291-8860-45a8-89d3-29971bcd9b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\00_mainGame">
       <UniqueIdentifier>{c43cd0b5-04f1-4d9a-b77d-42fdbeb16689}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\scene\01_mapTool">
+    <Filter Include="main\classes\scene\01_mapTool">
       <UniqueIdentifier>{eb7ca8f6-bca7-442c-8b7e-d7396b2897ec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\scene\test">
+    <Filter Include="main\classes\scene\test">
       <UniqueIdentifier>{7ece4345-ee0b-4205-a5c6-495797f5ce21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\global\utility\manager\UI">
-      <UniqueIdentifier>{87df888f-e93b-462e-a149-31fed18e35d1}</UniqueIdentifier>
+    <Filter Include="classes\global\utility\container">
+      <UniqueIdentifier>{6fc28cca-6090-471b-8d1f-117bcdc77ae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\container\doubleLinkedList">
+      <UniqueIdentifier>{baccb975-5d26-4675-a51f-bbaf1c33de97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI">
+      <UniqueIdentifier>{f25151d7-f5f5-49db-9e78-e8a1e13a0a59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window">
+      <UniqueIdentifier>{58c38f62-ec64-41b2-b093-8addb3a39b92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\_base">
+      <UniqueIdentifier>{4c9a82ef-98e3-4923-9661-a15722982afa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\button">
+      <UniqueIdentifier>{2e2c05d1-17d1-4252-9ae6-07e69a870345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\button\_base">
+      <UniqueIdentifier>{859eda49-e75d-4a7c-8e42-913c5d3dd4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\function\gManager">
+      <UniqueIdentifier>{a69e9599-8fcd-48bd-ac01-8c1c32cc20ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -208,13 +241,13 @@
       <Filter>classes\global\utility\math</Filter>
     </ClInclude>
     <ClInclude Include="windowManager.h">
-      <Filter>classes\global\utility\manager\window</Filter>
+      <Filter>classes\global\utility\manager\direct\window</Filter>
     </ClInclude>
     <ClInclude Include="direct3dApplication.h">
       <Filter>classes\global\utility\application\direct3dApplication</Filter>
     </ClInclude>
     <ClInclude Include="deviceManager.h">
-      <Filter>classes\global\utility\manager\device</Filter>
+      <Filter>classes\global\utility\manager\direct\device</Filter>
     </ClInclude>
     <ClInclude Include="iRenderable.h">
       <Filter>classes\global\utility\interface\renderable</Filter>
@@ -229,13 +262,13 @@
       <Filter>classes\global\utility\application\windowApplication</Filter>
     </ClInclude>
     <ClInclude Include="timeManager.h">
-      <Filter>classes\global\utility\manager\time</Filter>
+      <Filter>classes\global\utility\manager\direct\time</Filter>
     </ClInclude>
     <ClInclude Include="managerList.h">
       <Filter>classes\global\utility\manager</Filter>
     </ClInclude>
     <ClInclude Include="inputManager.h">
-      <Filter>classes\global\utility\manager\input</Filter>
+      <Filter>classes\global\utility\manager\direct\input</Filter>
     </ClInclude>
     <ClInclude Include="baseObject.h">
       <Filter>classes\global\utility\object\_base</Filter>
@@ -250,7 +283,7 @@
       <Filter>classes\global\function\gFunc</Filter>
     </ClInclude>
     <ClInclude Include="resourceManager.h">
-      <Filter>classes\global\utility\manager\resource</Filter>
+      <Filter>classes\global\utility\manager\direct\resource</Filter>
     </ClInclude>
     <ClInclude Include="debugGrid.h">
       <Filter>classes\global\utility\debug\grid</Filter>
@@ -298,7 +331,7 @@
       <Filter>classes\global\utility\sound</Filter>
     </ClInclude>
     <ClInclude Include="soundManager.h">
-      <Filter>classes\global\utility\manager\sound</Filter>
+      <Filter>classes\global\utility\manager\direct\sound</Filter>
     </ClInclude>
     <ClInclude Include="particleEmitter.h">
       <Filter>classes\global\utility\particle\emitter</Filter>
@@ -310,13 +343,13 @@
       <Filter>classes\global\utility\object\renderObject\particle\point</Filter>
     </ClInclude>
     <ClInclude Include="mainGame.h">
-      <Filter>main\scene\00_mainGame</Filter>
+      <Filter>main\classes\scene\00_mainGame</Filter>
     </ClInclude>
     <ClInclude Include="sceneManager.h">
-      <Filter>classes\global\utility\manager\scene</Filter>
+      <Filter>classes\global\utility\manager\common\scene</Filter>
     </ClInclude>
     <ClInclude Include="sceneBase.h">
-      <Filter>main\scene\_base</Filter>
+      <Filter>main\classes\scene\_base</Filter>
     </ClInclude>
     <ClInclude Include="particleCreater.h">
       <Filter>classes\global\utility\particle\creater</Filter>
@@ -325,19 +358,34 @@
       <Filter>classes\global\utility\object\renderObject\particle\quad</Filter>
     </ClInclude>
     <ClInclude Include="sceneTest2.h">
-      <Filter>main\scene\test</Filter>
+      <Filter>main\classes\scene\test</Filter>
     </ClInclude>
     <ClInclude Include="sceneTest1.h">
-      <Filter>main\scene\test</Filter>
+      <Filter>main\classes\scene\test</Filter>
     </ClInclude>
     <ClInclude Include="field.h">
       <Filter>classes\global\utility\object\renderObject\field</Filter>
     </ClInclude>
     <ClInclude Include="sceneMapTool.h">
-      <Filter>main\scene\01_mapTool</Filter>
+      <Filter>main\classes\scene\01_mapTool</Filter>
     </ClInclude>
     <ClInclude Include="uiManager.h">
-      <Filter>classes\global\utility\manager\UI</Filter>
+      <Filter>classes\global\utility\manager\common\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="dbList.h">
+      <Filter>classes\global\utility\container\doubleLinkedList</Filter>
+    </ClInclude>
+    <ClInclude Include="dbList.hpp">
+      <Filter>classes\global\utility\container\doubleLinkedList</Filter>
+    </ClInclude>
+    <ClInclude Include="windowBase.h">
+      <Filter>main\classes\windowUI\window\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="buttonBase.h">
+      <Filter>main\classes\windowUI\button\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="gMng.h">
+      <Filter>classes\global\function\gManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -348,22 +396,22 @@
       <Filter>classes\global\utility\math</Filter>
     </ClCompile>
     <ClCompile Include="windowManager.cpp">
-      <Filter>classes\global\utility\manager\window</Filter>
+      <Filter>classes\global\utility\manager\direct\window</Filter>
     </ClCompile>
     <ClCompile Include="direct3dApplication.cpp">
       <Filter>classes\global\utility\application\direct3dApplication</Filter>
     </ClCompile>
     <ClCompile Include="deviceManager.cpp">
-      <Filter>classes\global\utility\manager\device</Filter>
+      <Filter>classes\global\utility\manager\direct\device</Filter>
     </ClCompile>
     <ClCompile Include="iWindowApplication.cpp">
       <Filter>classes\global\utility\application\windowApplication</Filter>
     </ClCompile>
     <ClCompile Include="timeManager.cpp">
-      <Filter>classes\global\utility\manager\time</Filter>
+      <Filter>classes\global\utility\manager\direct\time</Filter>
     </ClCompile>
     <ClCompile Include="inputManager.cpp">
-      <Filter>classes\global\utility\manager\input</Filter>
+      <Filter>classes\global\utility\manager\direct\input</Filter>
     </ClCompile>
     <ClCompile Include="baseObject.cpp">
       <Filter>classes\global\utility\object\_base</Filter>
@@ -378,7 +426,7 @@
       <Filter>classes\global\function\gFunc</Filter>
     </ClCompile>
     <ClCompile Include="resourceManager.cpp">
-      <Filter>classes\global\utility\manager\resource</Filter>
+      <Filter>classes\global\utility\manager\direct\resource</Filter>
     </ClCompile>
     <ClCompile Include="debugGrid.cpp">
       <Filter>classes\global\utility\debug\grid</Filter>
@@ -426,7 +474,7 @@
       <Filter>classes\global\utility\sound</Filter>
     </ClCompile>
     <ClCompile Include="soundManager.cpp">
-      <Filter>classes\global\utility\manager\sound</Filter>
+      <Filter>classes\global\utility\manager\direct\sound</Filter>
     </ClCompile>
     <ClCompile Include="particleEmitter.cpp">
       <Filter>classes\global\utility\particle\emitter</Filter>
@@ -441,13 +489,13 @@
       <Filter>main\winMain</Filter>
     </ClCompile>
     <ClCompile Include="mainGame.cpp">
-      <Filter>main\scene\00_mainGame</Filter>
+      <Filter>main\classes\scene\00_mainGame</Filter>
     </ClCompile>
     <ClCompile Include="sceneManager.cpp">
-      <Filter>classes\global\utility\manager\scene</Filter>
+      <Filter>classes\global\utility\manager\common\scene</Filter>
     </ClCompile>
     <ClCompile Include="sceneBase.cpp">
-      <Filter>main\scene\_base</Filter>
+      <Filter>main\classes\scene\_base</Filter>
     </ClCompile>
     <ClCompile Include="particleCreater.cpp">
       <Filter>classes\global\utility\particle\creater</Filter>
@@ -456,19 +504,30 @@
       <Filter>classes\global\utility\object\renderObject\particle\quad</Filter>
     </ClCompile>
     <ClCompile Include="sceneTest1.cpp">
-      <Filter>main\scene\test</Filter>
+      <Filter>main\classes\scene\test</Filter>
     </ClCompile>
     <ClCompile Include="sceneTest2.cpp">
-      <Filter>main\scene\test</Filter>
+      <Filter>main\classes\scene\test</Filter>
     </ClCompile>
     <ClCompile Include="field.cpp">
       <Filter>classes\global\utility\object\renderObject\field</Filter>
     </ClCompile>
     <ClCompile Include="sceneMapTool.cpp">
-      <Filter>main\scene\01_mapTool</Filter>
+      <Filter>main\classes\scene\01_mapTool</Filter>
     </ClCompile>
     <ClCompile Include="uiManager.cpp">
-      <Filter>classes\global\utility\manager\UI</Filter>
+      <Filter>classes\global\utility\manager\common\UI</Filter>
     </ClCompile>
+    <ClCompile Include="windowBase.cpp">
+      <Filter>main\classes\windowUI\window\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="buttonBase.cpp">
+      <Filter>main\classes\windowUI\button\_base</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gMng.inl">
+      <Filter>classes\global\function\gManager</Filter>
+    </None>
   </ItemGroup>
 </Project>

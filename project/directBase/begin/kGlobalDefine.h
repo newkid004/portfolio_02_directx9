@@ -28,6 +28,7 @@
 // STL
 #include <string>
 #include <vector>
+#include <list>
 #include <unordered_map>
 
 // d3d 헤더파일
@@ -40,6 +41,7 @@
 typedef double NUM_REAL;
 #include "c3DMatrix.h"
 #include "c3DVector.h"
+#include "dbList.h"
 
 // ----- 매크로 ------ //
 // 싱글톤
@@ -58,6 +60,7 @@ return &_instance;						\
 #define GET_SOUND_MANAGER()				(soundManager::getInstance())
 
 #define GET_SCENE_MANAGER()				(sceneManager::getInstance())
+#define GET_UI_MANAGER()				(uiManager::getInstance())
 
 // D3D
 #define WORLD_DIRECTION_RIGHT			(D3DXVECTOR3(1.0f, 0.0f, 0.0f))
@@ -93,6 +96,9 @@ return &_instance;						\
 #define COLOR_MAGENTA(alpha)	D3DCOLOR_ARGB(alpha, 255, 0, 255)
 #define COLOR_YELLOW(alpha)		D3DCOLOR_ARGB(alpha, 255, 255, 0)
 #define COLOR_CYAN(alpha)		D3DCOLOR_ARGB(alpha, 0, 255, 255)
+
+// STL helper
+#define STR_MAP(arg) std::unordered_map<std::string, arg>
 
 // ----- 창 설정 ----- //
 #define WINNAME				"winDirect"

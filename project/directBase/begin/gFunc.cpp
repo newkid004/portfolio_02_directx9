@@ -72,6 +72,33 @@ void gFunc::drawText(int x, int y, const std::string & text, int DT_align)
 	GET_LABEL()->drawUI();
 }
 
+void gFunc::drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha)
+{
+	// 행렬 설정
+	D3DXMATRIXA16 mWorld;
+	D3DXMatrixScaling(&mWorld, scale.x, scale.y, 1.0f);
+
+	GET_SPRITE()->SetTransform(&mWorld);
+
+	// 출력
+	D3DSURFACE_DESC sDesc;
+	texture->GetLevelDesc(0, &sDesc);
+
+	RECT rcTexture = { 0, 0, (LONG)sDesc.Width, (LONG)sDesc.Height };
+
+	D3DXVECTOR3 position = {
+		pos.x * (1.0f / scale.x),
+		pos.y * (1.0f / scale.y),
+		1.0f };
+
+	GET_SPRITE()->Draw(
+		texture,
+		&rcTexture,
+		&D3DXVECTOR3(rcTexture.right / 2.0f, rcTexture.bottom / 2.0f, 0.0f),
+		&position,
+		COLOR_WHITE((int)(255 * alpha)));
+}
+
 LPDIRECT3DVERTEXBUFFER9 gFunc::createVertexBuffer(int size, DWORD options, DWORD FVF)
 {
 	LPDIRECT3DVERTEXBUFFER9 result = nullptr;
@@ -176,4 +203,11 @@ float gFunc::rndFloat(float min, float max)
 	uniform_real_distribution<float> uRandom(min, max);
 
 	return uRandom(rDevice);
+}
+
+bool gFunc::isMouseInRange(const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size)
+{
+	return
+		pos.x < MN_KEY->getMousePos().x && MN_KEY->getMousePos().x < pos.x + size.x &&
+		pos.y < MN_KEY->getMousePos().y && MN_KEY->getMousePos().y < pos.y + size.y;
 }

@@ -159,6 +159,9 @@
     <ClInclude Include="allocateHierarchy.h" />
     <ClInclude Include="animationController.h" />
     <ClInclude Include="baseObject.h" />
+    <ClInclude Include="buttonBase.h" />
+    <ClInclude Include="dbList.h" />
+    <ClInclude Include="dbList.hpp" />
     <ClInclude Include="debugGizmo.h" />
     <ClInclude Include="debugGrid.h" />
     <ClInclude Include="c3DMatrix.h" />
@@ -170,6 +173,7 @@
     <ClInclude Include="direct3dApplication.h" />
     <ClInclude Include="field.h" />
     <ClInclude Include="gFunc.h" />
+    <ClInclude Include="gMng.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="iRenderable.h" />
     <ClInclude Include="iUpdateble.h" />
@@ -201,6 +205,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
+    <ClInclude Include="windowBase.h" />
     <ClInclude Include="windowManager.h" />
     <ClInclude Include="windowMessageHandler.h" />
   </ItemGroup>
@@ -208,6 +213,7 @@
     <ClCompile Include="allocateHierarchy.cpp" />
     <ClCompile Include="animationController.cpp" />
     <ClCompile Include="baseObject.cpp" />
+    <ClCompile Include="buttonBase.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
     <ClCompile Include="debugGrid.cpp" />
     <ClCompile Include="c3DMatrix.cpp" />
@@ -246,8 +252,12 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
+    <ClCompile Include="windowBase.cpp" />
     <ClCompile Include="windowManager.cpp" />
     <ClCompile Include="winMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gMng.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

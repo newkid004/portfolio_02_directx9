@@ -21,7 +21,7 @@ public :
 
 public :
 	static void createPickRay(ray* out_info);
-	static bool chkPick(LPD3DXMESH mesh, ray* in_ray, info* out_info);
+	static bool chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh);
 
 private :
 	pick() {};

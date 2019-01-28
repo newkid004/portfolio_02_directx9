@@ -36,7 +36,7 @@ void pick::createPickRay(ray * out_info)
 	rayOrigin.z = mWorld(3, 2);
 }
 
-bool pick::chkPick(LPD3DXMESH mesh, ray * in_ray, info * out_info)
+bool pick::chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh)
 {
 	D3DXVECTOR3 & rayDir = in_ray->direction;
 	D3DXVECTOR3 & rayOrigin = in_ray->origin;

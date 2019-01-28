@@ -7,6 +7,7 @@
 #include "soundManager.h"
 
 #include "sceneManager.h"
+#include "uiManager.h"
 
 // ----- def ----- //
 #define MN_WIN		GET_WINDOW_MANAGER()
@@ -17,3 +18,4 @@
 #define MN_SND		GET_SOUND_MANAGER()
 
 #define MN_SCENE	GET_SCENE_MANAGER()
+#define MN_UI		GET_UI_MANAGER()

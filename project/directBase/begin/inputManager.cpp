@@ -41,6 +41,7 @@ void inputManager::update(void)
 	}
 
 	updateMousePos();
+	_clickIgnore = false;
 }
 
 LPDIRECTINPUT8 inputManager::createDirectInput(void)

@@ -20,6 +20,7 @@ private:
 	DIMOUSESTATE	_mouseState;
 	DIMOUSESTATE	_mousePrevState;
 	POINT			_mousePos;
+	bool			_clickIgnore = false;
 
 	// pick
 	pick::ray		_pickRay;
@@ -47,9 +48,11 @@ public :
 
 public :
 	constexpr pick::ray & getPickRay(void) { return _pickRay; }
-	POINT getMousePos(void) { return _mousePos; }
+	const POINT & getMousePos(void) { return _mousePos; }
+	bool getClickIgnore(void) { return _clickIgnore; }
 
 	void setMousePos(POINT input);
+	void setClickIgnore(void) { _clickIgnore = true; }
 
 private :
 	void updateMousePos(void);
