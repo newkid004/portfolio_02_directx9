@@ -15,7 +15,7 @@ void mainGame::init(void)
 	MN_SCENE->add("scene2", new sceneTest2);
 	MN_SCENE->add("sceneMapTool", new sceneMapTool);
 
-	MN_SCENE->change("sceneMapTool");
+	MN_SCENE->change("scene1");
 }
 
 void mainGame::update(void)

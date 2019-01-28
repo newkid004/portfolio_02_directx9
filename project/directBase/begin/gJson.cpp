@@ -11,7 +11,5 @@ void gJson::write(json & in_json, const std::string & filepath)
 void gJson::read(json & out_json, const string & filepath)
 {
 	ifstream file(filepath);
-	string content((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
-
-	out_json = json::parse(content);
+	file >> out_json;
 }

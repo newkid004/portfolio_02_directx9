@@ -6,6 +6,9 @@ class sceneTest1 : public sceneBase
 {
 private :
 	float _stackTime = 0.0f;
+	int _count = 0;
+	int _save = 0;
+	json _json;
 
 public:
 	virtual void init(void) override;

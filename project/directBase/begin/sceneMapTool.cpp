@@ -5,17 +5,12 @@
 #include "cameraControlable.h"
 #include "debugGrid.h"
 
-sceneMapTool::sceneMapTool()
-{
-	_grid->setVisible(false);
-	((cameraControlable*)GET_CAMERA())->setVisible(false);
-}
-
 void sceneMapTool::init(void)
 {
 	sceneBase::init();
 
-	
+	_grid->setVisible(false);
+	((cameraControlable*)_camera)->setVisible(false);
 }
 
 void sceneMapTool::update(void)

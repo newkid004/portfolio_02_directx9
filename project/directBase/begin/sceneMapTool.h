@@ -11,7 +11,7 @@ public:
 	virtual void drawUI(void) override;
 
 public:
-	sceneMapTool();
+	sceneMapTool() {};
 	~sceneMapTool() {};
 };
 
