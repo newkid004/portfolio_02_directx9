@@ -6,7 +6,7 @@ class buttonBase;
 struct uiInfo
 {
 	LPDIRECT3DTEXTURE9 backImage = nullptr;
-	std::string * nameP;
+	std::string * nameP = nullptr;
 	D3DXVECTOR2 pos;
 	D3DXVECTOR2 size;
 	D3DXVECTOR2 scale = D3DXVECTOR2(1.0f, 1.0f);
@@ -19,7 +19,7 @@ public :
 	typedef dbList<windowBase*> UI_LIST;
 	typedef UI_LIST::node*		UI_LIST_NODE;
 
-private :
+protected :
 	uiInfo _info;
 	UI_LIST_NODE _managedNode = nullptr;
 	std::unordered_map<std::string, buttonBase*> _mButton;
@@ -44,7 +44,7 @@ public:	// ----- button ----- //
 	buttonBase* addButton(const std::string & name, buttonBase* addition);
 	buttonBase* findButton(const std::string & name);
 
-public :
+public :	// ----- get / set ----- //
 	uiInfo & getInfo(void) { return _info; }
 	UI_LIST_NODE & getNode(void) { return _managedNode; }
 

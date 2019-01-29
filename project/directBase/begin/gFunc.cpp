@@ -189,6 +189,40 @@ pick::ray gFunc::createPickRay(const POINT & clickPos)
 	return ray;
 }
 
+LPDIRECT3DTEXTURE9 gFunc::createRenderTarget(void)
+{
+	LPDIRECT3DTEXTURE9 result = nullptr;
+
+	MN_DEV->CreateTexture(
+		GET_WINDOW_SIZE().cx,
+		GET_WINDOW_SIZE().cy,
+		1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_R32F,
+		D3DPOOL_DEFAULT,
+		&result,
+		NULL);
+
+	return result;
+}
+
+LPDIRECT3DSURFACE9 gFunc::createDepthStensil(void)
+{
+	LPDIRECT3DSURFACE9 result = nullptr;
+
+	MN_DEV->CreateDepthStencilSurface(
+		GET_WINDOW_SIZE().cx,
+		GET_WINDOW_SIZE().cy,
+		D3DFMT_D24S8,
+		D3DMULTISAMPLE_NONE,
+		0,
+		TRUE,
+		&result,
+		NULL);
+
+	return result;
+}
+
 int gFunc::rndInt(int min, int max)
 {
 	random_device rDevice;

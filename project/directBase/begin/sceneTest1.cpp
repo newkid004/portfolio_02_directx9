@@ -58,16 +58,19 @@ void sceneTest1::updateControl(void)
 	if (MN_KEY->mousePress(EMouseInput::MIDDLE))
 	{
 		gJson::read(_json, "test.json");
-		for (auto j : _json["count0"])
+		for (auto jArray : _json)
 		{
-			for (auto jin : j)
+			for (auto j : jArray)
 			{
-				int getter;
-				jin.get_to<int>(getter);
+				for (auto jin : j)
+				{
+					int getter;
+					jin.get_to<int>(getter);
 
-				printf("%d ", getter);
+					printf("%d ", getter);
+				}
+				printf("\n");
 			}
-			printf("\n");
 		}
 	}
 }

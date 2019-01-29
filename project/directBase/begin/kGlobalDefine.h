@@ -31,6 +31,7 @@
 #include <vector>
 #include <list>
 #include <unordered_map>
+#include <array>
 
 // d3d 헤더파일
 #include <d3d9.h>
@@ -105,8 +106,8 @@ return &_instance;						\
 
 // ----- 창 설정 ----- //
 #define WINNAME				"winDirect"
-#define WINSIZEX			640
-#define WINSIZEY			360
+#define WINSIZEX			1280
+#define WINSIZEY			720
 #define BACK_COLOR			COLOR_GRAY
 
 // ----- enum ----- //

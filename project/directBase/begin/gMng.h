@@ -13,7 +13,7 @@ public :
 
 public :	// add
 	template<typename tKey, typename tValue>
-	static tValue add(tKey & key, tValue value, std::unordered_map<tKey, tValue> & container);
+	static tValue add(tKey & key, tValue & value, std::unordered_map<tKey, tValue> & container);
 	template<typename tValue> 
 	static tValue add(tValue & value, std::list<tValue> & container, PLACE place = PLACE::BACK);
 	template<typename tValue>

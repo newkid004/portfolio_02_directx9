@@ -160,6 +160,8 @@
     <ClInclude Include="animationController.h" />
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="buttonBase.h" />
+    <ClInclude Include="buttonMoveBar.h" />
+    <ClInclude Include="buttonStatic.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
     <ClInclude Include="debugDraw.h" />
@@ -183,6 +185,9 @@
     <ClInclude Include="lightBase.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="managerList.h" />
+    <ClInclude Include="maptool_cursur.h" />
+    <ClInclude Include="maptool_data.h" />
+    <ClInclude Include="maptool_window.h" />
     <ClInclude Include="particleCreater.h" />
     <ClInclude Include="particleEmitter.h" />
     <ClInclude Include="particlePoint.h" />
@@ -208,12 +213,17 @@
     <ClInclude Include="windowBase.h" />
     <ClInclude Include="windowManager.h" />
     <ClInclude Include="windowMessageHandler.h" />
+    <ClInclude Include="windowMoveable.h" />
+    <ClInclude Include="windowRenderTarget.h" />
+    <ClInclude Include="windowStatic.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="allocateHierarchy.cpp" />
     <ClCompile Include="animationController.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="buttonBase.cpp" />
+    <ClCompile Include="buttonMoveBar.cpp" />
+    <ClCompile Include="buttonStatic.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
     <ClCompile Include="debugGrid.cpp" />
@@ -230,6 +240,9 @@
     <ClCompile Include="labelBase.cpp" />
     <ClCompile Include="lightBase.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="maptool_cursur.cpp" />
+    <ClCompile Include="maptool_data.cpp" />
+    <ClCompile Include="maptool_window.cpp" />
     <ClCompile Include="particleCreater.cpp" />
     <ClCompile Include="particleEmitter.cpp" />
     <ClCompile Include="particlePoint.cpp" />
@@ -254,6 +267,9 @@
     <ClCompile Include="uiManager.cpp" />
     <ClCompile Include="windowBase.cpp" />
     <ClCompile Include="windowManager.cpp" />
+    <ClCompile Include="windowMoveable.cpp" />
+    <ClCompile Include="windowRenderTarget.cpp" />
+    <ClCompile Include="windowStatic.cpp" />
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>
   <ItemGroup>

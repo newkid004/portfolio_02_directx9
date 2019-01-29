@@ -3,7 +3,7 @@
 using namespace std;
 
 template<typename tKey, typename tValue>
-inline tValue gMng::add(tKey & key, tValue value, std::unordered_map<tKey, tValue>& container)
+inline tValue gMng::add(tKey & key, tValue & value, std::unordered_map<tKey, tValue>& container)
 {
 	auto iter = container.find(key);
 	if (iter != container.end()) return iter->second;

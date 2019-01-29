@@ -12,7 +12,7 @@ struct activeSet
 
 class buttonBase
 {
-private :
+protected :
 	uiInfo _info;
 	activeSet _activeSet;
 
@@ -29,7 +29,7 @@ public:
 	windowBase*& getWindow(void) { return _bindWindow; }
 
 public:
-	buttonBase();
-	~buttonBase();
+	buttonBase(windowBase* bind) : _bindWindow(bind) {};
+	~buttonBase() {};
 };
 

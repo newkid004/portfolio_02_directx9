@@ -9,6 +9,19 @@
 windowBase::windowBase(const uiInfo & info) :
 	_info(info)
 {
+	if (_info.size == D3DXVECTOR2())
+	{
+		D3DSURFACE_DESC sDesc;
+		_info.backImage->GetLevelDesc(0, &sDesc);
+		_info.size = D3DXVECTOR2(sDesc.Width, sDesc.Height);
+	}
+
+	if (_info.pos == D3DXVECTOR2())
+	{
+		_info.pos = D3DXVECTOR2(
+			(WINSIZEX + _info.size.x) / 2.0f,
+			(WINSIZEY + _info.size.y) / 2.0f);
+	}
 }
 
 

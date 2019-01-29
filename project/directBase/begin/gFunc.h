@@ -19,6 +19,8 @@ public :
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, DWORD FVF);
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, D3DVERTEXELEMENT9* elements);
 	static pick::ray				createPickRay(const POINT & clickPos);
+	static LPDIRECT3DTEXTURE9		createRenderTarget(void);
+	static LPDIRECT3DSURFACE9		createDepthStensil(void);
 	
 	// º¯È¯
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
