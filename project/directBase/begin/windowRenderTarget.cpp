@@ -5,8 +5,10 @@
 windowRenderTarget::windowRenderTarget(const uiInfo & info) : 
 	windowBase(info)
 {
-	_info.backImage = gFunc::createRenderTarget();
-	_depthStensil = gFunc::createDepthStensil();
+	_info.backImage = gFunc::createRenderTarget(info.size);
+	_depthStensil = gFunc::createDepthStensil(info.size);
+
+	gFunc::runRenderTarget(_info.backImage, D3DCLEAR_TARGET, NULL, [](void)->void {}, COLOR_BLACK(0));
 }
 
 windowRenderTarget::~windowRenderTarget()

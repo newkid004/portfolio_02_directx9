@@ -20,16 +20,17 @@ public :
 public :
 	windowBase * add(std::string winName, windowBase* winAdd);
 	windowBase* find(std::string winName);
+
+	UI_LIST_NODE show(std::string winName);
+	UI_LIST_NODE show(windowBase* winBase);
+	UI_LIST_NODE close(std::string winName);
+	UI_LIST_NODE close(windowBase* winBase);
+	UI_LIST_NODE trans(std::string winName);
+	UI_LIST_NODE trans(windowBase* winBase);
+
+public :
 	windowBase* getFocus(void) { if (_lWinOpen.empty()) return nullptr; return _lWinOpen.front(); }
-
-	void show(std::string winName);
-	void show(windowBase* winBase);
-	void close(std::string winName);
-	void close(windowBase* winBase);
-	void trans(std::string winName);
-	void trans(windowBase* winBase);
-
-	UI_LIST_NODE getIgnoreNode(void) { return _lWinOpen.end()->next; };	// tail
+	UI_LIST_NODE getIgnoreNode(void) { return _lWinOpen.end(); }
 
 public:
 	uiManager();

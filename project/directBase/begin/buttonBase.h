@@ -3,15 +3,25 @@
 
 #include "windowBase.h"
 
-struct activeSet
-{
-	std::function<void(void)> up;
-	std::function<void(void)> press;
-	std::function<void(void)> down;
-};
-
 class buttonBase
 {
+public :
+	typedef windowBase::UI_LIST_NODE UI_LIST_NODE;
+
+public :
+	struct activeSet
+	{
+		std::function<UI_LIST_NODE(void)> up;
+		std::function<UI_LIST_NODE(void)> press;
+		std::function<UI_LIST_NODE(void)> down;
+	};
+
+	struct activeScrollSet
+	{
+		std::function<UI_LIST_NODE(void)> up;
+		std::function<UI_LIST_NODE(void)> down;
+	};
+
 protected :
 	uiInfo _info;
 	activeSet _activeSet;
@@ -19,14 +29,20 @@ protected :
 	windowBase* _bindWindow = nullptr;
 
 public :
-	virtual void updateAlways(void) = 0;
-	virtual void updateActice(void);
+	virtual UI_LIST_NODE updateAlways(void) = 0;
+	virtual UI_LIST_NODE updateActice(void);
+	static UI_LIST_NODE updateActiceScroll(buttonBase* own, activeScrollSet & scrollSet);
 	virtual void drawUI(void);
 
 public:
-	const uiInfo & getInfo(void) { return _info; }
+	uiInfo & getInfo(void) { return _info; }
 	activeSet & getActiveSet(void) { return _activeSet; }
 	windowBase*& getWindow(void) { return _bindWindow; }
+
+	D3DXVECTOR2 getAbsPos(void);
+	D3DXVECTOR2 getAbsSize(void);
+	D3DXVECTOR2 getAbsScale(void);
+	float getAbsAlpha(void) { return _bindWindow->getInfo().alpha * _info.alpha; };
 
 public:
 	buttonBase(windowBase* bind) : _bindWindow(bind) {};

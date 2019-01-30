@@ -8,7 +8,7 @@ private :
 	LPDIRECT3DSURFACE9 _depthStensil = nullptr;
 
 public :
-	virtual void updateWindow(void) override {};
+	virtual UI_LIST_NODE updateWindow(void) override { return _managedNode; };
 
 public:
 	windowRenderTarget(const uiInfo & info);

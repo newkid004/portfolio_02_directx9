@@ -24,10 +24,15 @@ void uiManager::update(void)
 {
 	bool runner = true;
 	bool isIgnore = false;
+
+	UI_LIST_NODE resultNode = nullptr;
 	_lWinOpen.run(&runner, [&](windowBase* win, UI_LIST_NODE & node)->void {
-		auto beforeNode = node->prev;
-		win->update();
-		node = beforeNode->next;
+		resultNode = win->update();
+		
+		if (resultNode == getIgnoreNode())
+			runner = false;
+
+		node = resultNode;
 	});
 }
 
@@ -57,54 +62,65 @@ windowBase * uiManager::find(std::string winName)
 	return gMng::find(winName, _mWinCatalog);
 }
 
-void uiManager::show(std::string winName)
+UI_LIST_NODE uiManager::show(std::string winName)
 {
-	gMng::findif(winName, _mWinCatalog, (function<void(windowBase*)>)[](windowBase* found)->void {
-		found->show();
+	windowBase* f = nullptr;
+	gMng::findif(winName, _mWinCatalog, (function<void(windowBase*)>)[&](windowBase* found)->void {
+		(f = found)->show();
 	});
+	return f->getNode();
 }
 
-void uiManager::show(windowBase * winBase)
+UI_LIST_NODE uiManager::show(windowBase * winBase)
 {
+	// 열린 managedNode 제거
+	if (winBase->isShow())
+		_lWinOpen.erase(winBase->getNode());
+	
 	// 맨 앞으로 창 이동
-	gMng::add(winBase, _lWinOpen);
-
-	// manageNode 교체
-	if (winBase->isClose())	winBase->getNode() = _lWinOpen.begin();
-	else					_lWinOpen.erase(winBase->getNode());
+	gMng::add(winBase, _lWinOpen, gMng::PLACE::FRONT);
 
 	// 맨 앞의 iterator 삽입
 	winBase->getNode() = _lWinOpen.begin();
+
+	return getIgnoreNode();
 }
 
-void uiManager::close(std::string winName)
+UI_LIST_NODE uiManager::close(std::string winName)
 {
-	gMng::findif(winName, _mWinCatalog, (function<void(windowBase*)>)[](windowBase* found)->void {
-		found->close();
+	windowBase* f = nullptr;
+	gMng::findif(winName, _mWinCatalog, (function<void(windowBase*)>)[&](windowBase* found)->void {
+		(f = found)->close();
 	});
+	return f->getNode();
 }
 
-void uiManager::close(windowBase * winBase)
+UI_LIST_NODE uiManager::close(windowBase * winBase)
 {
 	if (winBase->isClose())
-		return;
+		return winBase->getNode();
 
-	// 닫고 초기화
-	UI_LIST_NODE nextNode = _lWinOpen.erase(winBase->getNode());
+	// 목록에서 제거
+	auto resultNode = _lWinOpen.erase(winBase->getNode());
 	winBase->getNode() = getIgnoreNode();
+
+	return resultNode;
 }
 
-void uiManager::trans(std::string winName)
+UI_LIST_NODE uiManager::trans(std::string winName)
 {
-	gMng::findif(winName, _mWinCatalog, (function<void(windowBase*)>)[](windowBase* found)->void {
-		found->trans();
+	windowBase* f = nullptr;
+	gMng::findif(winName, _mWinCatalog, (function<void(windowBase*)>)[&](windowBase* found)->void {
+		(f = found)->trans();
 	});
+
+	return f->getNode();
 }
 
-void uiManager::trans(windowBase * winBase)
+UI_LIST_NODE uiManager::trans(windowBase * winBase)
 {
 	if (winBase->isClose())
-		winBase->show();
+		return show(winBase);
 	else
-		winBase->close();
+		return close(winBase);
 }

@@ -161,6 +161,7 @@
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="buttonMoveBar.h" />
+    <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="buttonBase.cpp" />
     <ClCompile Include="buttonMoveBar.cpp" />
+    <ClCompile Include="buttonScrollVertical.cpp" />
     <ClCompile Include="buttonStatic.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />

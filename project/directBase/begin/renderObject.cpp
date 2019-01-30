@@ -25,14 +25,13 @@ void renderObject::draw(void)
 
 		drawPost();
 
-	}
+		for (auto child : _vChildren)
+		{
+			auto rObject = dynamic_cast<renderObject*>(child);
 
-	for (auto child : _vChildren)
-	{
-		auto rObject = dynamic_cast<renderObject*>(child);
-
-		if (rObject != nullptr)
-			rObject->draw();
+			if (rObject != nullptr)
+				rObject->draw();
+		}
 	}
 }
 

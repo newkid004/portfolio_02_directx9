@@ -5,6 +5,9 @@ template<typename T>
 class dbList
 {
 public :
+	using type = T;
+
+public :
 	enum class runDirection
 	{
 		FORWARD,
@@ -13,26 +16,29 @@ public :
 
 	struct node
 	{
+		T value;
+
 		node* prev = nullptr;
 		node* next = nullptr;
-
-		T value;
 	};
 
 private:
 	int _size = 0;
-	node** _head = nullptr;
-	node** _tail = nullptr;
+	node* _head = nullptr;
+	node* _tail = nullptr;
 
 public :
 	T front(void);
 	T back(void);
 	node* begin(void);
 	node* end(void);
+	node* rbegin(void);
+	node* rend(void);
 	void push_front(T input);
 	void push_back(T input);
 
 	void run(bool* runner, const std::function<void(T found, node *& curNode)> & callback, runDirection runDir = runDirection::FORWARD);
+	void runClear(const std::function<void(T found, node *& curNode)> & callback, runDirection runDir = runDirection::FORWARD);
 	node* find(T input, runDirection runDir = runDirection::FORWARD);
 	bool findif(T input, const std::function<void(T found, node *& curNode)> & callback, runDirection runDir = runDirection::FORWARD);
 
@@ -44,8 +50,6 @@ public :
 	bool empty(void) { return _size == 0; };
 
 private :
-	node*& head(void) { return *_head; }
-	node*& tail(void) { return *_tail; }
 	void insert(node* prev, node* next, node* input);
 
 public:

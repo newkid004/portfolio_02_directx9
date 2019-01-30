@@ -19,10 +19,15 @@ public :
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, DWORD FVF);
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, D3DVERTEXELEMENT9* elements);
 	static pick::ray				createPickRay(const POINT & clickPos);
-	static LPDIRECT3DTEXTURE9		createRenderTarget(void);
-	static LPDIRECT3DSURFACE9		createDepthStensil(void);
+	static LPDIRECT3DTEXTURE9		createRenderTarget(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));
+	static LPDIRECT3DSURFACE9		createDepthStensil(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));
+
+	// getter
+	static void						getTextureSize(D3DXVECTOR2* out_size, LPDIRECT3DTEXTURE9 texture);
 	
 	// 변환
+	static D3DXVECTOR2				Vec2Mlt(D3DXVECTOR2 & v1, D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x * v2.x, v1.y * v2.y); }
+	static D3DXVECTOR2				Vec2Dev(D3DXVECTOR2 & v1, D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x / v2.x, v1.y / v2.y); }
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
 
 	// 난수
@@ -36,6 +41,7 @@ public :
 	static boundingBox				createBoundingBox(LPD3DXMESH mesh);
 	static boundingSphere			createBoundingSphere(LPD3DXMESH mesh);
 
+	static bool						isIntersect(const objectBox & boundA, const objectBox & boundB);
 	static bool						isIntersect(const boundingBox & boundA, const boundingBox & boundB);
 	static bool						isIntersect(const boundingSphere & boundA, const boundingSphere & boundB);
 	static void						obj2bound(boundingBox* outBoundingBox, objectBox* inObjectBox);

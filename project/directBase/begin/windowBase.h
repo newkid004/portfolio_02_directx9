@@ -7,8 +7,8 @@ struct uiInfo
 {
 	LPDIRECT3DTEXTURE9 backImage = nullptr;
 	std::string * nameP = nullptr;
-	D3DXVECTOR2 pos;
-	D3DXVECTOR2 size;
+	D3DXVECTOR2 pos = D3DXVECTOR2(0.0f, 0.0f);
+	D3DXVECTOR2 size = D3DXVECTOR2(0.0f, 0.0f);
 	D3DXVECTOR2 scale = D3DXVECTOR2(1.0f, 1.0f);
 	float alpha = 1.0f;
 };
@@ -25,18 +25,18 @@ protected :
 	std::unordered_map<std::string, buttonBase*> _mButton;
 
 public :
-	void update(void);
+	UI_LIST_NODE update(void);
 	void drawUI(void);
 
 protected :
-	virtual void updateAlways(void);
-	virtual void updateWindow(void) = 0;
-	void updateFocus(void);
+	virtual UI_LIST_NODE updateAlways(void);
+	virtual UI_LIST_NODE updateWindow(void) = 0;
+	UI_LIST_NODE updateFocus(void);
 
 public:	// ----- window ----- //
-	virtual void show(void);
-	virtual void close(void);
-	virtual void trans(void);
+	virtual UI_LIST_NODE show(void);
+	virtual UI_LIST_NODE close(void);
+	virtual UI_LIST_NODE trans(void);
 	virtual bool isShow(void);
 	virtual bool isClose(void);
 
@@ -47,6 +47,7 @@ public:	// ----- button ----- //
 public :	// ----- get / set ----- //
 	uiInfo & getInfo(void) { return _info; }
 	UI_LIST_NODE & getNode(void) { return _managedNode; }
+	D3DXVECTOR2 getAbsSize(void);
 
 public:
 	windowBase(const uiInfo & info);

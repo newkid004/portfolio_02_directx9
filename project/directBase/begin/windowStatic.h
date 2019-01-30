@@ -5,7 +5,7 @@
 class windowStatic : public windowBase
 {
 public :
-	virtual void updateWindow(void) override {};
+	virtual UI_LIST_NODE updateWindow(void) override { return _managedNode; };
 
 public:
 	windowStatic(const uiInfo & info) : windowBase(info) {};

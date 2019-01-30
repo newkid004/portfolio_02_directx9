@@ -9,6 +9,7 @@
 #include "lightBase.h"
 #include "labelBase.h"
 #include "spriteBase.h"
+#include "sceneBase.h"
 
 direct3dApplication::~direct3dApplication()
 {
@@ -110,11 +111,11 @@ int direct3dApplication::msgLoop(void)
 			update();
 			draw();
 
-			_sprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_BACKTOFRONT);
+			GET_SPRITE()->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_DEPTH_BACKTOFRONT);
 			{
 				drawUI();
 			}
-			_sprite->End();
+			GET_SPRITE()->End();
 			
 			GET_DEVICE_MANAGER()->getDevice()->EndScene();
 		}

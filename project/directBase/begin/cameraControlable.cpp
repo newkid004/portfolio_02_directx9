@@ -56,6 +56,8 @@ void cameraControlable::draw(void)
 
 void cameraControlable::updateControl(void)
 {
+	if (MN_KEY->getClickIgnore()) return;
+
 	// view
 	if (MN_KEY->mousePress(EMouseInput::RIGHT))	
 		_mousePrevPosition = MN_KEY->getMousePos();

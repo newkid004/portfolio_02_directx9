@@ -74,27 +74,29 @@ void gFunc::drawText(int x, int y, const std::string & text, int DT_align)
 
 void gFunc::drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha)
 {
-	// 행렬 설정
-	D3DXMATRIXA16 mWorld;
-	D3DXMatrixScaling(&mWorld, scale.x, scale.y, 1.0f);
-
-	GET_SPRITE()->SetTransform(&mWorld);
-
-	// 출력
+	// 크기 설정
 	D3DSURFACE_DESC sDesc;
 	texture->GetLevelDesc(0, &sDesc);
-
 	RECT rcTexture = { 0, 0, (LONG)sDesc.Width, (LONG)sDesc.Height };
+
+	// 행렬 설정
+	D3DXMATRIXA16 mWorld;
+	D3DXMatrixScaling(&mWorld, 
+		scale.x,
+		scale.y,
+		1.0f);
+	GET_SPRITE()->SetTransform(&mWorld);
 
 	D3DXVECTOR3 position = {
 		pos.x * (1.0f / scale.x),
 		pos.y * (1.0f / scale.y),
-		1.0f };
+		0.0f };
 
 	GET_SPRITE()->Draw(
 		texture,
 		&rcTexture,
-		&D3DXVECTOR3(rcTexture.right / 2.0f, rcTexture.bottom / 2.0f, 0.0f),
+		// &D3DXVECTOR3(rcTexture.right / 2.0f, rcTexture.bottom / 2.0f, 0.0f),
+		&D3DXVECTOR3(0.0f, 0.0f, 0.0f),
 		&position,
 		COLOR_WHITE((int)(255 * alpha)));
 }
@@ -189,16 +191,21 @@ pick::ray gFunc::createPickRay(const POINT & clickPos)
 	return ray;
 }
 
-LPDIRECT3DTEXTURE9 gFunc::createRenderTarget(void)
+LPDIRECT3DTEXTURE9 gFunc::createRenderTarget(D3DXVECTOR2 size)
 {
 	LPDIRECT3DTEXTURE9 result = nullptr;
 
+	if (size == D3DXVECTOR2())
+		size = D3DXVECTOR2(
+			GET_WINDOW_SIZE().cx,
+			GET_WINDOW_SIZE().cy);
+
 	MN_DEV->CreateTexture(
-		GET_WINDOW_SIZE().cx,
-		GET_WINDOW_SIZE().cy,
+		size.x,
+		size.y,
 		1,
 		D3DUSAGE_RENDERTARGET,
-		D3DFMT_R32F,
+		D3DFMT_A8R8G8B8,
 		D3DPOOL_DEFAULT,
 		&result,
 		NULL);
@@ -206,13 +213,18 @@ LPDIRECT3DTEXTURE9 gFunc::createRenderTarget(void)
 	return result;
 }
 
-LPDIRECT3DSURFACE9 gFunc::createDepthStensil(void)
+LPDIRECT3DSURFACE9 gFunc::createDepthStensil(D3DXVECTOR2 size)
 {
 	LPDIRECT3DSURFACE9 result = nullptr;
 
+	if (size == D3DXVECTOR2())
+		size = D3DXVECTOR2(
+			GET_WINDOW_SIZE().cx,
+			GET_WINDOW_SIZE().cy);
+
 	MN_DEV->CreateDepthStencilSurface(
-		GET_WINDOW_SIZE().cx,
-		GET_WINDOW_SIZE().cy,
+		size.x,
+		size.y,
 		D3DFMT_D24S8,
 		D3DMULTISAMPLE_NONE,
 		0,
@@ -221,6 +233,16 @@ LPDIRECT3DSURFACE9 gFunc::createDepthStensil(void)
 		NULL);
 
 	return result;
+}
+
+void gFunc::getTextureSize(D3DXVECTOR2 * out_size, LPDIRECT3DTEXTURE9 texture)
+{
+	// 출력
+	D3DSURFACE_DESC sDesc;
+	texture->GetLevelDesc(0, &sDesc);
+
+	out_size->x = sDesc.Width;
+	out_size->y = sDesc.Height;
 }
 
 int gFunc::rndInt(int min, int max)
@@ -288,6 +310,99 @@ boundingSphere gFunc::createBoundingSphere(LPD3DXMESH mesh)
 	}
 
 	return result;
+}
+
+bool gFunc::isIntersect(const objectBox & boundA, const objectBox & boundB)
+{
+	float cutoffValue = 0.99999f;
+	bool isExistParallel = false;
+
+	float cosValues[3][3] = { 0.0f, };
+	float absCosValues[3][3] = { 0.0f, };
+
+	float deltaDotValues[3] = { 0.0f, };
+	D3DXVECTOR3 delta = boundB.center - boundA.center;
+
+	float dotValueA = 0.0f;
+	float dotValueB = 0.0f;
+	float totalDotValue = 0.0f;
+
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 0; j < 3; ++j)
+		{
+			cosValues[i][j] = D3DXVec3Dot(&boundA.direction[i], &boundB.direction[j]);
+			absCosValues[i][j] = fabsf(cosValues[i][j]);
+
+			// 평행한 축이 존재할 경우
+			if (cutoffValue < absCosValues[i][j])
+				isExistParallel = true;
+		}
+		deltaDotValues[i] = D3DXVec3Dot(&boundA.direction[i], &delta);
+	}
+
+	// ----- A기준 충돌 ----- //
+	// X Y Z 순
+	for (int i = 0; i < 3; ++i)
+	{
+		totalDotValue = fabsf(deltaDotValues[i]);
+		dotValueA = boundA.halfLength[i];
+		dotValueB =
+			(absCosValues[i][0] * boundB.halfLength[0]) +
+			(absCosValues[i][1] * boundB.halfLength[1]) +
+			(absCosValues[i][2] * boundB.halfLength[2]);
+
+		if (dotValueA + dotValueB < totalDotValue)
+			return false;
+	}
+
+	// ----- A기준 충돌 ----- //
+	// X Y Z 순
+	for (int i = 0; i < 3; ++i)
+	{
+		totalDotValue = fabsf(D3DXVec3Dot(&boundA.direction[i], &delta));
+		dotValueB = boundB.halfLength[i];
+		dotValueA =
+			(absCosValues[0][i] * boundA.halfLength[0]) +
+			(absCosValues[1][i] * boundA.halfLength[1]) +
+			(absCosValues[2][i] * boundA.halfLength[2]);
+
+		if (dotValueA + dotValueB < totalDotValue)
+			return false;
+	}
+
+	// ----- 평행축 존재 ----- //
+	if (isExistParallel)
+		return true;
+
+	// ----- A x B 기준 충돌 ----- //
+	// X x X ~ Z x Z
+	for (int c = 0; c < 3; ++c)
+	{
+		for (int r = 0; r < 3; ++r)
+		{
+			int column1 = (c + 1) % 3;
+			int column2 = (c + 2) % 3;
+
+			int row1 = (r + 1) % 3;
+			int row2 = (r + 2) % 3;
+
+			totalDotValue = fabs(
+				(deltaDotValues[column2] * cosValues[column1][r]) -
+				(deltaDotValues[column1] * cosValues[column2][r]));
+			dotValueA =
+				absCosValues[column2][r] * boundA.halfLength[column1] +
+				absCosValues[column1][r] * boundA.halfLength[column2];
+			dotValueB =
+				absCosValues[c][row2] * boundA.halfLength[row1] +
+				absCosValues[c][row1] * boundA.halfLength[row2];
+
+			if (dotValueA + dotValueB < totalDotValue)
+				return false;
+		}
+	}
+
+	return true;
 }
 
 bool gFunc::isIntersect(const boundingBox & boundA, const boundingBox & boundB)
