@@ -30,8 +30,10 @@ protected :
 
 public :
 	virtual UI_LIST_NODE updateAlways(void) = 0;
-	virtual UI_LIST_NODE updateActice(void);
-	static UI_LIST_NODE updateActiceScroll(buttonBase* own, activeScrollSet & scrollSet);
+	virtual UI_LIST_NODE updateActive(void);
+	virtual UI_LIST_NODE updateActiveAnyway(void);
+	static UI_LIST_NODE updateActiveScroll(buttonBase* own, activeScrollSet & scrollSet);
+	static UI_LIST_NODE updateActiveScrollAnyway(buttonBase* own, activeScrollSet & scrollSet);
 	virtual void drawUI(void);
 
 public:

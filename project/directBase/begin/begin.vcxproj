@@ -188,7 +188,8 @@
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="managerList.h" />
     <ClInclude Include="maptool_cursur.h" />
-    <ClInclude Include="maptool_data.h" />
+    <ClInclude Include="maptool_data_catalog.h" />
+    <ClInclude Include="maptool_data_io.h" />
     <ClInclude Include="maptool_window.h" />
     <ClInclude Include="particleCreater.h" />
     <ClInclude Include="particleEmitter.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
     <ClInclude Include="windowBase.h" />
+    <ClInclude Include="windowCtlogMaptool.h" />
     <ClInclude Include="windowManager.h" />
     <ClInclude Include="windowMessageHandler.h" />
     <ClInclude Include="windowMoveable.h" />
@@ -247,7 +249,8 @@
     <ClCompile Include="lightBase.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="maptool_cursur.cpp" />
-    <ClCompile Include="maptool_data.cpp" />
+    <ClCompile Include="maptool_data_catalog.cpp" />
+    <ClCompile Include="maptool_data_io.cpp" />
     <ClCompile Include="maptool_window.cpp" />
     <ClCompile Include="particleCreater.cpp" />
     <ClCompile Include="particleEmitter.cpp" />
@@ -272,6 +275,7 @@
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
     <ClCompile Include="windowBase.cpp" />
+    <ClCompile Include="windowCtlogMaptool.cpp" />
     <ClCompile Include="windowManager.cpp" />
     <ClCompile Include="windowMoveable.cpp" />
     <ClCompile Include="windowRenderTarget.cpp" />

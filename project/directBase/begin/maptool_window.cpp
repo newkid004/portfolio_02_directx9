@@ -6,6 +6,7 @@
 #include "windowStatic.h"
 #include "windowRenderTarget.h"
 #include "windowMoveable.h"
+#include "windowCtlogMaptool.h"
 
 #include "buttonScrollVertical.h"
 
@@ -108,7 +109,8 @@ windowStatic * maptool_window::createBottomTrans(void)
 	return result;
 }
 
-windowMoveable * maptool_window::create_mvProp(void)
+
+windowCtlogMaptool * maptool_window::create_mvProp(void)
 {
 	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
 	D3DXVECTOR2 textureSize;
@@ -121,7 +123,17 @@ windowMoveable * maptool_window::create_mvProp(void)
 		(WINSIZEX - winInfo.size.x) / 2.0f,
 		(WINSIZEY - winInfo.size.y) / 2.0f);
 
-	auto result = new windowMoveable(winInfo);
+	auto result = new windowCtlogMaptool(winInfo);
+
+	auto testTexture = MN_SRC->getSpriteTexture("resource/texture/bonobono.png");
+	for (int i = 0; i < 23; ++i)
+	{
+		auto b = new maptool_data_catalog::base();
+		b->_standImage = testTexture;
+
+		result->addItem(b);
+	}
+	
 
 	return result;
 }

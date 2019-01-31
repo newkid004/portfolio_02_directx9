@@ -7,9 +7,9 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
-		CHAR	= 1 << 3,
-		FIELD	= 1 << 2,
-		PROP	= 1 << 1,
+		CHAR	= 1 << 2,
+		FIELD	= 1 << 1,
+		PROP	= 1 << 0,
 		BASE	= 0 << 0
 	};
 

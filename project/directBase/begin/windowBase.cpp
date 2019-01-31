@@ -48,7 +48,7 @@ UI_LIST_NODE windowBase::update(void)
 
 		for (auto i : _mButton)
 		{
-			resultNode = i.second->updateActice();
+			resultNode = i.second->updateActive();
 
 			if (resultNode != _managedNode)
 				return resultNode;

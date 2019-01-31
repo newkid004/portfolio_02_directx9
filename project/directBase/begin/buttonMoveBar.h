@@ -11,7 +11,7 @@ protected :
 	POINT _beforePos;
 
 public :
-	virtual UI_LIST_NODE updateActice(void) override;
+	virtual UI_LIST_NODE updateActive(void) override;
 
 public:
 	buttonMoveBar(windowBase* bind);

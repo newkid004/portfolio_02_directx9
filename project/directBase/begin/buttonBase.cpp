@@ -3,36 +3,52 @@
 #include "managerList.h"
 #include "gFunc.h"
 
-UI_LIST_NODE buttonBase::updateActice(void)
+UI_LIST_NODE buttonBase::updateActive(void)
 {
 	UI_LIST_NODE curNode = _bindWindow->getNode();
 
 	if (gFunc::isMouseInRange(getAbsPos(), getAbsSize()))
-	{
-		if (MN_KEY->mouseUp() && _activeSet.up)			curNode = _activeSet.up();
-		if (curNode != _bindWindow->getNode())			return curNode;
+		curNode = updateActiveAnyway();
 
-		if (MN_KEY->mousePress() && _activeSet.press)	curNode = _activeSet.press();
-		if (curNode != _bindWindow->getNode())			return curNode;
-
-		if (MN_KEY->mouseDown() && _activeSet.down)		curNode = _activeSet.down();
-		if (curNode != _bindWindow->getNode())			return curNode;
-	}
 	return curNode;
 }
 
-UI_LIST_NODE buttonBase::updateActiceScroll(buttonBase * own, activeScrollSet & scrollSet)
+UI_LIST_NODE buttonBase::updateActiveAnyway(void)
+{
+	UI_LIST_NODE curNode = _bindWindow->getNode();
+
+	if (MN_KEY->mouseUp() && _activeSet.up)			curNode = _activeSet.up();
+	if (curNode != _bindWindow->getNode())			return curNode;
+
+	if (MN_KEY->mousePress() && _activeSet.press)	curNode = _activeSet.press();
+	if (curNode != _bindWindow->getNode())			return curNode;
+
+	if (MN_KEY->mouseDown() && _activeSet.down)		curNode = _activeSet.down();
+	if (curNode != _bindWindow->getNode())			return curNode;
+
+	return curNode;
+}
+
+UI_LIST_NODE buttonBase::updateActiveScroll(buttonBase * own, activeScrollSet & scrollSet)
 {
 	UI_LIST_NODE curNode = own->_bindWindow->getNode();
 
 	if (gFunc::isMouseInRange(own->getAbsPos(), own->getAbsSize()))
-	{
-		if (MN_KEY->wheelUp() && scrollSet.up)			curNode = scrollSet.up();
-		if (curNode != own->_bindWindow->getNode())		return curNode;
+		curNode = updateActiveScrollAnyway(own, scrollSet);
 
-		if (MN_KEY->wheelDown() && scrollSet.down)		curNode = scrollSet.down();
-		if (curNode != own->_bindWindow->getNode())		return curNode;
-	}
+	return curNode;
+}
+
+UI_LIST_NODE buttonBase::updateActiveScrollAnyway(buttonBase * own, activeScrollSet & scrollSet)
+{
+	UI_LIST_NODE curNode = own->_bindWindow->getNode();
+
+	if (MN_KEY->wheelUp() && scrollSet.up)			curNode = scrollSet.up();
+	if (curNode != own->_bindWindow->getNode())		return curNode;
+
+	if (MN_KEY->wheelDown() && scrollSet.down)		curNode = scrollSet.down();
+	if (curNode != own->_bindWindow->getNode())		return curNode;
+
 	return curNode;
 }
 

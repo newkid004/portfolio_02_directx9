@@ -1,10 +1,14 @@
 #pragma once
 #include "kGlobalDefine.h"
 
+#include "maptool_data_catalog.h"
+
 class windowBase;
 class windowStatic;
 class windowMoveable;
 class windowRenderTarget;
+class windowCtlogMaptool;
+
 class buttonStatic;
 
 class maptool_window
@@ -16,7 +20,7 @@ public :
 		windowStatic* bottomBar = nullptr;
 		windowRenderTarget* minimap = nullptr;
 
-		windowMoveable* mv_prop = nullptr;
+		windowCtlogMaptool* mv_prop = nullptr;
 		windowMoveable* mv_character = nullptr;
 		windowMoveable* mv_event = nullptr;
 		windowMoveable* mv_file = nullptr;
@@ -31,7 +35,7 @@ private :
 	windowRenderTarget* createMinimap(void);
 	windowStatic* createBottomTrans(void);
 
-	windowMoveable* create_mvProp(void);
+	windowCtlogMaptool * create_mvProp(void);
 	windowMoveable* create_mvCharacter(void);
 	windowMoveable* create_mvEvent(void);
 	windowMoveable* create_mvFile(void);

@@ -22,6 +22,7 @@ private :
 
 public :
 	UI_LIST_NODE updateAlways(void) override;
+	UI_LIST_NODE updateActive(void) override;
 
 public :
 	void moveScroll(LONG interval);
@@ -61,7 +62,7 @@ protected :
 
 public :
 	UI_LIST_NODE updateAlways(void) override;
-	UI_LIST_NODE updateActice(void) override;
+	UI_LIST_NODE updateActive(void) override;
 
 public :
 	void putListHeight(int ListHeight, float viewHeight = 1.0f);

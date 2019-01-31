@@ -2,8 +2,8 @@
 #include "kGlobalDefine.h"
 #include "windowMoveable.h"
 
-
 class buttonCatalogItem;
+class buttonScrollVertical;
 
 template<typename T>
 class windowMvCatalog : public windowMoveable
@@ -22,7 +22,7 @@ protected :
 
 protected :
 	buttonCatalogItem* createButtonCatalog(int index);
-	LPDIRECT3DTEXTURE9 putTexture2button(int dataIndex) = 0;
+	virtual LPDIRECT3DTEXTURE9 putTexture2button(int dataIndex) = 0;
 
 public :
 	int getIndex(void) { return _selectIndex; }
@@ -33,7 +33,7 @@ public :
 private :
 	float rowCount(void) { return _vData.size() / 4; }
 
-public:
+protected:
 	windowMvCatalog(const uiInfo & info);
 	~windowMvCatalog();
 };

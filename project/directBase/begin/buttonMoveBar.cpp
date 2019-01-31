@@ -36,18 +36,7 @@ buttonMoveBar::buttonMoveBar(windowBase* bind) :
 	};
 }
 
-UI_LIST_NODE buttonMoveBar::updateActice(void)
+UI_LIST_NODE buttonMoveBar::updateActive(void)
 {
-	UI_LIST_NODE curNode = _bindWindow->getNode();
-
-	if (MN_KEY->mouseUp() && _activeSet.up)			curNode = _activeSet.up();
-	if (curNode != _bindWindow->getNode())			return curNode;
-
-	if (MN_KEY->mousePress() && _activeSet.press)	curNode = _activeSet.press();
-	if (curNode != _bindWindow->getNode())			return curNode;
-
-	if (MN_KEY->mouseDown() && _activeSet.down)		curNode = _activeSet.down();
-	if (curNode != _bindWindow->getNode())			return curNode;
-
-	return curNode;
+	return buttonBase::updateActiveAnyway();
 }

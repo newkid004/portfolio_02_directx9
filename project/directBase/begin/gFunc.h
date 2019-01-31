@@ -11,7 +11,7 @@ public :
 
 	// UI
 	static void drawText(int x, int y, const std::string & text, int DT_align = DT_TOP | DT_LEFT);
-	static void drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha = 1.0f, D3DXVECTOR2 * offset = NULL, RECT * clipSize = NULL);
+	static void drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha = 1.0f, D3DXVECTOR2 * offset = NULL, RECT * clipSize = NULL, bool isClipPull = true);
 
 	// creater
 	static LPDIRECT3DVERTEXBUFFER9	createVertexBuffer(int size, DWORD options, DWORD FVF);
@@ -20,6 +20,7 @@ public :
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, D3DVERTEXELEMENT9* elements);
 	static pick::ray				createPickRay(const POINT & clickPos);
 	static LPDIRECT3DTEXTURE9		createRenderTarget(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));
+	static LPDIRECT3DTEXTURE9		createRenderTargetShadowMap(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));
 	static LPDIRECT3DSURFACE9		createDepthStensil(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));
 
 	// getter

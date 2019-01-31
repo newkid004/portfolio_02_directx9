@@ -72,33 +72,38 @@ void gFunc::drawText(int x, int y, const std::string & text, int DT_align)
 	GET_LABEL()->drawUI();
 }
 
-void gFunc::drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha, D3DXVECTOR2 * offset, RECT * clipSize)
+void gFunc::drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha, D3DXVECTOR2 * offset, RECT * clipSize, bool isClipPull)
 {
 	// 크기 설정
-	// D3DSURFACE_DESC sDesc;
-	// texture->GetLevelDesc(0, &sDesc);
-	D3DXVECTOR2 offsetValue;
-	if (offset) offsetValue = gFunc::Vec2Dev(*offset, scale);
-	else		offsetValue = D3DXVECTOR2(0, 0);
+	D3DXVECTOR2 drawSize = gFunc::Vec2Dev(size, scale);
+	RECT rcTexture = {
+		0, 0,
+		(LONG)drawSize.x,
+		(LONG)drawSize.y };
 
+	// 보간 설정
+	if (offset)
+	{
+		D3DXVECTOR2 offsetValue = gFunc::Vec2Dev(*offset, scale);
+		rcTexture.right += rcTexture.left = offsetValue.x;
+		rcTexture.bottom += rcTexture.top = offsetValue.y;
+	}
+
+	// 클립 설정
 	D3DXVECTOR4 clipValue;
 	if (clipSize)
 	{
-		clipValue = D3DXVECTOR4{ 
-			clipSize->left		/ scale.x,
-			clipSize->top		/ scale.y,
-			clipSize->right		/ scale.x,
-			clipSize->bottom	/ scale.y };
-	}
-	else 
-		clipValue = D3DXVECTOR4(0, 0, 0, 0);
+		clipValue = D3DXVECTOR4(
+			clipSize->left / scale.x,
+			clipSize->top / scale.y,
+			clipSize->right / scale.x,
+			clipSize->bottom / scale.y);
 
-	D3DXVECTOR2 drawSize = D3DXVECTOR2(size.x / scale.x, size.y / scale.y);
-	RECT rcTexture = {
-		(LONG)offsetValue.x + clipValue.x,
-		(LONG)offsetValue.y + clipValue.y,
-		(LONG)drawSize.x + offsetValue.x - clipValue.z,
-		(LONG)drawSize.y + offsetValue.y - clipValue.w };
+		rcTexture.left += clipValue.x;
+		rcTexture.top += clipValue.y;
+		rcTexture.right -= clipValue.z;
+		rcTexture.bottom -= clipValue.w;
+	}
 
 	// 행렬 설정
 	D3DXMATRIXA16 mWorld;
@@ -108,9 +113,10 @@ void gFunc::drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, cons
 		1.0f);
 	GET_SPRITE()->SetTransform(&mWorld);
 
+	// 위치 설정
 	D3DXVECTOR3 position = {
-		pos.x * (1.0f / scale.x) - (clipSize == NULL ? 0 : clipSize->left),
-		pos.y * (1.0f / scale.y) - (clipSize == NULL ? 0 : clipSize->top),
+		pos.x * (1.0f / scale.x) + (isClipPull || clipSize == NULL ? 0 : clipValue.x),
+		pos.y * (1.0f / scale.y) + (isClipPull || clipSize == NULL ? 0 : clipValue.y),
 		0.0f };
 
 	GET_SPRITE()->Draw(
@@ -226,6 +232,28 @@ LPDIRECT3DTEXTURE9 gFunc::createRenderTarget(D3DXVECTOR2 size)
 		1,
 		D3DUSAGE_RENDERTARGET,
 		D3DFMT_A8R8G8B8,
+		D3DPOOL_DEFAULT,
+		&result,
+		NULL);
+
+	return result;
+}
+
+LPDIRECT3DTEXTURE9 gFunc::createRenderTargetShadowMap(D3DXVECTOR2 size)
+{
+	LPDIRECT3DTEXTURE9 result = nullptr;
+
+	if (size == D3DXVECTOR2())
+		size = D3DXVECTOR2(
+			GET_WINDOW_SIZE().cx,
+			GET_WINDOW_SIZE().cy);
+
+	MN_DEV->CreateTexture(
+		size.x,
+		size.y,
+		1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_R32F,
 		D3DPOOL_DEFAULT,
 		&result,
 		NULL);
