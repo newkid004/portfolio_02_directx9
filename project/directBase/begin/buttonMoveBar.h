@@ -2,7 +2,7 @@
 #include "kGlobalDefine.h"
 #include "buttonStatic.h"
 
-constexpr float BTN_MOVE_BAR_SIZE = 30.0f;
+constexpr float BTN_MOVE_BAR_SIZE_Y = 30.0f;
 
 class buttonMoveBar : public buttonStatic
 {

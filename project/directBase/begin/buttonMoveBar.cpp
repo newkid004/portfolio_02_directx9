@@ -7,7 +7,7 @@ buttonMoveBar::buttonMoveBar(windowBase* bind) :
 	buttonStatic(bind)
 {
 	_info.pos = D3DXVECTOR2(0, 0);
-	_info.size = D3DXVECTOR2(_bindWindow->getInfo().size.x, BTN_MOVE_BAR_SIZE);
+	_info.size = D3DXVECTOR2(_bindWindow->getInfo().size.x, BTN_MOVE_BAR_SIZE_Y);
 
 	_activeSet.press = [this](void)->UI_LIST_NODE {
 		if (gFunc::isMouseInRange(getAbsPos(), getAbsSize()))

@@ -54,6 +54,7 @@ protected :
 	buttonScrollVerticalArm* _armTop = nullptr;
 	buttonScrollVerticalArm* _armBot = nullptr;
 
+	float _viewHeight = 1.0f;
 	float _listHeight = 1.0f;
 	float _value = 0.0f;
 	activeScrollSet _activeScrollSet;
@@ -63,13 +64,13 @@ public :
 	UI_LIST_NODE updateActice(void) override;
 
 public :
-	void putListHeight(int input);
+	void putListHeight(int ListHeight, float viewHeight = 1.0f);
 
 public :
 	float & getValue(void) { return _value; }
 
 public:
-	buttonScrollVertical(windowBase* bind, int listHeight = 1.0f);
+	buttonScrollVertical(windowBase* bind, int listHeight = 1.0f, float viewHeight = 1.0f);
 	~buttonScrollVertical();
 };
 

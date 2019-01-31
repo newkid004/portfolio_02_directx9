@@ -160,6 +160,7 @@
     <ClInclude Include="animationController.h" />
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="buttonBase.h" />
+    <ClInclude Include="buttonCatalogItem.h" />
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
@@ -215,6 +216,8 @@
     <ClInclude Include="windowManager.h" />
     <ClInclude Include="windowMessageHandler.h" />
     <ClInclude Include="windowMoveable.h" />
+    <ClInclude Include="windowMvCatalog.h" />
+    <ClInclude Include="windowMvCatalog.hpp" />
     <ClInclude Include="windowRenderTarget.h" />
     <ClInclude Include="windowStatic.h" />
   </ItemGroup>
@@ -223,6 +226,7 @@
     <ClCompile Include="animationController.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="buttonBase.cpp" />
+    <ClCompile Include="buttonCatalogItem.cpp" />
     <ClCompile Include="buttonMoveBar.cpp" />
     <ClCompile Include="buttonScrollVertical.cpp" />
     <ClCompile Include="buttonStatic.cpp" />

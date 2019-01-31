@@ -66,8 +66,8 @@ void buttonScrollVerticalHead::moveScroll(LONG interval)
 
 	// re value
 	float percent = 
-		(_info.pos.y - BTN_MOVE_BAR_SIZE) /
-		(_body->getInfo().scale.y - _info.scale.y - BTN_MOVE_BAR_SIZE);
+		(_info.pos.y - BTN_MOVE_BAR_SIZE_Y) /
+		(_body->getInfo().scale.y - _info.scale.y - BTN_MOVE_BAR_SIZE_Y);
 
 	btnScrollFunc::b2Body(_body)->getValue() = percent;
 }
@@ -81,7 +81,7 @@ buttonScrollVerticalArm::buttonScrollVerticalArm(windowBase * bind) :
 }
 
 // ----- scroll body ----- //
-buttonScrollVertical::buttonScrollVertical(windowBase * bind, int listHeight) :
+buttonScrollVertical::buttonScrollVertical(windowBase * bind, int listHeight, float viewHeight) :
 	buttonBase(bind)
 {
 	D3DXVECTOR2 textureSize;
@@ -90,7 +90,7 @@ buttonScrollVertical::buttonScrollVertical(windowBase * bind, int listHeight) :
 	gFunc::getTextureSize(&textureSize, _info.backImage);
 
 	_info.size = textureSize;
-	_info.pos = D3DXVECTOR2(bind->getInfo().size.x - textureSize.x, BTN_MOVE_BAR_SIZE);
+	_info.pos = D3DXVECTOR2(bind->getInfo().size.x - textureSize.x, BTN_MOVE_BAR_SIZE_Y);
 	_info.scale.y = bind->getInfo().size.y - _info.pos.y;
 
 	// ----- part ----- //
@@ -111,7 +111,7 @@ buttonScrollVertical::buttonScrollVertical(windowBase * bind, int listHeight) :
 		return _bindWindow->getNode();
 	};
 
-	putListHeight(listHeight);
+	putListHeight(listHeight, viewHeight);
 }
 
 buttonScrollVertical::~buttonScrollVertical()
@@ -140,14 +140,15 @@ UI_LIST_NODE buttonScrollVertical::updateActice(void)
 	return _bindWindow->getNode();
 }
 
-void buttonScrollVertical::putListHeight(int input)
+void buttonScrollVertical::putListHeight(int ListHeight, float viewHeight)
 {
-	_listHeight = input;
+	_listHeight = ListHeight;
+	_viewHeight = viewHeight;
 
-	_head->getInfo().scale.y = _info.scale.y / _listHeight;
-	_head->getInfo().pos.y = BTN_MOVE_BAR_SIZE + (_info.scale.y - _head->getInfo().scale.y) * _value;
+	_head->getInfo().scale.y = _info.scale.y / (_viewHeight / _listHeight);
+	_head->getInfo().pos.y = BTN_MOVE_BAR_SIZE_Y + (_info.scale.y - _head->getInfo().scale.y) * _value;
 
-	_armTop->getInfo().scale.y = _head->getInfo().pos.y - BTN_MOVE_BAR_SIZE;
+	_armTop->getInfo().scale.y = _head->getInfo().pos.y - BTN_MOVE_BAR_SIZE_Y;
 
 	_armBot->getInfo().pos.y = _head->getInfo().pos.y + _head->getInfo().scale.y;
 	_armBot->getInfo().scale.y = _info.scale.y - _armBot->getInfo().pos.y;

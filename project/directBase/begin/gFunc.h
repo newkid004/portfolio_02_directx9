@@ -11,7 +11,7 @@ public :
 
 	// UI
 	static void drawText(int x, int y, const std::string & text, int DT_align = DT_TOP | DT_LEFT);
-	static void drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha = 1.0f);
+	static void drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha = 1.0f, D3DXVECTOR2 * offset = NULL, RECT * clipSize = NULL);
 
 	// creater
 	static LPDIRECT3DVERTEXBUFFER9	createVertexBuffer(int size, DWORD options, DWORD FVF);
@@ -26,8 +26,8 @@ public :
 	static void						getTextureSize(D3DXVECTOR2* out_size, LPDIRECT3DTEXTURE9 texture);
 	
 	// 변환
-	static D3DXVECTOR2				Vec2Mlt(D3DXVECTOR2 & v1, D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x * v2.x, v1.y * v2.y); }
-	static D3DXVECTOR2				Vec2Dev(D3DXVECTOR2 & v1, D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x / v2.x, v1.y / v2.y); }
+	static D3DXVECTOR2				Vec2Mlt(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x * v2.x, v1.y * v2.y); }
+	static D3DXVECTOR2				Vec2Dev(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x / v2.x, v1.y / v2.y); }
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
 
 	// 난수

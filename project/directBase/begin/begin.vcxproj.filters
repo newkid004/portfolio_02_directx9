@@ -271,6 +271,15 @@
     <Filter Include="main\classes\windowUI\button\static\scrollVertical">
       <UniqueIdentifier>{6886d8d9-8670-4412-b0fd-2a085574834a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\windowUI\window\static\moveable\_base">
+      <UniqueIdentifier>{9a2f215e-5325-4c6b-bcba-c292303a584a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\moveable\list">
+      <UniqueIdentifier>{9bb931bc-0e47-4cf3-bf08-8ba8142d6380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\button\static\catalogItem">
+      <UniqueIdentifier>{5718c5ff-644b-4f73-b854-98e7380beea5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -447,14 +456,23 @@
     <ClInclude Include="windowStatic.h">
       <Filter>main\classes\windowUI\window\static\_base</Filter>
     </ClInclude>
-    <ClInclude Include="windowMoveable.h">
-      <Filter>main\classes\windowUI\window\static\moveable</Filter>
-    </ClInclude>
     <ClInclude Include="buttonMoveBar.h">
       <Filter>main\classes\windowUI\button\static\moveBar</Filter>
     </ClInclude>
     <ClInclude Include="buttonScrollVertical.h">
       <Filter>main\classes\windowUI\button\static\scrollVertical</Filter>
+    </ClInclude>
+    <ClInclude Include="windowMoveable.h">
+      <Filter>main\classes\windowUI\window\static\moveable\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="windowMvCatalog.h">
+      <Filter>main\classes\windowUI\window\static\moveable\list</Filter>
+    </ClInclude>
+    <ClInclude Include="buttonCatalogItem.h">
+      <Filter>main\classes\windowUI\button\static\catalogItem</Filter>
+    </ClInclude>
+    <ClInclude Include="windowMvCatalog.hpp">
+      <Filter>main\classes\windowUI\window\static\moveable\list</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -611,14 +629,17 @@
     <ClCompile Include="windowStatic.cpp">
       <Filter>main\classes\windowUI\window\static\_base</Filter>
     </ClCompile>
-    <ClCompile Include="windowMoveable.cpp">
-      <Filter>main\classes\windowUI\window\static\moveable</Filter>
-    </ClCompile>
     <ClCompile Include="buttonMoveBar.cpp">
       <Filter>main\classes\windowUI\button\static\moveBar</Filter>
     </ClCompile>
     <ClCompile Include="buttonScrollVertical.cpp">
       <Filter>main\classes\windowUI\button\static\scrollVertical</Filter>
+    </ClCompile>
+    <ClCompile Include="windowMoveable.cpp">
+      <Filter>main\classes\windowUI\window\static\moveable\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="buttonCatalogItem.cpp">
+      <Filter>main\classes\windowUI\button\static\catalogItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

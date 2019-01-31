@@ -15,11 +15,15 @@ maptool_window::maptool_window()
 	MN_UI->add("maptool_bottomTrans",	_windowSet.bottomTrans	= createBottomTrans())->show();
 	MN_UI->add("maptool_minimap",		_windowSet.minimap		= createMinimap())->show();
 
-	MN_UI->add("maptool_mnProp",		_windowSet.mv_prop		= create_mvProp());
-	// MN_UI->add("maptool_mnCharacter",	_windowSet.mv_character	= create_mvCharacter());
-	// MN_UI->add("maptool_mnEvent",		_windowSet.mv_event		= create_mvEvent());
-	// MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile());
-	// MN_UI->add("maptool_mnOption",		_windowSet.mv_option	= create_mvOption());
+	vector<windowBase*> vWindow;
+	vWindow.push_back(MN_UI->add("maptool_mnProp",		_windowSet.mv_prop		= create_mvProp()));
+	//	vWindow.push_back(MN_UI->add("maptool_mnCharacter",	_windowSet.mv_character	= create_mvCharacter()));
+	//	vWindow.push_back(MN_UI->add("maptool_mnEvent",		_windowSet.mv_event		= create_mvEvent()));
+	//	vWindow.push_back(MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile()));
+	//	vWindow.push_back(MN_UI->add("maptool_mnOption",		_windowSet.mv_option	= create_mvOption()));
+
+	for (auto i : vWindow)
+		i->getInfo().pos += D3DXVECTOR2(gFunc::rndFloat(-100, 100), gFunc::rndFloat(-100, 100));
 }
 
 maptool_window::~maptool_window()
@@ -95,6 +99,8 @@ windowStatic * maptool_window::createBottomTrans(void)
 		_windowSet.bottomTrans->getInfo().pos.y = _windowSet.bottomBar->isShow() ?
 			WINSIZEY - _windowSet.bottomBar->getInfo().size.y - _windowSet.bottomTrans->getInfo().size.y :
 			WINSIZEY - _windowSet.bottomTrans->getInfo().size.y;
+
+		_windowSet.bottomTrans->show();
 
 		return resultNode;
 	};
