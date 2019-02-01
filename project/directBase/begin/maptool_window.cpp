@@ -18,8 +18,8 @@ maptool_window::maptool_window()
 
 	vector<windowBase*> vWindow;
 	vWindow.push_back(MN_UI->add("maptool_mnProp",		_windowSet.mv_prop		= create_mvProp()));
-	//	vWindow.push_back(MN_UI->add("maptool_mnCharacter",	_windowSet.mv_character	= create_mvCharacter()));
-	//	vWindow.push_back(MN_UI->add("maptool_mnEvent",		_windowSet.mv_event		= create_mvEvent()));
+	vWindow.push_back(MN_UI->add("maptool_mnCharacter",	_windowSet.mv_character	= create_mvCharacter()));
+	vWindow.push_back(MN_UI->add("maptool_mnEvent",		_windowSet.mv_event		= create_mvEvent()));
 	//	vWindow.push_back(MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile()));
 	//	vWindow.push_back(MN_UI->add("maptool_mnOption",		_windowSet.mv_option	= create_mvOption()));
 
@@ -128,24 +128,67 @@ windowCtlogMaptool * maptool_window::create_mvProp(void)
 	auto testTexture = MN_SRC->getSpriteTexture("resource/texture/bonobono.png");
 	for (int i = 0; i < 23; ++i)
 	{
-		auto b = new maptool_data_catalog::base();
+		auto b = new maptool_data_catalog::OBJ::PROP();
 		b->_standImage = testTexture;
 
 		result->addItem(b);
 	}
-	
 
 	return result;
 }
 
-windowMoveable * maptool_window::create_mvCharacter(void)
+windowCtlogMaptool * maptool_window::create_mvCharacter(void)
 {
-	return nullptr;
+	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
+	D3DXVECTOR2 textureSize;
+	gFunc::getTextureSize(&textureSize, transTexture);
+
+	uiInfo winInfo;
+	winInfo.backImage = transTexture;
+	winInfo.size = textureSize;
+	winInfo.pos = D3DXVECTOR2(
+		(WINSIZEX - winInfo.size.x) / 2.0f,
+		(WINSIZEY - winInfo.size.y) / 2.0f);
+
+	auto result = new windowCtlogMaptool(winInfo);
+
+	auto testTexture = MN_SRC->getSpriteTexture("resource/texture/textureGradiant.png");
+	for (int i = 0; i < 13; ++i)
+	{
+		auto b = new maptool_data_catalog::OBJ::CHAR();
+		b->_standImage = testTexture;
+
+		result->addItem(b);
+	}
+
+	return result;
 }
 
-windowMoveable * maptool_window::create_mvEvent(void)
+windowCtlogMaptool * maptool_window::create_mvEvent(void)
 {
-	return nullptr;
+	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
+	D3DXVECTOR2 textureSize;
+	gFunc::getTextureSize(&textureSize, transTexture);
+
+	uiInfo winInfo;
+	winInfo.backImage = transTexture;
+	winInfo.size = textureSize;
+	winInfo.pos = D3DXVECTOR2(
+		(WINSIZEX - winInfo.size.x) / 2.0f,
+		(WINSIZEY - winInfo.size.y) / 2.0f);
+
+	auto result = new windowCtlogMaptool(winInfo);
+
+	auto testTexture = MN_SRC->getSpriteTexture("resource/texture/bonobono.png");
+	for (int i = 0; i < 3; ++i)
+	{
+		auto b = new maptool_data_catalog::OBJ::EVENT();
+		b->_standImage = testTexture;
+
+		result->addItem(b);
+	}
+
+	return result;
 }
 
 windowMoveable * maptool_window::create_mvFile(void)

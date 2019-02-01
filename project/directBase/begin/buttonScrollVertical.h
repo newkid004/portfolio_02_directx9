@@ -1,6 +1,7 @@
 #pragma once
 #include "kGlobalDefine.h"
 #include "buttonStatic.h"
+#include "IbuttonScroll.h"
 
 constexpr float BTN_SCROLL_SIZE_X = 18.0f;
 
@@ -63,9 +64,11 @@ protected :
 public :
 	UI_LIST_NODE updateAlways(void) override;
 	UI_LIST_NODE updateActive(void) override;
+	void drawUI(void) override;
 
 public :
 	void putListHeight(int ListHeight, float viewHeight = 1.0f);
+	void moveScroll(LONG interval) { _head->moveScroll(interval); }
 
 public :
 	float & getValue(void) { return _value; }

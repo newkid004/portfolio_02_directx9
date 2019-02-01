@@ -178,6 +178,7 @@
     <ClInclude Include="gFunc.h" />
     <ClInclude Include="gJson.h" />
     <ClInclude Include="gMng.h" />
+    <ClInclude Include="IbuttonScroll.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="iRenderable.h" />
     <ClInclude Include="iUpdateble.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="field.cpp" />
     <ClCompile Include="gFunc.cpp" />
     <ClCompile Include="gJson.cpp" />
+    <ClCompile Include="IbuttonScroll.cpp" />
     <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="iWindowApplication.cpp" />
     <ClCompile Include="labelBase.cpp" />

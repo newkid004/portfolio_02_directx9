@@ -152,3 +152,8 @@ D3DXVECTOR2 windowBase::getAbsSize(void)
 {
 	return gFunc::Vec2Mlt(_info.size, _info.scale);
 }
+
+D3DXVECTOR2 windowBase::getSizePos(void)
+{
+	return _info.pos + _info.size;
+}

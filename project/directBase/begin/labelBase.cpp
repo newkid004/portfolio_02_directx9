@@ -15,7 +15,7 @@ labelBase::~labelBase()
 
 void labelBase::drawDoUI(void)
 {
-	RECT rcText = { _position.x , _position.y, 0, 0 };
+	RECT rcText = { (LONG)_position.x , (LONG)_position.y, 0, 0 };
 
 	_font->DrawTextA(
 		NULL,

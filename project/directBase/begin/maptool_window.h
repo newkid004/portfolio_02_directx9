@@ -21,8 +21,8 @@ public :
 		windowRenderTarget* minimap = nullptr;
 
 		windowCtlogMaptool* mv_prop = nullptr;
-		windowMoveable* mv_character = nullptr;
-		windowMoveable* mv_event = nullptr;
+		windowCtlogMaptool* mv_character = nullptr;
+		windowCtlogMaptool* mv_event = nullptr;
 		windowMoveable* mv_file = nullptr;
 		windowMoveable* mv_option = nullptr;
 	};
@@ -36,8 +36,8 @@ private :
 	windowStatic* createBottomTrans(void);
 
 	windowCtlogMaptool * create_mvProp(void);
-	windowMoveable* create_mvCharacter(void);
-	windowMoveable* create_mvEvent(void);
+	windowCtlogMaptool * create_mvCharacter(void);
+	windowCtlogMaptool* create_mvEvent(void);
 	windowMoveable* create_mvFile(void);
 	windowMoveable* create_mvOption(void);
 

@@ -10,6 +10,14 @@
 #pragma comment(lib, "dxguid.lib")	// direct gui
 #pragma comment(lib, "winmm.lib")	// window multi-media
 
+// 경고 무시
+#pragma warning(disable : 4018)		// signed / unsigned 비교 경고
+#pragma warning(disable : 4244)		// 형변환 경고
+#pragma warning(disable : 4305)		// double -> float 경고
+#pragma warning(disable : 4838)		// 축소변환 경고
+
+#pragma warning(disable : 4316)		// 힙 메모리 16불일치 경고
+
 // 공용 헤더파일
 #include <fstream>
 #include <iostream>
