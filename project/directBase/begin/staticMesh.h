@@ -21,6 +21,8 @@ private :
 	mParam _param;
 
 protected :
+	virtual void putCull(void) override;
+
 	virtual void drawDo(void) override;
 
 public :

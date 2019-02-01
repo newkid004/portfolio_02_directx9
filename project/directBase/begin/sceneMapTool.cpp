@@ -10,6 +10,8 @@
 
 #include "windowCtlogMaptool.h"
 
+#include "staticMesh.h"
+
 sceneMapTool::~sceneMapTool()
 {
 	SAFE_DELETE(_window);
@@ -21,6 +23,8 @@ void sceneMapTool::init(void)
 
 	_window = new maptool_window();
 
+	_staticMesh = createStaticMesh();
+
 	// _grid->setVisible(false);
 	// ((cameraControlable*)_camera)->setVisible(false);
 }
@@ -31,12 +35,15 @@ void sceneMapTool::update(void)
 	MN_UI->update();
 
 	sceneBase::update();
+
+	_staticMesh->update();
 }
 
 void sceneMapTool::draw(void)
 {
 	sceneBase::draw();
 
+	_staticMesh->draw();
 }
 
 void sceneMapTool::drawUI(void)
@@ -54,5 +61,15 @@ void sceneMapTool::updateControl(void)
 		i->_standImage = MN_SRC->getSpriteTexture("resource/texture/practice_05.png");
 		_window->getSet().mv_prop->addItem(i);
 	}
+}
+
+staticMesh * sceneMapTool::createStaticMesh(void)
+{
+	staticMesh::mParam param = {
+		"resource/mesh/Elementalist/Elementalist.x",
+		"resource/effect/example_15.fx"
+	};
+
+	return new staticMesh(param);
 }
 

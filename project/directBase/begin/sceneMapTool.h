@@ -5,10 +5,14 @@
 class maptool_data;
 class maptool_window;
 
+class staticMesh;
+
 class sceneMapTool : public sceneBase
 {
 private :
 	maptool_window* _window = nullptr;
+
+	staticMesh* _staticMesh;
 
 public:
 	virtual void init(void) override;
@@ -16,8 +20,11 @@ public:
 	virtual void draw(void) override;
 	virtual void drawUI(void) override;
 
-public :
+private :
 	void updateControl(void);
+	
+private :
+	staticMesh* createStaticMesh(void);
 
 public:
 	sceneMapTool() {};

@@ -9,6 +9,7 @@ class debugDraw;
 class renderObject : public baseObject, public iRenderable
 {
 protected:
+	bool _isCull = false;
 	bool _isVisible = true;
 	bool _isDebugEnable = false;
 
@@ -20,9 +21,12 @@ protected:
 	debugDraw* _debugDraw = nullptr;
 
 public :	// iterface
+	virtual void update(void) override;
 	virtual void draw(void) final override;
 
 protected:
+	virtual void putCull(void);
+
 	virtual void drawPre(void) {};
 	virtual void drawDo(void) {};
 	virtual void drawPost(void) {};

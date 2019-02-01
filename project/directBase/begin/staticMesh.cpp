@@ -17,11 +17,21 @@ staticMesh::staticMesh(mParam & param) :
 {
 	_effect = MN_SRC->getEffect(param.effectFilePath);
 	_info = MN_SRC->getStaticMesh(param.meshFilePath);
+
+	setBoundingBox(gFunc::createBoundingBox(_info->mesh));
+	setBoundingSphere(gFunc::createBoundingSphere(_info->mesh));
 }
 
 
 staticMesh::~staticMesh()
 {
+}
+
+void staticMesh::putCull(void)
+{
+	boundingSphere bound;
+	this->getBoundingSphereFinal(&bound);
+	_isCull |= GET_CAMERA()->isCullFrustum(bound);
 }
 
 void staticMesh::drawDo(void)

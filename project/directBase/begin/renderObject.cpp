@@ -6,6 +6,8 @@
 #include "debugGizmo.h"
 #include "debugDraw.h"
 
+#include "sceneBase.h"
+
 renderObject::renderObject() :
 	_isVisible(true)
 {
@@ -15,15 +17,24 @@ renderObject::~renderObject()
 {
 }
 
+void renderObject::update(void)
+{
+	baseObject::update();
+
+	_isCull = false;
+	putCull();
+}
+
 void renderObject::draw(void)
 {
 	if (_isVisible)
 	{
-		drawPre();
-
-		drawDo();
-
-		drawPost();
+		if (!_isCull)
+		{
+			drawPre();
+			drawDo();
+			drawPost();
+		}
 
 		for (auto child : _vChildren)
 		{
@@ -33,6 +44,11 @@ void renderObject::draw(void)
 				rObject->draw();
 		}
 	}
+}
+
+void renderObject::putCull(void)
+{
+	_isCull |= GET_CAMERA()->isCullFrustum(_position);
 }
 
 void renderObject::getBoundingBoxFinal(boundingBox * out)
