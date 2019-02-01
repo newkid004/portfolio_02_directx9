@@ -4,9 +4,9 @@
 
 #include "maptool_data_catalog.h"
 
-class windowCtlogMaptool : public windowMvCatalog<maptool_data_catalog::base*>
+class windowCtlogMaptool : public windowMvCatalog<maptool_data_catalog::OBJ::BASE*>
 {
-public :
+protected :
 	LPDIRECT3DTEXTURE9 putTexture2button(int dataIndex) override;
 
 public:

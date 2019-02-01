@@ -7,9 +7,10 @@
 
 typedef windowBase::UI_LIST_NODE UI_LIST_NODE;
 
-buttonCatalogItem::buttonCatalogItem(windowBase * bind, int index, float * bindOffset) :
+buttonCatalogItem::buttonCatalogItem(windowBase * bind, int index, int* bindIndex, float * bindOffset) :
 	buttonBase(bind),
 	_index(index),
+	_bindIndex(bindIndex),
 	_bindOffset(bindOffset)
 {
 	_info.pos = D3DXVECTOR2(
@@ -19,6 +20,13 @@ buttonCatalogItem::buttonCatalogItem(windowBase * bind, int index, float * bindO
 	_info.size = D3DXVECTOR2(
 		(bind->getInfo().size.x - BTN_SCROLL_SIZE_X) / 4.0f,
 		(bind->getInfo().size.y - BTN_MOVE_BAR_SIZE_Y) / 4.0f);
+
+	_activeSet.press = [this](void)->UI_LIST_NODE {
+		if (_info.backImage)
+			*_bindIndex = _index + (int)(*_bindOffset / getAbsSize().y) * 4;
+
+		return _bindWindow->getNode();
+	};
 }
 
 UI_LIST_NODE buttonCatalogItem::updateAlways(void)

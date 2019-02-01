@@ -6,6 +6,7 @@ class buttonCatalogItem : public buttonBase
 {
 private:
 	int _index;
+	int * _bindIndex = nullptr;
 	float* _bindOffset = nullptr;
 
 protected :
@@ -15,7 +16,7 @@ public :
 	virtual void drawUI(void) override;
 
 public:
-	buttonCatalogItem(windowBase* bind, int index, float* bindOffset);
+	buttonCatalogItem(windowBase* bind, int index, int* bindIndex, float* bindOffset);
 	~buttonCatalogItem() {};
 };
 

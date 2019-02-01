@@ -22,7 +22,7 @@ buttonScrollVerticalHead::buttonScrollVerticalHead(windowBase * bind) :
 	_activeSet.down = [this](void)->UI_LIST_NODE {
 		if (_isClicked)
 		{
-			LONG moveY = _beforePosY - MN_KEY->getMousePos().y;
+			LONG moveY = MN_KEY->getMousePos().y - _beforePosY;
 
 			moveScroll(moveY);
 
@@ -44,10 +44,10 @@ buttonScrollVerticalHead::buttonScrollVerticalHead(windowBase * bind) :
 
 UI_LIST_NODE buttonScrollVerticalHead::updateAlways(void)
 {
-	if (gFunc::isMouseInRange(getAbsPos(), getAbsSize()))
-		_info.alpha = min(1.0f, _info.alpha + MN_TIME->getDeltaTime() / 2.0f);
+	if (_isClicked || gFunc::isMouseInRange(getAbsPos(), getAbsSize()))
+		_info.alpha = min(1.0f, _info.alpha + MN_TIME->getDeltaTime() * 2.0f);
 	else
-		_info.alpha = max(0.5f, _info.alpha - MN_TIME->getDeltaTime() / 2.0f);
+		_info.alpha = max(0.5f, _info.alpha - MN_TIME->getDeltaTime() * 2.0f);
 
 	return _bindWindow->getNode();
 }
@@ -67,18 +67,18 @@ void buttonScrollVerticalHead::moveScroll(LONG interval)
 	// re position
 	if (interval != 0)
 	{
-		if (interval < 0 && (_info.pos.y + BTN_MOVE_BAR_SIZE_Y) < 0.0f)
+		if (interval < 0 && (_info.pos.y - BTN_MOVE_BAR_SIZE_Y) < 0.0f)
 		{
 			moveScroll(interval + 1);
 			return;
 		}
-		// else if (0 < interval && _bindWindow->getInfo().size.y <= _info.pos.y - BTN_MOVE_BAR_SIZE_Y + _info.size.y)
-		// {
-		// 	moveScroll(interval - 1);
-		// 	return;
-		// }
+		else if (0 < interval && 1.0f <= scrollValue)
+		{
+			moveScroll(interval - 1);
+			return;
+		}
 
-		_armTop->getInfo().scale.y += interval;
+		_armTop->getInfo().scale.y = max(BTN_MOVE_BAR_SIZE_Y, _armTop->getInfo().scale.y + interval);
 		_armBot->getInfo().pos.y += interval;
 		_armBot->getInfo().scale.y -= interval;
 		_info.pos.y += interval;
@@ -88,7 +88,7 @@ void buttonScrollVerticalHead::moveScroll(LONG interval)
 	float maxLength = _body->getInfo().scale.y - _info.scale.y;
 
 	if (maxLength != 0.0f)
-		scrollValue = (_info.pos.y + BTN_MOVE_BAR_SIZE_Y) / maxLength;
+		scrollValue = (_info.pos.y - BTN_MOVE_BAR_SIZE_Y) / maxLength;
 }
 
 // ----- scroll arm ----- //
@@ -119,19 +119,6 @@ buttonScrollVertical::buttonScrollVertical(windowBase * bind, int listHeight, fl
 	_head->_armTop = _armTop = new buttonScrollVerticalArm(bind);
 	_head->_armBot = _armBot = new buttonScrollVerticalArm(bind);
 
-	// event
-	_activeScrollSet.up = _armTop->getActiveSet().press = [this](void)->UI_LIST_NODE {
-		_head->moveScroll(10);
-
-		return _bindWindow->getNode();
-	};
-
-	_activeScrollSet.down = _armBot->getActiveSet().press = [this](void)->UI_LIST_NODE {
-		_head->moveScroll(-10);
-
-		return _bindWindow->getNode();
-	};
-
 	putListHeight(listHeight, viewHeight);
 }
 
@@ -153,9 +140,16 @@ UI_LIST_NODE buttonScrollVertical::updateActive(void)
 	_armTop->updateActive();
 	_armBot->updateActive();
 
-	buttonBase::updateActiveScroll(this, _activeScrollSet);
-
 	return _bindWindow->getNode();
+}
+
+void buttonScrollVertical::drawUI(void)
+{
+	buttonBase::drawUI();
+
+	_armTop->drawUI();
+	_armBot->drawUI();
+	_head->drawUI();
 }
 
 void buttonScrollVertical::putListHeight(int ListHeight, float viewHeight)
@@ -163,12 +157,12 @@ void buttonScrollVertical::putListHeight(int ListHeight, float viewHeight)
 	_listHeight = ListHeight;
 	_viewHeight = viewHeight;
 
+	_armTop->getInfo().scale.y = _head->getInfo().pos.y - BTN_MOVE_BAR_SIZE_Y;
+
 	_head->getInfo().scale.y = _info.scale.y * (_viewHeight / _listHeight);
 	_head->getInfo().pos.y = _info.scale.y - _head->getInfo().scale.y != 0 ?
-		((_head->getInfo().pos.y - BTN_MOVE_BAR_SIZE_Y) / (_info.scale.y - _head->getInfo().scale.y)) * _value :
-		0.0f;
-
-	_armTop->getInfo().scale.y = _head->getInfo().pos.y - BTN_MOVE_BAR_SIZE_Y;
+		BTN_MOVE_BAR_SIZE_Y + ((_head->getInfo().pos.y - BTN_MOVE_BAR_SIZE_Y) / (_info.scale.y - _head->getInfo().scale.y)) * _value :
+		BTN_MOVE_BAR_SIZE_Y;
 
 	_armBot->getInfo().pos.y = _head->getInfo().pos.y + _head->getInfo().scale.y;
 	_armBot->getInfo().scale.y = _bindWindow->getInfo().size.y - _armBot->getInfo().pos.y;

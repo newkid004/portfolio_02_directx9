@@ -26,12 +26,12 @@ protected :
 
 public :
 	UI_LIST_NODE update(void);
-	void drawUI(void);
+	virtual void drawUI(void);
 
 protected :
 	virtual UI_LIST_NODE updateAlways(void);
 	virtual UI_LIST_NODE updateWindow(void) = 0;
-	UI_LIST_NODE updateFocus(void);
+	virtual UI_LIST_NODE updateFocus(void);
 
 public:	// ----- window ----- //
 	virtual UI_LIST_NODE show(void);
@@ -48,9 +48,10 @@ public :	// ----- get / set ----- //
 	uiInfo & getInfo(void) { return _info; }
 	UI_LIST_NODE & getNode(void) { return _managedNode; }
 	D3DXVECTOR2 getAbsSize(void);
+	D3DXVECTOR2 getSizePos(void);
 
 public:
 	windowBase(const uiInfo & info);
-	~windowBase();
+	virtual ~windowBase();
 };
 

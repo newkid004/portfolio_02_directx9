@@ -5,8 +5,7 @@
 
 #include "buttonMoveBar.h"
 
-windowMoveable::windowMoveable(const uiInfo & info) : 
-	windowStatic(info)
+windowMoveable::windowMoveable(const uiInfo & info) : windowStatic(info)
 {
 	addButton("moveBar", new buttonMoveBar(this));
 }

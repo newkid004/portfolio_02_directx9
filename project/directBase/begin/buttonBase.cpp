@@ -29,29 +29,6 @@ UI_LIST_NODE buttonBase::updateActiveAnyway(void)
 	return curNode;
 }
 
-UI_LIST_NODE buttonBase::updateActiveScroll(buttonBase * own, activeScrollSet & scrollSet)
-{
-	UI_LIST_NODE curNode = own->_bindWindow->getNode();
-
-	if (gFunc::isMouseInRange(own->getAbsPos(), own->getAbsSize()))
-		curNode = updateActiveScrollAnyway(own, scrollSet);
-
-	return curNode;
-}
-
-UI_LIST_NODE buttonBase::updateActiveScrollAnyway(buttonBase * own, activeScrollSet & scrollSet)
-{
-	UI_LIST_NODE curNode = own->_bindWindow->getNode();
-
-	if (MN_KEY->wheelUp() && scrollSet.up)			curNode = scrollSet.up();
-	if (curNode != own->_bindWindow->getNode())		return curNode;
-
-	if (MN_KEY->wheelDown() && scrollSet.down)		curNode = scrollSet.down();
-	if (curNode != own->_bindWindow->getNode())		return curNode;
-
-	return curNode;
-}
-
 void buttonBase::drawUI(void)
 {
 	if (_info.backImage)

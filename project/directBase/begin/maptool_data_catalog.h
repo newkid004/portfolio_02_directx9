@@ -14,25 +14,39 @@ public :
 	};
 
 // ----- base ----- //
-	struct base
+public :
+	class OBJ
 	{
-		int _baseType = baseType::BASE;
+	public :
+		struct BASE
+		{
+			int _baseType = baseType::BASE;
 
-		LPDIRECT3DTEXTURE9 _standImage = nullptr;
+			LPDIRECT3DTEXTURE9 _standImage = nullptr;
+		};
+
+		struct PROP : public BASE
+		{
+
+			PROP() { _baseType |= baseType::PROP; }
+		};
+
+		struct CHAR : public PROP
+		{
+			CHAR() { _baseType |= baseType::CHAR; }
+		};
+
+		struct EVENT : public BASE
+		{
+			EVENT() { _baseType |= baseType::EVENT; }
+		};
+
+		OBJ() {};
+		~OBJ() {};
 	};
 
-	struct prop : public base
-	{
-		prop() { _baseType |= baseType::PROP; }
-	};
-
-	struct character : public prop
-	{
-		character() { _baseType |= baseType::CHAR; }
-	};
-
-private:
-	maptool_data_catalog() {};
 	~maptool_data_catalog() {};
+private :
+	maptool_data_catalog() {};
 };
 
