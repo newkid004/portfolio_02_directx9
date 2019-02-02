@@ -8,6 +8,8 @@
 
 #include "sceneBase.h"
 
+D3DXPLANE terrain::_defPlane = D3DXPLANE(0, 1, 0, 0);
+
 terrain::terrain(const params & param) :
 	_param(param)
 {

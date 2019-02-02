@@ -238,9 +238,6 @@
     <Filter Include="main\classes\scene\01_mapTool\classes\data">
       <UniqueIdentifier>{6d509b8a-554c-4156-b909-5cbc50ae9eb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\scene\01_mapTool\window">
-      <UniqueIdentifier>{6886afa7-5c88-429b-b31a-f6e0003b4c84}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\classes\scene\01_mapTool\cursur">
       <UniqueIdentifier>{c7832db3-f302-4c78-b3e9-6f0b873c43cf}</UniqueIdentifier>
     </Filter>
@@ -321,6 +318,15 @@
     </Filter>
     <Filter Include="main\classes\singleton">
       <UniqueIdentifier>{34078ffe-a9b6-4aea-a32a-d4c291e12047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\collection">
+      <UniqueIdentifier>{41b9784b-cc3c-461e-b88b-47f3a7aa18dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\collection\window">
+      <UniqueIdentifier>{6886afa7-5c88-429b-b31a-f6e0003b4c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\collection\field">
+      <UniqueIdentifier>{638ff899-7835-40f1-9d1b-44c33a4f797d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -481,7 +487,7 @@
       <Filter>classes\global\function\gJson</Filter>
     </ClInclude>
     <ClInclude Include="maptool_window.h">
-      <Filter>main\classes\scene\01_mapTool\window</Filter>
+      <Filter>main\classes\scene\01_mapTool\collection\window</Filter>
     </ClInclude>
     <ClInclude Include="maptool_cursur.h">
       <Filter>main\classes\scene\01_mapTool\cursur\_base</Filter>
@@ -546,6 +552,7 @@
     <ClInclude Include="singletonBase.h">
       <Filter>main\classes\singleton</Filter>
     </ClInclude>
+    <ClInclude Include="maptool_field.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -684,7 +691,7 @@
       <Filter>classes\global\function\gJson</Filter>
     </ClCompile>
     <ClCompile Include="maptool_window.cpp">
-      <Filter>main\classes\scene\01_mapTool\window</Filter>
+      <Filter>main\classes\scene\01_mapTool\collection\window</Filter>
     </ClCompile>
     <ClCompile Include="maptool_cursur.cpp">
       <Filter>main\classes\scene\01_mapTool\cursur\_base</Filter>
@@ -734,6 +741,7 @@
     <ClCompile Include="frustum.cpp">
       <Filter>main\classes\frustum\_base</Filter>
     </ClCompile>
+    <ClCompile Include="maptool_field.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

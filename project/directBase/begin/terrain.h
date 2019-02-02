@@ -37,6 +37,8 @@ public :
 	};
 
 private :
+	static D3DXPLANE _defPlane;
+
 	SIZE _sizeMap;
 	SIZE _sizeTile;
 	SIZE _sizeTotal;
@@ -67,9 +69,9 @@ public :
 	LPD3DXMESH getMesh(void) { return _mesh; }
 
 	bool getIntersectPoint(const pick::ray & ray, D3DXVECTOR3 & out_position);
+	static const D3DXPLANE & getDefPlane(void) { return _defPlane; }
 
 public:
 	terrain(const params & param);
 	virtual ~terrain();
 };
-

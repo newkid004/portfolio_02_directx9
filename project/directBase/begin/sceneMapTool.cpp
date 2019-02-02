@@ -7,14 +7,18 @@
 
 #include "maptool_data_io.h"
 #include "maptool_window.h"
+#include "maptool_field.h"
 
 #include "windowCtlogMaptool.h"
 
+#include "terrain.h"
 #include "staticMesh.h"
+#include "pickRay.h"
 
 sceneMapTool::~sceneMapTool()
 {
 	SAFE_DELETE(_window);
+	SAFE_DELETE(_field);
 }
 
 void sceneMapTool::init(void)
@@ -22,6 +26,7 @@ void sceneMapTool::init(void)
 	sceneBase::init();
 
 	_window = new maptool_window();
+	_field = new maptool_field();
 
 	_staticMesh = createStaticMesh();
 
@@ -60,6 +65,18 @@ void sceneMapTool::updateControl(void)
 		auto i = new maptool_data_catalog::OBJ::BASE();
 		i->_standImage = MN_SRC->getSpriteTexture("resource/texture/practice_05.png");
 		_window->getSet().mv_prop->addItem(i);
+	}
+
+	if (MN_KEY->mouseDown())
+	{
+		pick::ray pickRay;
+		pick::createPickRay(&pickRay);
+
+		D3DXVECTOR3 pickPos;
+		if (pick::chkPick(&pickPos, &pickRay, &terrain::getDefPlane()))
+		{
+			_staticMesh->setPosition(pickPos);
+		}
 	}
 }
 

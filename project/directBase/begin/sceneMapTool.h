@@ -4,6 +4,7 @@
 
 class maptool_data;
 class maptool_window;
+class maptool_field;
 
 class staticMesh;
 
@@ -11,6 +12,7 @@ class sceneMapTool : public sceneBase
 {
 private :
 	maptool_window* _window = nullptr;
+	maptool_field* _field = nullptr;
 
 	staticMesh* _staticMesh;
 

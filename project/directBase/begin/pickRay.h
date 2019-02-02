@@ -24,6 +24,7 @@ public :
 public:
 	static void createPickRay(ray* out_ray, D3DXMATRIXA16 * mObjWorld = nullptr);
 	static bool chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh);
+	static bool chkPick(D3DXVECTOR3* out_info, ray* in_ray, const D3DXPLANE* plane);
 	static bool chkPick(ray* in_ray, renderObject* sMesh, EDebugDrawType type = EDebugDrawType::SPHERE);
 
 private:

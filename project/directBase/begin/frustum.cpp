@@ -45,8 +45,6 @@ void frustum::updatePlane(void)
 	for (D3DXVECTOR3 & vertex : planeVertex)
 		D3DXVec3TransformCoord(&vertex, &vertex, &mInverse);
 
-	
-
 	// 절두체 평면 제작
 	D3DXPlaneFromPoints(&_plane[0], &planeVertex[0], &planeVertex[3], &planeVertex[2]); //Near
 	D3DXPlaneFromPoints(&_plane[1], &planeVertex[4], &planeVertex[5], &planeVertex[6]); //Far

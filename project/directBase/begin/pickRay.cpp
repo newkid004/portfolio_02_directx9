@@ -69,6 +69,26 @@ bool pick::chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh)
 	return out_info->isHit == TRUE;
 }
 
+bool pick::chkPick(D3DXVECTOR3 * out_info, ray * in_ray, const D3DXPLANE * plane)
+{
+	D3DXVECTOR3 planeVector(plane->a, plane->b, plane->c);
+
+	float dotOrigin = D3DXVec3Dot(&planeVector, &in_ray->origin);
+	float dotDir = D3DXVec3Dot(&planeVector, &in_ray->direction);
+
+	if (dotDir == 0)
+		return false;
+
+	float distance = -(dotOrigin + plane->d) / dotDir;
+
+	*out_info = in_ray->origin + (in_ray->direction * distance);
+
+	if (distance < 0)
+		return false;
+
+	return true;
+}
+
 bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 {
 	switch (type)

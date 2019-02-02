@@ -196,6 +196,7 @@
     <ClInclude Include="maptool_cursur.h" />
     <ClInclude Include="maptool_data_catalog.h" />
     <ClInclude Include="maptool_data_io.h" />
+    <ClInclude Include="maptool_field.h" />
     <ClInclude Include="maptool_window.h" />
     <ClInclude Include="particleCreater.h" />
     <ClInclude Include="particleEmitter.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="maptool_cursur.cpp" />
     <ClCompile Include="maptool_data_catalog.cpp" />
     <ClCompile Include="maptool_data_io.cpp" />
+    <ClCompile Include="maptool_field.cpp" />
     <ClCompile Include="maptool_window.cpp" />
     <ClCompile Include="particleCreater.cpp" />
     <ClCompile Include="particleEmitter.cpp" />
