@@ -56,6 +56,7 @@ void terrain::smoothTerrainMesh(int smoothLevel)
 	for (int i = 0; i < smoothLevel; ++i)
 	{
 		vector<float> vNormalize(_vHeightList);
+
 		for (int y = 1; y < _sizeMap.cy - 1; ++y)
 		{
 			for (int x = 1; x < _sizeMap.cx - 1; ++x)

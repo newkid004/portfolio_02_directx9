@@ -7,9 +7,11 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
-		CHAR	= 1 << 2,
-		FIELD	= 1 << 1,
-		PROP	= 1 << 0,
+		WALL	= 1 << 0,
+		PROP	= 1 << 1,
+		FIELD	= 1 << 2,
+		CHAR	= 1 << 3,
+
 		BASE	= 0 << 0
 	};
 
@@ -32,6 +34,13 @@ public :
 		std::array<float, 3> _rotateZ;
 
 		prop() { _baseType |= baseType::PROP; }
+	};
+
+	struct wall : public base
+	{
+		std::array<float, 3> _normal;
+
+		wall() { _baseType |= baseType::WALL; }
 	};
 
 // ----- prop ----- //

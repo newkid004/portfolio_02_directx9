@@ -293,6 +293,12 @@ void gFunc::getTextureSize(D3DXVECTOR2 * out_size, LPDIRECT3DTEXTURE9 texture)
 	out_size->y = sDesc.Height;
 }
 
+void gFunc::getNormal(D3DXVECTOR3 * out, D3DXVECTOR3 * v0, D3DXVECTOR3 * v1, D3DXVECTOR3 * v2)
+{
+	D3DXVec3Cross(out, &(*v1 - *v0), &(*v2 - *v0));
+	D3DXVec3Normalize(out, out);
+}
+
 int gFunc::rndInt(int min, int max)
 {
 	random_device rDevice;

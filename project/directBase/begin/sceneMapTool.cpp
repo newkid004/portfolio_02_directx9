@@ -41,12 +41,16 @@ void sceneMapTool::update(void)
 
 	sceneBase::update();
 
+	_field->update();
+
 	_staticMesh->update();
 }
 
 void sceneMapTool::draw(void)
 {
 	sceneBase::draw();
+
+	_field->draw();
 
 	_staticMesh->draw();
 }

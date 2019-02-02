@@ -24,9 +24,7 @@ public :
 public:
 	static void createPickRay(ray* out_ray, D3DXMATRIXA16 * mObjWorld = nullptr);
 
-	/*
-		
-	*/
+	// 만일 in_ray == NULL 이라면, 마우스 <-> 화면 pickRay 적용
 	static bool chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh);
 	static bool chkPick(D3DXVECTOR3* out_info, ray* in_ray, const D3DXPLANE* plane);
 	static bool chkPick(ray* in_ray, renderObject* sMesh, EDebugDrawType type = EDebugDrawType::SPHERE);

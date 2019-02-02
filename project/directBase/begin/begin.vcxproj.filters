@@ -328,6 +328,9 @@
     <Filter Include="main\classes\scene\01_mapTool\collection\field">
       <UniqueIdentifier>{638ff899-7835-40f1-9d1b-44c33a4f797d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\bspTree">
+      <UniqueIdentifier>{98d88fbe-61f8-497f-9866-76cd694ecbdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -552,7 +555,9 @@
     <ClInclude Include="singletonBase.h">
       <Filter>main\classes\singleton</Filter>
     </ClInclude>
-    <ClInclude Include="maptool_field.h" />
+    <ClInclude Include="maptool_field.h">
+      <Filter>main\classes\scene\01_mapTool\collection\field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -741,7 +746,9 @@
     <ClCompile Include="frustum.cpp">
       <Filter>main\classes\frustum\_base</Filter>
     </ClCompile>
-    <ClCompile Include="maptool_field.cpp" />
+    <ClCompile Include="maptool_field.cpp">
+      <Filter>main\classes\scene\01_mapTool\collection\field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">
