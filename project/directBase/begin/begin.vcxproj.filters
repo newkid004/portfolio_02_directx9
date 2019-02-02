@@ -295,6 +295,18 @@
     <Filter Include="main\classes\windowUI\button\import">
       <UniqueIdentifier>{426fc39a-af26-42c4-9c22-9d85686f48bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\manager\common\event">
+      <UniqueIdentifier>{8b6567ca-5feb-4dc2-aa4e-dd00039edc72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\event">
+      <UniqueIdentifier>{3108521f-371e-4ab2-ad3c-6528566597d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\event\_base">
+      <UniqueIdentifier>{82951071-03b5-4526-87a7-75f6d37b99c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\event\_catcher">
+      <UniqueIdentifier>{9d07085b-d117-4cf0-8eb5-0faa0a492af2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -498,6 +510,18 @@
     <ClInclude Include="IbuttonScroll.h">
       <Filter>main\classes\windowUI\button\import</Filter>
     </ClInclude>
+    <ClInclude Include="eventDef.h">
+      <Filter>main\classes\event\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="eventBase.h">
+      <Filter>main\classes\event\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="eventCatcher.h">
+      <Filter>main\classes\event\_catcher</Filter>
+    </ClInclude>
+    <ClInclude Include="eventManager.h">
+      <Filter>classes\global\utility\manager\common\event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -673,6 +697,12 @@
     </ClCompile>
     <ClCompile Include="IbuttonScroll.cpp">
       <Filter>main\classes\windowUI\button\import</Filter>
+    </ClCompile>
+    <ClCompile Include="eventCatcher.cpp">
+      <Filter>main\classes\event\_catcher</Filter>
+    </ClCompile>
+    <ClCompile Include="eventManager.cpp">
+      <Filter>classes\global\utility\manager\common\event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
