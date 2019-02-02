@@ -88,6 +88,7 @@ return &_instance;						\
 #define GET_INSTANCE_HANDLE()			(GET_WINDOW_MANAGER()->getHInstance())
 
 #define GET_CAMERA()					(GET_SCENE_MANAGER()->getCurrentScene()->getCamera())
+#define GET_FRUSTUM()					(GET_SCENE_MANAGER()->getCurrentScene()->getFrustum())
 #define GET_LIGHT()						(GET_SCENE_MANAGER()->getCurrentScene()->getLight())
 #define GET_LABEL()						(GET_SCENE_MANAGER()->getCurrentScene()->getLabel())
 #define GET_SPRITE()					(GET_SCENE_MANAGER()->getCurrentScene()->getSprite())

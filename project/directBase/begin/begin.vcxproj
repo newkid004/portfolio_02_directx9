@@ -175,6 +175,7 @@
     <ClInclude Include="deviceManager.h" />
     <ClInclude Include="direct3dApplication.h" />
     <ClInclude Include="field.h" />
+    <ClInclude Include="frustum.h" />
     <ClInclude Include="gFunc.h" />
     <ClInclude Include="gJson.h" />
     <ClInclude Include="gMng.h" />
@@ -198,6 +199,7 @@
     <ClInclude Include="particleQuad.h" />
     <ClInclude Include="particleSystem.h" />
     <ClInclude Include="pickRay.h" />
+    <ClInclude Include="quadTree.h" />
     <ClInclude Include="renderObject.h" />
     <ClInclude Include="resourceManager.h" />
     <ClInclude Include="sceneBase.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="sceneMapTool.h" />
     <ClInclude Include="sceneTest1.h" />
     <ClInclude Include="sceneTest2.h" />
+    <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="soundManager.h" />
@@ -242,6 +245,7 @@
     <ClCompile Include="deviceManager.cpp" />
     <ClCompile Include="direct3dApplication.cpp" />
     <ClCompile Include="field.cpp" />
+    <ClCompile Include="frustum.cpp" />
     <ClCompile Include="gFunc.cpp" />
     <ClCompile Include="gJson.cpp" />
     <ClCompile Include="IbuttonScroll.cpp" />
@@ -260,6 +264,7 @@
     <ClCompile Include="particleQuad.cpp" />
     <ClCompile Include="particleSystem.cpp" />
     <ClCompile Include="pickRay.cpp" />
+    <ClCompile Include="quadTree.cpp" />
     <ClCompile Include="renderObject.cpp" />
     <ClCompile Include="resourceManager.cpp" />
     <ClCompile Include="sceneBase.cpp" />

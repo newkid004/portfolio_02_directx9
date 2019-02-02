@@ -25,7 +25,7 @@ public :	// iterface
 	virtual void draw(void) final override;
 
 protected:
-	virtual void putCull(void);
+	virtual bool cullFrustum(void);
 
 	virtual void drawPre(void) {};
 	virtual void drawDo(void) {};

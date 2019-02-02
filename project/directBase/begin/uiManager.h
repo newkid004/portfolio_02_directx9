@@ -1,13 +1,14 @@
 #pragma once
 #include "kGlobalDefine.h"
 #include "iUpdateble.h"
+#include "singletonBase.h"
 
 class windowBase;
 
 typedef dbList<windowBase*> UI_LIST;
 typedef UI_LIST::node*		UI_LIST_NODE;
 
-class uiManager : public iUpdateble
+class uiManager : public singletonBase<uiManager>, public iUpdateble
 {
 private :
 	STR_MAP(windowBase*)	_mWinCatalog;
@@ -35,8 +36,6 @@ public :
 public:
 	uiManager();
 	~uiManager();
-
-public :
-	DECLARE_SINGLETON(uiManager);
 };
 
+#define MN_UI SINGLE(uiManager)

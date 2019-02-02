@@ -6,6 +6,7 @@
 #include "gFunc.h"
 
 #include "sceneBase.h"
+#include "frustum.h"
 
 staticMesh::staticMesh()
 {
@@ -27,11 +28,11 @@ staticMesh::~staticMesh()
 {
 }
 
-void staticMesh::putCull(void)
+bool staticMesh::cullFrustum(void)
 {
 	boundingSphere bound;
 	this->getBoundingSphereFinal(&bound);
-	_isCull |= GET_CAMERA()->isCullFrustum(bound);
+	return GET_FRUSTUM()->isCull(bound);
 }
 
 void staticMesh::drawDo(void)

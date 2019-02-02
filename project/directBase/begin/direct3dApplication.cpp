@@ -4,6 +4,7 @@
 #include "gFunc.h"
 
 #include "cameraControlable.h"
+#include "frustum.h"
 #include "debugGrid.h"
 #include "debugGizmo.h"
 #include "lightBase.h"
@@ -14,6 +15,7 @@
 direct3dApplication::~direct3dApplication()
 {
 	SAFE_DELETE(_camera);
+	SAFE_DELETE(_frustum);
 	SAFE_DELETE(_grid);
 	SAFE_DELETE(_light);
 	SAFE_DELETE(_label);
@@ -31,27 +33,13 @@ void direct3dApplication::init(void)
 	GET_TIME_MANAGER()->init();
 	GET_INPUT_MANAGER()->init();
 
-	_camera = new cameraControlable(MN_WIN->getAspect(), 60.0f, 1000.0f);
-	_camera->setPosition(D3DXVECTOR3(0, 0, -5));
-
-	_grid = new debugGrid(50);
-	_grid->setPosition(D3DXVECTOR3(0, 0, 0));
-	_grid->addChild(new debugGizmo(12.0f));
-
-	_light = new lightBase(0);
-	_light->setPosition(D3DXVECTOR3(0.0f, 0.0f, -5.0f));
-	_light->setRotation(D3DXVECTOR3(45.0f, 0.0f, 0.0f));
-	_light->setLightable(true);
-
-	_label = new labelBase("", 16.0f);
-	_label->setPosition(D3DXVECTOR3(1, 1, 0));
-
-	_sprite = createSprite();
+	createMember();
 }
 
 void direct3dApplication::update(void)
 {
 	_camera->update();
+	_frustum->update();
 	_grid->update();
 	_light->update();
 	_label->update();
@@ -135,6 +123,28 @@ LPD3DXSPRITE direct3dApplication::createSprite(void)
 		&result);
 
 	return result;
+}
+
+void direct3dApplication::createMember(void)
+{
+	_camera = new cameraControlable(MN_WIN->getAspect(), 60.0f, 1000.0f);
+	_camera->setPosition(D3DXVECTOR3(0, 0, -5));
+
+	_grid = new debugGrid(50);
+	_grid->setPosition(D3DXVECTOR3(0, 0, 0));
+	_grid->addChild(new debugGizmo(12.0f));
+
+	_light = new lightBase(0);
+	_light->setPosition(D3DXVECTOR3(0.0f, 0.0f, -5.0f));
+	_light->setRotation(D3DXVECTOR3(45.0f, 0.0f, 0.0f));
+	_light->setLightable(true);
+
+	_label = new labelBase("", 16.0f);
+	_label->setPosition(D3DXVECTOR3(1, 1, 0));
+
+	_sprite = createSprite();
+
+	_frustum = new frustum();
 }
 
 void direct3dApplication::setWindowSize(const SIZE & input)

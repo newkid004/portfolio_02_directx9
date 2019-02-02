@@ -9,6 +9,7 @@ class camera;
 class debugGrid;
 class lightBase;
 class labelBase;
+class frustum;
 
 class direct3dApplication : 
 	public iWindowApplication,
@@ -16,7 +17,9 @@ class direct3dApplication :
 	public iRenderable
 {
 protected :
-	camera* _camera = NULL;
+	camera* _camera = nullptr;
+	frustum* _frustum = nullptr;
+
 	debugGrid* _grid = nullptr;
 	lightBase* _light = nullptr;
 	labelBase* _label = nullptr;
@@ -41,9 +44,11 @@ protected:
 
 protected :
 	LPD3DXSPRITE createSprite(void);
+	virtual void createMember(void);
 
 public :
 	camera* getCamera(void) { return _camera; }
+	frustum* getFrustum(void) { return _frustum; }
 	void setCamera(camera* input) { _camera = input; }
 
 	lightBase* getLight(void) { return _light; }

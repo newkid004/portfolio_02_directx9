@@ -3,6 +3,7 @@
 #include "managerList.h"
 #include "gFunc.h"
 #include "camera.h"
+#include "frustum.h"
 #include "debugGizmo.h"
 #include "debugDraw.h"
 
@@ -22,7 +23,7 @@ void renderObject::update(void)
 	baseObject::update();
 
 	_isCull = false;
-	putCull();
+	_isCull |= cullFrustum();
 }
 
 void renderObject::draw(void)
@@ -46,9 +47,9 @@ void renderObject::draw(void)
 	}
 }
 
-void renderObject::putCull(void)
+bool renderObject::cullFrustum(void)
 {
-	_isCull |= GET_CAMERA()->isCullFrustum(_position);
+	return GET_FRUSTUM()->isCull(_position);
 }
 
 void renderObject::getBoundingBoxFinal(boundingBox * out)

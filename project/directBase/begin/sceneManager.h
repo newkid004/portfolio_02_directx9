@@ -1,9 +1,10 @@
 #pragma once
 #include "kGlobalDefine.h"
+#include "singletonBase.h"
 
 class sceneBase;
 
-class sceneManager
+class sceneManager : public singletonBase<sceneManager>
 {
 private :
 	typedef sceneBase* SCENE;
@@ -28,11 +29,9 @@ public :
 public :
 	SCENE & getCurrentScene(void) { return _currentScene; }
 
-public :
-	DECLARE_SINGLETON(sceneManager);
-
 public:
 	sceneManager() {};
 	virtual ~sceneManager();
 };
 
+#define MN_SCENE SINGLE(sceneManager)
