@@ -48,6 +48,9 @@ void pick::createPickRay(ray * out_ray, D3DXMATRIXA16 * mObjWorld)
 
 bool pick::chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh)
 {
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
 	D3DXVECTOR3 & rayDir = in_ray->direction;
 	D3DXVECTOR3 & rayOrigin = in_ray->origin;
 
@@ -71,6 +74,9 @@ bool pick::chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh)
 
 bool pick::chkPick(D3DXVECTOR3 * out_info, ray * in_ray, const D3DXPLANE * plane)
 {
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
 	D3DXVECTOR3 planeVector(plane->a, plane->b, plane->c);
 
 	float dotOrigin = D3DXVec3Dot(&planeVector, &in_ray->origin);
@@ -91,6 +97,9 @@ bool pick::chkPick(D3DXVECTOR3 * out_info, ray * in_ray, const D3DXPLANE * plane
 
 bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 {
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
 	switch (type)
 	{
 	case EDebugDrawType::BOX: {
@@ -115,73 +124,42 @@ bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 
 bool pick::chkPick(ray * in_ray, boundingBox * bBox)
 {
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
 	D3DXVECTOR3 & rayDir = in_ray->direction;
 	D3DXVECTOR3 & rayOrigin = in_ray->origin;
 
 	float value_mM = -FLT_MAX;
 	float value_Mm = FLT_MAX;
 
-	// x
-	if (fabsf(rayDir.x) <= FLT_EPSILON)
+	for (int i = 0; i < 3; ++i)
 	{
-		if (rayOrigin.x < bBox->min.x || bBox->max.x < rayOrigin.x)
-			return false;
-	}
-	else
-	{
-		float minValue = (bBox->min.x - rayOrigin.x) / rayDir.x;
-		float maxValue = (bBox->max.x - rayOrigin.x) / rayDir.x;
+		float viewRayDir = *(((float*)&rayDir) + i);
+		float viewRayOrigin = *(((float*)&rayOrigin) + i);
 
-		if (maxValue < minValue)
-			std::swap(maxValue, minValue);
+		float viewBoxMin = *(((float*)&bBox->min) + i);
+		float viewBoxMax = *(((float*)&bBox->max) + i);
 
-		if (value_mM < minValue) value_mM = minValue;
-		if (maxValue < value_Mm) value_Mm = maxValue;
+		if (fabsf(viewRayDir) <= FLT_EPSILON)
+		{
+			if (viewRayOrigin < viewBoxMin || viewBoxMax < viewRayOrigin)
+				return false;
+		}
+		else
+		{
+			float minValue = (viewBoxMin - viewRayOrigin) / viewRayDir;
+			float maxValue = (viewBoxMax - viewRayOrigin) / viewRayDir;
 
-		if (value_Mm < 0.0f || value_Mm < value_mM)
-			return false;
-	}
+			if (maxValue < minValue)
+				std::swap(maxValue, minValue);
 
-	// y
-	if (fabsf(rayDir.y) <= FLT_EPSILON)
-	{
-		if (rayOrigin.y < bBox->min.y || bBox->max.y < rayOrigin.y)
-			return false;
-	}
-	else
-	{
-		float minValue = (bBox->min.y - rayOrigin.y) / rayDir.y;
-		float maxValue = (bBox->max.y - rayOrigin.y) / rayDir.y;
+			if (value_mM < minValue) value_mM = minValue;
+			if (maxValue < value_Mm) value_Mm = maxValue;
 
-		if (maxValue < minValue)
-			std::swap(maxValue, minValue);
-
-		if (value_mM < minValue) value_mM = minValue;
-		if (maxValue < value_Mm) value_Mm = maxValue;
-
-		if (value_Mm < 0.0f || value_Mm < value_mM)
-			return false;
-	}
-
-	// z
-	if (fabsf(rayDir.z) <= FLT_EPSILON)
-	{
-		if (rayOrigin.z < bBox->min.z || bBox->max.z < rayOrigin.z)
-			return false;
-	}
-	else
-	{
-		float minValue = (bBox->min.z - rayOrigin.z) / rayDir.z;
-		float maxValue = (bBox->max.z - rayOrigin.z) / rayDir.z;
-
-		if (maxValue < minValue)
-			std::swap(maxValue, minValue);
-
-		if (value_mM < minValue) value_mM = minValue;
-		if (maxValue < value_Mm) value_Mm = maxValue;
-
-		if (value_Mm < 0.0f || value_Mm < value_mM)
-			return false;
+			if (value_Mm < 0.0f || value_Mm < value_mM)
+				return false;
+		}
 	}
 
 	return true;
@@ -189,6 +167,9 @@ bool pick::chkPick(ray * in_ray, boundingBox * bBox)
 
 bool pick::chkPick(ray * in_ray, boundingSphere * bSphere)
 {
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
 	D3DXVECTOR3 & rayDir = in_ray->direction;
 	D3DXVECTOR3 & rayOrigin = in_ray->origin;
 

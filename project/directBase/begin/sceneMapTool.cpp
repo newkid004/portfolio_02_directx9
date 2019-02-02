@@ -69,11 +69,8 @@ void sceneMapTool::updateControl(void)
 
 	if (MN_KEY->mouseDown())
 	{
-		pick::ray pickRay;
-		pick::createPickRay(&pickRay);
-
 		D3DXVECTOR3 pickPos;
-		if (pick::chkPick(&pickPos, &pickRay, &terrain::getDefPlane()))
+		if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
 		{
 			_staticMesh->setPosition(pickPos);
 		}
