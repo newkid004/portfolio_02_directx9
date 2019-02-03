@@ -564,10 +564,10 @@
     <ClInclude Include="maptool_field.h">
       <Filter>main\classes\scene\01_mapTool\collection\field</Filter>
     </ClInclude>
-    <ClInclude Include="sceneCollisionTest.h">
+    <ClInclude Include="boxObject.h">
       <Filter>main\classes\collision\test</Filter>
     </ClInclude>
-    <ClInclude Include="boxObject.h">
+    <ClInclude Include="sceneCollisionTest.h">
       <Filter>main\classes\collision\test</Filter>
     </ClInclude>
   </ItemGroup>

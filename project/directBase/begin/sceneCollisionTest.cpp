@@ -52,7 +52,7 @@ void sceneCollisionTest::init(void)
 		EC_PLAYER_STATE_CHANGE_INCREASE);
 
 	stEventCatcher1->getAfterActive() = [this](eventBase* e) -> void {
-		((skinnedMesh*)e->getDest())->moveY(2.0f * GET_TIME_MANAGER()->getDeltaTime());
+		((skinnedMesh*)e->getDest())->moveY(2.0f * MN_TIME->getDeltaTime());
 	};
 
 	stEventCatcher2->getParam() = makeDestParam(
@@ -62,7 +62,7 @@ void sceneCollisionTest::init(void)
 		EC_PLAYER_STATE_CHANGE_DECREASE);
 
 	stEventCatcher2->getAfterActive() = [this](eventBase* e) -> void {
-		((skinnedMesh*)e->getDest())->moveY(-2.0f * GET_TIME_MANAGER()->getDeltaTime());
+		((skinnedMesh*)e->getDest())->moveY(-2.0f * MN_TIME->getDeltaTime());
 	};
 
 	MN_EVENT->getEventCatcherArray(stEventCatcher1->getParam()).push_back(stEventCatcher1);
@@ -72,6 +72,9 @@ void sceneCollisionTest::init(void)
 void sceneCollisionTest::update(void)
 {
 	sceneBase::update();
+
+	this->updateControl();
+
 	for (int i = 0; i < ZOMBIE_NUM; i++)
 	{
 		m_pSkinnedMesh[i]->update();
@@ -79,7 +82,6 @@ void sceneCollisionTest::update(void)
 
 	m_pBoxObject->update();
 
-	this->updateControl();
 }
 
 void sceneCollisionTest::draw(void)
@@ -98,20 +100,17 @@ void sceneCollisionTest::updateControl(void)
 {
 	for (int i = 0; i < ZOMBIE_NUM; i++)
 	{
-		m_pSkinnedMesh[i]->update();
-
-		auto oAnimationNameList = m_pSkinnedMesh[i]->getAniController()->getAnimationNameList;
-
+		auto oAnimationNameList = m_pSkinnedMesh[i]->getAniController()->getAnimationNameList();
 
 		if (MN_KEY->keyDown(DIK_UP))
 		{
-			GET_EVENT_MANAGER()->add(new eventBase(NULL, m_pSkinnedMesh[0],
+			MN_EVENT->add(new eventBase(NULL, m_pSkinnedMesh[0],
 				makeDestParam(ET_CHARACTER | EK_CHARACTER_PLAYER | EA_CHARACTER_RUN | EC_PLAYER_STATE_CHANGE_INCREASE),
 				0.01));
 		}
 		else if (MN_KEY->keyDown(DIK_DOWN))
 		{
-			GET_EVENT_MANAGER()->add(new eventBase(NULL, m_pSkinnedMesh[0],
+			MN_EVENT->add(new eventBase(NULL, m_pSkinnedMesh[0],
 				makeDestParam(ET_CHARACTER | EK_CHARACTER_PLAYER | EA_CHARACTER_RUN | EC_PLAYER_STATE_CHANGE_DECREASE),
 				0.01));
 		}
@@ -136,8 +135,8 @@ void sceneCollisionTest::updateControl(void)
 skinnedMesh * sceneCollisionTest::createSkinnedMesh(void)
 {
 	skinnedMesh::mParam stParameters = {
-	"Resources/Meshes/L4D1/male/male.x",
-	"Resources/Effects/Example_16.fx"
+	"resource/mesh/L4D1/male/male.x",
+	"resource/effect/skinnedMesh.fx"
 	};
 	return new skinnedMesh(stParameters);
 }

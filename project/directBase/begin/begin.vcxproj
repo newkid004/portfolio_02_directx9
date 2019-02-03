@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\ChoiSY\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -159,6 +159,7 @@
     <ClInclude Include="allocateHierarchy.h" />
     <ClInclude Include="animationController.h" />
     <ClInclude Include="baseObject.h" />
+    <ClInclude Include="boxObject.h" />
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="buttonCatalogItem.h" />
     <ClInclude Include="buttonMoveBar.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="renderObject.h" />
     <ClInclude Include="resourceManager.h" />
     <ClInclude Include="sceneBase.h" />
+    <ClInclude Include="sceneCollisionTest.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="sceneMapTool.h" />
     <ClInclude Include="sceneTest1.h" />
@@ -236,6 +238,7 @@
     <ClCompile Include="allocateHierarchy.cpp" />
     <ClCompile Include="animationController.cpp" />
     <ClCompile Include="baseObject.cpp" />
+    <ClCompile Include="boxObject.cpp" />
     <ClCompile Include="buttonBase.cpp" />
     <ClCompile Include="buttonCatalogItem.cpp" />
     <ClCompile Include="buttonMoveBar.cpp" />
@@ -276,6 +279,7 @@
     <ClCompile Include="renderObject.cpp" />
     <ClCompile Include="resourceManager.cpp" />
     <ClCompile Include="sceneBase.cpp" />
+    <ClCompile Include="sceneCollisionTest.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneMapTool.cpp" />
     <ClCompile Include="sceneTest1.cpp" />

@@ -32,6 +32,7 @@ void direct3dApplication::init(void)
 	GET_SOUND_MANAGER()->init();
 	GET_TIME_MANAGER()->init();
 	GET_INPUT_MANAGER()->init();
+	GET_EVENT_MANAGER()->init();
 
 	createMember();
 }
@@ -86,6 +87,7 @@ int direct3dApplication::msgLoop(void)
 		// 관리자 갱신
 		GET_TIME_MANAGER()->update();
 		GET_INPUT_MANAGER()->update();
+		GET_EVENT_MANAGER()->update();
 
 		// 버퍼 클리어
 		GET_DEVICE_MANAGER()->getDevice()->Clear(

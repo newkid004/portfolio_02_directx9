@@ -48,7 +48,7 @@
 #include <dsound.h>
 
 // 외부 포함 파일
-#include <nlohman/json.hpp>
+#include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
 // 유틸리티 파일

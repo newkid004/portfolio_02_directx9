@@ -13,7 +13,7 @@ public :
 	struct set
 	{
 		std::list<baseObject*> objList;
-		std::list< maptool_data::base*> 
+		//std::list< maptool_data::base*> 
 
 		terrain* field = nullptr;
 
