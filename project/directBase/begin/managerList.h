@@ -8,6 +8,7 @@
 
 #include "sceneManager.h"
 #include "uiManager.h"
+#include "eventManager.h"
 
 // ----- def ----- //
 #define MN_WIN		GET_WINDOW_MANAGER()
@@ -16,3 +17,4 @@
 #define MN_TIME		GET_TIME_MANAGER()
 #define MN_SRC		GET_RESOURCE_MANAGER()
 #define MN_SND		GET_SOUND_MANAGER()
+#define MN_EVENT	GET_EVENT_MANAGER()

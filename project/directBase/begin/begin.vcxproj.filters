@@ -331,6 +331,12 @@
     <Filter Include="main\classes\bspTree">
       <UniqueIdentifier>{98d88fbe-61f8-497f-9866-76cd694ecbdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\collision">
+      <UniqueIdentifier>{8c36422e-c672-4f71-976e-79397415a0fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\collision\test">
+      <UniqueIdentifier>{12735cd2-8bf4-4c46-9671-cebcf81fe06c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -558,6 +564,12 @@
     <ClInclude Include="maptool_field.h">
       <Filter>main\classes\scene\01_mapTool\collection\field</Filter>
     </ClInclude>
+    <ClInclude Include="sceneCollisionTest.h">
+      <Filter>main\classes\collision\test</Filter>
+    </ClInclude>
+    <ClInclude Include="boxObject.h">
+      <Filter>main\classes\collision\test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -748,6 +760,12 @@
     </ClCompile>
     <ClCompile Include="maptool_field.cpp">
       <Filter>main\classes\scene\01_mapTool\collection\field</Filter>
+    </ClCompile>
+    <ClCompile Include="boxObject.cpp">
+      <Filter>main\classes\collision\test</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneCollisionTest.cpp">
+      <Filter>main\classes\collision\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
