@@ -1,7 +1,7 @@
 #include "quadTree.h"
 
 
-quadTree::quadTree(int sizeX, int sizeY)
+quadTree::node::node(quadTree* tree, int sizeX, int sizeY)
 {
 	this->setEdge(
 		0,
@@ -10,27 +10,20 @@ quadTree::quadTree(int sizeX, int sizeY)
 		sizeX * sizeY - 1);
 }
 
-quadTree::quadTree(quadTree * parent)
+quadTree::node::node(quadTree* tree, int TL, int TR, int BL, int BR)
 {
+	this->setEdge(
+		TL, TR, 
+		BL, BR);
 }
 
-quadTree::~quadTree()
+quadTree::node::~node(void)
 {
 	for (int i = 0; i < 4; ++i)
 		SAFE_DELETE(_child[i]);
 }
 
-quadTree * quadTree::createChild(int TL, int TR, int BL, int BR)
-{
-	quadTree* child;
-
-	child = new quadTree(this);
-	child->setEdge(TL, TR, BL, BR);
-
-	return child;
-}
-
-bool quadTree::setEdge(int TL, int TR, int BL, int BR)
+bool quadTree::node::setEdge(int TL, int TR, int BL, int BR)
 {
 	EDGE(edge::TL) = TL;
 	EDGE(edge::TR) = TR;
@@ -41,7 +34,16 @@ bool quadTree::setEdge(int TL, int TR, int BL, int BR)
 	return true;
 }
 
-bool quadTree::subDivide(void)
+quadTree::node * quadTree::node::createChild(int TL, int TR, int BL, int BR)
+{
+	node* child;
+
+	child = new node(TL, TR, BL, BR);
+
+	return child;
+}
+
+bool quadTree::node::subDivide(void)
 {
 	// 분할가능 여부 판단
 	if (EDGE(edge::TR) - EDGE(edge::TL) <= 1)
@@ -62,12 +64,22 @@ bool quadTree::subDivide(void)
 	return true;
 }
 
-int & quadTree::EDGE(edge e)
+int & quadTree::node::EDGE(edge e)
 {
 	return _edge[(int)e];
 }
 
-quadTree *& quadTree::CHILD(edge e)
+quadTree::node *& quadTree::node::CHILD(edge e)
 {
 	return _child[(int)e];
+}
+
+// quadTree
+quadTree::quadTree(int sizeX, int sizeY)
+{
+}
+
+quadTree::~quadTree()
+{
+	SAFE_DELETE(_root);
 }

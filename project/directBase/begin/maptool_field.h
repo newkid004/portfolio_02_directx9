@@ -6,17 +6,18 @@
 
 class terrain;
 class baseObject;
+class quadTree;
 
 class maptool_field : public iUpdateble
 {
 public :
 	struct set
 	{
-		std::list<baseObject*> objList;
-		std::list< maptool_data::base*> 
+		std::vector<baseObject*> objList;
+		std::vector< maptool_data::base*> 
 
 		terrain* field = nullptr;
-
+		quadTree* qTree = nullptr;
 
 	};
 
