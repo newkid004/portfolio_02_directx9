@@ -14,7 +14,7 @@ public :
 	struct set
 	{
 		std::vector<baseObject*> objList;
-		std::vector< maptool_data::base*> 
+		std::vector<maptool_data::base*> dataList;
 
 		terrain* field = nullptr;
 		quadTree* qTree = nullptr;
