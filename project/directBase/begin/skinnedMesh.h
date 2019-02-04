@@ -53,6 +53,7 @@ private :
 
 public :
 	animationController* getAniController(void) { return _aniController; }
+	const mParam & getMakeParam(void) { return _param; }
 
 public:
 	skinnedMesh(const mParam & param);

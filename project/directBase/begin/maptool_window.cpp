@@ -31,6 +31,23 @@ maptool_window::~maptool_window()
 {
 }
 
+void maptool_window::update(void)
+{
+	auto focusWindow = MN_UI->getFocus();
+	auto offsetedWindowSet = ((windowCtlogMaptool**)&_windowSet) + 3;
+	
+	for (int i = 0; i < 3; ++i)
+	{
+		auto lookWindow = *(offsetedWindowSet + i);
+
+		if (focusWindow == lookWindow)
+		{
+			_windowSet.focusedWindow = lookWindow;
+			break;
+		}
+	}
+}
+
 windowStatic * maptool_window::createBottomBar(void)
 {
 	// ----- window ----- //

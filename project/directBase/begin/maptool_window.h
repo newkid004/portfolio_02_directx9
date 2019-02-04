@@ -25,10 +25,15 @@ public :
 		windowCtlogMaptool* mv_event = nullptr;
 		windowMoveable* mv_file = nullptr;
 		windowMoveable* mv_option = nullptr;
+
+		windowCtlogMaptool* focusedWindow = nullptr;
 	};
 
 private :
 	set _windowSet;
+
+public :
+	void update(void);
 
 private :
 	windowStatic* createBottomBar(void);

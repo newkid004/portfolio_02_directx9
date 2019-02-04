@@ -6,7 +6,7 @@
 
 class terrain;
 class baseObject;
-class quadTree;
+class quadTree_Frustum;
 
 class maptool_field : public iUpdateble
 {
@@ -17,8 +17,9 @@ public :
 		std::vector<maptool_data::base*> dataList;
 
 		terrain* field = nullptr;
-		quadTree* qTree = nullptr;
+		quadTree_Frustum* qTree = nullptr;
 
+		baseObject* selectionObject = nullptr;
 	};
 
 private :
@@ -28,7 +29,10 @@ public :
 	void update(void) override;
 	void draw(void);
 
+public :
+	constexpr set & getSet(void) { return _fieldSet; }
+
 public:
-	maptool_field();
+	maptool_field(terrain* inTerrain);
 	~maptool_field();
 };

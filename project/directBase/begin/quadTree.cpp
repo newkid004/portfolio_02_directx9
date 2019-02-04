@@ -65,7 +65,7 @@ bool quadTree::node::subDivide(void)
 
 bool quadTree::node::build(node * parent)
 {
-	if (subDivide)
+	if (subDivide())
 	{
 		float radius2 = (parent->EDGE(edge::BR) - parent->EDGE(edge::TL)) / 2;
 

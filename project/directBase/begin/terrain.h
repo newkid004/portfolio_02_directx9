@@ -68,6 +68,10 @@ public :
 	float getHeight(D3DXVECTOR2 pos);
 	LPD3DXMESH getMesh(void) { return _mesh; }
 
+	const SIZE & getSizeMap(void) { return _sizeMap; }
+	const SIZE & getSizeTile(void) { return _sizeTile; }
+	const SIZE & getSizeTotal(void) { return _sizeTotal; }
+
 	bool getIntersectPoint(const pick::ray & ray, D3DXVECTOR3 & out_position);
 	static const D3DXPLANE & getDefPlane(void) { return _defPlane; }
 

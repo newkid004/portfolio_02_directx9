@@ -26,11 +26,11 @@ protected :
 	virtual void drawDo(void) override;
 
 public :
-
+	const mParam & getMakeParam(void) { return _param; }
 
 public:
 	staticMesh();
-	staticMesh(mParam & param);
+	staticMesh(const mParam & param);
 
 	~staticMesh();
 };

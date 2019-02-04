@@ -328,9 +328,6 @@
     <Filter Include="main\classes\scene\01_mapTool\collection\field">
       <UniqueIdentifier>{638ff899-7835-40f1-9d1b-44c33a4f797d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\bspTree">
-      <UniqueIdentifier>{98d88fbe-61f8-497f-9866-76cd694ecbdc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\classes\collision">
       <UniqueIdentifier>{8c36422e-c672-4f71-976e-79397415a0fe}</UniqueIdentifier>
     </Filter>
@@ -576,6 +573,9 @@
     <ClInclude Include="quadTree_Frustum.h">
       <Filter>main\classes\quadTree\frustum</Filter>
     </ClInclude>
+    <ClInclude Include="maptool_data_catalog.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\data\catalog</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -742,9 +742,6 @@
     </ClCompile>
     <ClCompile Include="maptool_data_io.cpp">
       <Filter>main\classes\scene\01_mapTool\classes\data\io</Filter>
-    </ClCompile>
-    <ClCompile Include="maptool_data_catalog.cpp">
-      <Filter>main\classes\scene\01_mapTool\classes\data\catalog</Filter>
     </ClCompile>
     <ClCompile Include="windowCtlogMaptool.cpp">
       <Filter>main\classes\windowUI\window\static\moveable\catalog\maptool</Filter>

@@ -26,7 +26,7 @@ void sceneMapTool::init(void)
 	sceneBase::init();
 
 	_window = new maptool_window();
-	_field = new maptool_field();
+	_field = new maptool_field(NULL);
 
 	_staticMesh = createStaticMesh();
 
@@ -41,6 +41,7 @@ void sceneMapTool::update(void)
 
 	sceneBase::update();
 
+	_window->update();
 	_field->update();
 
 	_staticMesh->update();
@@ -59,7 +60,7 @@ void sceneMapTool::drawUI(void)
 {
 	sceneBase::drawUI();
 
-	MN_UI->drawUI();
+	MN_UI->drawUI();	// window
 }
 
 void sceneMapTool::updateControl(void)

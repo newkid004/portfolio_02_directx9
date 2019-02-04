@@ -13,6 +13,7 @@
 // 경고 무시
 #pragma warning(disable : 4018)		// signed / unsigned 비교 경고
 #pragma warning(disable : 4244)		// 형변환 경고
+#pragma warning(disable : 4267)		// size_t -> UINT 경고
 #pragma warning(disable : 4305)		// double -> float 경고
 #pragma warning(disable : 4838)		// 축소변환 경고
 

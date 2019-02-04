@@ -13,7 +13,7 @@ staticMesh::staticMesh()
 	ZeroMemory(&_param, sizeof(_param));
 }
 
-staticMesh::staticMesh(mParam & param) :
+staticMesh::staticMesh(const mParam & param) :
 	_param(param)
 {
 	_effect = MN_SRC->getEffect(param.effectFilePath);

@@ -1,6 +1,8 @@
 #pragma once
 #include "kGlobalDefine.h"
 
+class renderObject;
+
 class maptool_data_catalog
 {
 public :
@@ -27,6 +29,7 @@ public :
 
 		struct PROP : public BASE
 		{
+			renderObject* _object;
 
 			PROP() { _baseType |= baseType::PROP; }
 		};
@@ -45,8 +48,13 @@ public :
 		~OBJ() {};
 	};
 
+public :
+	static void duplicate(OBJ::BASE** outObject, OBJ::BASE* targetObject);
+	static void duplicate(OBJ::PROP** outObject, OBJ::PROP* targetObject);
+	static void duplicate(OBJ::CHAR** outObject, OBJ::CHAR* targetObject);
+	static void duplicate(OBJ::EVENT** outObject, OBJ::EVENT* targetObject);
+
 	~maptool_data_catalog() {};
 private :
 	maptool_data_catalog() {};
 };
-
