@@ -9,10 +9,12 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
-		EVENT	= 1 << 2,
-		CHAR	= 1 << 1,
-		PROP	= 1 << 0,
-		BASE	= 0 << 0
+		EVENT	= 1 << 3,
+		CHAR	= 1 << 2,
+		PROP	= 1 << 1,
+		BASE	= 1 << 0,
+		
+		NONE	= 0
 	};
 
 // ----- base ----- //
@@ -29,9 +31,10 @@ public :
 
 		struct PROP : public BASE
 		{
-			renderObject* _object;
+			renderObject* _object = nullptr;
 
 			PROP() { _baseType |= baseType::PROP; }
+			~PROP() { SAFE_DELETE(_object); }
 		};
 
 		struct CHAR : public PROP
