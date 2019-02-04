@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -206,6 +206,7 @@
     <ClInclude Include="particleSystem.h" />
     <ClInclude Include="pickRay.h" />
     <ClInclude Include="quadTree.h" />
+    <ClInclude Include="quadTree_Frustum.h" />
     <ClInclude Include="renderObject.h" />
     <ClInclude Include="resourceManager.h" />
     <ClInclude Include="sceneBase.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="particleSystem.cpp" />
     <ClCompile Include="pickRay.cpp" />
     <ClCompile Include="quadTree.cpp" />
+    <ClCompile Include="quadTree_Frustum.cpp" />
     <ClCompile Include="renderObject.cpp" />
     <ClCompile Include="resourceManager.cpp" />
     <ClCompile Include="sceneBase.cpp" />

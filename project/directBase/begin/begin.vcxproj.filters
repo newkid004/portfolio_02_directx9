@@ -337,6 +337,9 @@
     <Filter Include="main\classes\collision\test">
       <UniqueIdentifier>{12735cd2-8bf4-4c46-9671-cebcf81fe06c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\quadTree\frustum">
+      <UniqueIdentifier>{ad9e4436-1560-46d1-818d-06486524e227}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -570,6 +573,9 @@
     <ClInclude Include="sceneCollisionTest.h">
       <Filter>main\classes\collision\test</Filter>
     </ClInclude>
+    <ClInclude Include="quadTree_Frustum.h">
+      <Filter>main\classes\quadTree\frustum</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -766,6 +772,9 @@
     </ClCompile>
     <ClCompile Include="sceneCollisionTest.cpp">
       <Filter>main\classes\collision\test</Filter>
+    </ClCompile>
+    <ClCompile Include="quadTree_Frustum.cpp">
+      <Filter>main\classes\quadTree\frustum</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

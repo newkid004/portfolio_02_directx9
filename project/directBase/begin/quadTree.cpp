@@ -1,7 +1,9 @@
 #include "quadTree.h"
 
+#include "gFunc.h"
 
-quadTree::node::node(quadTree* tree, int sizeX, int sizeY)
+quadTree::node::node(quadTree* bind, int sizeX, int sizeY) :
+	_bindTree(bind)
 {
 	this->setEdge(
 		0,
@@ -10,7 +12,8 @@ quadTree::node::node(quadTree* tree, int sizeX, int sizeY)
 		sizeX * sizeY - 1);
 }
 
-quadTree::node::node(quadTree* tree, int TL, int TR, int BL, int BR)
+quadTree::node::node(quadTree* bind, int TL, int TR, int BL, int BR) :
+	_bindTree(bind)
 {
 	this->setEdge(
 		TL, TR, 
@@ -36,24 +39,20 @@ bool quadTree::node::setEdge(int TL, int TR, int BL, int BR)
 
 quadTree::node * quadTree::node::createChild(int TL, int TR, int BL, int BR)
 {
-	node* child;
-
-	child = new node(TL, TR, BL, BR);
-
-	return child;
+	return new node(_bindTree, TL, TR, BL, BR);
 }
 
 bool quadTree::node::subDivide(void)
 {
-	// 분할가능 여부 판단
-	if (EDGE(edge::TR) - EDGE(edge::TL) <= 1)
-		return false;
-
 	// 각 변 중점위치
 	int centerTop = (EDGE(edge::TL) + EDGE(edge::TR)) / 2;
 	int centerBot = (EDGE(edge::BL) + EDGE(edge::BR)) / 2;
 	int centerLft = (EDGE(edge::TL) + EDGE(edge::BL)) / 2;
 	int centerRgt = (EDGE(edge::TR) + EDGE(edge::BR)) / 2;
+
+	// 분할가능 여부 판단
+	if (isVisible())
+		return false;
 
 	// 자식 추가(분할)
 	CHILD(edge::TL) = createChild(EDGE(edge::TL), centerTop, centerLft, _center);
@@ -62,6 +61,41 @@ bool quadTree::node::subDivide(void)
 	CHILD(edge::BR) = createChild(_center, centerRgt, centerBot, EDGE(edge::BR));
 
 	return true;
+}
+
+bool quadTree::node::build(node * parent)
+{
+	if (subDivide)
+	{
+		float radius2 = (parent->EDGE(edge::BR) - parent->EDGE(edge::TL)) / 2;
+
+		_radius = radius2 / 2.0f;
+
+		CHILD(edge::TL)->build(this);
+		CHILD(edge::TR)->build(this);
+		CHILD(edge::BL)->build(this);
+		CHILD(edge::BR)->build(this);
+	}
+	return true;
+}
+
+bool quadTree::node::isVisible(void)
+{
+	return EDGE(edge::TR) - EDGE(edge::TL) <= 1;
+}
+
+void quadTree::node::getPosition(D3DXVECTOR3 * out)
+{
+	return getPosition(out, _bindTree->getOffset());
+}
+
+void quadTree::node::getPosition(D3DXVECTOR3 * out, const D3DXVECTOR3 & offset)
+{
+	*out = 
+		offset +
+		D3DXVECTOR3(
+			_center % _bindTree->getSize().x, 0,
+			_center / _bindTree->getSize().x);
 }
 
 int & quadTree::node::EDGE(edge e)
@@ -74,12 +108,28 @@ quadTree::node *& quadTree::node::CHILD(edge e)
 	return _child[(int)e];
 }
 
+
 // quadTree
 quadTree::quadTree(int sizeX, int sizeY)
 {
+	_size = POINT{ (LONG)sizeX, (LONG)sizeY };
 }
 
 quadTree::~quadTree()
 {
 	SAFE_DELETE(_root);
+}
+
+void quadTree::build(void)
+{
+	_root = new node(this, _size.x, _size.y);
+	_root->build(_root);
+}
+
+D3DXVECTOR3 quadTree::getOffset(void)
+{
+	return D3DXVECTOR3(
+		_position.x - (_size.x * _scale.x),
+		_position.y,
+		_position.z - (_size.y * _scale.z));
 }

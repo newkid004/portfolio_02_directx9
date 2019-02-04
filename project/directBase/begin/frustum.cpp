@@ -54,23 +54,45 @@ void frustum::updatePlane(void)
 	D3DXPlaneFromPoints(&_plane[5], &planeVertex[3], &planeVertex[7], &planeVertex[6]); //Bottom
 }
 
-bool frustum::isCull(const D3DXVECTOR3 & pos)
+bool frustum::isCull(const D3DXVECTOR3 & pos, int c)
 {
-	for (D3DXPLANE & fPlane : _plane)
-	{
-		if (D3DXPlaneDotCoord(&fPlane, &pos) < 0.0f)
-			return true;
-	}
-	return false;
+	return chkCull(pos, 0, c);
 }
 
-bool frustum::isCull(const boundingSphere & bound)
+bool frustum::isCull(const boundingSphere & bound, int c)
 {
-	for (D3DXPLANE & fPlane : _plane)
+	return chkCull(bound.center, bound.radius, c);
+}
+
+bool frustum::chkCull(const D3DXVECTOR3 & dotPos, float interval, int c)
+{
+	if (c & CULL::NEAR_FAR)
 	{
-		if (D3DXPlaneDotCoord(&fPlane, &bound.center) + bound.radius < 0.0f)
-			return true;
+		for (int i = 0; i < 2; ++i)
+		{
+			if (D3DXPlaneDotCoord(&_plane[i], &dotPos) + interval < 0.0f)
+				return true;
+		}
 	}
+
+	if (c & CULL::LEFT_RIGHT)
+	{
+		for (int i = 2; i < 4; ++i)
+		{
+			if (D3DXPlaneDotCoord(&_plane[i], &dotPos) + interval < 0.0f)
+				return true;
+		}
+	}
+
+	if (c & CULL::TOP_BOT)
+	{
+		for (int i = 4; i < 6; ++i)
+		{
+			if (D3DXPlaneDotCoord(&_plane[i], &dotPos) + interval < 0.0f)
+				return true;
+		}
+	}
+
 	return false;
 }
 

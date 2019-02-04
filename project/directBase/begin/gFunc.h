@@ -30,6 +30,8 @@ public :
 	// 변환
 	static D3DXVECTOR2				Vec2Mlt(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x * v2.x, v1.y * v2.y); }
 	static D3DXVECTOR2				Vec2Dev(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x / v2.x, v1.y / v2.y); }
+	static D3DXVECTOR3				Vec3Mlt(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVECTOR3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z); }
+	static D3DXVECTOR3				Vec3Dev(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVECTOR3(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z); }
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
 
 	// 난수
