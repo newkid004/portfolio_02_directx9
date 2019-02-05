@@ -573,9 +573,6 @@
     <ClInclude Include="quadTree_Frustum.h">
       <Filter>main\classes\quadTree\frustum</Filter>
     </ClInclude>
-    <ClInclude Include="maptool_data_catalog.cpp">
-      <Filter>main\classes\scene\01_mapTool\classes\data\catalog</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -773,6 +770,7 @@
     <ClCompile Include="quadTree_Frustum.cpp">
       <Filter>main\classes\quadTree\frustum</Filter>
     </ClCompile>
+    <ClCompile Include="maptool_data_catalog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

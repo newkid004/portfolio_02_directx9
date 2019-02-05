@@ -17,10 +17,10 @@ staticMesh::staticMesh(const mParam & param) :
 	_param(param)
 {
 	_effect = MN_SRC->getEffect(param.effectFilePath);
-	_info = MN_SRC->getStaticMesh(param.meshFilePath);
+	_meshSet = MN_SRC->getStaticMesh(param.meshFilePath);
 
-	setBoundingBox(gFunc::createBoundingBox(_info->mesh));
-	setBoundingSphere(gFunc::createBoundingSphere(_info->mesh));
+	setBoundingBox(gFunc::createBoundingBox(_meshSet->mesh));
+	setBoundingSphere(gFunc::createBoundingSphere(_meshSet->mesh));
 }
 
 
@@ -43,12 +43,12 @@ void staticMesh::drawDo(void)
 	_effect->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
 	_effect->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
 
-	for (int i = 0; i < _info->numMaterial; ++i)
+	for (int i = 0; i < _meshSet->numMaterial; ++i)
 	{
-		_effect->SetTexture("_texture", _info->vTextureList[i]);
+		_effect->SetTexture("_texture", _meshSet->vTextureList[i]);
 
 		gFunc::runEffectLoop(_effect, "myTechnique", [&](int passNum)->void {
-			_info->mesh->DrawSubset(i);
+			_meshSet->mesh->DrawSubset(i);
 		});
 	}
 }

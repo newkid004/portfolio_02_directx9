@@ -10,6 +10,11 @@
 
 #include "buttonScrollVertical.h"
 
+#include "staticMesh.h"
+#include "skinnedMesh.h"
+
+typedef maptool_data_catalog CATALOG;
+
 maptool_window::maptool_window()
 {
 	MN_UI->add("maptool_bottomBar",		_windowSet.bottomBar	= createBottomBar())->show();
@@ -142,14 +147,15 @@ windowCtlogMaptool * maptool_window::create_mvProp(void)
 
 	auto result = new windowCtlogMaptool(winInfo);
 
-	auto testTexture = MN_SRC->getSpriteTexture("resource/texture/bonobono.png");
-	for (int i = 0; i < 23; ++i)
-	{
-		auto b = new maptool_data_catalog::OBJ::PROP();
-		b->_standImage = testTexture;
+	CATALOG::OBJ::PROP* prop = nullptr;
+	staticMesh::mParam param;
 
-		result->addItem(b);
-	}
+	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
+	param.effectFilePath = "resource/effect/example_15.fx";
+
+	CATALOG::createProp(&prop, &param);
+	prop->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
+	result->addItem(prop);
 
 	return result;
 }

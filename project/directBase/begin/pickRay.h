@@ -23,6 +23,7 @@ public :
 
 public:
 	static void createPickRay(ray* out_ray, D3DXMATRIXA16 * mObjWorld = nullptr);
+	static void applyMatrix(ray* out_ray, ray* in_ray, D3DXMATRIXA16 * mObjWorld);
 
 	// 만일 in_ray == NULL 이라면, 마우스 <-> 화면 pickRay 적용
 	static bool chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh);

@@ -7,8 +7,8 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
-		WALL	= 1 << 0,
-		PROP	= 1 << 1,
+		PROP	= 1 << 0,
+		WALL	= 1 << 1,
 		FIELD	= 1 << 2,
 		CHAR	= 1 << 3,
 

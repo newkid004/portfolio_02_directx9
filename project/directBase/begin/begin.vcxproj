@@ -196,7 +196,6 @@
     <ClInclude Include="managerList.h" />
     <ClInclude Include="maptool_cursur.h" />
     <ClInclude Include="maptool_data_catalog.h" />
-    <ClInclude Include="maptool_data_catalog.cpp" />
     <ClInclude Include="maptool_data_io.h" />
     <ClInclude Include="maptool_field.h" />
     <ClInclude Include="maptool_window.h" />
@@ -267,6 +266,7 @@
     <ClCompile Include="lightBase.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="maptool_cursur.cpp" />
+    <ClCompile Include="maptool_data_catalog.cpp" />
     <ClCompile Include="maptool_data_io.cpp" />
     <ClCompile Include="maptool_field.cpp" />
     <ClCompile Include="maptool_window.cpp" />

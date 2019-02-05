@@ -37,13 +37,19 @@ void pick::createPickRay(ray * out_ray, D3DXMATRIXA16 * mObjWorld)
 	rayOrigin.z = mWorld(3, 2);
 
 	if (mObjWorld != nullptr)
-	{
-		D3DXMATRIXA16 mObjInv;
-		D3DXMatrixInverse(&mObjInv, NULL, mObjWorld);
+		applyMatrix(out_ray, out_ray, mObjWorld);
+}
 
-		D3DXVec3TransformNormal(&rayDir, &rayDir, &mObjInv);
-		D3DXVec3TransformCoord(&rayOrigin, &rayOrigin, &mObjInv);
-	}
+void pick::applyMatrix(ray * out_ray, ray * in_ray, D3DXMATRIXA16 * mObjWorld)
+{
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
+	D3DXMATRIXA16 mObjInv;
+	D3DXMatrixInverse(&mObjInv, NULL, mObjWorld);
+
+	D3DXVec3TransformNormal(&out_ray->direction, &in_ray->direction, &mObjInv);
+	D3DXVec3TransformCoord(&out_ray->origin, &in_ray->origin, &mObjInv);
 }
 
 bool pick::chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh)

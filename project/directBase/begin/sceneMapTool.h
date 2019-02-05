@@ -14,8 +14,6 @@ private :
 	maptool_window* _window = nullptr;
 	maptool_field* _field = nullptr;
 
-	staticMesh* _staticMesh;
-
 public:
 	virtual void init(void) override;
 	virtual void update(void) override;
@@ -23,10 +21,7 @@ public:
 	virtual void drawUI(void) override;
 
 private :
-	void updateControl(void);
-	
-private :
-	staticMesh* createStaticMesh(void);
+	void updateControl_Prop(void);
 
 public:
 	sceneMapTool() {};
