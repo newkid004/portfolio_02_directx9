@@ -34,7 +34,7 @@ public :
 			renderObject* _object = nullptr;
 
 			PROP() { _baseType |= baseType::PROP; }
-			~PROP() { SAFE_DELETE(_object); }
+			~PROP();
 		};
 
 		struct CHAR : public PROP
@@ -52,12 +52,16 @@ public :
 	};
 
 public :
+	static void createProp(OBJ::PROP** out, void * param);
+	static void createChar(OBJ::CHAR** out, void * param);
+
+public :
 	static void duplicate(OBJ::BASE** outObject, OBJ::BASE* targetObject);
 	static void duplicate(OBJ::PROP** outObject, OBJ::PROP* targetObject);
 	static void duplicate(OBJ::CHAR** outObject, OBJ::CHAR* targetObject);
 	static void duplicate(OBJ::EVENT** outObject, OBJ::EVENT* targetObject);
 
-	~maptool_data_catalog() {};
 private :
 	maptool_data_catalog() {};
+	~maptool_data_catalog() {};
 };

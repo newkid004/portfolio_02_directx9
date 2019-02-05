@@ -28,23 +28,19 @@ void sceneMapTool::init(void)
 	_window = new maptool_window();
 	_field = new maptool_field(NULL);
 
-	_staticMesh = createStaticMesh();
-
 	// _grid->setVisible(false);
 	// ((cameraControlable*)_camera)->setVisible(false);
 }
 
 void sceneMapTool::update(void)
 {
-	updateControl();
+	updateControl_Prop();
 	MN_UI->update();
 
 	sceneBase::update();
 
 	_window->update();
 	_field->update();
-
-	_staticMesh->update();
 }
 
 void sceneMapTool::draw(void)
@@ -52,8 +48,6 @@ void sceneMapTool::draw(void)
 	sceneBase::draw();
 
 	_field->draw();
-
-	_staticMesh->draw();
 }
 
 void sceneMapTool::drawUI(void)
@@ -63,32 +57,39 @@ void sceneMapTool::drawUI(void)
 	MN_UI->drawUI();	// window
 }
 
-void sceneMapTool::updateControl(void)
+void sceneMapTool::updateControl_Prop(void)
 {
-	if (MN_KEY->keyPress(DIK_P))
+	if (windowCtlogMaptool* viewWindow = _window->getSet().focusedWindow)
 	{
-		auto i = new maptool_data_catalog::OBJ::BASE();
-		i->_standImage = MN_SRC->getSpriteTexture("resource/texture/practice_05.png");
-		_window->getSet().mv_prop->addItem(i);
-	}
-
-	if (MN_KEY->mouseDown())
-	{
-		D3DXVECTOR3 pickPos;
-		if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
+		if (0 <= viewWindow->getItem() && !MN_KEY->getClickIgnore())
 		{
-			_staticMesh->setPosition(pickPos);
+			if (MN_KEY->mousePress())
+			{
+				// pick check
+				if (renderObject* pickObject = _field->getPickObject())
+				{
+					_field->getSet().selectionObject = pickObject;
+				}
+			}
+
+
+			// prop move
+			if (auto selection = _field->getSet().selectionObject)
+			{
+				if (MN_KEY->mouseDown())
+				{
+					D3DXVECTOR3 pickPos;
+					if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
+					{
+						selection->setPosition(pickPos);
+					}
+				}
+			}
+			// prop put
+			else
+			{
+
+			}
 		}
 	}
 }
-
-staticMesh * sceneMapTool::createStaticMesh(void)
-{
-	staticMesh::mParam param = {
-		"resource/mesh/Elementalist/Elementalist.x",
-		"resource/effect/example_15.fx"
-	};
-
-	return new staticMesh(param);
-}
-

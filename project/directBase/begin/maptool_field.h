@@ -6,6 +6,7 @@
 
 class terrain;
 class baseObject;
+class renderObject;
 class quadTree_Frustum;
 
 class maptool_field : public iUpdateble
@@ -30,6 +31,8 @@ public :
 	void draw(void);
 
 public :
+	renderObject* getPickObject(void);	// update보다 먼저 확인 필요
+
 	constexpr set & getSet(void) { return _fieldSet; }
 
 public:

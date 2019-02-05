@@ -34,6 +34,7 @@ protected:
 public:
 	void ToggleVisible(void) { _isVisible = !_isVisible; }
 
+	bool isCull(void) { return _isCull; }
 	bool getVisible(void) { return _isVisible; }
 	bool getDebugEnalbe(void) { return _isDebugEnable; }
 	constexpr boundingBox & getBoundingBox(void) { return _bBox; }

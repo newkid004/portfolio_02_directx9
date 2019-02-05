@@ -55,6 +55,8 @@ public :
 	animationController* getAniController(void) { return _aniController; }
 	const mParam & getMakeParam(void) { return _param; }
 
+	LPD3DXMESH getMesh(void) { return _mesh; }
+
 public:
 	skinnedMesh(const mParam & param);
 	virtual ~skinnedMesh();

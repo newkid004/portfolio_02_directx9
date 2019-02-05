@@ -17,7 +17,7 @@ public :
 
 private :
 	LPD3DXEFFECT _effect = nullptr;
-	meshSet* _info = nullptr;
+	meshSet* _meshSet = nullptr;
 	mParam _param;
 
 protected :
@@ -27,6 +27,7 @@ protected :
 
 public :
 	const mParam & getMakeParam(void) { return _param; }
+	meshSet* getMeshSet(void) { return _meshSet; }
 
 public:
 	staticMesh();
