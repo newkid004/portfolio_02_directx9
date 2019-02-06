@@ -3,7 +3,7 @@
 #include "singletonBase.h"
 
 class staticMesh;
-class skinndMesh;
+class skinnedMesh;
 
 class maptool_render
 {
@@ -36,6 +36,7 @@ private :
 
 public :
 	void drawOutLine(staticMesh* obj);
+	void drawOutLine(skinnedMesh* obj);
 
 public :
 	maptool_render();

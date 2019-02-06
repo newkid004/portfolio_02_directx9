@@ -48,6 +48,8 @@ void maptool_data_io::apply(OBJ::BASE * in, baseObject * obj)
 
 void maptool_data_io::apply(OBJ::PROP * in, staticMesh * obj)
 {
+	apply((OBJ::BASE*)in, (baseObject*)obj);
+
 	in->_source = obj->getMakeParam().meshFilePath;
 	in->_effect = obj->getMakeParam().effectFilePath;
 
@@ -60,6 +62,8 @@ void maptool_data_io::apply(OBJ::PROP * in, staticMesh * obj)
 
 void maptool_data_io::apply(OBJ::CHAR * in, skinnedMesh * obj)
 {
+	apply((OBJ::BASE*)in, (baseObject*)obj);
+
 	in->_source = obj->getMakeParam().filePath;
 	in->_effect = obj->getMakeParam().effectFilePath;
 

@@ -150,3 +150,7 @@ void maptool_render::drawOutLine(staticMesh * obj)
 		_screen->DrawSubset(0);
 	});
 }
+
+void maptool_render::drawOutLine(skinnedMesh * obj)
+{
+}

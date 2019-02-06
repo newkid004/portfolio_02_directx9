@@ -198,6 +198,7 @@
     <ClInclude Include="maptool_data_catalog.h" />
     <ClInclude Include="maptool_data_io.h" />
     <ClInclude Include="maptool_field.h" />
+    <ClInclude Include="maptool_io.h" />
     <ClInclude Include="maptool_render.h" />
     <ClInclude Include="maptool_window.h" />
     <ClInclude Include="particleCreater.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="maptool_data_catalog.cpp" />
     <ClCompile Include="maptool_data_io.cpp" />
     <ClCompile Include="maptool_field.cpp" />
+    <ClCompile Include="maptool_io.cpp" />
     <ClCompile Include="maptool_render.cpp" />
     <ClCompile Include="maptool_window.cpp" />
     <ClCompile Include="particleCreater.cpp" />
