@@ -7,7 +7,7 @@ class gFunc
 public :
 	// effect
 	static void runEffectLoop(LPD3DXEFFECT effect, const std::string & technique, const std::function<void(int)> & callback);
-	static void runRenderTarget(LPDIRECT3DTEXTURE9 renderTarget, int clearOption, LPDIRECT3DSURFACE9 depthStensil, const std::function<void(void)> & callback, D3DCOLOR backColor = BACK_COLOR(255));
+	static void runRenderTarget(LPDIRECT3DTEXTURE9 renderTarget, int clearOption, LPDIRECT3DSURFACE9 depthStensil, const std::function<void(void)> & callback, bool isAlpha = false, D3DCOLOR backColor = BACK_COLOR(0));
 
 	// UI
 	static void drawText(int x, int y, const std::string & text, int DT_align = DT_TOP | DT_LEFT);

@@ -3,6 +3,9 @@
 
 class renderObject;
 
+class staticMesh;
+class skinnedMesh;
+
 class maptool_data_catalog
 {
 public :
@@ -57,10 +60,12 @@ public :
 	static void createChar(OBJ::CHAR** out, void * param);
 
 public :
-	static void duplicate(OBJ::BASE** outObject, OBJ::BASE* targetObject);
-	static void duplicate(OBJ::PROP** outObject, OBJ::PROP* targetObject);
-	static void duplicate(OBJ::CHAR** outObject, OBJ::CHAR* targetObject);
-	static void duplicate(OBJ::EVENT** outObject, OBJ::EVENT* targetObject);
+	static void duplicate(staticMesh** outObject, OBJ::PROP* targetObject);
+	static void duplicate(skinnedMesh** outObject, OBJ::CHAR* targetObject);
+	// static void duplicate(OBJ::EVENT** outObject, OBJ::EVENT* targetObject);
+
+private :
+	static void applyObject(renderObject* target, renderObject* own);
 
 private :
 	maptool_data_catalog() {};

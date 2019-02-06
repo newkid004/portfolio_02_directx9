@@ -106,6 +106,10 @@ int direct3dApplication::msgLoop(void)
 				drawUI();
 			}
 			GET_SPRITE()->End();
+
+			D3DXMATRIXA16 mWorld;
+			D3DXMatrixIdentity(&mWorld);
+			GET_SPRITE()->SetTransform(&mWorld);
 			
 			GET_DEVICE_MANAGER()->getDevice()->EndScene();
 		}

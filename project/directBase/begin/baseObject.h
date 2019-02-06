@@ -37,6 +37,11 @@ public :
 	void rotateY(float angle, bool isLocal = true);
 	void rotateZ(float angle, bool isLocal = true);
 
+	// 카메라 축을 기준으로 회전
+	void rotateCameraX(float angle);
+	void rotateCameraY(float angle);
+	void rotateCameraZ(float angle);
+
 	// 특정 기준으로 회전
 	void rotate2Pos(const D3DXVECTOR3 & pos, bool isSphere = true, bool isFixAxisX = false);
 	void rotate2Dir(const D3DXVECTOR3 & dir, bool isSphere = true, bool isFixAxisX = false);
@@ -58,6 +63,7 @@ public :	// 접근, 지정자
 	constexpr D3DXVECTOR3 & getDirectForward	(void) { return _directionForward; }
 
 	D3DXVECTOR3 getOffset(void) { return D3DXVECTOR3(_mOffset(3, 0), _mOffset(3, 1), _mOffset(3, 2)); }
+	constexpr D3DXMATRIXA16 & getOffsetMatrix(void) { return _mOffset; }
 	constexpr D3DXVECTOR3 & getOffsetPosition(void) { return _offsetPosition; }
 	
 	// 지정자

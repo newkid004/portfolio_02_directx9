@@ -5,14 +5,41 @@ float4x4 _mProjection;
 float4x4 _mViewProjection;
 
 float4 _viewPosition;
+float4 _lightPosition;
 float4 _lightDirection;
 
+float _winSizeX;
+float _winSizeY;
+
+// ----- texture ----- //
 texture _textureDiffuse;
+texture _textureNormal;
+
+// ----- render target ----- //
+texture _renderOrigin;
 texture _renderOutline;
 
 sampler2D _samplerDiffuse = sampler_state
 {
 	texture = _textureDiffuse;
+	
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
+	MipFilter = LINEAR;
+};
+
+sampler2D _samplerNormal = sampler_state
+{
+	texture = _textureNormal;
+	
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
+	MipFilter = LINEAR;
+};
+
+sampler2D _samplerRenderOrigin = sampler_state
+{
+	texture = _renderOrigin;
 	
 	MinFilter = LINEAR;
 	MagFilter = LINEAR;
@@ -42,24 +69,14 @@ float3x3 _mVtc = {
 };
 
 // ----- blur ----- //
-float4 filterH[7] = {
-	0.0f,	-3.0f,	0.0f,	1.0f / 64.0f,
-	0.0f,	-2.0f,	0.0f,	6.0f / 64.0f,
-	0.0f,	-1.0f,	0.0f,	15.0f / 64.0f,
+float4 filter[7] = {
+	-3.0f,	-3.0f,	0.0f,	5.0f / 64.0f,
+	-2.0f,	-2.0f,	0.0f,	7.0f / 64.0f,
+	-1.0f,	-1.0f,	0.0f,	10.0f / 64.0f,
 	0.0f,	 0.0f,	0.0f,	20.0f / 64.0f,
-	0.0f,	 1.0f,	0.0f,	15.0f / 64.0f,
-	0.0f,	 2.0f,	0.0f,	6.0f / 64.0f,
-	0.0f,	 3.0f,	0.0f,	1.0f / 64.0f,
-};
-
-float4 filterV[7] = {
-	-3.0f,	0.0f,	0.0f,	1.0f / 64.0f,
-	-2.0f,	0.0f,	0.0f,	6.0f / 64.0f,
-	-1.0f,	0.0f,	0.0f,	15.0f / 64.0f,
-	0.0f,	0.0f,	0.0f,	20.0f / 64.0f,
-	1.0f,	0.0f,	0.0f,	15.0f / 64.0f,
-	2.0f,	0.0f,	0.0f,	6.0f / 64.0f,
-	3.0f,	0.0f,	0.0f,	1.0f / 64.0f,
+	1.0f,	 1.0f,	0.0f,	10.0f / 64.0f,
+	2.0f,	 2.0f,	0.0f,	7.0f / 64.0f,
+	3.0f,	 3.0f,	0.0f,	5.0f / 64.0f,
 };
 
 struct input
@@ -95,32 +112,10 @@ output vsOrigin(input iput)
 	return oput;
 }
 
-float4 psOrigin(output iput) : COLOR0
-{
-	float3 normal = normalize(iput.normal);
-	float3 viewDirection = normalize(iput.viewDirection);
-	float3 lightDirection = normalize(_lightDirection.xyz);
-
-	float4 diffuseColor = tex2D(_sampler, iput.uv);
-
-	float4 environmentColor = texCUBE(_samplerCube, reflect(-viewDirection, normal));
-	float diffuse = saturate(dot(-lightDirection, normal));
-	float specular = saturate(dot(reflect(lightDirection, normal), viewDirection));
-
-	float4 finalColor = diffuseColor;
-	finalColor.rgb = finalColor.rgb * diffuse;
-	finalColor.rgb = finalColor.rgb + (finalColor.rgb * specular);
-	finalColor.rgb = finalColor.rgb + (environmentColor.rgb * 0.5f);
-
-	return finalColor;
-}
-
 float4 psSolid(output iput) : COLOR0
 {
 	return float4(1.0f, 0.0f, 0.0f, 1.0f);
 }
-
-// ----- pass1 ----- //
 
 output vsPanel(input iput)
 {
@@ -132,8 +127,7 @@ output vsPanel(input iput)
 	return oput;
 }
 
-
-float4 psBlur(output iput) : COLOR0
+float4 psOutLine(output iput) : COLOR0
 {
 	float sumHrz = 0.0f;
 	float sumVtc = 0.0f;
@@ -142,8 +136,10 @@ float4 psBlur(output iput) : COLOR0
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			float2 offset = float2(i - 1, j - 1) * (1.0f / 640.0f);
-			float3 pColor = tex2D(_samplerRenderOutline, iput.uv + offset).rgb;
+			float2 offset = float2(
+				(i - 1) * (1.0f / _winSizeX),
+				(j - 1) * (1.0f / _winSizeY));
+			float3 pColor = tex2D(_samplerRenderOrigin, iput.uv + offset).rgb;
 
 			float calValue = dot(pColor, float3(0.3f, 0.59f, 0.12f));
 
@@ -156,7 +152,23 @@ float4 psBlur(output iput) : COLOR0
 	return float4(finalValue.rrr, 1.0f);
 }
 
-technique techOutline
+float4 psBlur(output iput) : COLOR0
+{
+	float4 color = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+	for(int i = 0; i < 7; ++i)
+	{
+		float2 offset = float2(
+			filter[i].x * (1.0f / _winSizeX),
+			filter[i].y * (1.0f / _winSizeY));
+
+		color += tex2D(_samplerRenderOutline, iput.uv + offset) * filter[i].w;
+	}
+
+	return color;
+}
+
+technique techOrigin
 {
 	pass p0
 	{
@@ -165,22 +177,22 @@ technique techOutline
 	}
 }
 
-technique techScreen
+technique techOutline
 {
 	pass p0
 	{
 		cullMode = NONE;
 
 		VertexShader = compile vs_3_0 vsPanel();
-		PixelShader = compile ps_3_0 psBlur();
+		PixelShader = compile ps_3_0 psOutLine();
 	}
 }
 
-technique myTechnique
+technique techBlur
 {
 	pass p0
 	{
-		VertexShader = compile vs_3_0 vsOrigin();
-		PixelShader = compile ps_3_0 psOrigin();
+		VertexShader = compile vs_3_0 vsPanel();
+		PixelShader = compile ps_3_0 psBlur();
 	}
 }

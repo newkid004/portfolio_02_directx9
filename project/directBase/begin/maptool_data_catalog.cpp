@@ -28,38 +28,31 @@ void maptool_data_catalog::createChar(OBJ::CHAR ** out, void * param)
 }
 
 // ----- duplicate ----- //
-void maptool_data_catalog::duplicate(OBJ::BASE ** outObject, OBJ::BASE * targetObject)
+void maptool_data_catalog::duplicate(staticMesh ** outObject, OBJ::PROP * targetObject)
 {
-	OBJ::BASE* result = new OBJ::BASE();
-	result->_standImage = targetObject->_standImage;
+	staticMesh* obj = (staticMesh*)targetObject->_object;
+	staticMesh* result = new staticMesh(obj->getMakeParam());
 
+	applyObject(result, obj);
 	*outObject = result;
 }
 
-void maptool_data_catalog::duplicate(OBJ::PROP ** outObject, OBJ::PROP * targetObject)
+void maptool_data_catalog::duplicate(skinnedMesh ** outObject, OBJ::CHAR * targetObject)
 {
-	OBJ::PROP* result = new OBJ::PROP();
+	skinnedMesh* obj = (skinnedMesh*)targetObject->_object;
+	skinnedMesh* result = new skinnedMesh(obj->getMakeParam());
 
-	result->_standImage = targetObject->_standImage;
-	result->_object = new staticMesh(((staticMesh*)targetObject->_object)->getMakeParam());
-
+	applyObject(result, obj);
 	*outObject = result;
 }
 
-void maptool_data_catalog::duplicate(OBJ::CHAR ** outObject, OBJ::CHAR * targetObject)
+void maptool_data_catalog::applyObject(renderObject * target, renderObject * own)
 {
-	OBJ::CHAR* result = new OBJ::CHAR();
+	target->setScale(own->getScale());
 
-	result->_standImage = targetObject->_standImage;
-	result->_object = new skinnedMesh(((skinnedMesh*)targetObject->_object)->getMakeParam());
+	target->setDirectionForward(own->getDirectForward());
+	target->setDirectionUp(own->getDirectUp());
+	target->setDirectionRight(own->getDirectRight());
 
-	*outObject = result;
-}
-
-void maptool_data_catalog::duplicate(OBJ::EVENT ** outObject, OBJ::EVENT * targetObject)
-{
-	OBJ::EVENT* result = new OBJ::EVENT();
-	result->_standImage = targetObject->_standImage;
-
-	*outObject = result;
+	target->setMatrixOffset(own->getOffsetMatrix());
 }

@@ -26,7 +26,7 @@ void gFunc::runEffectLoop(LPD3DXEFFECT effect, const string & technique, const f
 	effect->End();
 }
 
-void gFunc::runRenderTarget(LPDIRECT3DTEXTURE9 renderTarget, int clearOption, LPDIRECT3DSURFACE9 depthStensil, const std::function<void(void)>& callback, D3DCOLOR backColor)
+void gFunc::runRenderTarget(LPDIRECT3DTEXTURE9 renderTarget, int clearOption, LPDIRECT3DSURFACE9 depthStensil, const std::function<void(void)>& callback, bool isAlpha, D3DCOLOR backColor)
 {
 	LPDIRECT3DSURFACE9 originRenderTarget = nullptr;
 	LPDIRECT3DSURFACE9 originDepthStensil = nullptr;
@@ -41,18 +41,32 @@ void gFunc::runRenderTarget(LPDIRECT3DTEXTURE9 renderTarget, int clearOption, LP
 
 	// ·»´õÅ¸°Ù ¼³Á¤
 	LPDIRECT3DSURFACE9 targetSurface = nullptr;
-	if (SUCCEEDED(renderTarget->GetSurfaceLevel(0, &targetSurface)))
+	if (renderTarget)
 	{
-		MN_DEV->SetRenderTarget(0, targetSurface);
-		SAFE_RELEASE(targetSurface);
+		if (SUCCEEDED(renderTarget->GetSurfaceLevel(0, &targetSurface)))
+		{
+			MN_DEV->SetRenderTarget(0, targetSurface);
+			SAFE_RELEASE(targetSurface);
+		}
+
+		// ·»´õÅ¸°Ù ÃÊ±âÈ­
+		if (clearOption)
+			MN_DEV->Clear(0, NULL, clearOption, backColor, 1, 0);
 	}
 
-	// ·»´õÅ¸°Ù ÃÊ±âÈ­
-	if (clearOption)
-		MN_DEV->Clear(0, NULL, clearOption, backColor, 1, 0);
+	// ¾ËÆÄºí·»µù È®ÀÎ
+	if (isAlpha)
+	{
+		MN_DEV->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+		MN_DEV->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		MN_DEV->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	}
 
 	// ±¸¹® ½ÇÇà
 	callback();
+
+	if (isAlpha)
+		MN_DEV->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
 
 	// ¿øº» º¹±¸
 	MN_DEV->SetRenderTarget(0, originRenderTarget);

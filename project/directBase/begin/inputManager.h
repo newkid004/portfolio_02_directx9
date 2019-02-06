@@ -20,6 +20,7 @@ private:
 	DIMOUSESTATE	_mouseState;
 	DIMOUSESTATE	_mousePrevState;
 	POINT			_mousePos;
+
 	bool			_clickIgnore = false;
 
 	// pick
@@ -34,6 +35,7 @@ public :
 	void init(void);
 	void update(void);
 
+public :
 	bool keyDown(int keyCode);
 	bool keyPress(int keyCode);
 	bool keyUp(int keyCode);
@@ -48,7 +50,7 @@ public :
 
 public :
 	constexpr pick::ray & getPickRay(void) { return _pickRay; }
-	const POINT & getMousePos(void) { return _mousePos; }
+	constexpr POINT & getMousePos(void) { return _mousePos; }
 	bool getClickIgnore(void) { return _clickIgnore; }
 
 	void setMousePos(POINT input);
