@@ -26,7 +26,7 @@ protected :
 	virtual void drawDo(void) override;
 
 public :
-	const mParam & getMakeParam(void) { return _param; }
+	mParam & getMakeParam(void) { return _param; }
 	meshSet* getMeshSet(void) { return _meshSet; }
 
 public:

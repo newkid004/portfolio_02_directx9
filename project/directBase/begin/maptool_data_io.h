@@ -81,11 +81,21 @@ public :
 		~OBJ() {}
 	};
 
+public :	// ----- parse ----- //
+	static void parse(OBJ::BASE* own, json & j_in);
+	static void parse(OBJ::PROP* own, json & j_in);
+	static void parse(OBJ::CHAR* own, json & j_in);
+
 public :	// ----- apply ----- //
-	static void apply(OBJ::BASE* in, baseObject* obj);
-	static void apply(OBJ::PROP* in, staticMesh* obj);
-	static void apply(OBJ::CHAR* in, skinnedMesh* obj);
-	static void apply(OBJ::FIELD* in, terrain* obj);
+	static void apply(OBJ::BASE* in,	baseObject* obj);
+	static void apply(OBJ::PROP* in,	staticMesh* obj);
+	static void apply(OBJ::CHAR* in,	skinnedMesh* obj);
+	static void apply(OBJ::FIELD* in,	terrain* obj);
+
+	static void apply(baseObject* in,	OBJ::BASE* data);
+	static void apply(staticMesh* in,	OBJ::PROP* data);
+	static void apply(skinnedMesh* in,	OBJ::CHAR* data);
+	static void apply(terrain* in,		OBJ::FIELD* data);
 
 public :	// ----- creater ----- //
 	static void create(OBJ::BASE** out, baseObject* obj);

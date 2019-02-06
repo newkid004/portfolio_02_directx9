@@ -25,6 +25,7 @@ public:
 
 private :
 	void updateControl_Prop(void);
+	void updateControl_key(void);
 
 private :
 	void putProp(void);

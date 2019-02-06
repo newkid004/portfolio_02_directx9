@@ -43,14 +43,12 @@ void sceneMapTool::update(void)
 {
 	MN_UI->update();
 	updateControl_Prop();
+	updateControl_key();
 
 	sceneBase::update();
 
 	_window->update();
 	_field->update();
-
-	if (MN_KEY->keyPress(DIK_P))
-		_io->write();
 }
 
 void sceneMapTool::draw(void)
@@ -121,6 +119,36 @@ void sceneMapTool::updateControl_Prop(void)
 	}
 }
 
+void sceneMapTool::updateControl_key(void)
+{
+	// save, load
+	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_S))
+		_io->write();
+	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_L))
+		_io->read();
+
+	// prop delete
+	if (MN_KEY->keyPress(DIK_DELETE) && _field->getSet().selectionObject != nullptr)
+	{
+		auto & vObjList = _field->getSet().objList;
+		auto & vDataList = _field->getSet().dataList;
+
+		auto & selection = _field->getSet().selectionObject;
+		for (int i = 0; i < vObjList.size(); ++i)
+		{
+			if (vObjList[i] == selection)
+			{
+				vObjList.erase(vObjList.begin() + i);
+				vDataList.erase(vDataList.begin() + i);
+
+				selection = nullptr;
+
+				break;
+			}
+		}
+	}
+}
+
 void sceneMapTool::putProp(void)
 {
 	typedef maptool_data_catalog CATALOG;
@@ -129,31 +157,30 @@ void sceneMapTool::putProp(void)
 	windowCtlogMaptool* viewWindow = _window->getSet().focusedWindow;
 	
 	CATA_OBJ::BASE* item = viewWindow->getItem();
-	CATA_OBJ::BASE* duplication = nullptr;
+	renderObject* duplication = nullptr;
 
 	// 카탈로그 내 아이템정보 복사
-	if (item->_baseType & CATALOG::baseType::CHAR)			CATALOG::duplicate((CATA_OBJ::CHAR**)&duplication, (CATA_OBJ::CHAR*)item);
-	else if (item->_baseType & CATALOG::baseType::EVENT)	CATALOG::duplicate((CATA_OBJ::EVENT**)&duplication, (CATA_OBJ::EVENT*)item);
-	else if (item->_baseType & CATALOG::baseType::PROP)		CATALOG::duplicate((CATA_OBJ::PROP**)&duplication, (CATA_OBJ::PROP*)item);
+	if (item->_baseType & CATALOG::baseType::CHAR)			CATALOG::duplicate((skinnedMesh**)&duplication, (CATA_OBJ::CHAR*)item);
+	// else if (item->_baseType & CATALOG::baseType::EVENT)	CATALOG::duplicate((CATA_OBJ::EVENT**)&duplication, (CATA_OBJ::EVENT*)item);
+	else if (item->_baseType & CATALOG::baseType::PROP)		CATALOG::duplicate((staticMesh**)&duplication, (CATA_OBJ::PROP*)item);
 
 	if (duplication)
 	{
 		typedef maptool_data_io DATA_IO;
 
-		auto duplicateObject = ((CATALOG::OBJ::PROP*)duplication)->_object;
 		DATA_IO::OBJ::BASE* ioBase = nullptr;
 
-		if (item->_baseType & CATALOG::baseType::CHAR)			DATA_IO::create((DATA_IO::OBJ::CHAR**)&ioBase, (skinnedMesh*)duplicateObject);
+		if (item->_baseType & CATALOG::baseType::CHAR)			DATA_IO::create((DATA_IO::OBJ::CHAR**)&ioBase, (skinnedMesh*)duplication);
 		// else if (item->_baseType & CATALOG::baseType::EVENT)	DATA_IO::create((DATA_IO::OBJ::EVENT**)&ioBase, (skinnedMesh*)duplicateObject);
-		else if (item->_baseType & CATALOG::baseType::PROP)		DATA_IO::create((DATA_IO::OBJ::PROP**)&ioBase, (staticMesh*)duplicateObject);
+		else if (item->_baseType & CATALOG::baseType::PROP)		DATA_IO::create((DATA_IO::OBJ::PROP**)&ioBase, (staticMesh*)duplication);
 
 		// 복사한 정보 field내 리스트에 추가
 		if (ioBase)
 		{
-			_field->getSet().objList.push_back(duplicateObject);
+			_field->getSet().objList.push_back(duplication);
 			_field->getSet().dataList.push_back(ioBase);
 
-			_field->getSet().selectionObject = duplicateObject;
+			_field->getSet().selectionObject = duplication;
 
 			// 위치 초기화
 			D3DXVECTOR3 pickPos;
