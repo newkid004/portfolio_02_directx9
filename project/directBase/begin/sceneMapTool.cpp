@@ -30,6 +30,8 @@ void sceneMapTool::init(void)
 {
 	sceneBase::init();
 
+	ZeroMemory(&_mousePrev, sizeof(POINT));
+
 	_window	= new maptool_window();
 	_field	= new maptool_field(NULL);
 	_render	= new maptool_render();
@@ -96,6 +98,10 @@ void sceneMapTool::updateControl_Prop(void)
 	}
 	if (viewWindow == nullptr || viewWindow->getIndex() < 0)
 	{
+		// ready to rotate
+		if (MN_KEY->keyDown(DIK_LSHIFT) && MN_KEY->mousePress())
+			_mousePrev = MN_KEY->getMousePos();
+
 		renderObject* pickObject = nullptr;
 		if (MN_KEY->mousePress())
 		{
@@ -106,14 +112,34 @@ void sceneMapTool::updateControl_Prop(void)
 		if (MN_KEY->mousePress(EMouseInput::RIGHT))
 			_field->getSet().selectionObject = nullptr;
 
-		if (MN_KEY->mouseDown() && MN_KEY->keyDown(DIK_LCONTROL))
+		if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->mouseDown())
 		{
 			// 03. prop move
-			if (_field->getSet().selectionObject != nullptr && pickObject != _field->getSet().selectionObject)
+			if (_field->getSet().selectionObject != nullptr) // && pickObject != _field->getSet().selectionObject)
 			{
 				D3DXVECTOR3 pickPos;
 				if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
 					_field->getSet().selectionObject->setPosition(pickPos);
+			}
+		}
+		else if (MN_KEY->keyDown(DIK_LSHIFT) && MN_KEY->mouseDown())
+		{
+			// 04. prop rotate
+			if (_field->getSet().selectionObject != nullptr)
+			{
+				POINT mouseMove = {
+					MN_KEY->getMousePos().x - _mousePrev.x,
+					MN_KEY->getMousePos().y - _mousePrev.y };
+
+				if (!MN_KEY->keyDown(DIK_SPACE))
+					_field->getSet().selectionObject->rotateY(-mouseMove.x / 8.0f, false);
+				else
+				{
+					_field->getSet().selectionObject->rotateCameraX(-mouseMove.y / 8.0f);
+					_field->getSet().selectionObject->rotateCameraY(-mouseMove.x / 8.0f);
+				}
+
+				MN_KEY->setMousePos(_mousePrev);
 			}
 		}
 	}
@@ -182,10 +208,12 @@ void sceneMapTool::putProp(void)
 
 			_field->getSet().selectionObject = duplication;
 
-			// 위치 초기화
+			// 위치, 회전 초기화
 			D3DXVECTOR3 pickPos;
 			if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
 				_field->getSet().selectionObject->setPosition(pickPos);
+
+			_field->getSet().selectionObject->rotateBillboard(true, true);
 		}
 	}
 }

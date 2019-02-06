@@ -37,6 +37,11 @@ public :
 	void rotateY(float angle, bool isLocal = true);
 	void rotateZ(float angle, bool isLocal = true);
 
+	// 카메라 축을 기준으로 회전
+	void rotateCameraX(float angle);
+	void rotateCameraY(float angle);
+	void rotateCameraZ(float angle);
+
 	// 특정 기준으로 회전
 	void rotate2Pos(const D3DXVECTOR3 & pos, bool isSphere = true, bool isFixAxisX = false);
 	void rotate2Dir(const D3DXVECTOR3 & dir, bool isSphere = true, bool isFixAxisX = false);

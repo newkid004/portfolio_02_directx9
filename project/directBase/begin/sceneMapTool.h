@@ -17,6 +17,8 @@ private :
 	maptool_render*	_render = nullptr;
 	maptool_io*		_io = nullptr;
 
+	POINT _mousePrev;
+
 public:
 	virtual void init(void) override;
 	virtual void update(void) override;

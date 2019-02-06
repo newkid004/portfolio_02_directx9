@@ -171,6 +171,48 @@ void baseObject::rotateZ(float angle, bool isLocal)
 	normalizeAxis();
 }
 
+void baseObject::rotateCameraX(float angle)
+{
+	// 카메라 y축 기준 회전 행렬 설정
+	D3DXMATRIXA16 mRotation;
+	D3DXMatrixRotationAxis(&mRotation, &GET_CAMERA()->getDirectRight(), D3DXToRadian(angle));
+
+	// 기저 벡터 회전
+	D3DXVec3TransformNormal(&_directionForward, &_directionForward, &mRotation);
+	D3DXVec3TransformNormal(&_directionRight, &_directionRight, &mRotation);
+	D3DXVec3TransformNormal(&_directionUp, &_directionUp, &mRotation);
+
+	normalizeAxis();
+}
+
+void baseObject::rotateCameraY(float angle)
+{
+	// 카메라 y축 기준 회전 행렬 설정
+	D3DXMATRIXA16 mRotation;
+	D3DXMatrixRotationAxis(&mRotation, &GET_CAMERA()->getDirectUp(), D3DXToRadian(angle));
+
+	// 기저 벡터 회전
+	D3DXVec3TransformNormal(&_directionForward, &_directionForward, &mRotation);
+	D3DXVec3TransformNormal(&_directionRight, &_directionRight, &mRotation);
+	D3DXVec3TransformNormal(&_directionUp, &_directionUp, &mRotation);
+
+	normalizeAxis();
+}
+
+void baseObject::rotateCameraZ(float angle)
+{
+	// 카메라 z축 기준 회전 행렬 설정
+	D3DXMATRIXA16 mRotation;
+	D3DXMatrixRotationAxis(&mRotation, &GET_CAMERA()->getDirectForward(), D3DXToRadian(angle));
+
+	// 기저 벡터 회전
+	D3DXVec3TransformNormal(&_directionForward, &_directionForward, &mRotation);
+	D3DXVec3TransformNormal(&_directionRight, &_directionRight, &mRotation);
+	D3DXVec3TransformNormal(&_directionUp, &_directionUp, &mRotation);
+
+	normalizeAxis();
+}
+
 void baseObject::rotate2Pos(const D3DXVECTOR3 & pos, bool isSphere, bool isFixAxisX)
 {
 	D3DXVECTOR3 dir = pos - _position;

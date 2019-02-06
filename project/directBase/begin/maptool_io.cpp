@@ -59,6 +59,8 @@ void maptool_io::buildObject()
 
 void maptool_io::spreadObject(void)
 {
+	_bindData->getSet().selectionObject = nullptr;
+
 	auto iter = _mJson.find("object");
 	json*& j = iter->second;
 
