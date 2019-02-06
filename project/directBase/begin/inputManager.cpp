@@ -33,6 +33,8 @@ void inputManager::update(void)
 	_mouseDevice->GetDeviceState(sizeof(_mouseState), &_mouseState);
 	_keyDevice->GetDeviceState(sizeof(_keyStates), _keyStates);
 
+	updateMousePos();
+
 	if (mouseDown(EMouseInput::LEFT) ||
 		mouseDown(EMouseInput::RIGHT) || 
 		mouseDown(EMouseInput::MIDDLE))
@@ -40,7 +42,6 @@ void inputManager::update(void)
 		pick::createPickRay(&_pickRay);
 	}
 
-	updateMousePos();
 	_clickIgnore = false;
 }
 

@@ -23,7 +23,7 @@ protected :
 
 protected :
 	virtual UI_LIST_NODE updateWindow(void) override;
-	void updateScroll(void);
+	void updateControl(void);
 
 	void drawUI(void) override;
 

@@ -44,6 +44,7 @@ void skinnedMesh::drawPre(void)
 #if SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_SHADER
 	_effect->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
 	_effect->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
+	_effect->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
 
 	D3DXVECTOR4 viewPosition(GET_CAMERA()->getPosition(), 1.0f);
 	_effect->SetVector("_viewPosition", &viewPosition);

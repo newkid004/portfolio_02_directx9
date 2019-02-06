@@ -52,7 +52,7 @@ public :
 	bool getClickIgnore(void) { return _clickIgnore; }
 
 	void setMousePos(POINT input);
-	void setClickIgnore(void) { _clickIgnore = true; }
+	void setClickIgnore(bool isIgnore = true) { _clickIgnore = isIgnore; }
 
 private :
 	void updateMousePos(void);

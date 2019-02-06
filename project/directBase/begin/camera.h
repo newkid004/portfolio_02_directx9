@@ -19,6 +19,7 @@ protected:
 
 	D3DXMATRIXA16 _mView;
 	D3DXMATRIXA16 _mProjection;
+	D3DXMATRIXA16 _mViewProjection;
 
 public:
 	virtual void update(void) override;
@@ -42,6 +43,7 @@ public :
 
 	constexpr D3DXMATRIXA16 & getMatrixView(void) { return _mView; }
 	constexpr D3DXMATRIXA16 & getMatrixProjection(void) { return _mProjection; }
+	constexpr D3DXMATRIXA16 & getMatrixViewProjection(void) { return _mViewProjection; }
 
 public:
 	camera(float aspect, float fov = 60.0f, float maxDistance = 1000.0f);

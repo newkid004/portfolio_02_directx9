@@ -68,10 +68,10 @@ renderObject * maptool_field::getPickObject(void)
 			// frustum culling 확인
 			if (!rObject->isCull())
 			{
-				maptool_data::base* rData = _fieldSet.dataList[i];
+				maptool_data_io::OBJ::BASE* rData = _fieldSet.dataList[i];
 				
 				// 형태 확인 : 캐릭터
-				if (rData->_baseType & maptool_data::baseType::CHAR)
+				if (rData->_baseType & maptool_data_io::baseType::CHAR)
 				{
 					if (auto viewObject = dynamic_cast<skinnedMesh*>(rObject))
 					{
@@ -91,7 +91,7 @@ renderObject * maptool_field::getPickObject(void)
 					}
 				}
 				// 형태 확인 : 물체
-				else if (rData->_baseType & maptool_data::baseType::PROP)
+				else if (rData->_baseType & maptool_data_io::baseType::PROP)
 				{
 					if (auto viewObject = dynamic_cast<staticMesh*>(rObject))
 					{

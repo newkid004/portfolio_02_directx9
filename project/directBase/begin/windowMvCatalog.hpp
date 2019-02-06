@@ -68,20 +68,23 @@ inline UI_LIST_NODE windowMvCatalog<T>::updateWindow(void)
 			_vCatalog[i]->getInfo().backImage = nullptr;
 	}
 
-	updateScroll();
+	updateControl();
 	_selection->updateWindow();
 
 	return _managedNode;
 }
 
 template<typename T>
-inline void windowMvCatalog<T>::updateScroll(void)
+inline void windowMvCatalog<T>::updateControl(void)
 {
 	if (gFunc::isMouseInRange(_info.pos, getAbsSize()))
 	{
 		if (MN_KEY->wheelUp())		_scroll->moveScroll(-10);
 		if (MN_KEY->wheelDown())	_scroll->moveScroll(10);
 	}
+
+	// 선택 취소
+	if (MN_KEY->mouseDown(EMouseInput::RIGHT)) _selectIndex = -1;
 }
 
 template<typename T>

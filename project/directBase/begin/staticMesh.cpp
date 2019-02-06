@@ -42,6 +42,7 @@ void staticMesh::drawDo(void)
 	_effect->SetMatrix("_mWorld", &getMatrixFinal());
 	_effect->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
 	_effect->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
+	_effect->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
 
 	for (int i = 0; i < _meshSet->numMaterial; ++i)
 	{

@@ -19,6 +19,8 @@ void camera::update(void)
 	updateCamera();
 
 	MN_DEV->SetTransform(D3DTS_VIEW, &_mView);
+
+	_mViewProjection = _mView * _mProjection;
 }
 void camera::update(const D3DXVECTOR3 & targetDirection)
 {

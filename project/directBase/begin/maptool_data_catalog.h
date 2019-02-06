@@ -27,6 +27,7 @@ public :
 			int _baseType = baseType::BASE;
 
 			LPDIRECT3DTEXTURE9 _standImage = nullptr;
+			virtual ~BASE() {}	// 다형성 보장 (dynamic_cast)
 		};
 
 		struct PROP : public BASE

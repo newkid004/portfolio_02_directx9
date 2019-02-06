@@ -1,7 +1,12 @@
 #pragma once
 #include "kGlobalDefine.h"
 
-class maptool_data
+class baseObject;
+class terrain;
+class staticMesh;
+class skinnedMesh;
+
+class maptool_data_io
 {
 public :
 // ----- enum ----- //
@@ -16,55 +21,80 @@ public :
 	};
 
 // ----- base ----- //
-	struct base
+	class OBJ
 	{
-		int _baseType = baseType::BASE;
+	public :
+		struct BASE
+		{
+			int _baseType = baseType::BASE;
 
-		std::array<float, 3> _position;
+			std::array<float, 3> _position;
+
+			virtual void write(json & in_Json);
+		};
+
+		struct PROP : public BASE
+		{
+			std::string _source;
+			std::string _effect;
+
+			std::array<float, 3> _scale;
+
+			std::array<float, 3> _rotateZ;
+			std::array<float, 3> _rotateY;
+			std::array<float, 3> _rotateX;
+
+			virtual void write(json & in_Json);
+
+			PROP() { _baseType |= baseType::PROP; }
+		};
+
+		struct WALL : public BASE
+		{
+			std::array<float, 3> _normal;
+
+			virtual void write(json & in_Json);
+
+			WALL() { _baseType |= baseType::WALL; }
+		};
+
+		// ----- prop ----- //
+		struct FIELD : public PROP
+		{
+			std::array<int, 2> _mapSize;
+			std::array<float, 2> _tileSize;
+
+			virtual void write(json & in_Json);
+
+			FIELD() { _baseType |= baseType::FIELD; }
+		};
+
+		struct CHAR : public PROP
+		{
+			virtual void write(json & in_Json);
+
+			CHAR() { _baseType |= baseType::CHAR; }
+		};
+
+	private :
+		OBJ() {}
+		~OBJ() {}
 	};
 
-	struct prop : public base
-	{
-		std::string _source;
+public :	// ----- apply ----- //
+	static void apply(OBJ::BASE* in, baseObject* obj);
+	static void apply(OBJ::PROP* in, staticMesh* obj);
+	static void apply(OBJ::CHAR* in, skinnedMesh* obj);
+	static void apply(OBJ::FIELD* in, terrain* obj);
 
-		std::array<float, 3> _scale;
-
-		std::array<float, 3> _rotateX;
-		std::array<float, 3> _rotateY;
-		std::array<float, 3> _rotateZ;
-
-		prop() { _baseType |= baseType::PROP; }
-	};
-
-	struct wall : public base
-	{
-		std::array<float, 3> _normal;
-
-		wall() { _baseType |= baseType::WALL; }
-	};
-
-// ----- prop ----- //
-	struct field : public prop
-	{
-		std::array<int, 2> _mapSize;
-		std::array<float, 2> _tileSize;
-
-		field() { _baseType |= baseType::FIELD; }
-	};
-
-	struct character : public prop
-	{
-		character() { _baseType |= baseType::CHAR; }
-	};
-
-public :
-	void write(json & in_Json, base & input);
-	void write(json & in_Json, prop & input);
-	void write(json & in_Json, field & input);
-	void write(json & in_Json, character & input);
+public :	// ----- creater ----- //
+	static void create(OBJ::BASE** out, baseObject* obj);
+	static void create(OBJ::PROP** out, staticMesh* obj);
+	static void create(OBJ::CHAR** out, skinnedMesh* obj);
+	static void create(OBJ::FIELD** out, terrain* obj);
 
 private:
-	maptool_data() {};
-	~maptool_data() {};
+	maptool_data_io() {};
+	~maptool_data_io() {};
 };
 
