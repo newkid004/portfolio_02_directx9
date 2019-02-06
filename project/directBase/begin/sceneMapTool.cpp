@@ -6,19 +6,23 @@
 #include "debugGrid.h"
 
 #include "maptool_data_io.h"
+
 #include "maptool_window.h"
 #include "maptool_field.h"
+#include "maptool_render.h"
 
 #include "windowCtlogMaptool.h"
 
 #include "terrain.h"
 #include "staticMesh.h"
+#include "skinnedMesh.h"
 #include "pickRay.h"
 
 sceneMapTool::~sceneMapTool()
 {
 	SAFE_DELETE(_window);
 	SAFE_DELETE(_field);
+	SAFE_DELETE(_render);
 }
 
 void sceneMapTool::init(void)
@@ -27,6 +31,7 @@ void sceneMapTool::init(void)
 
 	_window = new maptool_window();
 	_field = new maptool_field(NULL);
+	_render = new maptool_render();
 
 	// _grid->setVisible(false);
 	// ((cameraControlable*)_camera)->setVisible(false);
@@ -45,9 +50,17 @@ void sceneMapTool::update(void)
 
 void sceneMapTool::draw(void)
 {
-	sceneBase::draw();
+	// selection outline
+	baseObject*& selection = _field->getSet().selectionObject;
+	if (selection)
+	{
+		if (staticMesh* obj = dynamic_cast<staticMesh*>(selection))
+			_render->drawOutLine(obj);
+	}
 
 	_field->draw();
+
+	sceneBase::draw();
 }
 
 void sceneMapTool::drawUI(void)
@@ -60,10 +73,8 @@ void sceneMapTool::drawUI(void)
 void sceneMapTool::updateControl_Prop(void)
 {
 	if (MN_KEY->getClickIgnore())
-	{
-		_field->getSet().selectionObject = nullptr;
 		return;
-	}
+
 	windowCtlogMaptool* viewWindow = nullptr;
 	if (viewWindow = _window->getSet().focusedWindow)
 	{
@@ -78,6 +89,7 @@ void sceneMapTool::updateControl_Prop(void)
 				CATA_OBJ::BASE* item = viewWindow->getItem();
 				CATA_OBJ::BASE* duplication = nullptr;
 
+				// 카탈로그 내 아이템정보 복사
 				if (item->_baseType & CATALOG::baseType::CHAR)			CATALOG::duplicate((CATA_OBJ::CHAR**)&duplication, (CATA_OBJ::CHAR*)item);
 				else if (item->_baseType & CATALOG::baseType::EVENT)	CATALOG::duplicate((CATA_OBJ::EVENT**)&duplication, (CATA_OBJ::EVENT*)item);
 				else if (item->_baseType & CATALOG::baseType::PROP)		CATALOG::duplicate((CATA_OBJ::PROP**)&duplication, (CATA_OBJ::PROP*)item);
@@ -93,12 +105,18 @@ void sceneMapTool::updateControl_Prop(void)
 					// else if (item->_baseType & CATALOG::baseType::EVENT)	DATA_IO::create((DATA_IO::OBJ::EVENT**)&ioBase, (skinnedMesh*)duplicateObject);
 					else if (item->_baseType & CATALOG::baseType::PROP)		DATA_IO::create((DATA_IO::OBJ::PROP**)&ioBase, (staticMesh*)duplicateObject);
 
+					// 복사한 정보 field내 리스트에 추가
 					if (ioBase)
 					{
 						_field->getSet().objList.push_back(duplicateObject);
 						_field->getSet().dataList.push_back(ioBase);
 
 						_field->getSet().selectionObject = duplicateObject;
+
+						// 위치 초기화
+						D3DXVECTOR3 pickPos;
+						if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
+							_field->getSet().selectionObject->setPosition(pickPos);
 					}
 				}
 				viewWindow->getIndex() = -1;
@@ -128,4 +146,8 @@ void sceneMapTool::updateControl_Prop(void)
 			}
 		}
 	}
+}
+
+void sceneMapTool::drawSelection(void)
+{
 }

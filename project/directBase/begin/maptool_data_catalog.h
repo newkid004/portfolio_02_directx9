@@ -63,6 +63,9 @@ public :
 	static void duplicate(OBJ::EVENT** outObject, OBJ::EVENT* targetObject);
 
 private :
+	static void applyObject(renderObject* target, renderObject* own);
+
+private :
 	maptool_data_catalog() {};
 	~maptool_data_catalog() {};
 };

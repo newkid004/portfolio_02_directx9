@@ -337,6 +337,9 @@
     <Filter Include="main\classes\quadTree\frustum">
       <UniqueIdentifier>{ad9e4436-1560-46d1-818d-06486524e227}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\classes\render">
+      <UniqueIdentifier>{fcae32aa-9259-48a1-8f32-e50fd7262c7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -573,6 +576,9 @@
     <ClInclude Include="quadTree_Frustum.h">
       <Filter>main\classes\quadTree\frustum</Filter>
     </ClInclude>
+    <ClInclude Include="maptool_render.h">
+      <Filter>main\classes\scene\01_mapTool\classes\render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -770,7 +776,12 @@
     <ClCompile Include="quadTree_Frustum.cpp">
       <Filter>main\classes\quadTree\frustum</Filter>
     </ClCompile>
-    <ClCompile Include="maptool_data_catalog.cpp" />
+    <ClCompile Include="maptool_data_catalog.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\data\catalog</Filter>
+    </ClCompile>
+    <ClCompile Include="maptool_render.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

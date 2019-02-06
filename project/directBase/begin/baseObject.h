@@ -58,6 +58,7 @@ public :	// 접근, 지정자
 	constexpr D3DXVECTOR3 & getDirectForward	(void) { return _directionForward; }
 
 	D3DXVECTOR3 getOffset(void) { return D3DXVECTOR3(_mOffset(3, 0), _mOffset(3, 1), _mOffset(3, 2)); }
+	constexpr D3DXMATRIXA16 & getOffsetMatrix(void) { return _mOffset; }
 	constexpr D3DXVECTOR3 & getOffsetPosition(void) { return _offsetPosition; }
 	
 	// 지정자
