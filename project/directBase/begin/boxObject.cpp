@@ -54,7 +54,7 @@ LPD3DXMESH boxObject::createWallMesh(void)
 {
 	LPD3DXMESH pMesh = nullptr;
 
-	D3DXCreateBox(GET_DEVICE_MANAGER()->getDevice(), 15, 8, 2, &pMesh, NULL);
+	D3DXCreateBox(GET_DEVICE_MANAGER()->getDevice(), 10, 8, 1, &pMesh, NULL);
 
 	return pMesh;
 }

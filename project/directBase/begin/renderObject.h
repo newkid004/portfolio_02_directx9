@@ -45,7 +45,7 @@ public:
 	debugDraw* getDebugDraw(void) { return _debugDraw; }
 
 	void setVisible(bool input) { _isVisible = input; }
-	void setDebugEnalbe(bool input, EDebugDrawType drawType = EDebugDrawType::BOX);
+	void setDebugEnable(bool input, EDebugDrawType drawType = EDebugDrawType::BOX);
 	void setBoundingBox(const boundingBox & input) { _bBox = input; };
 	void setBoundingSphere(const boundingSphere & input) { _bSphere = input; };
 

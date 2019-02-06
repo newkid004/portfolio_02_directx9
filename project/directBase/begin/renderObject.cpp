@@ -113,7 +113,7 @@ void renderObject::getObjectBox(objectBox * out)
 	}
 }
 
-void renderObject::setDebugEnalbe(bool input, EDebugDrawType drawType)
+void renderObject::setDebugEnable(bool input, EDebugDrawType drawType)
 {
 	if (_isDebugEnable != input)
 	{

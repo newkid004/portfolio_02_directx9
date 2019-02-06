@@ -9,6 +9,7 @@
 #include "eventCatcher.h"
 #include "animationController.h"
 #include "skinnedMesh.h"
+#include "staticMesh.h"
 #include "boxObject.h"
 
 #define ZOMBIE_NUM 1
@@ -21,11 +22,15 @@ sceneCollisionTest::~sceneCollisionTest()
 	{
 		SAFE_DELETE(m_pSkinnedMesh[i]);
 	}
+
+	SAFE_DELETE(m_pMapMesh);
 }
 
 void sceneCollisionTest::init(void)
 {
 	sceneBase::init();
+
+	this->initEvent();
 
 	for (int i = 0; i < ZOMBIE_NUM; i++)
 	{
@@ -38,10 +43,48 @@ void sceneCollisionTest::init(void)
 		m_pSkinnedMesh[i]->rotateZ(180, true);
 	}
 
+	m_pMapMesh = this->createMapMesh();
+	m_pMapMesh->setScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
+	m_pMapMesh->moveY(10);
+
 	m_pBoxObject = new boxObject;
 	m_pBoxObject->moveZ(4);
 	m_pBoxObject->moveY(4);
 
+	m_pBoxObject->setDebugEnable(true, EDebugDrawType::SPHERE);
+	
+}
+
+void sceneCollisionTest::update(void)
+{
+	sceneBase::update();
+
+	this->updateControl();
+
+	for (int i = 0; i < ZOMBIE_NUM; i++)
+	{
+		m_pSkinnedMesh[i]->update();
+	}
+	m_pMapMesh->update();
+
+	m_pBoxObject->update();
+}
+
+void sceneCollisionTest::draw(void)
+{
+	sceneBase::draw();
+
+	for (int i = 0; i < ZOMBIE_NUM; i++)
+	{
+		m_pSkinnedMesh[i]->draw();
+	}
+
+	//m_pMapMesh->draw();
+	m_pBoxObject->draw();
+}
+
+void sceneCollisionTest::initEvent(void)
+{
 	eventCatcher* stEventCatcher1 = new eventCatcher;
 	eventCatcher* stEventCatcher2 = new eventCatcher;
 
@@ -67,33 +110,6 @@ void sceneCollisionTest::init(void)
 
 	MN_EVENT->getEventCatcherArray(stEventCatcher1->getParam()).push_back(stEventCatcher1);
 	MN_EVENT->getEventCatcherArray(stEventCatcher2->getParam()).push_back(stEventCatcher2);
-}
-
-void sceneCollisionTest::update(void)
-{
-	sceneBase::update();
-
-	this->updateControl();
-
-	for (int i = 0; i < ZOMBIE_NUM; i++)
-	{
-		m_pSkinnedMesh[i]->update();
-	}
-
-	m_pBoxObject->update();
-
-}
-
-void sceneCollisionTest::draw(void)
-{
-	sceneBase::draw();
-
-	for (int i = 0; i < ZOMBIE_NUM; i++)
-	{
-		m_pSkinnedMesh[i]->draw();
-	}
-
-	m_pBoxObject->draw();
 }
 
 void sceneCollisionTest::updateControl(void)
@@ -135,8 +151,17 @@ void sceneCollisionTest::updateControl(void)
 skinnedMesh * sceneCollisionTest::createSkinnedMesh(void)
 {
 	skinnedMesh::mParam stParameters = {
-	"resource/mesh/L4D1/male/male.x",
-	"resource/effect/skinnedMesh.fx"
+		"resource/mesh/L4D1/male/male.x",
+		"resource/effect/skinnedMesh.fx"
 	};
 	return new skinnedMesh(stParameters);
+}
+
+staticMesh * sceneCollisionTest::createMapMesh(void)
+{
+	staticMesh::mParam stParameters = {
+		"resource/mesh/L4D1/map/apartment.x",
+		"resource/effect/example_16.fx"
+	};
+	return new staticMesh(stParameters);
 }
