@@ -17,6 +17,7 @@ protected :
 
 	int _selectIndex = -1;
 	float _offset = 0.0f;
+	D3DXVECTOR2 _range;
 
 	std::vector<T> _vData;
 	std::vector<buttonItem*> _vItem;
@@ -33,15 +34,16 @@ protected :
 public :
 	constexpr int & getIndex(void) { return _selectIndex; }
 	constexpr float & getOffset(void) { return _offset; }
+	constexpr D3DXVECTOR2 & getRange(void) { return _range; }
 	constexpr T & getItem(void) { return _vData[_selectIndex]; }
 
 	void addItem(T input);
 
 private :
-	float rowCount(void) { return _vData.size() / 4; }
+	float rowCount(void) { return _vData.size() / (int)_range.y; }
 
 protected:
-	windowMvCatalog(const uiInfo & info);
+	windowMvCatalog(const uiInfo & info, D3DXVECTOR2 & range);
 	virtual ~windowMvCatalog();
 };
 

@@ -1,7 +1,7 @@
 #include "windowCtlogMaptool.h"
 
-windowCtlogMaptool::windowCtlogMaptool(const uiInfo & info) :
-	windowMvCatalog(info)
+windowCtlogMaptool::windowCtlogMaptool(const uiInfo & info, D3DXVECTOR2 range) :
+	windowMvCatalog(info, range)
 {
 }
 

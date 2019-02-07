@@ -27,13 +27,13 @@ windowMvList::windowMvList(const uiInfo & info, int listCount) :
 
 	for (int i = 0; i < _listCount + 1; ++i)
 	{
-		auto btn = new buttonItemText(this, i, &_selectIndex, &_offset, _listCount);
+		// auto btn = new buttonItemText(this, i, &_selectIndex, &_offset, &_range);
 	
-		_vItem.push_back(btn);
-	
-		char buf[64];
-		sprintf_s(buf, "item_%d", i);
-		addButton(buf, btn);
+		// _vItem.push_back(btn);
+		// 
+		// char buf[64];
+		// sprintf_s(buf, "item_%d", i);
+		// addButton(buf, btn);
 	}
 }
 

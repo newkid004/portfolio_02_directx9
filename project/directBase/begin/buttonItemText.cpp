@@ -7,12 +7,12 @@
 
 #include "windowMvList.h"
 
-buttonItemText::buttonItemText(windowBase * bind, int index, int * bindIndex, float * bindOffset, int countY) :
-	buttonItem(bind, index, bindIndex, bindOffset, 1, countY)
+buttonItemText::buttonItemText(windowBase * bind, int index, int * bindIndex, float * bindOffset, D3DXVECTOR2 * bindRange) :
+	buttonItem(bind, index, bindIndex, bindOffset, bindRange)
 {
 	_activeSet.press = [this](void)->UI_LIST_NODE {
 		if (_bindString)
-			*_bindIndex = _index + (int)(*_bindOffset / getAbsSize().y) * (int)_viewCount.x;
+			*_bindIndex = _index + (int)(*_bindOffset / getAbsSize().y) * (int)_bindRange->x;
 
 		return _bindWindow->getNode();
 	};

@@ -13,16 +13,17 @@
 typedef windowBase::UI_LIST_NODE UI_LIST_NODE;
 
 template<typename T>
-windowMvCatalog<T>::windowMvCatalog(const uiInfo & info) :
-	windowMoveable(info)
+windowMvCatalog<T>::windowMvCatalog(const uiInfo & info, D3DXVECTOR2 & range) :
+	windowMoveable(info),
+	_range(range)
 {
-	_scroll = (buttonScrollVertical*)addButton("scroll", new buttonScrollVertical(this, 4, 4));
+	_scroll = (buttonScrollVertical*)addButton("scroll", new buttonScrollVertical(this, _range.y, _range.y));
 	_selection =  new windowSelectionCatalog<T>(info, this);
-	_selection->init(4, 4);
+	_selection->init(_range.x, _range.y);
 
-	for (int i = 0; i < 20; ++i)
+	for (int i = 0; i < (_range.x + 1) * _range.y; ++i)
 	{
-		auto btn = new buttonItem(this, i, &_selectIndex, &_offset, 4, 4);
+		auto btn = new buttonItem(this, i, &_selectIndex, &_offset, &_range);
 		_vItem.push_back(btn);
 
 		char buf[64];
@@ -45,13 +46,13 @@ inline UI_LIST_NODE windowMvCatalog<T>::updateWindow(void)
 {
 	_offset = 
 		(_info.size.y - BTN_MOVE_BAR_SIZE_Y) *
-		_scroll->getValue() * (rowCount() / 4.0f);
+		_scroll->getValue() * (rowCount() / _range.y);
 
-	float btnSize = (_info.size.y - BTN_MOVE_BAR_SIZE_Y) / 4.0f;
+	float btnSize = (_info.size.y - BTN_MOVE_BAR_SIZE_Y) / _range.y;
 	float modOffset = std::fmodf(_offset, btnSize);
-	for (int i = 0; i < 20; ++i)
+	for (int i = 0; i < (_range.x + 1) * _range.y; ++i)
 	{
-		int dataIndex = (i % 4) + ((_offset - modOffset + (btnSize * (i / 4))) / btnSize) * 4;
+		int dataIndex = std::fmodf(i, _range.x) + ((_offset - modOffset + (btnSize * (i / (int)_range.x))) / btnSize) * (int)_range.y;
 
 		if (dataIndex < _vData.size())
 		{
@@ -102,7 +103,7 @@ inline void windowMvCatalog<T>::addItem(T input)
 	_vData.push_back(input);
 
 	int rows = rowCount();
-	int listItemRows = rows < 4 ? 4 : rows;
+	int listItemRows = rows < _range.y ? _range.y : rows;
 
-	_scroll->putListHeight(listItemRows, 4);
+	_scroll->putListHeight(listItemRows, _range.y);
 }

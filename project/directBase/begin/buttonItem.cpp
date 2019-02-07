@@ -7,27 +7,26 @@
 
 typedef windowBase::UI_LIST_NODE UI_LIST_NODE;
 
-buttonItem::buttonItem(windowBase * bind, int index, int * bindIndex, float * bindOffset, int countX, int countY) :
+buttonItem::buttonItem(windowBase * bind, int index, int * bindIndex, float * bindOffset, D3DXVECTOR2 * bindRange) :
 	buttonBase(bind),
 	_index(index),
 	_bindIndex(bindIndex),
-	_bindOffset(bindOffset)
+	_bindOffset(bindOffset),
+	_bindRange(bindRange)
 {
 	_info.pos = D3DXVECTOR2(
-		index % countX,
-		index / countX);
+		std::fmodf(index, _bindRange->x),
+		index / _bindRange->x);
 
 	_info.size = D3DXVECTOR2(
-		(bind->getInfo().size.x - BTN_SCROLL_SIZE_X) / (float)countX,
-		(bind->getInfo().size.y - BTN_MOVE_BAR_SIZE_Y) / (float)countY);
+		(bind->getInfo().size.x - BTN_SCROLL_SIZE_X) /_bindRange->x,
+		(bind->getInfo().size.y - BTN_MOVE_BAR_SIZE_Y) / _bindRange->y);
 
 	_info.pos = gFunc::Vec2Mlt(_info.pos, _info.size);
 
-	_viewCount = D3DXVECTOR2(countX, countY);
-
 	_activeSet.press = [this](void)->UI_LIST_NODE {
 		if (_info.backImage)
-			*_bindIndex = _index + (int)(*_bindOffset / getAbsSize().y) * (int)_viewCount.x;
+			*_bindIndex = _index + (int)(*_bindOffset / getAbsSize().y) * (int)_bindRange->x;
 
 		return _bindWindow->getNode();
 	};
@@ -37,9 +36,9 @@ UI_LIST_NODE buttonItem::updateAlways(void)
 {
 	auto absSize = getAbsSize();
 
-	_info.pos.x = (std::fmodf(_index, _viewCount.x)) * absSize.x;
+	_info.pos.x = (std::fmodf(_index, _bindRange->x)) * absSize.x;
 	_info.pos.y =
-		((_index / (int)_viewCount.x) * absSize.y) -
+		((_index / (int)_bindRange->x) * absSize.y) -
 		std::fmodf(*_bindOffset, absSize.y) +
 		BTN_MOVE_BAR_SIZE_Y;
 
@@ -53,13 +52,13 @@ void buttonItem::drawUI(void)
 		RECT clipRect = { 0, };
 		RECT* pRect = nullptr;
 
-		if ((int)(_index / _viewCount.x) == 0)
+		if (_index / (int)_bindRange->x == 0)
 		{
 			clipRect.top = -(_info.pos.y - BTN_MOVE_BAR_SIZE_Y);
 			pRect = &clipRect;
 		}
 
-		else if (_viewCount.y - 1.0f < _index / _viewCount.x)
+		else if (_bindRange->y - 1.0f < _index / (int)_bindRange->x)
 		{
 			if (_bindWindow->getInfo().size.y <= _info.pos.y)
 				return;

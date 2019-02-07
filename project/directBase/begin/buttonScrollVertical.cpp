@@ -62,7 +62,7 @@ void buttonScrollVerticalHead::moveScroll(LONG interval)
 	auto & scrollValue = btnScrollFunc::b2Body(_body)->getValue();
 	auto body = btnScrollFunc::b2Body(_body);
 
-	if (_info.size.y == body->getInfo().size.y)
+	if (_info.scale.y == body->getInfo().size.y)
 		return;
 
 	bool isCorrect = false;

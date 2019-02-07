@@ -15,7 +15,7 @@ public :
 	std::string & getString(void) { return *_bindString; }
 
 public:
-	buttonItemText(windowBase* bind, int index, int* bindIndex, float* bindOffset, int countY);
+	buttonItemText(windowBase* bind, int index, int* bindIndex, float* bindOffset, D3DXVECTOR2 * bindRange);
 	~buttonItemText();
 };
 
