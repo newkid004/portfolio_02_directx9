@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -161,7 +161,8 @@
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="boxObject.h" />
     <ClInclude Include="buttonBase.h" />
-    <ClInclude Include="buttonCatalogItem.h" />
+    <ClInclude Include="buttonItem.h" />
+    <ClInclude Include="buttonItemText.h" />
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
@@ -226,6 +227,7 @@
     <ClInclude Include="spriteBase.h" />
     <ClInclude Include="staticMesh.h" />
     <ClInclude Include="terrain.h" />
+    <ClInclude Include="textManager.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
@@ -236,7 +238,11 @@
     <ClInclude Include="windowMoveable.h" />
     <ClInclude Include="windowMvCatalog.h" />
     <ClInclude Include="windowMvCatalog.hpp" />
+    <ClInclude Include="windowMvList.h" />
     <ClInclude Include="windowRenderTarget.h" />
+    <ClInclude Include="windowSelection.h" />
+    <ClInclude Include="windowSelectionCatalog.h" />
+    <ClInclude Include="windowSelectionCatalog.hpp" />
     <ClInclude Include="windowStatic.h" />
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +251,8 @@
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="boxObject.cpp" />
     <ClCompile Include="buttonBase.cpp" />
-    <ClCompile Include="buttonCatalogItem.cpp" />
+    <ClCompile Include="buttonItem.cpp" />
+    <ClCompile Include="buttonItemText.cpp" />
     <ClCompile Include="buttonMoveBar.cpp" />
     <ClCompile Include="buttonScrollVertical.cpp" />
     <ClCompile Include="buttonStatic.cpp" />
@@ -300,6 +307,7 @@
     <ClCompile Include="spriteBase.cpp" />
     <ClCompile Include="staticMesh.cpp" />
     <ClCompile Include="terrain.cpp" />
+    <ClCompile Include="textManager.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
@@ -307,7 +315,9 @@
     <ClCompile Include="windowCtlogMaptool.cpp" />
     <ClCompile Include="windowManager.cpp" />
     <ClCompile Include="windowMoveable.cpp" />
+    <ClCompile Include="windowMvList.cpp" />
     <ClCompile Include="windowRenderTarget.cpp" />
+    <ClCompile Include="windowSelection.cpp" />
     <ClCompile Include="windowStatic.cpp" />
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>

@@ -13,6 +13,17 @@ inline tValue gMng::add(tKey & key, tValue & value, std::unordered_map<tKey, tVa
 	return value;
 }
 
+template<typename tKey, typename tValue>
+inline tValue gMng::add(tKey & key, tValue & value, std::unordered_set<tKey, tValue>& container)
+{
+	auto iter = container.find(key);
+	if (iter != container.end()) return iter->second;
+
+	container.insert(unordered_set<tKey, tValue>::value_type(key, value));
+
+	return value;
+}
+
 template<typename tValue>
 inline tValue gMng::add(tValue & value, list<tValue>& container, PLACE place)
 {
@@ -67,6 +78,15 @@ inline tValue gMng::find(tKey & key, std::unordered_map<tKey, tValue>& container
 	return iter->second;
 }
 
+template<typename tKey, typename tValue>
+inline tValue gMng::find(tKey & key, std::unordered_set<tKey, tValue>& container)
+{
+	auto iter = container.find(key);
+	if (iter == container.end()) return NULL;
+
+	return iter->second;
+}
+
 template<typename tValue>
 inline tValue gMng::find(tValue & key, std::list<tValue>& container, PLACE place)
 {
@@ -111,6 +131,18 @@ inline tValue gMng::find(tValue & key, dbList<tValue>& container, PLACE place)
 
 template<typename tKey, typename tValue>
 inline bool gMng::findif(tKey & key, std::unordered_map<tKey, tValue>& container, const std::function<void(tValue found)>& callback)
+{
+	auto foundValue = find(key, container);
+	if (foundValue != NULL)
+	{
+		callback(foundValue);
+		return true;
+	}
+	return false;
+}
+
+template<typename tKey, typename tValue>
+inline bool gMng::findif(tKey & key, std::unordered_set<tKey, tValue>& container, const std::function<void(tValue found)>& callback)
 {
 	auto foundValue = find(key, container);
 	if (foundValue != NULL)

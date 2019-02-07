@@ -12,6 +12,7 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
+		FILE	= 1 << 4,
 		EVENT	= 1 << 3,
 		CHAR	= 1 << 2,
 		PROP	= 1 << 1,
@@ -49,6 +50,11 @@ public :
 		struct EVENT : public BASE
 		{
 			EVENT() { _baseType |= baseType::EVENT; }
+		};
+
+		struct FILE : public BASE
+		{
+			FILE() { _baseType |= baseType::FILE; }
 		};
 
 		OBJ() {};

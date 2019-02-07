@@ -62,6 +62,9 @@ void buttonScrollVerticalHead::moveScroll(LONG interval)
 	auto & scrollValue = btnScrollFunc::b2Body(_body)->getValue();
 	auto body = btnScrollFunc::b2Body(_body);
 
+	if (_info.scale.y == body->getInfo().size.y)
+		return;
+
 	bool isCorrect = false;
 
 	// re position
@@ -76,7 +79,7 @@ void buttonScrollVerticalHead::moveScroll(LONG interval)
 		{
 			moveScroll(interval - 1);
 			return;
-		}
+		} 
 
 		_armTop->getInfo().scale.y = max(BTN_MOVE_BAR_SIZE_Y, _armTop->getInfo().scale.y + interval);
 		_armBot->getInfo().pos.y += interval;

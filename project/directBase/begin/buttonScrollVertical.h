@@ -1,7 +1,6 @@
 #pragma once
 #include "kGlobalDefine.h"
 #include "buttonStatic.h"
-#include "IbuttonScroll.h"
 
 constexpr float BTN_SCROLL_SIZE_X = 18.0f;
 

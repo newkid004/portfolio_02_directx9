@@ -9,7 +9,7 @@ private :
 	maptool_field* _bindData = nullptr;
 	std::unordered_map<std::string, json*> _mJson;
 
-	std::string _filename = "default";
+	int* _bindMapIndex = nullptr;
 
 private :
 	void insertJson(const std::string & jsonName);
@@ -25,7 +25,7 @@ public :
 	void read(void);
 
 public:
-	maptool_io(maptool_field* bindData);
+	maptool_io(maptool_field* bindData, int* bindMapIndex);
 	~maptool_io();
 };
 

@@ -9,8 +9,9 @@
 
 constexpr char* filepath = "resource/json/maptool/";
 
-maptool_io::maptool_io(maptool_field * bindData) :
-	_bindData(bindData)
+maptool_io::maptool_io(maptool_field * bindData, int* bindMapIndex) :
+	_bindData(bindData),
+	_bindMapIndex(bindMapIndex)
 {
 	insertJson("object");
 	insertJson("event");
@@ -139,19 +140,24 @@ void maptool_io::spreadObject(void)
 
 void maptool_io::write(void)
 {
+	*_bindMapIndex = *_bindMapIndex < 0 ? 0 : *_bindMapIndex;
+
 	buildObject();
 
 	for (auto & i : _mJson)
 	{
 		if (i.second)
 		{
-			gJson::write(*i.second, filepath + _filename + "/" + i.first + ".json");
+			string dirPath = "map" + to_string(*_bindMapIndex) + '/';
+			gJson::write(*i.second, filepath + dirPath + i.first + ".json");
 		}
 	}
 }
 
 void maptool_io::read(void)
 {
+	*_bindMapIndex = *_bindMapIndex < 0 ? 0 : *_bindMapIndex;
+
 	for (auto & js : _mJson)
 	{
 		if (js.second == nullptr)
@@ -161,7 +167,8 @@ void maptool_io::read(void)
 			SAFE_DELETE(js.second);
 			js.second = new json;
 
-			gJson::read(*js.second, filepath + _filename + "/" + js.first + ".json");
+			string dirPath = "map" + to_string(*_bindMapIndex) + '/';
+			gJson::read(*js.second, filepath + dirPath + js.first + ".json");
 		}
 	}
 

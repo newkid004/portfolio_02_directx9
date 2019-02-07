@@ -9,6 +9,7 @@
 #include "sceneManager.h"
 #include "uiManager.h"
 #include "eventManager.h"
+#include "textManager.h"
 
 // ----- def ----- //
 #define MN_WIN		GET_WINDOW_MANAGER()

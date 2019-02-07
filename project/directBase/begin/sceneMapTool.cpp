@@ -35,7 +35,7 @@ void sceneMapTool::init(void)
 	_window	= new maptool_window();
 	_field	= new maptool_field(NULL);
 	_render	= new maptool_render();
-	_io		= new maptool_io(_field);
+	_io		= new maptool_io(_field, &_window->getSet().mv_file->getIndex());
 
 	// _grid->setVisible(false);
 	// ((cameraControlable*)_camera)->setVisible(false);
@@ -109,7 +109,8 @@ void sceneMapTool::updateControl_Prop(void)
 			if (pickObject = _field->getPickObject())
 				_field->getSet().selectionObject = pickObject;
 		}
-		if (MN_KEY->mousePress(EMouseInput::RIGHT))
+		if (MN_KEY->mousePress(EMouseInput::RIGHT) &&
+			_window->getSet().focusedWindow != _window->getSet().mv_file)
 			_field->getSet().selectionObject = nullptr;
 
 		if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->mouseDown())
@@ -147,11 +148,24 @@ void sceneMapTool::updateControl_Prop(void)
 
 void sceneMapTool::updateControl_key(void)
 {
+	// window close
+	if (MN_KEY->keyPress(DIK_ESCAPE))
+	{
+		_window->getSet().focusedWindow->getIndex() = -1;
+		_window->getSet().focusedWindow->close();
+	}
+
 	// save, load
 	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_S))
 		_io->write();
 	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_L))
+	{
+		int fileSelection = _window->getSet().mv_file->getIndex();
+		
 		_io->read();
+
+		_window->getSet().mv_file->getIndex() = fileSelection;
+	}
 
 	// prop delete
 	if (MN_KEY->keyPress(DIK_DELETE) && _field->getSet().selectionObject != nullptr)

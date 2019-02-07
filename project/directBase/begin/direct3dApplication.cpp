@@ -63,7 +63,7 @@ void direct3dApplication::drawUI(void)
 		MN_TIME->getDeltaTime(),
 		MN_TIME->getRunningTime());
 
-	gFunc::drawText(0, 0, text);
+	gFunc::drawText(0, 0, string(text));
 }
 
 LRESULT direct3dApplication::handleWindowMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

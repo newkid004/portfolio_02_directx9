@@ -77,13 +77,18 @@ void gFunc::runRenderTarget(LPDIRECT3DTEXTURE9 renderTarget, int clearOption, LP
 	SAFE_RELEASE(originDepthStensil);
 }
 
-void gFunc::drawText(int x, int y, const std::string & text, int DT_align)
+void gFunc::drawText(int x, int y, std::string & text, int DT_align, D3DCOLOR color)
 {
 	GET_LABEL()->setAlign(DT_align);
 	GET_LABEL()->setText(text);
-	GET_LABEL()->setPosition(D3DXVECTOR3(x, y, 1.0f));
+	GET_LABEL()->setPosition(D3DXVECTOR3(x, y, 0.0f));
+
+	auto prevColor = GET_LABEL()->getColor();
+	GET_LABEL()->setColor(color);
 
 	GET_LABEL()->drawUI();
+
+	GET_LABEL()->setColor(prevColor);
 }
 
 void gFunc::drawSprite(LPDIRECT3DTEXTURE9 texture, const D3DXVECTOR2 & pos, const D3DXVECTOR2 & size, const D3DXVECTOR2 & scale, float alpha, D3DXVECTOR2 * offset, RECT * clipSize, bool isClipPull)

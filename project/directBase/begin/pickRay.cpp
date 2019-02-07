@@ -126,6 +126,8 @@ bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 	} break;
 
 	}
+
+	return false;
 }
 
 bool pick::chkPick(ray * in_ray, boundingBox * bBox)
