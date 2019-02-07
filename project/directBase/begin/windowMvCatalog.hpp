@@ -21,7 +21,7 @@ windowMvCatalog<T>::windowMvCatalog(const uiInfo & info, D3DXVECTOR2 & range) :
 	_selection =  new windowSelectionCatalog<T>(info, this);
 	_selection->init(_range.x, _range.y);
 
-	for (int i = 0; i < (_range.x + 1) * _range.y; ++i)
+	for (int i = 0; i < _range.x * (_range.y + 1); ++i)
 	{
 		auto btn = new buttonItem(this, i, &_selectIndex, &_offset, &_range);
 		_vItem.push_back(btn);
@@ -48,11 +48,15 @@ inline UI_LIST_NODE windowMvCatalog<T>::updateWindow(void)
 		(_info.size.y - BTN_MOVE_BAR_SIZE_Y) *
 		_scroll->getValue() * (rowCount() / _range.y);
 
-	float btnSize = (_info.size.y - BTN_MOVE_BAR_SIZE_Y) / _range.y;
-	float modOffset = std::fmodf(_offset, btnSize);
-	for (int i = 0; i < (_range.x + 1) * _range.y; ++i)
+	D3DXVECTOR2 btnSize = D3DXVECTOR2(
+		(_info.size.x - BTN_SCROLL_SIZE_X) / _range.x,
+		(_info.size.y - BTN_MOVE_BAR_SIZE_Y) / _range.y);
+
+	float modOffset = std::fmodf(_offset, btnSize.x);
+
+	for (int i = 0; i < _range.x * (_range.y + 1); ++i)
 	{
-		int dataIndex = std::fmodf(i, _range.x) + ((_offset - modOffset + (btnSize * (i / (int)_range.x))) / btnSize) * (int)_range.y;
+		int dataIndex = std::fmodf(i, _range.x) + ((_offset - modOffset + (btnSize.y * (i / (int)_range.x))) / btnSize.x) * (int)_range.y;
 
 		if (dataIndex < _vData.size())
 		{
@@ -63,8 +67,8 @@ inline UI_LIST_NODE windowMvCatalog<T>::updateWindow(void)
 			gFunc::getTextureSize(&texSize, texture);
 
 			btnInfo.scale = D3DXVECTOR2(
-				btnSize / texSize.x, 
-				btnSize / texSize.y);
+				btnSize.x / texSize.x, 
+				btnSize.y / texSize.y);
 			btnInfo.size = texSize;
 		}
 		else

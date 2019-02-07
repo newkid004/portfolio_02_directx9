@@ -18,9 +18,9 @@ typedef maptool_data_catalog CATALOG;
 
 maptool_window::maptool_window()
 {
+	MN_UI->add("maptool_minimap",		_windowSet.minimap		= createMinimap())->show();
 	MN_UI->add("maptool_bottomBar",		_windowSet.bottomBar	= createBottomBar())->show();
 	MN_UI->add("maptool_bottomTrans",	_windowSet.bottomTrans	= createBottomTrans())->show();
-	MN_UI->add("maptool_minimap",		_windowSet.minimap		= createMinimap())->show();
 
 	vector<windowBase*> vWindow;
 	vWindow.push_back(MN_UI->add("maptool_mnProp",		_windowSet.mv_prop		= create_mvProp()));
@@ -31,6 +31,8 @@ maptool_window::maptool_window()
 
 	for (auto i : vWindow)
 		i->getInfo().pos += D3DXVECTOR2(gFunc::rndFloat(-100, 100), gFunc::rndFloat(-100, 100));
+
+	_activeWindow = vWindow.size();
 }
 
 maptool_window::~maptool_window()
@@ -42,7 +44,7 @@ void maptool_window::update(void)
 	auto focusWindow = MN_UI->getFocus();
 	auto offsetedWindowSet = ((windowCtlogMaptool**)&_windowSet) + 3;
 	
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < _activeWindow; ++i)
 	{
 		auto lookWindow = *(offsetedWindowSet + i);
 
@@ -215,7 +217,7 @@ windowCtlogMaptool * maptool_window::create_mvEvent(void)
 	return result;
 }
 
-windowMvList * maptool_window::create_mvFile(void)
+windowCtlogMaptool * maptool_window::create_mvFile(void)
 {
 	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
 	D3DXVECTOR2 textureSize;
@@ -228,13 +230,17 @@ windowMvList * maptool_window::create_mvFile(void)
 		(WINSIZEX - winInfo.size.x) / 2.0f,
 		(WINSIZEY - winInfo.size.y) / 2.0f);
 
-	auto result = new windowMvList(winInfo);
-
-	string testString = "testString";
-	for (int i = 0; i < 25; ++i)
+	auto result = new windowCtlogMaptool(winInfo, D3DXVECTOR2(1, 3));
+	for (int i = 0; i < 3; ++i)
 	{
-		result->addItem(testString + to_string(i));
+		auto b = new maptool_data_catalog::OBJ::FILE();
+
+		string filename = "map_" + to_string(i) + ".png";
+		b->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/file/" + filename);
+
+		result->addItem(b);
 	}
+	result->getIndex() = 0;
 
 	return result;
 }

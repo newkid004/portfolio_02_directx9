@@ -10,7 +10,7 @@ protected :
 	LPDIRECT3DTEXTURE9 putTexture2button(int dataIndex) override;
 
 public:
-	windowCtlogMaptool(const uiInfo & info, D3DXVECTOR2 range = D3DXVECTOR2(3, 3));
+	windowCtlogMaptool(const uiInfo & info, D3DXVECTOR2 & range = D3DXVECTOR2(4, 4));
 	~windowCtlogMaptool();
 };
 

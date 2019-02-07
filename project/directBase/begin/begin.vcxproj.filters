@@ -621,7 +621,9 @@
     <ClInclude Include="buttonItemText.h">
       <Filter>main\classes\windowUI\button\static\item\text</Filter>
     </ClInclude>
-    <ClInclude Include="textManager.h" />
+    <ClInclude Include="textManager.h">
+      <Filter>classes\global\utility\manager\common\text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -837,7 +839,9 @@
     <ClCompile Include="buttonItemText.cpp">
       <Filter>main\classes\windowUI\button\static\item\text</Filter>
     </ClCompile>
-    <ClCompile Include="textManager.cpp" />
+    <ClCompile Include="textManager.cpp">
+      <Filter>classes\global\utility\manager\common\text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">
