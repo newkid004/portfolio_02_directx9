@@ -3,23 +3,23 @@
 #include "windowMoveable.h"
 
 template<typename T>
-class windowSelection;
+class windowSelectionCatalog;
 
-class buttonCatalogItem;
+class buttonItem;
 class buttonScrollVertical;
 
 template<typename T>
 class windowMvCatalog : public windowMoveable
 {
 protected :
-	windowSelection<T>* _selection = nullptr;
+	windowSelectionCatalog<T>* _selection = nullptr;
 	buttonScrollVertical* _scroll = nullptr;
 
 	int _selectIndex = -1;
 	float _offset = 0.0f;
 
 	std::vector<T> _vData;
-	std::vector<buttonCatalogItem*> _vCatalog;
+	std::vector<buttonItem*> _vItem;
 
 protected :
 	virtual UI_LIST_NODE updateWindow(void) override;
@@ -43,32 +43,6 @@ private :
 protected:
 	windowMvCatalog(const uiInfo & info);
 	virtual ~windowMvCatalog();
-};
-
-// ----- selection ----- //
-template<typename T>
-class windowSelection : public windowStatic
-{
-public :
-	// ----- 해당 클래스 내부에서만 사용 ----- //
-	friend windowMvCatalog<T>;
-
-private:
-	bool _isVisible = false;
-	int* _bindIndex = nullptr;
-	float* _bindOffset = nullptr;
-	windowMvCatalog<T>* _bindWindow = nullptr;
-
-public :
-	void drawUI(void) override;
-
-protected:
-	UI_LIST_NODE updateWindow(void) override;
-	UI_LIST_NODE updateFocus(void) override { return _bindWindow->getNode(); }
-
-protected:
-	windowSelection(const uiInfo & info, windowMvCatalog<T>* bindWindow);
-	virtual ~windowSelection() {};
 };
 
 #include "windowMvCatalog.hpp"

@@ -7,6 +7,7 @@
 #include "windowRenderTarget.h"
 #include "windowMoveable.h"
 #include "windowCtlogMaptool.h"
+#include "windowMvList.h"
 
 #include "buttonScrollVertical.h"
 
@@ -25,7 +26,7 @@ maptool_window::maptool_window()
 	vWindow.push_back(MN_UI->add("maptool_mnProp",		_windowSet.mv_prop		= create_mvProp()));
 	vWindow.push_back(MN_UI->add("maptool_mnCharacter",	_windowSet.mv_character	= create_mvCharacter()));
 	vWindow.push_back(MN_UI->add("maptool_mnEvent",		_windowSet.mv_event		= create_mvEvent()));
-	//	vWindow.push_back(MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile()));
+	vWindow.push_back(MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile()));
 	//	vWindow.push_back(MN_UI->add("maptool_mnOption",		_windowSet.mv_option	= create_mvOption()));
 
 	for (auto i : vWindow)
@@ -214,9 +215,28 @@ windowCtlogMaptool * maptool_window::create_mvEvent(void)
 	return result;
 }
 
-windowMoveable * maptool_window::create_mvFile(void)
+windowMvList * maptool_window::create_mvFile(void)
 {
-	return nullptr;
+	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
+	D3DXVECTOR2 textureSize;
+	gFunc::getTextureSize(&textureSize, transTexture);
+
+	uiInfo winInfo;
+	winInfo.backImage = transTexture;
+	winInfo.size = textureSize;
+	winInfo.pos = D3DXVECTOR2(
+		(WINSIZEX - winInfo.size.x) / 2.0f,
+		(WINSIZEY - winInfo.size.y) / 2.0f);
+
+	auto result = new windowMvList(winInfo);
+
+	string testString = "testString";
+	for (int i = 0; i < 25; ++i)
+	{
+		result->addItem(testString + to_string(i));
+	}
+
+	return result;
 }
 
 windowMoveable * maptool_window::create_mvOption(void)

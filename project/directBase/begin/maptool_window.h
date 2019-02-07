@@ -8,6 +8,7 @@ class windowStatic;
 class windowMoveable;
 class windowRenderTarget;
 class windowCtlogMaptool;
+class windowMvList;
 
 class buttonStatic;
 
@@ -23,7 +24,7 @@ public :
 		windowCtlogMaptool* mv_prop = nullptr;
 		windowCtlogMaptool* mv_character = nullptr;
 		windowCtlogMaptool* mv_event = nullptr;
-		windowMoveable* mv_file = nullptr;
+		windowMvList* mv_file = nullptr;
 		windowMoveable* mv_option = nullptr;
 
 		windowCtlogMaptool* focusedWindow = nullptr;
@@ -43,7 +44,7 @@ private :
 	windowCtlogMaptool * create_mvProp(void);
 	windowCtlogMaptool * create_mvCharacter(void);
 	windowCtlogMaptool* create_mvEvent(void);
-	windowMoveable* create_mvFile(void);
+	windowMvList* create_mvFile(void);
 	windowMoveable* create_mvOption(void);
 
 	buttonStatic* createButtonUnderBar(windowBase* bindWindow, const std::string & texture, float offsetNumber);
