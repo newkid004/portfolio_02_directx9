@@ -46,7 +46,10 @@ void staticMesh::drawDo(void)
 
 	for (int i = 0; i < _meshSet->numMaterial; ++i)
 	{
-		_effect->SetTexture("_texture", _meshSet->vTextureList[i]);
+		if (_meshSet->vTextureList[i])
+		{
+			_effect->SetTexture("_texture", _meshSet->vTextureList[i]);
+		}
 
 		gFunc::runEffectLoop(_effect, "myTechnique", [&](int passNum)->void {
 			_meshSet->mesh->DrawSubset(i);

@@ -3,7 +3,7 @@
 #include "sceneBase.h"
 
 class skinnedMesh;
-class staticMesh;
+class mapObject;
 class boxObject;
 
 class sceneCollisionTest : public sceneBase
@@ -11,8 +11,8 @@ class sceneCollisionTest : public sceneBase
 private:
 
 	skinnedMesh* m_pSkinnedMesh[10];
-	staticMesh* m_pMapMesh = nullptr;
 	boxObject* m_pBoxObject = nullptr;
+	mapObject* m_pMapObject = nullptr;
 
 	int m_nAnimationIndex = 0;
 
@@ -28,8 +28,6 @@ private:
 
 private:
 	skinnedMesh* createSkinnedMesh(void);
-
-	staticMesh* createMapMesh(void);
 
 public:
 	sceneCollisionTest() {};

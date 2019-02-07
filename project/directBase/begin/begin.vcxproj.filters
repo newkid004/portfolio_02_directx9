@@ -343,6 +343,9 @@
     <Filter Include="main\classes\scene\01_mapTool\collection\io">
       <UniqueIdentifier>{5c8da9d2-9b20-4281-b7af-f07b4ec69f67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\map">
+      <UniqueIdentifier>{5e72afaa-1ba4-4570-8bc7-d0f423ab194d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -585,6 +588,12 @@
     <ClInclude Include="maptool_io.h">
       <Filter>main\classes\scene\01_mapTool\collection\io</Filter>
     </ClInclude>
+    <ClInclude Include="mapObject.h">
+      <Filter>main\classes\map</Filter>
+    </ClInclude>
+    <ClInclude Include="mapObjectBase.h">
+      <Filter>main\classes\map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -790,6 +799,12 @@
     </ClCompile>
     <ClCompile Include="maptool_io.cpp">
       <Filter>main\classes\scene\01_mapTool\collection\io</Filter>
+    </ClCompile>
+    <ClCompile Include="mapObject.cpp">
+      <Filter>main\classes\map</Filter>
+    </ClCompile>
+    <ClCompile Include="mapObjectBase.cpp">
+      <Filter>main\classes\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
