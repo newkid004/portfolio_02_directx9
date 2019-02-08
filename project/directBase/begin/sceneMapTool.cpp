@@ -76,6 +76,10 @@ void sceneMapTool::drawUI(void)
 	sceneBase::drawUI();
 
 	MN_UI->drawUI();	// window
+
+	char text[MAX_PATH] = "";
+	sprintf(text, "open file window and,\nsave : Ctrl + S\nload : Ctrl + L");
+	gFunc::drawText(0, 100, string(text));
 }
 
 void sceneMapTool::updateControl_Prop(void)

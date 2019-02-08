@@ -24,10 +24,10 @@ maptool_window::maptool_window()
 
 	vector<windowBase*> vWindow;
 	vWindow.push_back(MN_UI->add("maptool_mnProp",		_windowSet.mv_prop		= create_mvProp()));
-	vWindow.push_back(MN_UI->add("maptool_mnCharacter",	_windowSet.mv_character	= create_mvCharacter()));
+	vWindow.push_back(MN_UI->add("maptool_mnBump",		_windowSet.mv_bump		= create_mvBump()));
 	vWindow.push_back(MN_UI->add("maptool_mnEvent",		_windowSet.mv_event		= create_mvEvent()));
 	vWindow.push_back(MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile()));
-	//	vWindow.push_back(MN_UI->add("maptool_mnOption",		_windowSet.mv_option	= create_mvOption()));
+	// vWindow.push_back(MN_UI->add("maptool_mnOption",	_windowSet.mv_option	= create_mvOption()));
 
 	for (auto i : vWindow)
 		i->getInfo().pos += D3DXVECTOR2(gFunc::rndFloat(-100, 100), gFunc::rndFloat(-100, 100));
@@ -80,11 +80,11 @@ windowStatic * maptool_window::createBottomBar(void)
 	// ----- button ----- //
 	float btnCount = 0.0f;
 
-	result->addButton("prop",		createButtonUnderBar(result, "resource/texture/maptool/bottomBar/prop.png", btnCount++))		->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_prop->trans(); };
-	result->addButton("character",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/character.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_character->trans(); };
-	result->addButton("event",		createButtonUnderBar(result, "resource/texture/maptool/bottomBar/event.png", btnCount++))		->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_event->trans(); };
-	result->addButton("file",		createButtonUnderBar(result, "resource/texture/maptool/bottomBar/file.png", btnCount++))		->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_file->trans(); };
-	result->addButton("option",		createButtonUnderBar(result, "resource/texture/maptool/bottomBar/option.png", btnCount++))		->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_option->trans(); };
+	result->addButton("prop",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/prop.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_prop->trans(); };
+	result->addButton("bump",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/bump.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_bump->trans(); };
+	result->addButton("event",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/event.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_event->trans(); };
+	result->addButton("file",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/file.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_file->trans(); };
+	result->addButton("option",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/option.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_option->trans(); };
 
 	return result;
 }
@@ -150,20 +150,16 @@ windowCtlogMaptool * maptool_window::create_mvProp(void)
 
 	auto result = new windowCtlogMaptool(winInfo);
 
-	CATALOG::OBJ::PROP* prop = nullptr;
-	staticMesh::mParam param;
+	vector<CATALOG::OBJ::PROP*> content;
+	createContent_prop(content);
 
-	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
-	param.effectFilePath = "resource/effect/example_15.fx";
-
-	CATALOG::createProp(&prop, &param);
-	prop->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
-	result->addItem(prop);
+	for (auto i : content)
+		result->addItem(i);
 
 	return result;
 }
 
-windowCtlogMaptool * maptool_window::create_mvCharacter(void)
+windowCtlogMaptool * maptool_window::create_mvBump(void)
 {
 	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
 	D3DXVECTOR2 textureSize;
@@ -178,14 +174,11 @@ windowCtlogMaptool * maptool_window::create_mvCharacter(void)
 
 	auto result = new windowCtlogMaptool(winInfo);
 
-	auto testTexture = MN_SRC->getSpriteTexture("resource/texture/textureGradiant.png");
-	for (int i = 0; i < 13; ++i)
-	{
-		auto b = new maptool_data_catalog::OBJ::CHAR();
-		b->_standImage = testTexture;
+	vector<CATALOG::OBJ::BUMP*> content;
+	createContent_bump(content);
 
-		result->addItem(b);
-	}
+	for (auto i : content)
+		result->addItem(i);
 
 	return result;
 }
@@ -213,7 +206,6 @@ windowCtlogMaptool * maptool_window::create_mvEvent(void)
 
 		result->addItem(b);
 	}
-
 	return result;
 }
 
@@ -231,6 +223,14 @@ windowCtlogMaptool * maptool_window::create_mvFile(void)
 		(WINSIZEY - winInfo.size.y) / 2.0f);
 
 	auto result = new windowCtlogMaptool(winInfo, D3DXVECTOR2(1, 3));
+
+	vector<CATALOG::OBJ::FILE*> content;
+	createContent_file(content);
+
+	for (auto i : content)
+		result->addItem(i);
+
+
 	for (int i = 0; i < 3; ++i)
 	{
 		auto b = new maptool_data_catalog::OBJ::FILE();
@@ -248,6 +248,46 @@ windowCtlogMaptool * maptool_window::create_mvFile(void)
 windowMoveable * maptool_window::create_mvOption(void)
 {
 	return nullptr;
+}
+
+void maptool_window::createContent_prop(std::vector<CATALOG::OBJ::PROP*>& vContent)
+{
+	CATALOG::OBJ::PROP* item = nullptr;
+	staticMesh::mParam param;
+
+	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
+	param.effectFilePath = "resource/effect/example_15.fx";
+
+	CATALOG::create(&item, &param);
+	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
+
+	vContent.push_back(item);
+}
+
+void maptool_window::createContent_bump(std::vector<CATALOG::OBJ::BUMP*>& vContent)
+{
+	CATALOG::OBJ::BUMP* item = nullptr;
+	staticMesh::mParam param;
+
+	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
+	param.effectFilePath = "resource/effect/example_15.fx";
+
+	CATALOG::create(&item, &param);
+	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
+
+	vContent.push_back(item);
+}
+
+void maptool_window::createContent_event(std::vector<CATALOG::OBJ::EVENT*>& vContent)
+{
+}
+
+void maptool_window::createContent_file(std::vector<CATALOG::OBJ::FILE*>& vContent)
+{
+}
+
+void maptool_window::createContent_option(std::vector<CATALOG::OBJ::PROP*>& vContent)
+{
 }
 
 buttonStatic * maptool_window::createButtonUnderBar(windowBase * bindWindow, const std::string & texture, float offsetNumber)

@@ -11,7 +11,7 @@ maptool_data_catalog::OBJ::PROP::~PROP()
 	SAFE_DELETE(_object);
 }
 
-void maptool_data_catalog::createProp(OBJ::PROP ** out, void * param)
+void maptool_data_catalog::create(OBJ::PROP ** out, void * param)
 {
 	OBJ::PROP* result = new OBJ::PROP();
 	result->_object = new staticMesh(*(staticMesh::mParam*)param);
@@ -19,7 +19,15 @@ void maptool_data_catalog::createProp(OBJ::PROP ** out, void * param)
 	*out = result;
 }
 
-void maptool_data_catalog::createChar(OBJ::CHAR ** out, void * param)
+void maptool_data_catalog::create(OBJ::BUMP ** out, void * param)
+{
+	OBJ::BUMP* result = new OBJ::BUMP();
+	result->_object = new staticMesh(*(staticMesh::mParam*)param);
+
+	*out = result;
+}
+
+void maptool_data_catalog::create(OBJ::CHAR ** out, void * param)
 {
 	OBJ::CHAR* result = new OBJ::CHAR();
 	result->_object = new skinnedMesh(*(skinnedMesh::mParam*)param);
@@ -29,6 +37,15 @@ void maptool_data_catalog::createChar(OBJ::CHAR ** out, void * param)
 
 // ----- duplicate ----- //
 void maptool_data_catalog::duplicate(staticMesh ** outObject, OBJ::PROP * targetObject)
+{
+	staticMesh* obj = (staticMesh*)targetObject->_object;
+	staticMesh* result = new staticMesh(obj->getMakeParam());
+
+	applyObject(result, obj);
+	*outObject = result;
+}
+
+void maptool_data_catalog::duplicate(staticMesh ** outObject, OBJ::BUMP * targetObject)
 {
 	staticMesh* obj = (staticMesh*)targetObject->_object;
 	staticMesh* result = new staticMesh(obj->getMakeParam());

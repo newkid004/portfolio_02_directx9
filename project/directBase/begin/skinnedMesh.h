@@ -53,7 +53,7 @@ private :
 
 public :
 	animationController* getAniController(void) { return _aniController; }
-	const mParam & getMakeParam(void) { return _param; }
+	mParam & getMakeParam(void) { return _param; }
 
 	LPD3DXMESH getMesh(void) { return _mesh; }
 

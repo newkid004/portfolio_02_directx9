@@ -2,6 +2,20 @@
 #include "kGlobalDefine.h"
 #include "pickRay.h"
 
+
+static const D3DXMATRIXA16 g_IdentityNormal = {
+		1, 0, 0 ,0,
+		0, 1, 0 ,0,
+		0, 0, 1 ,0,
+		0, 0, 0 ,0
+};
+static const D3DXMATRIXA16 g_IdentityCoord = {
+		1, 0, 0 ,0,
+		0, 1, 0 ,0,
+		0, 0, 1 ,0,
+		0, 0, 0 ,1
+};
+
 class gFunc
 {
 public :
@@ -45,6 +59,9 @@ public :
 	static boundingBox				createBoundingBox(LPD3DXMESH mesh);
 	static boundingSphere			createBoundingSphere(LPD3DXMESH mesh);
 
+	// За·Д
+	static const D3DXMATRIXA16 *	getIdentity(bool isCoord = false) { return isCoord ? &g_IdentityCoord : &g_IdentityNormal; };
+
 	static bool						isIntersect(const objectBox & boundA, const objectBox & boundB);
 	static bool						isIntersect(const boundingBox & boundA, const boundingBox & boundB);
 	static bool						isIntersect(const boundingSphere & boundA, const boundingSphere & boundB);
@@ -54,4 +71,3 @@ private :
 	gFunc() {};
 	~gFunc() {};
 };
-

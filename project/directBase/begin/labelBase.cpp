@@ -2,6 +2,9 @@
 
 #include "managerList.h"
 
+#include "sceneBase.h"
+#include "spriteBase.h"
+
 labelBase::labelBase(const std::string & text, float size) :
 	_text(text)
 {
@@ -18,7 +21,7 @@ void labelBase::drawDoUI(void)
 	RECT rcText = { (LONG)_position.x , (LONG)_position.y, 0, 0 };
 
 	_font->DrawTextA(
-		NULL,
+		GET_SPRITE(),
 		_text.c_str(),
 		-1,
 		&rcText,
@@ -26,7 +29,7 @@ void labelBase::drawDoUI(void)
 		_diffuseColor);
 
 	_font->DrawTextA(
-		NULL,
+		GET_SPRITE(),
 		_text.c_str(),
 		-1,
 		&rcText,

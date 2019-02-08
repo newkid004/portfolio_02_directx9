@@ -16,6 +16,7 @@ public :
 		WALL	= 1 << 1,
 		FIELD	= 1 << 2,
 		CHAR	= 1 << 3,
+		BUMP	= 1 << 4,
 
 		BASE	= 0 << 0
 	};
@@ -76,6 +77,13 @@ public :
 			CHAR() { _baseType |= baseType::CHAR; }
 		};
 
+		struct BUMP : public PROP
+		{
+			virtual void write(json & in_Json);
+
+			BUMP() { _baseType |= baseType::BUMP; }
+		};
+
 	private :
 		OBJ() {}
 		~OBJ() {}
@@ -85,23 +93,27 @@ public :	// ----- parse ----- //
 	static void parse(OBJ::BASE* own, json & j_in);
 	static void parse(OBJ::PROP* own, json & j_in);
 	static void parse(OBJ::CHAR* own, json & j_in);
+	static void parse(OBJ::BUMP* own, json & j_in);
 
 public :	// ----- apply ----- //
 	static void apply(OBJ::BASE* in,	baseObject* obj);
 	static void apply(OBJ::PROP* in,	staticMesh* obj);
 	static void apply(OBJ::CHAR* in,	skinnedMesh* obj);
 	static void apply(OBJ::FIELD* in,	terrain* obj);
+	static void apply(OBJ::BUMP* in,	staticMesh* obj);
 
 	static void apply(baseObject* in,	OBJ::BASE* data);
 	static void apply(staticMesh* in,	OBJ::PROP* data);
 	static void apply(skinnedMesh* in,	OBJ::CHAR* data);
 	static void apply(terrain* in,		OBJ::FIELD* data);
+	static void apply(staticMesh* in,	OBJ::BUMP* data);
 
 public :	// ----- creater ----- //
 	static void create(OBJ::BASE** out, baseObject* obj);
 	static void create(OBJ::PROP** out, staticMesh* obj);
 	static void create(OBJ::CHAR** out, skinnedMesh* obj);
 	static void create(OBJ::FIELD** out, terrain* obj);
+	static void create(OBJ::BUMP** out, staticMesh* obj);
 
 private:
 	maptool_data_io() {};
