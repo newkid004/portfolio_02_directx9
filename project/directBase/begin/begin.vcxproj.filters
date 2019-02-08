@@ -364,6 +364,9 @@
     <Filter Include="classes\global\utility\manager\common\text">
       <UniqueIdentifier>{5ce1f3e8-f37d-4f2d-8481-227468520626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\map">
+      <UniqueIdentifier>{5e72afaa-1ba4-4570-8bc7-d0f423ab194d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -624,6 +627,12 @@
     <ClInclude Include="textManager.h">
       <Filter>classes\global\utility\manager\common\text</Filter>
     </ClInclude>
+    <ClInclude Include="mapObject.h">
+      <Filter>main\classes\map</Filter>
+    </ClInclude>
+    <ClInclude Include="mapObjectBase.h">
+      <Filter>main\classes\map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -841,6 +850,12 @@
     </ClCompile>
     <ClCompile Include="textManager.cpp">
       <Filter>classes\global\utility\manager\common\text</Filter>
+    </ClCompile>
+    <ClCompile Include="mapObject.cpp">
+      <Filter>main\classes\map</Filter>
+    </ClCompile>
+    <ClCompile Include="mapObjectBase.cpp">
+      <Filter>main\classes\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

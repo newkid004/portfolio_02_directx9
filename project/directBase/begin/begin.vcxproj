@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -195,6 +195,8 @@
     <ClInclude Include="lightBase.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="managerList.h" />
+    <ClInclude Include="mapObjectBase.h" />
+    <ClInclude Include="mapObject.h" />
     <ClInclude Include="maptool_cursur.h" />
     <ClInclude Include="maptool_data_catalog.h" />
     <ClInclude Include="maptool_data_io.h" />
@@ -274,6 +276,8 @@
     <ClCompile Include="labelBase.cpp" />
     <ClCompile Include="lightBase.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="mapObjectBase.cpp" />
+    <ClCompile Include="mapObject.cpp" />
     <ClCompile Include="maptool_cursur.cpp" />
     <ClCompile Include="maptool_data_catalog.cpp" />
     <ClCompile Include="maptool_data_io.cpp" />

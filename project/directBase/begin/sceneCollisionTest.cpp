@@ -11,6 +11,7 @@
 #include "skinnedMesh.h"
 #include "staticMesh.h"
 #include "boxObject.h"
+#include "mapObject.h"
 
 #define ZOMBIE_NUM 1
 
@@ -23,7 +24,7 @@ sceneCollisionTest::~sceneCollisionTest()
 		SAFE_DELETE(m_pSkinnedMesh[i]);
 	}
 
-	SAFE_DELETE(m_pMapMesh);
+	SAFE_DELETE(m_pMapObject);
 }
 
 void sceneCollisionTest::init(void)
@@ -43,9 +44,8 @@ void sceneCollisionTest::init(void)
 		m_pSkinnedMesh[i]->rotateZ(180, true);
 	}
 
-	m_pMapMesh = this->createMapMesh();
-	m_pMapMesh->setScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	m_pMapMesh->moveY(10);
+	m_pMapObject = new mapObject;
+	m_pMapObject->init();
 
 	m_pBoxObject = new boxObject;
 	m_pBoxObject->moveZ(4);
@@ -65,7 +65,7 @@ void sceneCollisionTest::update(void)
 	{
 		m_pSkinnedMesh[i]->update();
 	}
-	m_pMapMesh->update();
+	m_pMapObject->update();
 
 	m_pBoxObject->update();
 }
@@ -79,8 +79,8 @@ void sceneCollisionTest::draw(void)
 		m_pSkinnedMesh[i]->draw();
 	}
 
-	//m_pMapMesh->draw();
-	m_pBoxObject->draw();
+	//m_pBoxObject->draw();
+	m_pMapObject->draw();
 }
 
 void sceneCollisionTest::initEvent(void)
@@ -155,13 +155,4 @@ skinnedMesh * sceneCollisionTest::createSkinnedMesh(void)
 		"resource/effect/skinnedMesh.fx"
 	};
 	return new skinnedMesh(stParameters);
-}
-
-staticMesh * sceneCollisionTest::createMapMesh(void)
-{
-	staticMesh::mParam stParameters = {
-		"resource/mesh/L4D1/map/apartment.x",
-		"resource/effect/example_16.fx"
-	};
-	return new staticMesh(stParameters);
 }
