@@ -62,8 +62,18 @@ public :
 		// ----- prop ----- //
 		struct FIELD : public PROP
 		{
+			// terrain
+			// to PROP
 			std::array<int, 2> _mapSize;
 			std::array<float, 2> _tileSize;
+
+			// wall
+			std::string _wallSource;
+			std::string _wallEffect;
+
+			// ceil
+			std::string _ceilSource;
+			std::string _ceilEffect;
 
 			virtual void write(json & in_Json);
 
@@ -93,6 +103,7 @@ public :	// ----- parse ----- //
 	static void parse(OBJ::BASE* own, json & j_in);
 	static void parse(OBJ::PROP* own, json & j_in);
 	static void parse(OBJ::CHAR* own, json & j_in);
+	static void parse(OBJ::FIELD* own, json & j_in);
 	static void parse(OBJ::BUMP* own, json & j_in);
 
 public :	// ----- apply ----- //

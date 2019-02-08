@@ -34,6 +34,12 @@ void maptool_data_io::OBJ::FIELD::write(json & in_Json)
 	OBJ::PROP::write(in_Json);
 	in_Json["mapSize"] = _mapSize;
 	in_Json["tileSize"] = _tileSize;
+
+	in_Json["wallSource"] = _wallSource;
+	in_Json["wallEffect"] = _wallEffect;
+
+	in_Json["ceilSource"] = _ceilSource;
+	in_Json["ceilEffect"] = _ceilEffect;
 }
 
 void maptool_data_io::OBJ::CHAR::write(json & in_Json)
@@ -68,6 +74,20 @@ void maptool_data_io::parse(OBJ::PROP * own, json & j_in)
 void maptool_data_io::parse(OBJ::CHAR * own, json & j_in)
 {
 	parse((OBJ::PROP*)own, j_in);
+}
+
+void maptool_data_io::parse(OBJ::FIELD * own, json & j_in)
+{
+	parse((OBJ::PROP*)own, j_in);
+
+	j_in["mapSize"].get_to<std::array<int, 2>>(own->_mapSize);
+	j_in["tileSize"].get_to<std::array<float, 2>>(own->_tileSize);
+
+	j_in["wallSource"].get_to<std::string>(own->_wallSource);
+	j_in["wallEffect"].get_to<std::string>(own->_wallEffect);
+
+	j_in["ceilSource"].get_to<std::string>(own->_ceilSource);
+	j_in["ceilEffect"].get_to<std::string>(own->_ceilEffect);
 }
 
 void maptool_data_io::parse(OBJ::BUMP * own, json & j_in)

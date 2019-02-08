@@ -86,7 +86,6 @@ void gFunc::drawText(int x, int y, std::string & text, int DT_align, D3DCOLOR co
 	auto prevColor = GET_LABEL()->getColor();
 	GET_LABEL()->setColor(color);
 
-	MN_DEV->SetTransform(D3DTS_WORLD, getIdentity(true));
 	GET_SPRITE()->SetTransform(getIdentity(true));
 	GET_LABEL()->drawUI();
 
