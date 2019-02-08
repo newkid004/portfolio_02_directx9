@@ -20,6 +20,9 @@ protected:
 	void rotateMap(const D3DXVECTOR3 & a_rstRotation);
 	void moveMap(const D3DXVECTOR3 & a_rstMove);
 
+public : // ----- 접근, 지정자 ----- //
+	constexpr MAPLIST & getObjectList(void) { return m_oMapObjectList; }
+
 public:
 
 	mapObjectBase();

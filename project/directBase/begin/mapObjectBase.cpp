@@ -38,7 +38,7 @@ void mapObjectBase::init(void)
 	addMapObject("floor1_room3_bottom3", "resource/mesh/L4D1/map/wall/floor1_room3_bottom3.x", effectFilePath);
 	addMapObject("floor1_room3_bottom4", "resource/mesh/L4D1/map/wall/floor1_room3_bottom4.x", effectFilePath);
 	addMapObject("floor1_room3_doorLoop", "resource/mesh/L4D1/map/wall/floor1_room3_doorLoop.x", effectFilePath);
-	
+	/*
 	addMapObject("stairs1_1",  "resource/mesh/L4D1/map/wall/stairs1_1.x", effectFilePath);
 	addMapObject("stairs1_2",  "resource/mesh/L4D1/map/wall/stairs1_2.x", effectFilePath);
 	addMapObject("stairs1_3",  "resource/mesh/L4D1/map/wall/stairs1_3.x", effectFilePath);
@@ -81,7 +81,7 @@ void mapObjectBase::init(void)
 	addMapObject("stairWall_out8", "resource/mesh/L4D1/map/wall/stairWall_out8.x", effectFilePath);
 	addMapObject("stairWall_out9", "resource/mesh/L4D1/map/wall/stairWall_out9.x", effectFilePath);
 	addMapObject("stairWall_out10", "resource/mesh/L4D1/map/wall/stairWall_out10.x", effectFilePath);
-
+	*/
 	scaleMap(D3DXVECTOR3(0.0254f, 0.0254f, 0.0254f));
 
 	setMapObjectPosition("floorTopWall",			D3DXVECTOR3(0.0f,	10.5f, 39.5f));
@@ -103,6 +103,7 @@ void mapObjectBase::init(void)
 	setMapObjectPosition("floor1_room3_bottom3",	D3DXVECTOR3(5.5, 5, 10.5));
 	setMapObjectPosition("floor1_room3_bottom4",	D3DXVECTOR3(33.5, 5, 10.5));
 	setMapObjectPosition("floor1_room3_doorLoop",	D3DXVECTOR3(25, 9.5, 10.5));
+	/*
 	setMapObjectPosition("stairs1_1",				D3DXVECTOR3(-29.75, 0.25, 36.5));
 	setMapObjectPosition("stairs1_2",				D3DXVECTOR3(-30.25, 0.5, 36.5));
 	setMapObjectPosition("stairs1_3",				D3DXVECTOR3(-30.75, 0.75, 36.5));
@@ -145,6 +146,7 @@ void mapObjectBase::init(void)
 	setMapObjectPosition("stairWall_out8",  D3DXVECTOR3(-31.25, 9, 28.99));
 	setMapObjectPosition("stairWall_out9",  D3DXVECTOR3(-30.75, 9.25, 28.99));
 	setMapObjectPosition("stairWall_out10",	D3DXVECTOR3(-30.25, 9.5, 28.99));
+	*/
 }
 
 void mapObjectBase::addMapObject(string key, string meshFilePath, string effectFilePath)
