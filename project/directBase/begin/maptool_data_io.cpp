@@ -34,9 +34,20 @@ void maptool_data_io::OBJ::FIELD::write(json & in_Json)
 	OBJ::PROP::write(in_Json);
 	in_Json["mapSize"] = _mapSize;
 	in_Json["tileSize"] = _tileSize;
+
+	in_Json["wallSource"] = _wallSource;
+	in_Json["wallEffect"] = _wallEffect;
+
+	in_Json["ceilSource"] = _ceilSource;
+	in_Json["ceilEffect"] = _ceilEffect;
 }
 
 void maptool_data_io::OBJ::CHAR::write(json & in_Json)
+{
+	OBJ::PROP::write(in_Json);
+}
+
+void maptool_data_io::OBJ::BUMP::write(json & in_Json)
 {
 	OBJ::PROP::write(in_Json);
 }
@@ -61,6 +72,25 @@ void maptool_data_io::parse(OBJ::PROP * own, json & j_in)
 }
 
 void maptool_data_io::parse(OBJ::CHAR * own, json & j_in)
+{
+	parse((OBJ::PROP*)own, j_in);
+}
+
+void maptool_data_io::parse(OBJ::FIELD * own, json & j_in)
+{
+	parse((OBJ::PROP*)own, j_in);
+
+	j_in["mapSize"].get_to<std::array<int, 2>>(own->_mapSize);
+	j_in["tileSize"].get_to<std::array<float, 2>>(own->_tileSize);
+
+	j_in["wallSource"].get_to<std::string>(own->_wallSource);
+	j_in["wallEffect"].get_to<std::string>(own->_wallEffect);
+
+	j_in["ceilSource"].get_to<std::string>(own->_ceilSource);
+	j_in["ceilEffect"].get_to<std::string>(own->_ceilEffect);
+}
+
+void maptool_data_io::parse(OBJ::BUMP * own, json & j_in)
 {
 	parse((OBJ::PROP*)own, j_in);
 }
@@ -102,6 +132,11 @@ void maptool_data_io::apply(OBJ::FIELD * in, terrain * obj)
 {
 }
 
+void maptool_data_io::apply(OBJ::BUMP * in, staticMesh * obj)
+{
+	apply((OBJ::PROP*)in, obj);
+}
+
 void maptool_data_io::apply(baseObject * in, OBJ::BASE * data)
 {
 	CopyMemory(&in->getPosition(), &data->_position.front(), sizeof(D3DXVECTOR3));
@@ -123,11 +158,25 @@ void maptool_data_io::apply(staticMesh * in, OBJ::PROP * data)
 
 void maptool_data_io::apply(skinnedMesh * in, OBJ::CHAR * data)
 {
-	apply((skinnedMesh*)in, (OBJ::PROP*)data);
+	apply((baseObject*)in, (OBJ::BASE*)data);
+
+	in->getMakeParam().filePath = data->_source;
+	in->getMakeParam().effectFilePath = data->_effect;
+
+	CopyMemory(&in->getScale(), &data->_scale.front(), sizeof(D3DXVECTOR3));
+
+	CopyMemory(&in->getDirectForward(), &data->_rotateZ.front(), sizeof(D3DXVECTOR3));
+	CopyMemory(&in->getDirectUp(), &data->_rotateY.front(), sizeof(D3DXVECTOR3));
+	CopyMemory(&in->getDirectRight(), &data->_rotateX.front(), sizeof(D3DXVECTOR3));
 }
 
 void maptool_data_io::apply(terrain * in, OBJ::FIELD * data)
 {
+}
+
+void maptool_data_io::apply(staticMesh * in, OBJ::BUMP * data)
+{
+	apply((staticMesh*)in, (OBJ::PROP*)data);
 }
 
 void maptool_data_io::create(OBJ::BASE ** out, baseObject * obj)
@@ -154,6 +203,13 @@ void maptool_data_io::create(OBJ::CHAR ** out, skinnedMesh * obj)
 void maptool_data_io::create(OBJ::FIELD ** out, terrain * obj)
 {
 	OBJ::FIELD* result = new OBJ::FIELD();
+	apply(result, obj);
+	*out = result;
+}
+
+void maptool_data_io::create(OBJ::BUMP ** out, staticMesh * obj)
+{
+	OBJ::BUMP* result = new OBJ::BUMP();
 	apply(result, obj);
 	*out = result;
 }

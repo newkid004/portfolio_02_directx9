@@ -12,6 +12,7 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
+		BUMP	= 1 << 5,
 		FILE	= 1 << 4,
 		EVENT	= 1 << 3,
 		CHAR	= 1 << 2,
@@ -57,16 +58,23 @@ public :
 			FILE() { _baseType |= baseType::FILE; }
 		};
 
+		struct BUMP : public PROP
+		{
+			BUMP() { _baseType |= baseType::BUMP; }
+		};
+
 		OBJ() {};
 		~OBJ() {};
 	};
 
 public :
-	static void createProp(OBJ::PROP** out, void * param);
-	static void createChar(OBJ::CHAR** out, void * param);
+	static void create(OBJ::PROP** out, void * param);
+	static void create(OBJ::BUMP** out, void * param);
+	static void create(OBJ::CHAR** out, void * param);
 
 public :
 	static void duplicate(staticMesh** outObject, OBJ::PROP* targetObject);
+	static void duplicate(staticMesh** outObject, OBJ::BUMP* targetObject);
 	static void duplicate(skinnedMesh** outObject, OBJ::CHAR* targetObject);
 	// static void duplicate(OBJ::EVENT** outObject, OBJ::EVENT* targetObject);
 
