@@ -4,11 +4,15 @@
 #include "camera.h"
 #include "sceneBase.h"
 #include "sceneManager.h"
+#include "gFunc.h"
 
 
 boxObject::boxObject(void)
 {
 	m_pWallMesh = createWallMesh();
+
+	setBoundingBox(gFunc::createBoundingBox(m_pWallMesh));
+	setBoundingSphere(gFunc::createBoundingSphere(m_pWallMesh));
 }
 
 boxObject::~boxObject(void)

@@ -22,6 +22,12 @@ skinnedMesh::skinnedMesh(const mParam & param) :
 
 	_effect = MN_SRC->getEffect(param.effectFilePath);
 	_mesh = createSkinnedMeshFromX(param.filePath);
+
+	for (int i = 0; i < _vMeshContainerList.size(); ++i)
+	{
+		setBoundingBox(gFunc::createBoundingBox(_vMeshContainerList[i]->pSkinndMesh));
+		setBoundingSphere(gFunc::createBoundingSphere(_vMeshContainerList[i]->pSkinndMesh));
+	}
 }
 
 skinnedMesh::~skinnedMesh()
@@ -91,6 +97,7 @@ void skinnedMesh::drawBone(LPD3DXFRAME frame)
 	while (meshCont != nullptr)
 	{
 		drawMeshContainer(frame, meshCont);
+
 		meshCont = meshCont->pNextMeshContainer;
 	}
 
@@ -106,6 +113,7 @@ void skinnedMesh::drawBone(LPD3DXFRAME frame)
 void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshContainer)
 {
 	if (meshContainer->pSkinInfo == nullptr) return;
+
 
 #if SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
 	// 디바이스를 이용한 최대 뼈대 가중치 연산은 그래픽 카드 지원 여부에 종속되기 때문에 미리 검사가 필요
@@ -156,7 +164,6 @@ void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshC
 
 #else
 	auto meshCont = (allocateHierarchy::meshContainer*)meshContainer;
-
 	for (int i = 0; i < meshCont->vBoneCombinationList.size(); ++i)
 	{
 		int numBlends = 0;

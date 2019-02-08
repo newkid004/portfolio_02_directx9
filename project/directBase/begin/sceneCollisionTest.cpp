@@ -37,21 +37,26 @@ void sceneCollisionTest::init(void)
 	{
 		m_pSkinnedMesh[i] = this->createSkinnedMesh();
 
+		m_pSkinnedMesh[i]->setDebugEnable(true);
+		//m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::SPHERE);
+
 		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.001f, 0.001f, 0.001f));
 		m_pSkinnedMesh[i]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 		m_pSkinnedMesh[i]->rotateX(-90, true);
 		m_pSkinnedMesh[i]->rotateZ(180, true);
+
 	}
 
-	m_pMapObject = new mapObject;
-	m_pMapObject->init();
+	//m_pMapObject = new mapObject;
+	//m_pMapObject->init();
 
 	m_pBoxObject = new boxObject;
 	m_pBoxObject->moveZ(4);
 	m_pBoxObject->moveY(4);
 
-	m_pBoxObject->setDebugEnable(true, EDebugDrawType::SPHERE);
+	m_pBoxObject->setDebugEnable(true);
+
 	
 }
 
@@ -65,7 +70,7 @@ void sceneCollisionTest::update(void)
 	{
 		m_pSkinnedMesh[i]->update();
 	}
-	m_pMapObject->update();
+	//m_pMapObject->update();
 
 	m_pBoxObject->update();
 }
@@ -79,8 +84,8 @@ void sceneCollisionTest::draw(void)
 		m_pSkinnedMesh[i]->draw();
 	}
 
-	//m_pBoxObject->draw();
-	m_pMapObject->draw();
+	m_pBoxObject->draw();
+	//m_pMapObject->draw();
 }
 
 void sceneCollisionTest::initEvent(void)

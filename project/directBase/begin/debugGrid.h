@@ -27,6 +27,6 @@ private :
 
 public:
 	debugGrid(int size);
-	~debugGrid();
+	virtual ~debugGrid();
 };
 
