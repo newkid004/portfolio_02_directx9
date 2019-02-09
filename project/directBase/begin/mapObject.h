@@ -22,6 +22,8 @@ public:
 	MAPLIST & getMapList(void);
 	terrain*& getTerrain(void);
 
+	void setDebugEnable(bool input, EDebugDrawType type = EDebugDrawType::BOX);
+
 public:
 
 	mapObject();

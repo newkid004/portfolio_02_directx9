@@ -60,6 +60,8 @@ void skinnedMesh::drawPre(void)
 	_effect->SetVector("_lightDirection", &lightDirection);
 
 #endif	// SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_SHADER
+
+	MN_DEV->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 }
 
 void skinnedMesh::drawDo(void)
@@ -72,7 +74,7 @@ void skinnedMesh::drawDo(void)
 void skinnedMesh::drawPost(void)
 {
 	renderObject::drawPost();
-
+	MN_DEV->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 #if SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
 	MN_DEV->SetTexture(0, NULL);
 #endif // SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
@@ -201,6 +203,7 @@ void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshC
 		gFunc::runEffectLoop(_effect, "myTechnique", [&](int passNum)->void {
 			meshCont->pSkinndMesh->DrawSubset(i);
 		});
+		
 	}
 
 #endif // SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
@@ -303,8 +306,9 @@ LPD3DXMESH skinnedMesh::createSkinnedMesh(LPD3DXMESHCONTAINER meshContainer, int
 		&bufBoneCombinations,
 		&pMesh);
 
+
 	D3DVERTEXELEMENT9 elements[] = {
-		{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
 		{ 0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0 },
 		{ 0, 24, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BINORMAL, 0 },
 		{ 0, 36, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TANGENT, 0 },

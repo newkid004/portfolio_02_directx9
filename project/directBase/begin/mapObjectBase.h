@@ -14,6 +14,8 @@ protected:
 	virtual void init(void);
 	void addMapObject(std::string key, std::string meshFilePath, std::string effectFilePath);
 
+	MAPLIST & getMapList(void);
+
 	void setMapObjectScale(std::string key, const D3DXVECTOR3 & a_rstScale);
 	void setMapObjectRotation(std::string key, const D3DXVECTOR3 & a_rstRotation);
 	void setMapObjectPosition(std::string key, const D3DXVECTOR3 & a_rstPosition);

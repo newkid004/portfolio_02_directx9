@@ -23,6 +23,7 @@ protected :
 
 	allocateHierarchy::boneFrame* _rootBone = nullptr;
 	vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
+	vector<allocateHierarchy::meshContainer*> _vMeshContainerList2;
 
 	animationController* _aniController = nullptr;
 

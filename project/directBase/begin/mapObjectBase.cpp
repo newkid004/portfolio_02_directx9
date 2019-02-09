@@ -79,6 +79,11 @@ void mapObjectBase::addMapObject(string key, string meshFilePath, string effectF
 	m_oMapObjectList.insert(MAPLIST::value_type(key, new staticMesh(stParameters)));
 }
 
+MAPLIST & mapObjectBase::getMapList(void)
+{
+	return m_oMapObjectList;
+}
+
 void mapObjectBase::setMapObjectScale(string key, const D3DXVECTOR3 & a_rstScale)
 {
 	MAPLIST::iterator iter = m_oMapObjectList.find(key);
