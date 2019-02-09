@@ -35,12 +35,12 @@ void sceneCollisionTest::init(void)
 
 	for (int i = 0; i < ZOMBIE_NUM; i++)
 	{
-		m_pSkinnedMesh[i] = this->createSkinnedMesh();
+		m_pSkinnedMesh[i] = this->createZombieMesh();
 
 		m_pSkinnedMesh[i]->setDebugEnable(true);
 		//m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::SPHERE);
 
-		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.001f, 0.001f, 0.001f));
+		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.003f, 0.003f, 0.003f));
 		m_pSkinnedMesh[i]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 		m_pSkinnedMesh[i]->rotateX(-90, true);
@@ -48,8 +48,11 @@ void sceneCollisionTest::init(void)
 
 	}
 
-	//m_pMapObject = new mapObject;
-	//m_pMapObject->init();
+	m_pSkinnedMesh[1] = this->createObjectMesh();
+	m_pSkinnedMesh[1]->setScale(D3DXVECTOR3(0.00021f, 0.0021f, 0.0021f));
+	m_pSkinnedMesh[1]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 20.0f));
+	m_pMapObject = new mapObject;
+	m_pMapObject->init();
 
 	m_pBoxObject = new boxObject;
 	m_pBoxObject->moveZ(4);
@@ -70,9 +73,9 @@ void sceneCollisionTest::update(void)
 	{
 		m_pSkinnedMesh[i]->update();
 	}
-	//m_pMapObject->update();
+	m_pMapObject->update();
 
-	m_pBoxObject->update();
+	//m_pBoxObject->update();
 }
 
 void sceneCollisionTest::draw(void)
@@ -84,8 +87,10 @@ void sceneCollisionTest::draw(void)
 		m_pSkinnedMesh[i]->draw();
 	}
 
-	m_pBoxObject->draw();
-	//m_pMapObject->draw();
+	
+	m_pMapObject->draw();
+
+	//m_pBoxObject->draw();
 }
 
 void sceneCollisionTest::initEvent(void)
@@ -153,11 +158,20 @@ void sceneCollisionTest::updateControl(void)
 	}
 }
 
-skinnedMesh * sceneCollisionTest::createSkinnedMesh(void)
+skinnedMesh * sceneCollisionTest::createZombieMesh(void)
 {
 	skinnedMesh::mParam stParameters = {
 		"resource/mesh/L4D1/male/male.x",
 		"resource/effect/skinnedMesh.fx"
+	};
+	return new skinnedMesh(stParameters);
+}
+
+skinnedMesh * sceneCollisionTest::createObjectMesh(void)
+{
+	skinnedMesh::mParam stParameters = {
+	"resource/mesh/L4D1/c130/c130.x",
+	"resource/effect/skinnedMesh.fx"
 	};
 	return new skinnedMesh(stParameters);
 }
