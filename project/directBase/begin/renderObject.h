@@ -20,6 +20,9 @@ protected:
 
 	debugDraw* _debugDraw = nullptr;
 
+	std::vector<boundingBox> _vbBox;
+	std::vector<boundingSphere> _vbSphere;
+
 public :	// iterface
 	virtual void update(void) override;
 	virtual void draw(void) final override;
@@ -37,6 +40,8 @@ public:
 	bool isCull(void) { return _isCull; }
 	bool getVisible(void) { return _isVisible; }
 	bool getDebugEnalbe(void) { return _isDebugEnable; }
+	std::vector<boundingBox> & getBoundingBoxList(void) { return _vbBox; }
+	std::vector<boundingSphere> & getBoundingSphereList(void) { return _vbSphere; }
 	constexpr boundingBox & getBoundingBox(void) { return _bBox; }
 	constexpr boundingSphere & getBoundingSphere(void) { return _bSphere; }
 	void getBoundingBoxFinal(boundingBox * out);
@@ -46,7 +51,7 @@ public:
 
 	void setVisible(bool input) { _isVisible = input; }
 	void setDebugEnable(bool input, EDebugDrawType drawType = EDebugDrawType::BOX);
-	void setBoundingBox(const boundingBox & input) { _bBox = input; };
+	void setBoundingBox(const boundingBox & input) { _vbBox.push_back(input); };
 	void setBoundingSphere(const boundingSphere & input) { _bSphere = input; };
 
 protected :

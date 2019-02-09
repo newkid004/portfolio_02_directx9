@@ -27,7 +27,8 @@ private:
 	void updateControl(void);
 
 private:
-	skinnedMesh* createSkinnedMesh(void);
+	skinnedMesh* createZombieMesh(void);
+	skinnedMesh* createObjectMesh(void);
 
 public:
 	sceneCollisionTest() {};
