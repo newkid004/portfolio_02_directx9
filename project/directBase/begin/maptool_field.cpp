@@ -8,21 +8,23 @@
 #include "camera.h"
 
 #include "terrain.h"
+#include "mapObject.h"
 #include "quadTree_Frustum.h"
 
 #include "staticMesh.h"
 #include "skinnedMesh.h"
 
-maptool_field::maptool_field(terrain* inTerrain)
+maptool_field::maptool_field(mapObject* inTerrain)
 {
 	_fieldSet.field = inTerrain;
-
 	if (_fieldSet.field)
-		_fieldSet.qTree = new quadTree_Frustum(inTerrain->getSizeMap().cx, inTerrain->getSizeMap().cy);
-	else
-		_fieldSet.qTree = new quadTree_Frustum(256, 256);
+	{
+		auto & ter = _fieldSet.field->getTerrain();
+		if (ter)	_fieldSet.qTree = new quadTree_Frustum(ter->getSizeMap().cx, ter->getSizeMap().cy);
+		else		_fieldSet.qTree = new quadTree_Frustum(256, 256);
 
-	_fieldSet.qTree->build();
+		_fieldSet.qTree->build();
+	}
 }
 
 maptool_field::~maptool_field()
@@ -42,7 +44,8 @@ void maptool_field::update(void)
 	for (auto i : _fieldSet.objList)
 		i->update();
 
-	_fieldSet.qTree->cullFrustum();
+	if (_fieldSet.field) _fieldSet.field->update();
+	if (_fieldSet.qTree) _fieldSet.qTree->cullFrustum();
 }
 
 void maptool_field::draw(void)
@@ -52,6 +55,7 @@ void maptool_field::draw(void)
 		if (auto rObject = dynamic_cast<renderObject*>(i))
 			rObject->draw();
 	}
+	if (_fieldSet.field) _fieldSet.field->draw();
 }
 
 renderObject * maptool_field::getPickObject(void)

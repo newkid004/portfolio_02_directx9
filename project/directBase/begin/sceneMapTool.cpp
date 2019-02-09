@@ -12,6 +12,8 @@
 #include "maptool_render.h"
 #include "maptool_io.h"
 
+#include "mapObject.h"
+
 #include "windowCtlogMaptool.h"
 
 #include "terrain.h"
@@ -24,6 +26,9 @@ sceneMapTool::~sceneMapTool()
 	SAFE_DELETE(_window);
 	SAFE_DELETE(_field);
 	SAFE_DELETE(_render);
+	SAFE_DELETE(_io);
+
+	SAFE_DELETE(_mapObject);
 }
 
 void sceneMapTool::init(void)
@@ -32,8 +37,11 @@ void sceneMapTool::init(void)
 
 	ZeroMemory(&_mousePrev, sizeof(POINT));
 
+	// _mapObject = new mapObject();
+	// _mapObject->init();
+
 	_window	= new maptool_window();
-	_field	= new maptool_field(NULL);
+	_field	= new maptool_field(_mapObject);
 	_render	= new maptool_render();
 	_io		= new maptool_io(_field, &_window->getSet().mv_file->getIndex());
 

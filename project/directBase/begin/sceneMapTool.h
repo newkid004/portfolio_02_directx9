@@ -7,6 +7,8 @@ class maptool_field;
 class maptool_render;
 class maptool_io;
 
+class mapObject;
+
 class staticMesh;
 
 class sceneMapTool : public sceneBase
@@ -17,6 +19,9 @@ private :
 	maptool_render*	_render = nullptr;
 	maptool_io*		_io = nullptr;
 
+	mapObject* _mapObject = nullptr;
+
+private :
 	POINT _mousePrev;
 
 public:

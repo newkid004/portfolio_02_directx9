@@ -14,7 +14,7 @@ public :
 		string effectFilePath;
 	};
 
-private :
+protected :
 	LPD3DXMESH _mesh = nullptr;
 	LPD3DXEFFECT _effect = nullptr;
 
@@ -55,7 +55,9 @@ public :
 	animationController* getAniController(void) { return _aniController; }
 	mParam & getMakeParam(void) { return _param; }
 
+	std::string & getBasePath(void) { return _basePath; }
 	LPD3DXMESH getMesh(void) { return _mesh; }
+	LPD3DXEFFECT getEffect(void) { return _effect; }
 
 public:
 	skinnedMesh(const mParam & param);

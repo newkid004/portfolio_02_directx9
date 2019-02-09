@@ -1,27 +1,26 @@
 #pragma once
 
 #include "kGlobalDefine.h"
-#include "staticMesh.h"
 
-typedef unordered_map<string, staticMesh*> MAPLIST;
+#include "staticMesh.h"
 
 class mapObjectBase
 {
+public :
+	typedef unordered_map<std::string, staticMesh*> MAPLIST;
+
 protected:
 	
 	virtual void init(void);
-	void addMapObject(string key, string meshFilePath, string effectFilePath);
+	void addMapObject(std::string key, std::string meshFilePath, std::string effectFilePath);
 
-	void setMapObjectScale(string key, const D3DXVECTOR3 & a_rstScale);
-	void setMapObjectRotation(string key, const D3DXVECTOR3 & a_rstRotation);
-	void setMapObjectPosition(string key, const D3DXVECTOR3 & a_rstPosition);
+	void setMapObjectScale(std::string key, const D3DXVECTOR3 & a_rstScale);
+	void setMapObjectRotation(std::string key, const D3DXVECTOR3 & a_rstRotation);
+	void setMapObjectPosition(std::string key, const D3DXVECTOR3 & a_rstPosition);
 	
 	void scaleMap(const D3DXVECTOR3 & a_rstScale);
 	void rotateMap(const D3DXVECTOR3 & a_rstRotation);
 	void moveMap(const D3DXVECTOR3 & a_rstMove);
-
-public : // ----- 접근, 지정자 ----- //
-	constexpr MAPLIST & getObjectList(void) { return m_oMapObjectList; }
 
 public:
 

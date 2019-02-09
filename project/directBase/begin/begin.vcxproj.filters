@@ -367,6 +367,12 @@
     <Filter Include="main\classes\map">
       <UniqueIdentifier>{5e72afaa-1ba4-4570-8bc7-d0f423ab194d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\skinnedMesh\_base">
+      <UniqueIdentifier>{c235be00-d2f4-491e-9092-dcdd6a30852f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate">
+      <UniqueIdentifier>{c1c6bb85-aabe-444f-a49d-65011eed130a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -431,9 +437,6 @@
     </ClInclude>
     <ClInclude Include="allocateHierarchy.h">
       <Filter>classes\global\utility\animation\allocateHierarchy</Filter>
-    </ClInclude>
-    <ClInclude Include="skinnedMesh.h">
-      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh</Filter>
     </ClInclude>
     <ClInclude Include="animationController.h">
       <Filter>classes\global\utility\animation</Filter>
@@ -633,6 +636,12 @@
     <ClInclude Include="mapObjectBase.h">
       <Filter>main\classes\map</Filter>
     </ClInclude>
+    <ClInclude Include="skinnedMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="skinnedMeshDup.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -682,9 +691,6 @@
     </ClCompile>
     <ClCompile Include="allocateHierarchy.cpp">
       <Filter>classes\global\utility\animation\allocateHierarchy</Filter>
-    </ClCompile>
-    <ClCompile Include="skinnedMesh.cpp">
-      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh</Filter>
     </ClCompile>
     <ClCompile Include="animationController.cpp">
       <Filter>classes\global\utility\animation</Filter>
@@ -856,6 +862,12 @@
     </ClCompile>
     <ClCompile Include="mapObjectBase.cpp">
       <Filter>main\classes\map</Filter>
+    </ClCompile>
+    <ClCompile Include="skinnedMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="skinnedMeshDup.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

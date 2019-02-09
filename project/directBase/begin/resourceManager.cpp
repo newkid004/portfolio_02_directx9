@@ -3,6 +3,10 @@
 
 #include "sound.h"
 
+#include "skinnedMesh.h"
+#include "skinnedMeshDup.h"
+#include "animationController.h"
+
 resourceManager::resourceManager()
 {
 }
@@ -36,7 +40,7 @@ meshSet* resourceManager::createStaticMesh(const string & filePath)
 	for (int i = 0; i < meshSt->numMaterial; ++i)
 	{
 		auto xMaterial = (LPD3DXMATERIAL)bufXMaterial->GetBufferPointer();
-		LPDIRECT3DTEXTURE9 texture;
+		LPDIRECT3DTEXTURE9 texture = nullptr;
 
 		if (xMaterial[i].pTextureFilename)
 		{
@@ -77,6 +81,13 @@ meshSet* resourceManager::createStaticMesh(const string & filePath)
 	SAFE_RELEASE(originMesh);
 
 	return meshSt;
+}
+
+skinnedMesh* resourceManager::createSkinnedMesh(const string & filePath, void * makeParam)
+{
+	auto mParam = (skinnedMesh::mParam*)makeParam;
+
+	return new skinnedMesh(*mParam);
 }
 
 LPD3DXEFFECT resourceManager::createEffect(const string & key)
@@ -217,6 +228,16 @@ meshSet * resourceManager::getStaticMesh(const string & key, bool isAutoCreate)
 	return getSomthing(key, _mStaticMesh, isAutoCreate, (function<meshSet*(void)>)[&]()->auto { return createStaticMesh(key); });
 }
 
+skinnedMesh * resourceManager::getSkinnedMesh(const string & key, void * makeParam, bool isAutoCreate)
+{
+	return getSomthing(key, _mSkinnedMesh, isAutoCreate, (function<skinnedMesh*(void)>)[&]()->auto { return createSkinnedMesh(key, makeParam); });
+}
+
+skinnedMesh * resourceManager::getSkinnedMesh(const string & key)
+{
+	return getSomthing(key, _mSkinnedMesh, false, (function<skinnedMesh*(void)>)nullptr);
+}
+
 LPD3DXEFFECT resourceManager::getEffect(const string & key, bool isAutoCreate)
 {
 	return getSomthing(key, _mEffect, isAutoCreate, (function<LPD3DXEFFECT(void)>)[&]()->auto { return createEffect(key); });
@@ -243,7 +264,7 @@ sound * resourceManager::getSoundSE(const string & key, bool isAutoCreate)
 }
 
 template<typename T> 
-T resourceManager::getSomthing(const string & key, unordered_map<string, T> & table, bool isAutoCreate, function<T(void)> & creater)
+T resourceManager::getSomthing(const string & key, unordered_map<string, T> & table, bool isAutoCreate, function<T(void)> creater)
 {
 	auto iter = table.find(key);
 

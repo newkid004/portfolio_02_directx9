@@ -24,15 +24,15 @@ public :
 
 	struct params
 	{
-		int smoothLevel;
-		float heightScale;
+		int smoothLevel = 0;
+		float heightScale = 0;
 
-		string pathSplat;
-		string pathHeight;
-		string pathEffect;
+		string pathSplat	= "";
+		string pathHeight	= "";
+		string pathEffect	= "";
 
-		SIZE tileSize;
-		SIZE mapSize;
+		SIZE tileSize = { 0, };
+		SIZE mapSize = { 0, };
 		vector<string> vPathTextureFile;
 	};
 
@@ -74,6 +74,8 @@ public :
 
 	bool getIntersectPoint(const pick::ray & ray, D3DXVECTOR3 & out_position);
 	static const D3DXPLANE & getDefPlane(void) { return _defPlane; }
+
+	params & getMakeParam(void) { return _param; }
 
 public:
 	terrain(const params & param);

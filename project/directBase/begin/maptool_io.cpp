@@ -4,10 +4,14 @@
 
 #include "gJson.h"
 
+#include "mapObject.h"
 #include "skinnedMesh.h"
 #include "staticMesh.h"
+#include "quadTree_Frustum.h"
 
 constexpr char* filepath = "resource/json/maptool/";
+
+typedef maptool_data_io IO_DATA;
 
 maptool_io::maptool_io(maptool_field * bindData, int* bindMapIndex) :
 	_bindData(bindData),
@@ -40,7 +44,6 @@ void maptool_io::buildObject()
 	auto & vDataList = _bindData->getSet().dataList;
 	auto & vObjList = _bindData->getSet().objList;
 
-	typedef maptool_data_io IO_DATA;
 	for (int i = 0; i < vDataList.size(); ++i)
 	{
 		auto & vData = vDataList[i];
@@ -55,6 +58,22 @@ void maptool_io::buildObject()
 			IO_DATA::apply((IO_DATA::OBJ::PROP*)vData, (staticMesh*)vObj);
 		}
 		vData->write((*j)[i]);
+	}
+}
+
+void maptool_io::buildField(void)
+{
+	auto iter = _mJson.find("field");
+	json*& j = iter->second;
+
+	SAFE_DELETE(j);
+	j = new json;
+
+	if (mapObject* field = _bindData->getSet().field)
+	{
+		IO_DATA::OBJ::FIELD data;
+		IO_DATA::apply(&data, field);
+		data.write(*j);
 	}
 }
 
@@ -75,8 +94,6 @@ void maptool_io::spreadObject(void)
 	}
 	vObjList.clear();
 	vDataList.clear();
-
-	typedef maptool_data_io IO_DATA;
 
 	for (auto js : *j)
 	{
@@ -103,13 +120,7 @@ void maptool_io::spreadObject(void)
 		{
 			IO_DATA::OBJ::PROP* convert = new IO_DATA::OBJ::PROP();
 			IO_DATA::parse(convert, js);
-
-			staticMesh::mParam param;
-			param.meshFilePath = convert->_source;
-			param.effectFilePath = convert->_effect;
-
-			additionObject = new staticMesh(param);
-			IO_DATA::apply((staticMesh*)additionObject, convert);
+			IO_DATA::create((staticMesh**)&additionObject, convert);
 
 			additionData = convert;
 		}
@@ -121,6 +132,7 @@ void maptool_io::spreadObject(void)
 		}
 	}
 
+	/*
 	for (int i = 0; i < vDataList.size(); ++i)
 	{
 		auto & vData = vDataList[i];
@@ -136,6 +148,29 @@ void maptool_io::spreadObject(void)
 		}
 		vData->write((*j)[i]);
 	}
+	*/
+}
+
+void maptool_io::spreadField(void)
+{
+	auto iter = _mJson.find("field");
+	json*& j = iter->second;
+
+	mapObject*& field = _bindData->getSet().field;
+	SAFE_DELETE(field);
+
+	IO_DATA::OBJ::FIELD data;
+	IO_DATA::parse(&data, *j);
+	IO_DATA::create(&field, &data);
+
+	quadTree_Frustum* & quad = _bindData->getSet().qTree;
+	SAFE_DELETE(quad);
+
+	auto & ter = field->getTerrain();
+	if (ter)	quad = new quadTree_Frustum(ter->getSizeMap().cx, ter->getSizeMap().cy);
+	else		quad = new quadTree_Frustum(256, 256);
+
+	quad->build();
 }
 
 void maptool_io::write(void)
@@ -143,6 +178,7 @@ void maptool_io::write(void)
 	*_bindMapIndex = *_bindMapIndex < 0 ? 0 : *_bindMapIndex;
 
 	buildObject();
+	buildField();
 
 	for (auto & i : _mJson)
 	{
@@ -173,4 +209,5 @@ void maptool_io::read(void)
 	}
 
 	spreadObject();
+	spreadField();
 }

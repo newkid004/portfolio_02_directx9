@@ -1,6 +1,8 @@
 #include "mapObjectBase.h"
 #include "managerList.h"
 
+typedef mapObjectBase::MAPLIST MAPLIST;
+
 mapObjectBase::mapObjectBase()
 {
 }

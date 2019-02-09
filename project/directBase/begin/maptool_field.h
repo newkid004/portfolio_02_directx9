@@ -4,7 +4,7 @@
 
 #include "maptool_data_io.h"
 
-class terrain;
+class mapObject;
 class baseObject;
 class renderObject;
 class quadTree_Frustum;
@@ -17,7 +17,7 @@ public :
 		std::vector<baseObject*> objList;
 		std::vector<maptool_data_io::OBJ::BASE*> dataList;
 
-		terrain* field = nullptr;
+		mapObject* field = nullptr;
 		quadTree_Frustum* qTree = nullptr;
 
 		baseObject* selectionObject = nullptr;
@@ -36,6 +36,6 @@ public :
 	constexpr set & getSet(void) { return _fieldSet; }
 
 public:
-	maptool_field(terrain* inTerrain);
+	maptool_field(mapObject* inTerrain);
 	~maptool_field();
 };

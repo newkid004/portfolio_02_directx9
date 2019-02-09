@@ -2,8 +2,15 @@
 
 #include "mapObjectBase.h"
 
-class mapObject : mapObjectBase
+class terrain;
+class staticMesh;
+
+class mapObject : public mapObjectBase
 {
+protected :
+	terrain* _terrain = nullptr;
+	staticMesh* _ceilObject = nullptr;
+
 public:
 
 	virtual void init(void) override;
@@ -11,8 +18,9 @@ public:
 	void draw(void);
 
 public:
-
+	staticMesh*& getCeilObject(void);
 	MAPLIST & getMapList(void);
+	terrain*& getTerrain(void);
 
 public:
 

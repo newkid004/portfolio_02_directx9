@@ -14,11 +14,13 @@ private :
 private :
 	void insertJson(const std::string & jsonName);
 
-	// write 전, field의 objList내용 작성
+	// write 전, field의 json내용 작성
 	void buildObject(void);
+	void buildField(void);
 
 	// read 후, field에 json내용 작성
 	void spreadObject(void);
+	void spreadField(void);
 
 public :
 	void write(void);
