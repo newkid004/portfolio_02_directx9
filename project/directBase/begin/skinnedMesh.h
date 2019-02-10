@@ -14,19 +14,32 @@ public :
 		std::string effectFilePath;
 	};
 
+	struct STVertex
+	{
+		D3DXVECTOR3 m_stPosition;
+		D3DXVECTOR3 m_stNormal;
+		D3DXVECTOR3 m_stBinormal;
+		D3DXVECTOR3 m_stTangent;
+		D3DXVECTOR2 m_stUV;
+		D3DXVECTOR4 m_stBlendWeight;
+	};
+
 protected :
 	LPD3DXMESH _mesh = nullptr;
+	LPD3DXMESH _cloneMesh = nullptr;
 	LPD3DXEFFECT _effect = nullptr;
 
 	std::string _basePath = "";
 	mParam _param = { 0 };
 
 	allocateHierarchy::boneFrame* _rootBone = nullptr;
-	std::vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
-	std::vector<allocateHierarchy::meshContainer*> _vMeshContainerList2;
+	vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
 
 	animationController* _aniController = nullptr;
 
+	vector<D3DXVECTOR4> _vVertexList;
+
+	int num = 0;
 public :
 	void update(void) override;
 
@@ -45,6 +58,7 @@ private :
 	// 정보 출력
 	void drawBone(LPD3DXFRAME frame);
 	void drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshContainer);
+	void drawBox(void);
 
 	// 본
 	void setupBone(LPD3DXFRAME frame);

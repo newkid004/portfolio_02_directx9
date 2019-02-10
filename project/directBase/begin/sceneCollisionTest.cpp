@@ -100,7 +100,7 @@ void sceneCollisionTest::draw(void)
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->draw();
 #else
-	m_pBoxObject->draw();
+	//m_pBoxObject->draw();
 #endif // DEBUG_TYPE == DEBUG_TYPE_MAP
 }
 
@@ -172,7 +172,8 @@ void sceneCollisionTest::updateControl(void)
 skinnedMesh * sceneCollisionTest::createZombieMesh(void)
 {
 	skinnedMesh::mParam stParameters = {
-		"resource/mesh/L4D1/female/female.x",
+		//"resource/mesh/WitchApprentice/WitchApprentice.x",
+		"resource/mesh/L4D1/male/male1.x",
 		"resource/effect/skinnedMesh.fx"
 	};
 	return new skinnedMesh(stParameters);

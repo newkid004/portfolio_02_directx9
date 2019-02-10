@@ -345,6 +345,7 @@
     <None Include="resource\mesh\L4D1\Namvet\namvet.X" />
     <None Include="resource\mesh\L4D1\smoker\smoker.X" />
     <None Include="resource\mesh\L4D1\Teenangst\teenangst.X" />
+    <None Include="resource\mesh\L4D1\male\male1.X" />
     <None Include="resource\mesh\WitchApprentice\WitchApprentice.x" />
   </ItemGroup>
   <ItemGroup>
