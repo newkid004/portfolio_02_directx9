@@ -391,6 +391,42 @@
     <Filter Include="Resource\mesh\L4D1\male">
       <UniqueIdentifier>{c22bf61d-6760-4c05-b39f-da63efa55b97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\mesh\L4D1\Biker">
+      <UniqueIdentifier>{3a541fdb-3a06-46e3-b0df-6417fe88989f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\bill">
+      <UniqueIdentifier>{b008bf43-5645-44f8-b431-c77c163c07cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\c130">
+      <UniqueIdentifier>{5060cede-5ea0-47fe-8d8f-1b6ed5e9c130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\female">
+      <UniqueIdentifier>{6a4ad2d7-a220-46da-bb4e-0bb5483eac25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\hulk">
+      <UniqueIdentifier>{4d7ef917-c2b3-458d-8872-dd9353f8e6a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\Manager">
+      <UniqueIdentifier>{948c70dc-4185-4251-86f3-6d8b3db59fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\Namvet">
+      <UniqueIdentifier>{01bef1af-87a7-4288-bc53-7d36c4efe2a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\smoker">
+      <UniqueIdentifier>{058f7b94-e0ee-4297-9000-94f9862f833f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\Teenangst">
+      <UniqueIdentifier>{8c5bf707-138b-4c43-aea4-a0b6d7ac3b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\common\pattern">
+      <UniqueIdentifier>{caa1e04b-939a-44ac-8816-035b5895479a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\animation\controller">
+      <UniqueIdentifier>{03367589-0b0a-4a16-8498-c7bb3cb6760d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\animation\controllerDigit">
+      <UniqueIdentifier>{973b955d-0078-469c-80a5-5bf1fc9e5bd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -455,9 +491,6 @@
     </ClInclude>
     <ClInclude Include="allocateHierarchy.h">
       <Filter>classes\global\utility\animation\allocateHierarchy</Filter>
-    </ClInclude>
-    <ClInclude Include="animationController.h">
-      <Filter>classes\global\utility\animation</Filter>
     </ClInclude>
     <ClInclude Include="lightBase.h">
       <Filter>classes\global\utility\object\light\_base</Filter>
@@ -663,6 +696,21 @@
     <ClInclude Include="dijkstra.h">
       <Filter>main\classes\dijkstra</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationDef.h">
+      <Filter>classes\global\utility\manager\common\pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="PatternManager.h">
+      <Filter>classes\global\utility\manager\common\pattern</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationTester.h">
+      <Filter>main\classes\scene\test</Filter>
+    </ClInclude>
+    <ClInclude Include="animationController.h">
+      <Filter>classes\global\utility\animation\controller</Filter>
+    </ClInclude>
+    <ClInclude Include="animationControllerDigit.h">
+      <Filter>classes\global\utility\animation\controllerDigit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -712,9 +760,6 @@
     </ClCompile>
     <ClCompile Include="allocateHierarchy.cpp">
       <Filter>classes\global\utility\animation\allocateHierarchy</Filter>
-    </ClCompile>
-    <ClCompile Include="animationController.cpp">
-      <Filter>classes\global\utility\animation</Filter>
     </ClCompile>
     <ClCompile Include="lightBase.cpp">
       <Filter>classes\global\utility\object\light\_base</Filter>
@@ -893,6 +938,18 @@
     <ClCompile Include="dijkstra.cpp">
       <Filter>main\classes\dijkstra</Filter>
     </ClCompile>
+    <ClCompile Include="PatternManager.cpp">
+      <Filter>classes\global\utility\manager\common\pattern</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTester.cpp">
+      <Filter>main\classes\scene\test</Filter>
+    </ClCompile>
+    <ClCompile Include="animationController.cpp">
+      <Filter>classes\global\utility\animation\controller</Filter>
+    </ClCompile>
+    <ClCompile Include="animationControllerDigit.cpp">
+      <Filter>classes\global\utility\animation\controllerDigit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">
@@ -903,6 +960,36 @@
     </None>
     <None Include="resource\mesh\L4D1\male\male.X">
       <Filter>Resource\mesh\L4D1\male</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\Biker\biker.X">
+      <Filter>Resource\mesh\L4D1\Biker</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\bill\bill.X">
+      <Filter>Resource\mesh\L4D1\bill</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\c130\c130.X">
+      <Filter>Resource\mesh\L4D1\c130</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\c130\c130_1.X">
+      <Filter>Resource\mesh\L4D1\c130</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\female\female.X">
+      <Filter>Resource\mesh\L4D1\female</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\hulk\hulk.X">
+      <Filter>Resource\mesh\L4D1\hulk</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\Manager\manager.X">
+      <Filter>Resource\mesh\L4D1\Manager</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\Namvet\namvet.X">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\Teenangst\teenangst.X">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\smoker\smoker.X">
+      <Filter>Resource\mesh\L4D1\smoker</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -920,6 +1007,135 @@
     </Image>
     <Image Include="resource\mesh\L4D1\male\common_male_suit_01_head_01.tga">
       <Filter>Resource\mesh\L4D1\male</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Biker\francis_color.tga">
+      <Filter>Resource\mesh\L4D1\Biker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Biker\francis_color_normal.tga">
+      <Filter>Resource\mesh\L4D1\Biker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Biker\francis_hair.tga">
+      <Filter>Resource\mesh\L4D1\Biker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Biker\francis_head.tga">
+      <Filter>Resource\mesh\L4D1\Biker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Biker\francis_head_normal.tga">
+      <Filter>Resource\mesh\L4D1\Biker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Biker\green_iris.tga">
+      <Filter>Resource\mesh\L4D1\Biker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\bill\bill_color.tga">
+      <Filter>Resource\mesh\L4D1\bill</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\bill\bill_hair.tga">
+      <Filter>Resource\mesh\L4D1\bill</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\bill\bill_head.tga">
+      <Filter>Resource\mesh\L4D1\bill</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\bill\blue_iris.tga">
+      <Filter>Resource\mesh\L4D1\bill</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\c130\c130_1.tga">
+      <Filter>Resource\mesh\L4D1\c130</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\c130\c130_2.tga">
+      <Filter>Resource\mesh\L4D1\c130</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\c130\c130_propeller.tga">
+      <Filter>Resource\mesh\L4D1\c130</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\c130\c130_propeller_static.tga">
+      <Filter>Resource\mesh\L4D1\c130</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\female\common_female_casual_head_01.tga">
+      <Filter>Resource\mesh\L4D1\female</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\female\common_female_casual_lower_01.tga">
+      <Filter>Resource\mesh\L4D1\female</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\female\common_female_casual_upper_01.tga">
+      <Filter>Resource\mesh\L4D1\female</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\hulk\hulk_01.tga">
+      <Filter>Resource\mesh\L4D1\hulk</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\hulk\hulk_01_normal.tga">
+      <Filter>Resource\mesh\L4D1\hulk</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Manager\blue_iris.tga">
+      <Filter>Resource\mesh\L4D1\Manager</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Manager\brown_iris.tga">
+      <Filter>Resource\mesh\L4D1\Manager</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Manager\louis_color.tga">
+      <Filter>Resource\mesh\L4D1\Manager</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Manager\louis_color_normal.tga">
+      <Filter>Resource\mesh\L4D1\Manager</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Manager\louis_head.tga">
+      <Filter>Resource\mesh\L4D1\Manager</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Manager\louis_head_normal.tga">
+      <Filter>Resource\mesh\L4D1\Manager</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Namvet\bill_color.tga">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Namvet\bill_color_normal.tga">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Namvet\bill_hair.tga">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Namvet\bill_head.tga">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Namvet\bill_head_normal.tga">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Namvet\blue_iris.tga">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Namvet\green_iris.tga">
+      <Filter>Resource\mesh\L4D1\Namvet</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\blue_iris.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\brown_iris.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_color.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_color_normal.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_hair.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_head.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_head_normal.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_normal.tga">
+      <Filter>Resource\mesh\L4D1\Teenangst</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\smoker\boomer_hair.tga">
+      <Filter>Resource\mesh\L4D1\smoker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\smoker\smoker.tga">
+      <Filter>Resource\mesh\L4D1\smoker</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\smoker\smoker_normal.tga">
+      <Filter>Resource\mesh\L4D1\smoker</Filter>
     </Image>
   </ItemGroup>
 </Project>

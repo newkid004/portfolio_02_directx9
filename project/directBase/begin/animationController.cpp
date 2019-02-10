@@ -137,7 +137,7 @@ void animationController::play(LPD3DXANIMATIONSET aniSet)
 		_aniController->SetTrackEnable(1, true);				// 트랙 활성화
 		_aniController->SetTrackAnimationSet(1, preAniSet);		// 트랙 애니메이션 설정
 		_aniController->SetTrackPosition(1, trackPos);			// 위치 보존
-
+			
 		// 상대적인 재생시간
 		if (_blendSet.currentBlendTime < 0.0f)
 			_blendSet.currentBlendTime = _blendSet.timeBlend;

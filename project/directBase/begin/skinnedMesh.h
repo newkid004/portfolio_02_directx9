@@ -10,20 +10,20 @@ class skinnedMesh : public renderObject
 public :
 	struct mParam
 	{
-		string filePath;
-		string effectFilePath;
+		std::string filePath;
+		std::string effectFilePath;
 	};
 
 protected :
 	LPD3DXMESH _mesh = nullptr;
 	LPD3DXEFFECT _effect = nullptr;
 
-	string _basePath = "";
+	std::string _basePath = "";
 	mParam _param = { 0 };
 
 	allocateHierarchy::boneFrame* _rootBone = nullptr;
-	vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
-	vector<allocateHierarchy::meshContainer*> _vMeshContainerList2;
+	std::vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
+	std::vector<allocateHierarchy::meshContainer*> _vMeshContainerList2;
 
 	animationController* _aniController = nullptr;
 
@@ -51,7 +51,7 @@ private :
 	void setupBoneOnMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshContainer);
 
 	// ¸Þ½¬
-	LPD3DXMESH createSkinnedMeshFromX(const string & filePath);
+	LPD3DXMESH createSkinnedMeshFromX(const std::string & filePath);
 	LPD3DXMESH createSkinnedMesh(LPD3DXMESHCONTAINER meshContainer, int meshContainerNumber);
 
 public :

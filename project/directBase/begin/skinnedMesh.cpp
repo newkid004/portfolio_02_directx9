@@ -14,6 +14,8 @@
 #define SKINNED_MESH_TYPE_SHADER	2
 #define SKINNED_MESH_TYPE			SKINNED_MESH_TYPE_SHADER
 
+using namespace std;
+
 skinnedMesh::skinnedMesh(const mParam & param) :
 	_param(param)
 {
@@ -203,6 +205,10 @@ void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshC
 
 		int attributeID = boneComb.AttribId;
 		_effect->SetTexture("_texture", meshCont->vTextureList[attributeID]);
+		if (meshCont->vNormalTextureList[attributeID] != nullptr)
+		{
+			_effect->SetTexture("_normalTexture", meshCont->vNormalTextureList[attributeID]);
+		}
 
 		gFunc::runEffectLoop(_effect, "myTechnique", [&](int passNum)->void {
 			meshCont->pSkinndMesh->DrawSubset(i);

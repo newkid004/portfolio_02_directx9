@@ -8,8 +8,6 @@
 	본과 메쉬의 정보는 직접적으로 생성 및 제거 로직을 구현해야 함
 */
 
-using namespace std;
-
 class allocateHierarchy : public ID3DXAllocateHierarchy
 {
 public :
@@ -25,17 +23,18 @@ public :
 		DWORD numBlends;
 		LPD3DXMESH pSkinndMesh;
 
-		vector<boneFrame*> vBoneList;
-		vector<D3DXMATRIXA16> vBoneMatrixList;
-		vector<LPDIRECT3DTEXTURE9> vTextureList;
-		vector<D3DXBONECOMBINATION> vBoneCombinationList;
+		std::vector<boneFrame*> vBoneList;
+		std::vector<D3DXMATRIXA16> vBoneMatrixList;
+		std::vector<LPDIRECT3DTEXTURE9> vNormalTextureList;
+		std::vector<LPDIRECT3DTEXTURE9> vTextureList;
+		std::vector<D3DXBONECOMBINATION> vBoneCombinationList;
 	};
 
 	// 매개 변수
 	struct mParam
 	{
-		string basePath;
-		function<LPD3DXMESH(LPD3DXMESHCONTAINER, int)> skinnedMeshCreator;
+		std::string basePath;
+		std::function<LPD3DXMESH(LPD3DXMESHCONTAINER, int)> skinnedMeshCreator;
 	};
 
 private :
