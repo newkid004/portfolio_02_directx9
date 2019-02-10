@@ -895,6 +895,9 @@
     <None Include="resource\mesh\L4D1\male\male.X">
       <Filter>Resource\mesh\L4D1\male</Filter>
     </None>
+    <None Include="resource\mesh\L4D1\male\male1.X">
+      <Filter>Resource\mesh\L4D1\male</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp">
