@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -327,6 +327,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl" />
+    <None Include="resource\mesh\L4D1\male\male.X" />
+    <None Include="resource\mesh\WitchApprentice\WitchApprentice.x" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\mesh\L4D1\male\common_male_lower_01.tga" />
+    <Image Include="resource\mesh\L4D1\male\common_male_suit_01_head_01.tga" />
+    <Image Include="resource\mesh\L4D1\male\common_male_upper_01.tga" />
+    <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp" />
+    <Image Include="resource\mesh\WitchApprentice\WitchApprentice_w_diff.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

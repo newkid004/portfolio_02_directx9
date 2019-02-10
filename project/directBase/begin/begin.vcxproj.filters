@@ -376,6 +376,21 @@
     <Filter Include="main\classes\dijkstra">
       <UniqueIdentifier>{7de4d7c2-7a42-441a-a86b-0cb40fa053a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{4e1eebd6-a195-4558-828b-5b18f41c4fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh">
+      <UniqueIdentifier>{e7bff43c-5d32-4acc-95b4-2284474cf61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\WitchApprentice">
+      <UniqueIdentifier>{30259cb4-4306-45c3-85e7-9486a930caa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1">
+      <UniqueIdentifier>{8c67c35a-7d6e-4c88-bbaa-7c8b6066207e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\male">
+      <UniqueIdentifier>{c22bf61d-6760-4c05-b39f-da63efa55b97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -883,5 +898,28 @@
     <None Include="gMng.inl">
       <Filter>classes\global\function\gManager</Filter>
     </None>
+    <None Include="resource\mesh\WitchApprentice\WitchApprentice.x">
+      <Filter>Resource\mesh\WitchApprentice</Filter>
+    </None>
+    <None Include="resource\mesh\L4D1\male\male.X">
+      <Filter>Resource\mesh\L4D1\male</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp">
+      <Filter>Resource\mesh\WitchApprentice</Filter>
+    </Image>
+    <Image Include="resource\mesh\WitchApprentice\WitchApprentice_w_diff.bmp">
+      <Filter>Resource\mesh\WitchApprentice</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\male\common_male_upper_01.tga">
+      <Filter>Resource\mesh\L4D1\male</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\male\common_male_lower_01.tga">
+      <Filter>Resource\mesh\L4D1\male</Filter>
+    </Image>
+    <Image Include="resource\mesh\L4D1\male\common_male_suit_01_head_01.tga">
+      <Filter>Resource\mesh\L4D1\male</Filter>
+    </Image>
   </ItemGroup>
 </Project>

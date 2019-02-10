@@ -14,6 +14,9 @@
 #include "mapObject.h"
 
 #define ZOMBIE_NUM 1
+#define DEBUG_TYPE_MAP			1
+#define DEBUG_TYPE_COLLISION	2
+#define DEBUG_TYPE				DEBUG_TYPE_COLLISION
 
 sceneCollisionTest::~sceneCollisionTest()
 {
@@ -48,18 +51,21 @@ void sceneCollisionTest::init(void)
 
 	}
 
-	m_pSkinnedMesh[1] = this->createObjectMesh();
-	m_pSkinnedMesh[1]->setScale(D3DXVECTOR3(0.00021f, 0.0021f, 0.0021f));
-	m_pSkinnedMesh[1]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 20.0f));
+	//m_pSkinnedMesh[1] = this->createObjectMesh();
+	//m_pSkinnedMesh[1]->setScale(D3DXVECTOR3(0.00021f, 0.0021f, 0.0021f));
+	//m_pSkinnedMesh[1]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	
+#if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject = new mapObject;
 	m_pMapObject->init();
-
+	m_pMapObject->setDebugEnable(true);
+#else
 	m_pBoxObject = new boxObject;
 	m_pBoxObject->moveZ(4);
 	m_pBoxObject->moveY(4);
 
 	m_pBoxObject->setDebugEnable(true);
-
+#endif // DEBUG_TYPE == DEBUG_TYPE_MAP
 	
 }
 
@@ -72,10 +78,14 @@ void sceneCollisionTest::update(void)
 	for (int i = 0; i < ZOMBIE_NUM; i++)
 	{
 		m_pSkinnedMesh[i]->update();
+		
+		//gFunc::obj2bound(m_pSkinnedMesh[i]->getObjectBox(),)
 	}
+#if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->update();
-
-	//m_pBoxObject->update();
+#else
+	m_pBoxObject->update();
+#endif // DEBUG_TYPE == DEBUG_TYPE_MAP
 }
 
 void sceneCollisionTest::draw(void)
@@ -87,10 +97,11 @@ void sceneCollisionTest::draw(void)
 		m_pSkinnedMesh[i]->draw();
 	}
 
-	
+#if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->draw();
-
-	//m_pBoxObject->draw();
+#else
+	m_pBoxObject->draw();
+#endif // DEBUG_TYPE == DEBUG_TYPE_MAP
 }
 
 void sceneCollisionTest::initEvent(void)
@@ -161,7 +172,7 @@ void sceneCollisionTest::updateControl(void)
 skinnedMesh * sceneCollisionTest::createZombieMesh(void)
 {
 	skinnedMesh::mParam stParameters = {
-		"resource/mesh/L4D1/male/male.x",
+		"resource/mesh/L4D1/female/female.x",
 		"resource/effect/skinnedMesh.fx"
 	};
 	return new skinnedMesh(stParameters);
