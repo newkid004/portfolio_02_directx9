@@ -1,5 +1,6 @@
 #include "inputManager.h"
-#include "windowManager.h"
+
+#include "managerList.h"
 
 inputManager::inputManager(void)
 {
@@ -34,6 +35,7 @@ void inputManager::update(void)
 	_keyDevice->GetDeviceState(sizeof(_keyStates), _keyStates);
 
 	updateMousePos();
+	updateMouseDbClick();
 
 	if (mouseDown(EMouseInput::LEFT) ||
 		mouseDown(EMouseInput::RIGHT) || 
@@ -117,6 +119,21 @@ bool inputManager::mouseUp(EMouseInput input)
 		(_mousePrevState.rgbButtons[input] & 0x80);
 }
 
+bool inputManager::mousePressDb(void)
+{
+	if (!mousePress())
+		return false;
+
+	if (_mouseDbClickTime < _mouseClickTime &&
+		_mouseClickTime - _mouseClickTimePrev < _mouseDbClickTurm)
+	{
+		_mouseDbClickTime = _mouseClickTime + _mouseDbClickTurm;
+		return true;
+	}
+	else
+		return false;
+}
+
 bool inputManager::wheelUp(void)
 {
 	return 0 < _mouseState.lZ;
@@ -142,4 +159,13 @@ void inputManager::updateMousePos(void)
 {
 	GetCursorPos(&_mousePos);
 	ScreenToClient(GET_WINDOW_MANAGER()->getHWnd(), &_mousePos);
+}
+
+void inputManager::updateMouseDbClick(void)
+{
+	if (mousePress())
+	{
+		_mouseClickTimePrev = _mouseClickTime;
+		_mouseClickTime = MN_TIME->getRunningTime();
+	}
 }

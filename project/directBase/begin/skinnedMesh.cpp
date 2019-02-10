@@ -81,7 +81,11 @@ void skinnedMesh::drawPost(void)
 #if SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
 	MN_DEV->SetTexture(0, NULL);
 #endif // SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
+}
 
+void skinnedMesh::updateBoneMatrix(void)
+{
+	updateBoneMatrix(_rootBone, getMatrixFinal());
 }
 
 void skinnedMesh::updateBoneMatrix(LPD3DXFRAME frame, const D3DXMATRIXA16 & mUpdate)

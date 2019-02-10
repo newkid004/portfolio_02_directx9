@@ -175,6 +175,7 @@
     <ClInclude Include="cameraControlable.h" />
     <ClInclude Include="defaulteCube.h" />
     <ClInclude Include="deviceManager.h" />
+    <ClInclude Include="dijkstra.h" />
     <ClInclude Include="direct3dApplication.h" />
     <ClInclude Include="eventBase.h" />
     <ClInclude Include="eventCatcher.h" />
@@ -264,6 +265,7 @@
     <ClCompile Include="cameraControlable.cpp" />
     <ClCompile Include="defaulteCube.cpp" />
     <ClCompile Include="deviceManager.cpp" />
+    <ClCompile Include="dijkstra.cpp" />
     <ClCompile Include="direct3dApplication.cpp" />
     <ClCompile Include="eventCatcher.cpp" />
     <ClCompile Include="eventManager.cpp" />

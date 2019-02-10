@@ -42,6 +42,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <array>
+#include <queue>
 
 // d3d 헤더파일
 #include <d3d9.h>

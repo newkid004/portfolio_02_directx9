@@ -373,6 +373,9 @@
     <Filter Include="classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate">
       <UniqueIdentifier>{c1c6bb85-aabe-444f-a49d-65011eed130a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\dijkstra">
+      <UniqueIdentifier>{7de4d7c2-7a42-441a-a86b-0cb40fa053a5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{4e1eebd6-a195-4558-828b-5b18f41c4fe4}</UniqueIdentifier>
     </Filter>
@@ -657,6 +660,9 @@
     <ClInclude Include="skinnedMeshDup.h">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClInclude>
+    <ClInclude Include="dijkstra.h">
+      <Filter>main\classes\dijkstra</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -883,6 +889,9 @@
     </ClCompile>
     <ClCompile Include="skinnedMeshDup.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
+    </ClCompile>
+    <ClCompile Include="dijkstra.cpp">
+      <Filter>main\classes\dijkstra</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

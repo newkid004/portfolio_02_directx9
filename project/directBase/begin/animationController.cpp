@@ -3,7 +3,6 @@
 #include "managerList.h"
 
 animationController::animationController(LPD3DXANIMATIONCONTROLLER aniController) :
-	_timeScale(1.0f),
 	_aniController(aniController)
 {
 	int numAniSet = aniController->GetNumAnimationSets();
@@ -30,16 +29,16 @@ animationController::~animationController()
 
 void animationController::update(void)
 {
-	if (_isPlay)
+	if (_playSet.isPlay)
 	{
-		float deltaTime = _timeScale * MN_TIME->getDeltaTime();
+		float deltaTime = _playSet.timeScale * MN_TIME->getDeltaTime();
 
 		// 블렌드 제어
-		if (0.0f < _currentBlendTime)
+		if (0.0f < _blendSet.currentBlendTime)
 		{
-			_currentBlendTime -= MN_TIME->getDeltaTime();
+			_blendSet.currentBlendTime -= MN_TIME->getDeltaTime();
 
-			float switchWeight = _currentBlendTime / _timeBlend;
+			float switchWeight = _blendSet.currentBlendTime / _blendSet.timeBlend;
 			_aniController->SetTrackWeight(1, switchWeight);
 			_aniController->SetTrackWeight(0, 1.0f - switchWeight);
 		}
@@ -50,12 +49,12 @@ void animationController::update(void)
 		D3DXTRACK_DESC trackDesc;
 		_aniController->GetTrackDesc(0, &trackDesc);
 
-		double percent = trackDesc.Position / _aniCurrent->GetPeriod();
+		double percent = trackDesc.Position / _blendSet.aniCurrent->GetPeriod();
 
 		if (1.0f < percent)
 		{
-			auto curAnimation = _aniCurrent;
-			bool isLoop = _isLoop;
+			auto curAnimation = _blendSet.aniCurrent;
+			bool isLoop = _playSet.isPlay;
 
 			stop();
 			if (isLoop)
@@ -70,12 +69,12 @@ void animationController::play(const string & aniName, double pos)
 {
 	if (0.0 < pos)
 		setPlayPosition(pos);
-	else if (0.0 == pos && _aniCurrent != nullptr)
+	else if (0.0 == pos && _blendSet.aniCurrent != nullptr)
 	{
 		LPD3DXANIMATIONSET aniSet = nullptr;
 		_aniController->GetAnimationSet(0, &aniSet);
 
-		if (aniSet != _aniCurrent)
+		if (aniSet != _blendSet.aniCurrent)
 			setPlayPosition(pos);
 	}
 
@@ -90,12 +89,12 @@ void animationController::play(LPD3DXANIMATIONSET aniSet, double pos)
 	*/
 	if (0.0 < pos)
 		setPlayPosition(pos);
-	else if (0.0 == pos && _aniCurrent != nullptr)
+	else if (0.0 == pos && _blendSet.aniCurrent != nullptr)
 	{
 		LPD3DXANIMATIONSET aniSet = nullptr;
 		_aniController->GetAnimationSet(0, &aniSet);
 
-		if (aniSet != _aniCurrent)
+		if (aniSet != _blendSet.aniCurrent)
 			setPlayPosition(pos);
 	}
 
@@ -104,13 +103,13 @@ void animationController::play(LPD3DXANIMATIONSET aniSet, double pos)
 
 void animationController::play(const string & aniName, bool isLoop)
 {
-	_isLoop = isLoop;
+	_playSet.isLoop = isLoop;
 	play(aniName);
 }
 
 void animationController::play(LPD3DXANIMATIONSET aniSet, bool isLoop)
 {
-	_isLoop = isLoop;
+	_playSet.isLoop = isLoop;
 	play(aniSet);
 }
 
@@ -123,9 +122,9 @@ void animationController::play(const string & aniName)
 
 void animationController::play(LPD3DXANIMATIONSET aniSet)
 {
-	_isPlay = true;
+	_playSet.isPlay = true;
 
-	if (aniSet != _aniCurrent && _aniCurrent != nullptr)
+	if (aniSet != _blendSet.aniCurrent && _blendSet.aniCurrent != nullptr)
 	{
 		// 기존 애니메이션 보존 : 트랙 1번
 		LPD3DXANIMATIONSET preAniSet = nullptr;
@@ -140,23 +139,23 @@ void animationController::play(LPD3DXANIMATIONSET aniSet)
 		_aniController->SetTrackPosition(1, trackPos);			// 위치 보존
 
 		// 상대적인 재생시간
-		if (_currentBlendTime < 0.0f)
-			_currentBlendTime = _timeBlend;
+		if (_blendSet.currentBlendTime < 0.0f)
+			_blendSet.currentBlendTime = _blendSet.timeBlend;
 		else
-			_currentBlendTime = _timeBlend - _currentBlendTime;
+			_blendSet.currentBlendTime = _blendSet.timeBlend - _blendSet.currentBlendTime;
 	}
 
 	// 새 애니메이션 보존 : 트랙 0번
 	_aniController->SetTrackAnimationSet(0, aniSet);
 
-	_aniCurrent = aniSet;
+	_blendSet.aniCurrent = aniSet;
 }
 
 void animationController::stop(void)
 {
-	_isLoop = false;
-	_isPlay = false;
-	_aniCurrent = nullptr;
+	_playSet.isLoop = false;
+	_playSet.isPlay = false;
+	_blendSet.aniCurrent = nullptr;
 
 	setPlayPosition(0.0);
 	_aniController->SetTrackAnimationSet(0, NULL);

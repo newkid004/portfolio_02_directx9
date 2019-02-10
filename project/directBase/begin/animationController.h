@@ -6,21 +6,28 @@ using namespace std;
 
 class animationController : public iUpdateble
 {
-private :
+public :
+	struct playSet
+	{
+		bool isPlay = false;
+		bool isLoop = false;
+
+		float timeScale = 1.0f;
+	};
+
 	struct blendSet
 	{
-		LPD3DXANIMATIONSET ani;
+		float currentBlendTime = 0.0f;
+
+		float timeBlend = 0.25f;
+		float timeBlendElse = 1.0f;
+		LPD3DXANIMATIONSET aniCurrent = nullptr;
 	};
 
 private :
-	bool _isPlay = false;
-	bool _isLoop = false;
+	playSet _playSet;
+	blendSet _blendSet;
 
-	float _currentBlendTime = 0.0f;
-
-	float _timeBlend = 0.25f;
-	float _timeScale = 0.0f;
-	LPD3DXANIMATIONSET _aniCurrent = nullptr;
 	LPD3DXANIMATIONCONTROLLER _aniController = nullptr;
 
 	vector<string> _vAniNameList;
@@ -41,9 +48,14 @@ public :
 	void stop(void);
 
 public :
+	playSet & getPlaySet(void) { return _playSet; }
+	blendSet & getBlendSet(void) { return _blendSet; }
+
+	vector<string> & getAniNameList(void) { return _vAniNameList; }
+	unordered_map<string, LPD3DXANIMATIONSET> & getAniSetList(void) { return _mAniSetList; }
+	LPD3DXANIMATIONCONTROLLER & getAniController(void) { return _aniController; }
+
 	void setPlayPosition(double pos) { _aniController->SetTrackPosition(0, pos); }
-	void setTimeScale(float input) { _timeScale = input; }
-	void setTimeBlend(float input) { _timeBlend = input; }
 	vector<string> & getAnimationNameList(void) { return _vAniNameList; };
 
 public:

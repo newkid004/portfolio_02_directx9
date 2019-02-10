@@ -48,8 +48,10 @@ protected :
 	void drawDo(void) override;
 	void drawPost(void) override;
 
-private :
+public :
+	void updateBoneMatrix(void);
 
+private :
 	// 본 행렬 갱신
 	void updateBoneMatrix(LPD3DXFRAME frame, const D3DXMATRIXA16 & mUpdate);
 
