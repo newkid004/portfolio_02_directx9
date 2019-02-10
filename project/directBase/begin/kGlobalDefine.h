@@ -43,6 +43,7 @@
 #include <unordered_set>
 #include <array>
 #include <queue>
+#include <stack>
 
 // d3d 헤더파일
 #include <d3d9.h>
