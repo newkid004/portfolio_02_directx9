@@ -336,6 +336,7 @@
   <ItemGroup>
     <None Include="gMng.inl" />
     <None Include="resource\mesh\L4D1\male\male.X" />
+    <None Include="resource\mesh\L4D1\male\male1.X" />
     <None Include="resource\mesh\WitchApprentice\WitchApprentice.x" />
   </ItemGroup>
   <ItemGroup>

@@ -23,11 +23,13 @@ skinnedMesh::skinnedMesh(const mParam & param) :
 	_effect = MN_SRC->getEffect(param.effectFilePath);
 	_mesh = createSkinnedMeshFromX(param.filePath);
 
+
 	for (int i = 0; i < _vMeshContainerList.size(); ++i)
 	{
 		setBoundingBox(gFunc::createBoundingBox(_vMeshContainerList[i]->pSkinndMesh));
 		setBoundingSphere(gFunc::createBoundingSphere(_vMeshContainerList[i]->pSkinndMesh));
 	}
+	
 }
 
 skinnedMesh::~skinnedMesh()
@@ -40,6 +42,7 @@ void skinnedMesh::update(void)
 	renderObject::update();
 
 	_aniController->update();
+
 	updateBoneMatrix(_rootBone, getMatrixFinal());
 }
 
@@ -103,7 +106,7 @@ void skinnedMesh::drawBone(LPD3DXFRAME frame)
 	while (meshCont != nullptr)
 	{
 		drawMeshContainer(frame, meshCont);
-
+		//drawBox();
 		meshCont = meshCont->pNextMeshContainer;
 	}
 
@@ -198,6 +201,7 @@ void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshC
 				mWorld[j] = mBone * bone->combineMatrix;
 			}
 		}
+		
 		_effect->SetInt("_numBlend", numBlends);
 		_effect->SetMatrixArray("_mWorld", mWorld, 4);
 
@@ -207,10 +211,13 @@ void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshC
 		gFunc::runEffectLoop(_effect, "myTechnique", [&](int passNum)->void {
 			meshCont->pSkinndMesh->DrawSubset(i);
 		});
-		
 	}
-
+	
 #endif // SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
+}
+
+void skinnedMesh::drawBox(void)
+{
 }
 
 void skinnedMesh::setupBone(LPD3DXFRAME frame)
@@ -271,7 +278,7 @@ LPD3DXMESH skinnedMesh::createSkinnedMeshFromX(const string & filePath)
 		NULL,
 		(LPD3DXFRAME*)&_rootBone,	// 최상위 본
 		&aniController);			// 애니메이션을 제어하기 위한 컨트롤
-
+	
 	// 애니메이션 컨트롤러 생성
 	_aniController = new animationController(aniController);
 
@@ -290,7 +297,7 @@ LPD3DXMESH skinnedMesh::createSkinnedMeshFromX(const string & filePath)
 LPD3DXMESH skinnedMesh::createSkinnedMesh(LPD3DXMESHCONTAINER meshContainer, int meshContainerNumber)
 {
 	auto result = (allocateHierarchy::meshContainer*)meshContainer;
-
+	
 	DWORD numBlends = 0;
 	DWORD numBoneCombinations = 0;
 
@@ -355,6 +362,87 @@ LPD3DXMESH skinnedMesh::createSkinnedMesh(LPD3DXMESHCONTAINER meshContainer, int
 	SAFE_RELEASE(bufBoneCombinations);
 
 	_vMeshContainerList.push_back(result);
-
 	return pMesh;
 }
+
+/*
+	D3DVERTEXELEMENT9 elements[] = {
+		{ 0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL, 0 },
+		{ 0, 24, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BINORMAL, 0 },
+		{ 0, 36, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TANGENT, 0 },
+		{ 0, 48, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
+		{ 0, 56, D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDWEIGHT, 0 },
+		D3DDECL_END()
+			//스키닝 애니메이션을 처리하기 위해선 정점 정보에 뼈대 가중치를 나타내는
+			//BLENDWEIGHT 시멘틱이 반드시 포함되어야 함
+	};
+	if (num / 1 == 0)
+	{
+		for (int index = 0; index < _vMeshContainerList.size(); ++index)
+		{
+			auto originMesh = _vMeshContainerList[index]->pSkinndMesh;
+			originMesh->CloneMesh(
+				originMesh->GetOptions(),
+				elements,
+				MN_DEV,
+				&_cloneMesh);
+
+			for (int i = 0; i < _vMeshContainerList[index]->vBoneCombinationList.size(); ++i)
+			{
+				int numBlends = 0;
+				auto boneComb = _vMeshContainerList[index]->vBoneCombinationList[i];
+
+				D3DXMATRIXA16 nWorld[4];
+				for (int j = 0; j < 4; ++j)
+					D3DXMatrixIdentity(nWorld + j);
+
+				for (int j = 0; j < _vMeshContainerList[index]->numBlends; ++j)
+				{
+					int boneID = boneComb.BoneId[j];
+
+					if (boneID != UINT_MAX)
+					{
+						auto bone = _vMeshContainerList[index]->vBoneList[boneID];
+						D3DXMATRIXA16 mBone = _vMeshContainerList[index]->vBoneMatrixList[boneID];
+
+						nWorld[j] = mBone * bone->combineMatrix;
+					}
+				}
+				LPDIRECT3DVERTEXBUFFER9 pVertexBuffer = nullptr;
+
+				if (SUCCEEDED(_cloneMesh->GetVertexBuffer(&pVertexBuffer)))
+				{
+					STVertex* vertices;
+					if (SUCCEEDED(pVertexBuffer->Lock(0, sizeof(STVertex) * _cloneMesh->GetNumVertices(), (void**)&vertices, 0)))
+					{
+						for (int j = 0; j < _cloneMesh->GetNumVertices(); j++)
+						{
+							D3DXVECTOR4 stPosition;
+							float leftWeight = 1.0f;
+							for (int k = 1; k < _vMeshContainerList[index]->numBlends; k++)
+							{
+								leftWeight -= vertices[j].m_stBlendWeight[k];
+								D3DXVec3Transform(&stPosition, &vertices[j].m_stPosition, &nWorld[k]);
+
+								stPosition += stPosition * vertices[j].m_stBlendWeight[k];
+							}
+							D3DXVec3Transform(&stPosition, &vertices[j].m_stPosition, &nWorld[0]);
+							stPosition += stPosition * leftWeight;
+							stPosition.w = 1.0f;
+							D3DXVec4Transform(&stPosition, &stPosition, &GET_CAMERA()->getMatrixView());
+							D3DXVec4Transform(&stPosition, &stPosition, &GET_CAMERA()->getMatrixProjection());
+							vertices[j].m_stPosition.x = stPosition.x;
+							vertices[j].m_stPosition.y = stPosition.y;
+							vertices[j].m_stPosition.z = stPosition.z;
+						}
+						pVertexBuffer->Unlock();
+					}
+				}
+			}
+
+		}
+
+	}
+	num++;
+*/
