@@ -21,6 +21,12 @@ private:
 	DIMOUSESTATE	_mousePrevState;
 	POINT			_mousePos;
 
+	// double click
+	float			_mouseClickTime = 0.0f;
+	float			_mouseClickTimePrev = 0.0f;
+	float			_mouseDbClickTime = 0.0f;
+	float			_mouseDbClickTurm = 0.5f;
+
 	bool			_clickIgnore = false;
 
 	// pick
@@ -44,6 +50,9 @@ public :
 	bool mousePress(EMouseInput input = EMouseInput::LEFT);
 	bool mouseUp(EMouseInput input = EMouseInput::LEFT);
 
+	// 좌클릭만 확인
+	bool mousePressDb(void);
+
 	bool wheelUp(void);
 	bool wheelDown(void);
 	LONG wheel(void);
@@ -51,13 +60,16 @@ public :
 public :
 	constexpr pick::ray & getPickRay(void) { return _pickRay; }
 	constexpr POINT & getMousePos(void) { return _mousePos; }
+	float getDbClickTurm(void) { return _mouseDbClickTurm; }
 	bool getClickIgnore(void) { return _clickIgnore; }
 
 	void setMousePos(POINT input);
+	void setDbClickTurm(float input) { _mouseDbClickTurm = input; }
 	void setClickIgnore(bool isIgnore = true) { _clickIgnore = isIgnore; }
 
 private :
 	void updateMousePos(void);
+	void updateMouseDbClick(void);
 
 public :
 	DECLARE_SINGLETON(inputManager);

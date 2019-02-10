@@ -114,6 +114,29 @@ void baseObject::moveZ(float distance, bool isLocal)
 	}
 }
 
+void baseObject::moveCameraX(float distance, bool isFixAxisY)
+{
+	D3DXVECTOR3 direction = GET_CAMERA()->getDirectRight();
+	if (isFixAxisY) 
+		direction.y = 0;
+
+	_position += direction * distance;
+}
+
+void baseObject::moveCameraY(float distance)
+{
+	_position += GET_CAMERA()->getDirectUp() * distance;
+}
+
+void baseObject::moveCameraZ(float distance, bool isFixAxisY)
+{
+	D3DXVECTOR3 direction = GET_CAMERA()->getDirectForward();
+	if (isFixAxisY)
+		direction.y = 0;
+
+	_position += direction * distance;
+}
+
 void baseObject::rotateX(float angle, bool isLocal)
 {
 	// x축 기준 회전 행렬 설정

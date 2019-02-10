@@ -32,6 +32,11 @@ public :
 	void moveY(float distance, bool isLocal = true);
 	void moveZ(float distance, bool isLocal = true);
 
+	// 카메라 축을 기준으로 이동
+	void moveCameraX(float distance, bool isFixAxisY = false);
+	void moveCameraY(float distance);
+	void moveCameraZ(float distance, bool isFixAxisY = false);
+
 	// 해당 축을 기준으로 회전
 	void rotateX(float angle, bool isLocal = true);
 	void rotateY(float angle, bool isLocal = true);

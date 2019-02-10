@@ -110,50 +110,73 @@ void sceneMapTool::updateControl_Prop(void)
 	}
 	if (viewWindow == nullptr || viewWindow->getIndex() < 0)
 	{
-		// ready to rotate
-		if (MN_KEY->keyDown(DIK_LSHIFT) && MN_KEY->mousePress())
+		// ready to mouse
+		if (MN_KEY->mousePress())
 			_mousePrev = MN_KEY->getMousePos();
 
 		renderObject* pickObject = nullptr;
+		baseObject* & selection = _field->getSet().selectionObject;
+
 		if (MN_KEY->mousePress())
 		{
 			// 02. pick check
 			if (pickObject = _field->getPickObject())
-				_field->getSet().selectionObject = pickObject;
+				selection = pickObject;
 		}
 		if (MN_KEY->mousePress(EMouseInput::RIGHT) &&
 			_window->getSet().focusedWindow != _window->getSet().mv_file)
-			_field->getSet().selectionObject = nullptr;
+			selection = nullptr;
 
-		if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->mouseDown())
+		if (MN_KEY->mouseDown())
 		{
-			// 03. prop move
-			if (_field->getSet().selectionObject != nullptr) // && pickObject != _field->getSet().selectionObject)
-			{
-				D3DXVECTOR3 pickPos;
-				if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
-					_field->getSet().selectionObject->setPosition(pickPos);
-			}
-		}
-		else if (MN_KEY->keyDown(DIK_LSHIFT) && MN_KEY->mouseDown())
-		{
-			// 04. prop rotate
-			if (_field->getSet().selectionObject != nullptr)
-			{
-				POINT mouseMove = {
-					MN_KEY->getMousePos().x - _mousePrev.x,
-					MN_KEY->getMousePos().y - _mousePrev.y };
+			POINT mouseMove = {
+				MN_KEY->getMousePos().x - _mousePrev.x,
+				MN_KEY->getMousePos().y - _mousePrev.y };
 
-				if (!MN_KEY->keyDown(DIK_SPACE))
-					_field->getSet().selectionObject->rotateY(-mouseMove.x / 8.0f, false);
-				else
+			if (MN_KEY->keyDown(DIK_LCONTROL))
+			{
+				// 03. prop move
+				if (selection != nullptr) // && pickObject != _field->getSet().selectionObject)
 				{
-					_field->getSet().selectionObject->rotateCameraX(-mouseMove.y / 8.0f);
-					_field->getSet().selectionObject->rotateCameraY(-mouseMove.x / 8.0f);
+					if (MN_KEY->mousePressDb())
+					{
+						D3DXVECTOR3 pickPos;
+						if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
+							selection->setPosition(pickPos);
+					}
+					else
+					{
+						// x, z
+						if (MN_KEY->keyDown(DIK_SPACE))
+						{
+							selection->moveCameraX(mouseMove.x / 3.0f, true);
+							selection->moveCameraZ(-mouseMove.y / 3.0f, true);
+						}
+						// x, y
+						else
+						{
+							selection->moveCameraX(mouseMove.x / 3.0f, true);
+							selection->moveCameraY(-mouseMove.y / 3.0f);
+						}
+					}
 				}
-
-				MN_KEY->setMousePos(_mousePrev);
 			}
+			else if (MN_KEY->keyDown(DIK_LSHIFT))
+			{
+				// 04. prop rotate
+				if (_field->getSet().selectionObject != nullptr)
+				{
+					if (!MN_KEY->keyDown(DIK_SPACE))
+						selection->rotateY(-mouseMove.x / 8.0f, false);
+					else
+					{
+						selection->rotateCameraX(-mouseMove.y / 8.0f);
+						selection->rotateCameraY(-mouseMove.x / 8.0f);
+					}
+				}
+			}
+
+			MN_KEY->setMousePos(_mousePrev);
 		}
 	}
 }
