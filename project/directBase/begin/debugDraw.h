@@ -40,7 +40,6 @@ private:
 public:
 	LPD3DXMESH getBoundMesh(EDebugDrawType type = EDebugDrawType::NONE);
 	void getMatrixBound(int index, D3DXMATRIXA16 * outMat, EDebugDrawType type = EDebugDrawType::NONE);
-
 public:
 	debugDraw(renderObject* bind, EDebugDrawType drawType);
 	~debugDraw();

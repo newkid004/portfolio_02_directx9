@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -158,6 +158,10 @@
   <ItemGroup>
     <ClInclude Include="allocateHierarchy.h" />
     <ClInclude Include="animationController.h" />
+    <ClInclude Include="aStar_grape.h" />
+    <ClInclude Include="aStar_node.h" />
+    <ClInclude Include="aStar_path.h" />
+    <ClInclude Include="aStar_runner.h" />
     <ClInclude Include="animationControllerDigit.h" />
     <ClInclude Include="AnimationDef.h" />
     <ClInclude Include="AnimationTester.h" />
@@ -178,7 +182,6 @@
     <ClInclude Include="cameraControlable.h" />
     <ClInclude Include="defaulteCube.h" />
     <ClInclude Include="deviceManager.h" />
-    <ClInclude Include="dijkstra.h" />
     <ClInclude Include="direct3dApplication.h" />
     <ClInclude Include="eventBase.h" />
     <ClInclude Include="eventCatcher.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="gFunc.h" />
     <ClInclude Include="gJson.h" />
     <ClInclude Include="gMng.h" />
+    <ClInclude Include="heap.h" />
     <ClInclude Include="IbuttonScroll.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="iRenderable.h" />
@@ -215,6 +219,8 @@
     <ClInclude Include="particleSystem.h" />
     <ClInclude Include="PatternManager.h" />
     <ClInclude Include="patternMesh.h" />
+    <ClInclude Include="pathfind_grape.h" />
+    <ClInclude Include="pathfind_node.h" />
     <ClInclude Include="pickRay.h" />
     <ClInclude Include="quadTree.h" />
     <ClInclude Include="quadTree_Frustum.h" />
@@ -257,6 +263,10 @@
     <ClCompile Include="animationController.cpp" />
     <ClCompile Include="animationControllerDigit.cpp" />
     <ClCompile Include="AnimationTester.cpp" />
+    <ClCompile Include="aStar_grape.cpp" />
+    <ClCompile Include="aStar_node.cpp" />
+    <ClCompile Include="aStar_path.cpp" />
+    <ClCompile Include="aStar_runner.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="boxObject.cpp" />
     <ClCompile Include="buttonBase.cpp" />
@@ -272,7 +282,6 @@
     <ClCompile Include="cameraControlable.cpp" />
     <ClCompile Include="defaulteCube.cpp" />
     <ClCompile Include="deviceManager.cpp" />
-    <ClCompile Include="dijkstra.cpp" />
     <ClCompile Include="direct3dApplication.cpp" />
     <ClCompile Include="eventCatcher.cpp" />
     <ClCompile Include="eventManager.cpp" />
@@ -302,6 +311,8 @@
     <ClCompile Include="particleSystem.cpp" />
     <ClCompile Include="PatternManager.cpp" />
     <ClCompile Include="patternMesh.cpp" />
+    <ClCompile Include="pathfind_grape.cpp" />
+    <ClCompile Include="pathfind_node.cpp" />
     <ClCompile Include="pickRay.cpp" />
     <ClCompile Include="quadTree.cpp" />
     <ClCompile Include="quadTree_Frustum.cpp" />

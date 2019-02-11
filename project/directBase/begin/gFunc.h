@@ -44,8 +44,10 @@ public :
 	// 변환
 	static D3DXVECTOR2				Vec2Mlt(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x * v2.x, v1.y * v2.y); }
 	static D3DXVECTOR2				Vec2Dev(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x / v2.x, v1.y / v2.y); }
+	static float					Vec2Distance(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVec2Length(&(v1 - v2)); }
 	static D3DXVECTOR3				Vec3Mlt(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVECTOR3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z); }
 	static D3DXVECTOR3				Vec3Dev(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVECTOR3(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z); }
+	static float					Vec3Distance(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVec3Length(&(v1 - v2)); }
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
 
 	// 난수
@@ -57,6 +59,7 @@ public :
 
 	// 충돌
 	static boundingBox				createBoundingBox(LPD3DXMESH mesh);
+	static boundingBox				createBoundingBox(D3DXVECTOR3 position, float width, float height, float depth);
 	static boundingSphere			createBoundingSphere(LPD3DXMESH mesh);
 
 	// 행렬

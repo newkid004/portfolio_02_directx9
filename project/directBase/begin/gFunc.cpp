@@ -364,6 +364,17 @@ boundingBox gFunc::createBoundingBox(LPD3DXMESH mesh)
 	return result;
 }
 
+boundingBox gFunc::createBoundingBox(D3DXVECTOR3 position, float width, float height, float depth)
+{
+	boundingBox result;
+
+	// 경계 정보 설정
+	result.min = D3DXVECTOR3(position.x - width / 2, position.y - height / 2, position.z - depth / 2);
+	result.max = D3DXVECTOR3(position.x + width / 2, position.y + height / 2, position.z + depth / 2);
+	
+	return result;
+}
+
 boundingSphere gFunc::createBoundingSphere(LPD3DXMESH mesh)
 {
 	boundingSphere result;

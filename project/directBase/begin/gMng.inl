@@ -28,7 +28,7 @@ template<typename tValue>
 inline tValue gMng::add(tValue & value, list<tValue>& container, PLACE place)
 {
 	auto iter = std::find(container.begin(), container.end(), value);
-	if (iter != container.end()) return iter->second;
+	if (iter != container.end()) return *iter;
 
 	switch (place)
 	{
@@ -40,16 +40,12 @@ inline tValue gMng::add(tValue & value, list<tValue>& container, PLACE place)
 }
 
 template<typename tValue>
-inline tValue gMng::add(tValue & value, std::vector<tValue>& container, PLACE place)
+inline tValue gMng::add(tValue & value, std::vector<tValue>& container)
 {
 	auto iter = std::find(container.begin(), container.end(), value);
-	if (iter != container.end()) return iter->second;
+	if (iter != container.end()) return *iter;
 
-	switch (place)
-	{
-	case gMng::PLACE::FRONT: container.push_front(value); break;
-	case gMng::PLACE::BACK:  container.push_back(value); break;
-	}
+	container.push_back(value);
 
 	return value;
 }

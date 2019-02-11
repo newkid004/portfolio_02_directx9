@@ -373,9 +373,6 @@
     <Filter Include="classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate">
       <UniqueIdentifier>{c1c6bb85-aabe-444f-a49d-65011eed130a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\dijkstra">
-      <UniqueIdentifier>{7de4d7c2-7a42-441a-a86b-0cb40fa053a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{4e1eebd6-a195-4558-828b-5b18f41c4fe4}</UniqueIdentifier>
     </Filter>
@@ -429,6 +426,36 @@
     </Filter>
     <Filter Include="classes\global\utility\object\renderObject\mesh\skinnedMesh\patternMesh">
       <UniqueIdentifier>{0af8644b-7564-4c02-a5fb-100f87c2b242}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind">
+      <UniqueIdentifier>{7de4d7c2-7a42-441a-a86b-0cb40fa053a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\_base">
+      <UniqueIdentifier>{6cc07eea-2610-4bf7-a9eb-4f684311a539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\_base\grape">
+      <UniqueIdentifier>{e671f821-cf2b-4cec-8f8b-4b27b296906b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\_base\node">
+      <UniqueIdentifier>{183cd1c7-ab05-4160-b48c-d1ff58abdd57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\aStar">
+      <UniqueIdentifier>{800b39b3-2555-4336-b359-ad99f067a418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\aStar\grape">
+      <UniqueIdentifier>{bb3cc321-11be-47d7-b551-35128d01f4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\aStar\node">
+      <UniqueIdentifier>{ea02334a-6e41-434f-90fa-22c26e6d2256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\aStar\runner">
+      <UniqueIdentifier>{ae0d2682-5cd5-43cd-9458-e82bf3232219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\aStar\path">
+      <UniqueIdentifier>{88d74917-de3f-4ecd-a7af-cfe61a4edf48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\container\heap">
+      <UniqueIdentifier>{99aa2b33-a06e-4a00-aa2a-63b30da59a62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -696,8 +723,26 @@
     <ClInclude Include="skinnedMeshDup.h">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClInclude>
-    <ClInclude Include="dijkstra.h">
-      <Filter>main\classes\dijkstra</Filter>
+    <ClInclude Include="pathfind_grape.h">
+      <Filter>main\classes\pathfind\_base\grape</Filter>
+    </ClInclude>
+    <ClInclude Include="pathfind_node.h">
+      <Filter>main\classes\pathfind\_base\node</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_grape.h">
+      <Filter>main\classes\pathfind\aStar\grape</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_node.h">
+      <Filter>main\classes\pathfind\aStar\node</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_runner.h">
+      <Filter>main\classes\pathfind\aStar\runner</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_path.h">
+      <Filter>main\classes\pathfind\aStar\path</Filter>
+    </ClInclude>
+    <ClInclude Include="heap.h">
+      <Filter>classes\global\utility\container\heap</Filter>
     </ClInclude>
     <ClInclude Include="AnimationDef.h">
       <Filter>classes\global\utility\manager\common\pattern</Filter>
@@ -941,8 +986,23 @@
     <ClCompile Include="skinnedMeshDup.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClCompile>
-    <ClCompile Include="dijkstra.cpp">
-      <Filter>main\classes\dijkstra</Filter>
+    <ClCompile Include="pathfind_grape.cpp">
+      <Filter>main\classes\pathfind\_base\grape</Filter>
+    </ClCompile>
+    <ClCompile Include="pathfind_node.cpp">
+      <Filter>main\classes\pathfind\_base\node</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar_grape.cpp">
+      <Filter>main\classes\pathfind\aStar\grape</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar_node.cpp">
+      <Filter>main\classes\pathfind\aStar\node</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar_runner.cpp">
+      <Filter>main\classes\pathfind\aStar\runner</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar_path.cpp">
+      <Filter>main\classes\pathfind\aStar\path</Filter>
     </ClCompile>
     <ClCompile Include="PatternManager.cpp">
       <Filter>classes\global\utility\manager\common\pattern</Filter>
