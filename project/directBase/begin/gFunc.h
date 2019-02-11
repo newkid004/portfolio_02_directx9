@@ -57,6 +57,7 @@ public :
 
 	// 충돌
 	static boundingBox				createBoundingBox(LPD3DXMESH mesh);
+	static boundingBox				createBoundingBox(D3DXVECTOR3 position, float width, float height, float depth);
 	static boundingSphere			createBoundingSphere(LPD3DXMESH mesh);
 
 	// 행렬

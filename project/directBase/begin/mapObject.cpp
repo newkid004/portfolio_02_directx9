@@ -31,7 +31,8 @@ void mapObject::update(void)
 	}
 	if (_ceilObject) _ceilObject->update();
 }
-
+
+
 void mapObject::setDebugEnable(bool input, EDebugDrawType type)
 {
 	for (auto rValue : m_oMapObjectList)

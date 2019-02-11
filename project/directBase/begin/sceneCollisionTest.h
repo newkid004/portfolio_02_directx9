@@ -27,7 +27,7 @@ private:
 	void updateControl(void);
 
 private:
-	skinnedMesh* createZombieMesh(void);
+	skinnedMesh* createZombieMesh(ECharacterType characterType = ECharacterType::NONE);
 	skinnedMesh* createObjectMesh(void);
 
 public:

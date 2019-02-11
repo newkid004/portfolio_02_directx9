@@ -152,6 +152,15 @@ enum class EDebugDrawType
 	NONE
 };
 
+// 캐릭터 타입
+enum class ECharacterType
+{
+	PLAYBLE,
+	NORMAL_ZOMBIE,
+	SPECIAL_ZOMBIE,
+	NONE
+};
+
 // ----- struct ----- //
 
 // 정적 메쉬
