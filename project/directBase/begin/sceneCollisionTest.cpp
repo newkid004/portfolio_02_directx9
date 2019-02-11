@@ -38,12 +38,27 @@ void sceneCollisionTest::init(void)
 
 	for (int i = 0; i < ZOMBIE_NUM; i++)
 	{
-		m_pSkinnedMesh[i] = this->createZombieMesh();
+		m_pSkinnedMesh[i] = this->createZombieMesh(ECharacterType::NORMAL_ZOMBIE);
+
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Head1", D3DXVECTOR3(0.0f, 15.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Spine1", D3DXVECTOR3(0.0f, 8.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Foot", D3DXVECTOR3(3.0f, 0.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Foot", D3DXVECTOR3(-3.0f, 0.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Calf", D3DXVECTOR3(3.0f, 4.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Calf", D3DXVECTOR3(-3.0f, 4.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Hand", D3DXVECTOR3(5.0f, 8.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Hand", D3DXVECTOR3(-5.0f, 8.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Forearm", D3DXVECTOR3(4.5f, 10.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Forearm", D3DXVECTOR3(-4.5f, 10.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_UpperArm", D3DXVECTOR3(4.0f, 12.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_UpperArm", D3DXVECTOR3(-4.0f, 12.0f, 2.0f));
+
+		m_pSkinnedMesh[i]->init();
 
 		m_pSkinnedMesh[i]->setDebugEnable(true);
 		//m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::SPHERE);
 
-		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.003f, 0.003f, 0.003f));
+		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
 		m_pSkinnedMesh[i]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 		m_pSkinnedMesh[i]->rotateX(-90, true);
@@ -169,14 +184,14 @@ void sceneCollisionTest::updateControl(void)
 	}
 }
 
-skinnedMesh * sceneCollisionTest::createZombieMesh(void)
+skinnedMesh * sceneCollisionTest::createZombieMesh(ECharacterType characterType)
 {
 	skinnedMesh::mParam stParameters = {
 		//"resource/mesh/WitchApprentice/WitchApprentice.x",
 		"resource/mesh/L4D1/male/male1.x",
 		"resource/effect/skinnedMesh.fx"
 	};
-	return new skinnedMesh(stParameters);
+	return new skinnedMesh(stParameters, characterType);
 }
 
 skinnedMesh * sceneCollisionTest::createObjectMesh(void)
