@@ -427,6 +427,9 @@
     <Filter Include="classes\global\utility\animation\controllerDigit">
       <UniqueIdentifier>{973b955d-0078-469c-80a5-5bf1fc9e5bd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\skinnedMesh\patternMesh">
+      <UniqueIdentifier>{0af8644b-7564-4c02-a5fb-100f87c2b242}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -711,6 +714,9 @@
     <ClInclude Include="animationControllerDigit.h">
       <Filter>classes\global\utility\animation\controllerDigit</Filter>
     </ClInclude>
+    <ClInclude Include="patternMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\patternMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -949,6 +955,9 @@
     </ClCompile>
     <ClCompile Include="animationControllerDigit.cpp">
       <Filter>classes\global\utility\animation\controllerDigit</Filter>
+    </ClCompile>
+    <ClCompile Include="patternMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\patternMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

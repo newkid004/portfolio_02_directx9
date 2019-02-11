@@ -33,11 +33,11 @@ protected :
 	mParam _param = { 0 };
 
 	allocateHierarchy::boneFrame* _rootBone = nullptr;
-	vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
+	std::vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
 
 	animationController* _aniController = nullptr;
 
-	vector<D3DXVECTOR4> _vVertexList;
+	std::vector<D3DXVECTOR4> _vVertexList;
 
 	int num = 0;
 public :

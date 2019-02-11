@@ -355,7 +355,7 @@ LPD3DXMESH skinnedMesh::createSkinnedMesh(LPD3DXMESHCONTAINER meshContainer, int
 
 	for (int i = 0; i < numBoneCombinations; ++i)
 	{
-		D3DXBONECOMBINATION & boneComb = boneCombinations[i];
+		D3DXBONECOMBINATION  boneComb = boneCombinations[i];
 
 		auto copiedBoneComb = boneComb;
 		copiedBoneComb.BoneId = (DWORD*)malloc(sizeof(DWORD) * numBoneCombinations);

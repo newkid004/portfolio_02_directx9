@@ -1,6 +1,26 @@
 #pragma once
 #include "singletonBase.h"
 
+struct ACInfo
+{
+	int CurrentMotionBit;
+	int NextMotionBit;
+	int aniCount;
+	int nextAniCount;
+	float leftMixTime;
+	float maxMixTime;
+	float trackPositionA;
+	float trackPositionB;
+	float trackWeightA;
+	float trackWeightB;
+	float timeScale;
+	float nextTimeScale;
+	bool isCancel;
+	bool isNextCancel;
+	std::vector<int> motionVector;
+	std::vector<int> nextMotionVector;
+};
+
 class aniDefine : public singletonBase<aniDefine>
 {
 public:

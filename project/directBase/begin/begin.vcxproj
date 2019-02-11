@@ -214,6 +214,7 @@
     <ClInclude Include="particleQuad.h" />
     <ClInclude Include="particleSystem.h" />
     <ClInclude Include="PatternManager.h" />
+    <ClInclude Include="patternMesh.h" />
     <ClInclude Include="pickRay.h" />
     <ClInclude Include="quadTree.h" />
     <ClInclude Include="quadTree_Frustum.h" />
@@ -300,6 +301,7 @@
     <ClCompile Include="particleQuad.cpp" />
     <ClCompile Include="particleSystem.cpp" />
     <ClCompile Include="PatternManager.cpp" />
+    <ClCompile Include="patternMesh.cpp" />
     <ClCompile Include="pickRay.cpp" />
     <ClCompile Include="quadTree.cpp" />
     <ClCompile Include="quadTree_Frustum.cpp" />

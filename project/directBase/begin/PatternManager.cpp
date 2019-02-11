@@ -836,7 +836,7 @@ void PatternManager::initMaleZombie(void)
 		ATYPE_ZOMBIE_MALE |
 		MALE_ATTACK |
 		MALE_ATTACK_NONE,
-		arr, 2, 1.0f, false);
+		arr, 2, 1.0f, true);
 
 	// --, ´Þ¸®±â, NONE
 	arr[0] = 39;
