@@ -103,7 +103,7 @@ void skinnedMesh::updateBoneMatrix(LPD3DXFRAME frame, const D3DXMATRIXA16 & mUpd
 		}
 	}
 	
-	setBoundMatrix(bone->Name, bone->combineMatrix);
+	//setBoundMatrix(bone->Name, bone->combineMatrix);
 
 	// 연관 본 갱신
 	if (bone->pFrameSibling != nullptr)		updateBoneMatrix(bone->pFrameSibling, mUpdate);
@@ -245,9 +245,9 @@ void skinnedMesh::setBoundBox(void)
 					&_vBoneInfoList.find(_vBoneNameList[i])->second.position,
 					&_vBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
 
-				setBoundingBox(gFunc::createBoundingBox(
-					this->getPosition() + _vBoneInfoList.find(_vBoneNameList[i])->second.position,
-					3, 3, 3));
+				//setBoundingBox(_vBoneNameList[i], gFunc::createBoundingBox(
+				//	this->getPosition() + _vBoneInfoList.find(_vBoneNameList[i])->second.position,
+				//	3, 3, 3));
 			}
 		}
 	}
