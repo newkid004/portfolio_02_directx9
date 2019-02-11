@@ -170,6 +170,7 @@
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
+    <ClInclude Include="customMesh.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
     <ClInclude Include="debugDraw.h" />
@@ -202,6 +203,9 @@
     <ClInclude Include="managerList.h" />
     <ClInclude Include="mapObjectBase.h" />
     <ClInclude Include="mapObject.h" />
+    <ClInclude Include="maptool_brush.h" />
+    <ClInclude Include="maptool_brush_prop.h" />
+    <ClInclude Include="maptool_brush_trigger.h" />
     <ClInclude Include="maptool_cursur.h" />
     <ClInclude Include="maptool_data_catalog.h" />
     <ClInclude Include="maptool_data_io.h" />
@@ -268,6 +272,7 @@
     <ClCompile Include="buttonMoveBar.cpp" />
     <ClCompile Include="buttonScrollVertical.cpp" />
     <ClCompile Include="buttonStatic.cpp" />
+    <ClCompile Include="customMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
     <ClCompile Include="debugGrid.cpp" />
@@ -290,6 +295,9 @@
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="mapObjectBase.cpp" />
     <ClCompile Include="mapObject.cpp" />
+    <ClCompile Include="maptool_brush.cpp" />
+    <ClCompile Include="maptool_brush_prop.cpp" />
+    <ClCompile Include="maptool_brush_trigger.cpp" />
     <ClCompile Include="maptool_cursur.cpp" />
     <ClCompile Include="maptool_data_catalog.cpp" />
     <ClCompile Include="maptool_data_io.cpp" />

@@ -418,6 +418,21 @@
     <Filter Include="classes\global\utility\container\heap">
       <UniqueIdentifier>{99aa2b33-a06e-4a00-aa2a-63b30da59a62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\classes\brush">
+      <UniqueIdentifier>{1d5b7683-a316-40c3-b98e-c5923bfdd043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\classes\brush\_base">
+      <UniqueIdentifier>{c1ef2588-dcd3-49f4-9e23-f9f58b44c847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\classes\brush\prop">
+      <UniqueIdentifier>{700e4568-e3bf-493a-9754-5faf5189e19e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\classes\brush\trigger">
+      <UniqueIdentifier>{2a08e740-7a59-4b22-8cb6-fd73a6a31158}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\customMesh">
+      <UniqueIdentifier>{8fc2f507-4855-4fd6-a23c-73003c19cfa0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -708,6 +723,18 @@
     <ClInclude Include="heap.h">
       <Filter>classes\global\utility\container\heap</Filter>
     </ClInclude>
+    <ClInclude Include="maptool_brush.h">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="maptool_brush_trigger.h">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="maptool_brush_prop.h">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\prop</Filter>
+    </ClInclude>
+    <ClInclude Include="customMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\customMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -952,6 +979,18 @@
     </ClCompile>
     <ClCompile Include="aStar_path.cpp">
       <Filter>main\classes\pathfind\aStar\path</Filter>
+    </ClCompile>
+    <ClCompile Include="maptool_brush.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="maptool_brush_trigger.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="maptool_brush_prop.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\prop</Filter>
+    </ClCompile>
+    <ClCompile Include="customMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\customMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

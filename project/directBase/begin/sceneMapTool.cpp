@@ -12,6 +12,8 @@
 #include "maptool_render.h"
 #include "maptool_io.h"
 
+#include "maptool_brush.h"
+
 #include "mapObject.h"
 
 #include "windowCtlogMaptool.h"
@@ -52,7 +54,7 @@ void sceneMapTool::init(void)
 void sceneMapTool::update(void)
 {
 	MN_UI->update();
-	updateControl_Prop();
+	updateControl_brush();
 	updateControl_key();
 
 	sceneBase::update();
@@ -90,7 +92,11 @@ void sceneMapTool::drawUI(void)
 	gFunc::drawText(0, 100, string(text));
 }
 
-void sceneMapTool::updateControl_Prop(void)
+void sceneMapTool::initMap(void)
+{
+}
+
+void sceneMapTool::updateControl_brush(void)
 {
 	if (MN_KEY->getClickIgnore())
 		return;
@@ -108,6 +114,7 @@ void sceneMapTool::updateControl_Prop(void)
 			}
 		}
 	}
+
 	if (viewWindow == nullptr || viewWindow->getIndex() < 0)
 	{
 		// ready to mouse

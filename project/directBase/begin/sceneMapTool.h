@@ -7,17 +7,22 @@ class maptool_field;
 class maptool_render;
 class maptool_io;
 
+class maptool_brush;
+
 class mapObject;
 
 class staticMesh;
 
 class sceneMapTool : public sceneBase
 {
-private :
+public :
 	maptool_window*	_window = nullptr;
 	maptool_field*	_field = nullptr;
 	maptool_render*	_render = nullptr;
 	maptool_io*		_io = nullptr;
+
+	STR_MAP(maptool_brush*) _mBrush;
+	maptool_brush* _currentBrush = nullptr;
 
 	mapObject* _mapObject = nullptr;
 
@@ -31,7 +36,9 @@ public:
 	virtual void drawUI(void) override;
 
 private :
-	void updateControl_Prop(void);
+	void initMap(void);
+
+	void updateControl_brush(void);
 	void updateControl_key(void);
 
 private :
