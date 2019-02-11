@@ -19,7 +19,7 @@ public :	// add
 	template<typename tValue> 
 	static tValue add(tValue & value, std::list<tValue> & container, PLACE place = PLACE::BACK);
 	template<typename tValue>
-	static tValue add(tValue & value, std::vector<tValue> & container, PLACE place = PLACE::BACK);
+	static tValue add(tValue & value, std::vector<tValue> & container);
 	template<typename tValue>
 	static tValue add(tValue & value, dbList<tValue> & container, PLACE place = PLACE::BACK);
 

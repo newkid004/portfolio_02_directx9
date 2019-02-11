@@ -6,14 +6,23 @@ class staticMesh;
 class aStar_node;
 class aStar_grape;
 class aStar_runner;
+class aStar_path;
 
 class sceneTest2 : public sceneBase
 {
+public :
+	struct vertex
+	{
+		enum { FVF = D3DFVF_XYZ };
+
+		D3DXVECTOR3 pos;
+	};
+	
 private:
 	staticMesh* _staticMesh = nullptr;
 	aStar_grape* _grape = nullptr;
 	
-	std::stack<aStar_runner> _pathResult;
+	aStar_path* _pathResult = nullptr;
 	std::vector<aStar_node*> _vSelectionNode;
 
 public:
@@ -23,7 +32,11 @@ public:
 	virtual void drawUI(void) override;
 
 public :
-	void updateControl(void);
+	void updateMouse(void);
+	void updateKey(void);
+
+	void drawMesh(void);
+	void drawConnect(void);
 
 public :
 	aStar_grape* createGrape(void);

@@ -412,6 +412,12 @@
     <Filter Include="main\classes\pathfind\aStar\runner">
       <UniqueIdentifier>{ae0d2682-5cd5-43cd-9458-e82bf3232219}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\pathfind\aStar\path">
+      <UniqueIdentifier>{88d74917-de3f-4ecd-a7af-cfe61a4edf48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\container\heap">
+      <UniqueIdentifier>{99aa2b33-a06e-4a00-aa2a-63b30da59a62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -693,7 +699,15 @@
     <ClInclude Include="aStar_node.h">
       <Filter>main\classes\pathfind\aStar\node</Filter>
     </ClInclude>
-    <ClInclude Include="aStar_runner.h" />
+    <ClInclude Include="aStar_runner.h">
+      <Filter>main\classes\pathfind\aStar\runner</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_path.h">
+      <Filter>main\classes\pathfind\aStar\path</Filter>
+    </ClInclude>
+    <ClInclude Include="heap.h">
+      <Filter>classes\global\utility\container\heap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -933,7 +947,12 @@
     <ClCompile Include="aStar_node.cpp">
       <Filter>main\classes\pathfind\aStar\node</Filter>
     </ClCompile>
-    <ClCompile Include="aStar_runner.cpp" />
+    <ClCompile Include="aStar_runner.cpp">
+      <Filter>main\classes\pathfind\aStar\runner</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar_path.cpp">
+      <Filter>main\classes\pathfind\aStar\path</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

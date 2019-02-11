@@ -1,5 +1,6 @@
 #include "aStar_node.h"
 #include "aStar_grape.h"
+#include "aStar_runner.h"
 
 aStar_node::aStar_node(D3DXVECTOR3 position)
 {
@@ -9,6 +10,18 @@ aStar_node::aStar_node(D3DXVECTOR3 position)
 
 aStar_node::~aStar_node()
 {
+	// 자신과 연결된 노드 중, 자신을 제거
+	for (auto i : _linkedNodeList)
+	{
+		LIST & connectorNodeList = i.connector->getLinkedNodeList();
+		for (auto iter = connectorNodeList.begin(); iter != connectorNodeList.end();)
+		{
+			if (this == iter->connector)
+				iter = connectorNodeList.erase(iter);
+			else
+				++iter;
+		}
+	}
 }
 
 float aStar_node::connect(aStar_node * connector, bool reConnect)
@@ -28,15 +41,6 @@ float aStar_node::connect(aStar_node * connector, bool reConnect)
 		connector->connect(this, false);
 
 	return distance;
-}
-
-void aStar_node::calcDistance(aStar_runner::info_distance * out_distance, aStar_node * toNode)
-{
-	aStar_node* dest = ((aStar_grape*)_bindGrape)->getDestNode();
-
-	out_distance->G = aStar_grape::calDistance(this, toNode);
-	out_distance->H = aStar_grape::calDistance(this, dest);
-	out_distance->F = out_distance->G + out_distance->H;
 }
 
 aStar_node * aStar_node::getClosestNode(aStar_node * dest)

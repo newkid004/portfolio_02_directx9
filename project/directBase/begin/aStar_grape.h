@@ -2,8 +2,8 @@
 #include "kGlobalDefine.h"
 #include "pathfind_grape.h"
 
+class aStar_path;
 class aStar_node;
-class aStar_runner;
 
 class aStar_grape : public pathfind_grape
 {
@@ -27,15 +27,17 @@ protected :
 
 public :
 	void addNode(aStar_node* input);
+	void deleteNode(aStar_node* input);
+	void deleteNode(int index);
 
-	void pathfind(std::stack<aStar_runner> & out_path, aStar_node* sour, aStar_node* dest);
+	void pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* dest);
 
 public :
 	static float calDistance(aStar_node* n1, aStar_node* n2);
 	static float calDistance(aStar_node* n1, D3DXVECTOR3 & pos);
 
 public :
-	constexpr aStar_node* & operator[](int index) { _vNodeList[index]; }
+	aStar_node* operator[](int index) { return _vNodeList[index]; }
 
 public :
 	constexpr LIST & getNodeList(void) { return _vNodeList; }

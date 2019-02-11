@@ -9,7 +9,7 @@ protected :
 	pathfind_grape* _bindGrape = nullptr;
 
 public :
-	pathfind_grape* getBindGrape(void) { return _bindGrape; }
+	pathfind_grape* & getBindGrape(void) { return _bindGrape; }
 
 public:
 	pathfind_node();

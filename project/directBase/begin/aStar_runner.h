@@ -16,7 +16,7 @@ public :
 
 	struct comparer
 	{
-		bool operator()(aStar_runner & p1, aStar_runner & p2);
+		bool operator()(aStar_runner* & p1, aStar_runner* & p2);
 	};
 
 	struct member
@@ -34,10 +34,12 @@ protected :
 
 public :
 	constexpr member & getMember(void) { return _member; }
+	
+	void setPrevRunner(aStar_runner * prevRunner);
 
 public:
-	aStar_runner(aStar_node* startNode) { _member.placedNode = startNode; }
-	aStar_runner(aStar_runner & prevRunner, aStar_node* placedNode);
+	aStar_runner(aStar_node* startNode);
+	aStar_runner(aStar_runner* prevRunner, aStar_node* placedNode);
+	aStar_runner(member & member);
 	~aStar_runner() {}
 };
-

@@ -160,6 +160,7 @@
     <ClInclude Include="animationController.h" />
     <ClInclude Include="aStar_grape.h" />
     <ClInclude Include="aStar_node.h" />
+    <ClInclude Include="aStar_path.h" />
     <ClInclude Include="aStar_runner.h" />
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="boxObject.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="gFunc.h" />
     <ClInclude Include="gJson.h" />
     <ClInclude Include="gMng.h" />
+    <ClInclude Include="heap.h" />
     <ClInclude Include="IbuttonScroll.h" />
     <ClInclude Include="inputManager.h" />
     <ClInclude Include="iRenderable.h" />
@@ -256,6 +258,7 @@
     <ClCompile Include="animationController.cpp" />
     <ClCompile Include="aStar_grape.cpp" />
     <ClCompile Include="aStar_node.cpp" />
+    <ClCompile Include="aStar_path.cpp" />
     <ClCompile Include="aStar_runner.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="boxObject.cpp" />
