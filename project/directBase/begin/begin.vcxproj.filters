@@ -472,6 +472,12 @@
     <Filter Include="classes\global\utility\object\renderObject\mesh\nodeMesh">
       <UniqueIdentifier>{8fc2f507-4855-4fd6-a23c-73003c19cfa0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource\effect">
+      <UniqueIdentifier>{9f3f503b-d95e-4da7-b7ac-c81ce760be41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\mesh\L4D1\items">
+      <UniqueIdentifier>{e9c2cbf5-ce30-47be-9c1d-6064ce4d43a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1102,6 +1108,12 @@
     <None Include="resource\mesh\L4D1\male\male1.X">
       <Filter>Resource\mesh\L4D1\male</Filter>
     </None>
+    <None Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\uzi.X">
+      <Filter>Resource\mesh\L4D1\items</Filter>
+    </None>
+    <None Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\medikit.X">
+      <Filter>Resource\mesh\L4D1\items</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp">
@@ -1248,5 +1260,49 @@
     <Image Include="resource\mesh\L4D1\smoker\smoker_normal.tga">
       <Filter>Resource\mesh\L4D1\smoker</Filter>
     </Image>
+    <Image Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\w_eq_medkit.tga">
+      <Filter>Resource\mesh\L4D1\items</Filter>
+    </Image>
+    <Image Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\uzi.tga">
+      <Filter>Resource\mesh\L4D1\items</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="resource\effect\skinnedMesh.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\Survivor.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\example_11.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\example_12.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\example_13.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\example_15.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\example_16.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\example_17.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\field_node.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\outline.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\outlineBlur.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
+    <FxCompile Include="resource\effect\practice_06.fx">
+      <Filter>Resource\effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

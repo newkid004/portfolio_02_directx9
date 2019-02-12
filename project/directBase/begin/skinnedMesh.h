@@ -15,13 +15,21 @@ public :
 		std::string effectFilePath;
 	};
 
-	struct BoneInfo
+	struct STBoneInfo
 	{
 		D3DXVECTOR3 position;
 		D3DXMATRIXA16 combineMatrix;
 	};
 
-	typedef unordered_map<string, BoneInfo> BONEINFO;
+	struct STBoxSize
+	{
+		BYTE width;
+		BYTE height;
+		BYTE depth;
+	};
+
+	typedef std::unordered_map<std::string, STBoneInfo> BONEINFOLIST;
+	typedef std::unordered_map<std::string, STBoxSize> BOXSIZELIST;
 
 protected :
 	LPD3DXMESH _mesh = nullptr;
@@ -36,10 +44,11 @@ protected :
 
 	animationController* _aniController = nullptr;
 
-	BONEINFO _vBoneInfoList;
 	ECharacterType _characterType = ECharacterType::NONE;
 
-	vector<string> _vBoneNameList;
+	BONEINFOLIST _mBoneInfoList;
+	BOXSIZELIST _mBoxSizeList;
+	std::vector<std::string> _vBoneNameList;
 	
 public :
 	void init(void);
@@ -64,7 +73,8 @@ private :
 	// º»
 	void setupBone(LPD3DXFRAME frame);
 	void setupBoneOnMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshContainer);
-	void setBoundBox(void);
+	void setBoneBoundBox(void);
+	void setBoneBoundSphere(void);
 
 	// ¸Þ½¬
 	LPD3DXMESH createSkinnedMeshFromX(const std::string & filePath);
@@ -72,7 +82,7 @@ private :
 
 public :
 
-	void setupBoneInfo(string name, const D3DXVECTOR3 & position);
+	void setupBoneInfo(std::string name, const D3DXVECTOR3 & position, BYTE width, BYTE height, BYTE depth);
 
 	animationController* getAniController(void) { return _aniController; }
 	mParam & getMakeParam(void) { return _param; }

@@ -34,7 +34,8 @@ skinnedMesh::~skinnedMesh()
 
 void skinnedMesh::init(void)
 {
-	this->setBoundBox();
+	this->setBoneBoundBox();
+	this->setBoneBoundSphere();
 }
 
 void skinnedMesh::update(void)
@@ -97,13 +98,13 @@ void skinnedMesh::updateBoneMatrix(LPD3DXFRAME frame, const D3DXMATRIXA16 & mUpd
 	// 컴바인 매트릭스 복사
 	if (bone->Name != NULL)
 	{
-		if (_vBoneInfoList.find(bone->Name) != _vBoneInfoList.end())
+		if (_mBoneInfoList.find(bone->Name) != _mBoneInfoList.end())
 		{
-			_vBoneInfoList.find(bone->Name)->second.combineMatrix = bone->combineMatrix;
+			_mBoneInfoList.find(bone->Name)->second.combineMatrix = bone->combineMatrix;
+			
+			setBoundingBoxMatrix(bone->Name, _mBoneInfoList.find(bone->Name)->second.combineMatrix);
 		}
 	}
-	
-	//setBoundMatrix(bone->Name, bone->combineMatrix);
 
 	// 연관 본 갱신
 	if (bone->pFrameSibling != nullptr)		updateBoneMatrix(bone->pFrameSibling, mUpdate);
@@ -231,7 +232,7 @@ void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshC
 #endif // SKINNED_MESH_TYPE == SKINNED_MESH_TYPE_DEVICE
 }
 
-void skinnedMesh::setBoundBox(void)
+void skinnedMesh::setBoneBoundBox(void)
 {
 	switch (_characterType)
 	{
@@ -239,17 +240,57 @@ void skinnedMesh::setBoundBox(void)
 	{
 		for (int i = 0; i < _vBoneNameList.size(); ++i)
 		{
-			if (_vBoneInfoList.find(_vBoneNameList[i]) != _vBoneInfoList.end())
+			if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
 			{
-				D3DXVec3TransformCoord(&_vBoneInfoList.find(_vBoneNameList[i])->second.position,
-					&_vBoneInfoList.find(_vBoneNameList[i])->second.position,
-					&_vBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
+				D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
 
-				//setBoundingBox(_vBoneNameList[i], gFunc::createBoundingBox(
-				//	this->getPosition() + _vBoneInfoList.find(_vBoneNameList[i])->second.position,
-				//	3, 3, 3));
+				STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
+
+				BOUNDBOXSET boundSet;
+				ZeroMemory(&boundSet, sizeof(boundSet));
+				boundSet.box = gFunc::createBoundingBox(
+					this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					stBoxSize.width, stBoxSize.height, stBoxSize.depth);
+
+				boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
+
+				setBoundingBox(_vBoneNameList[i], boundSet);
 			}
 		}
+		break;
+	}
+	}
+}
+
+void skinnedMesh::setBoneBoundSphere(void)
+{
+	switch (_characterType)
+	{
+	case ECharacterType::NORMAL_ZOMBIE:
+	{
+		for (int i = 0; i < _vBoneNameList.size(); ++i)
+		{
+			if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
+			{
+				D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
+
+				STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
+				BOUNDSPHERESET boundSet;
+				ZeroMemory(&boundSet, sizeof(boundSet));
+				boundSet.sphere = gFunc::createBoundingSphere(
+					this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					stBoxSize.width / 1.3);
+
+				boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
+
+				setBoundingSphere(_vBoneNameList[i], boundSet);
+			}
+		}
+		break;
 	}
 	}
 }
@@ -268,13 +309,13 @@ void skinnedMesh::setupBone(LPD3DXFRAME frame)
 		setupBone(frame->pFrameFirstChild);
 }
 
-void skinnedMesh::setupBoneInfo(string name, const D3DXVECTOR3 & position)
+void skinnedMesh::setupBoneInfo(string name, const D3DXVECTOR3 & position, BYTE width, BYTE height, BYTE depth)
 {
 	switch (_characterType)
 	{
 		case ECharacterType::NORMAL_ZOMBIE:
 		{
-			BoneInfo boneInfo;
+			STBoneInfo boneInfo;
 			ZeroMemory(&boneInfo, sizeof(boneInfo));
 
 			boneInfo.position = position;
@@ -288,8 +329,17 @@ void skinnedMesh::setupBoneInfo(string name, const D3DXVECTOR3 & position)
 					}
 				}
 			}
-			_vBoneInfoList.insert(map<string, BoneInfo>::value_type(name, boneInfo));
+			_mBoneInfoList.insert(unordered_map<string, STBoneInfo>::value_type(name, boneInfo));
 			_vBoneNameList.push_back(name);
+
+			STBoxSize boxSize;
+			ZeroMemory(&boxSize, sizeof(boxSize));
+
+			boxSize.width = width;
+			boxSize.height = height;
+			boxSize.depth = depth;
+
+			_mBoxSizeList.insert(BOXSIZELIST::value_type(name, boxSize));
 		}
 	}
 }
@@ -399,9 +449,6 @@ LPD3DXMESH skinnedMesh::createSkinnedMesh(LPD3DXMESHCONTAINER meshContainer, int
 		elements,
 		MN_DEV,
 		&pMesh);
-
-	//D3DXFrameFind
-	//static_cast<AllocateHierarchy::stbone *>(pstBone)->m_stCombineMatrix
 
 	// 법선, 접선, 종법선 정보 계산
 	D3DXComputeNormals(pMesh, result->pAdjacency);

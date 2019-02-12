@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -354,6 +354,8 @@
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\medikit.X" />
+    <None Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\uzi.X" />
     <None Include="gMng.inl" />
     <None Include="resource\mesh\L4D1\Biker\biker.X" />
     <None Include="resource\mesh\L4D1\bill\bill.X" />
@@ -370,6 +372,8 @@
     <None Include="resource\mesh\WitchApprentice\WitchApprentice.x" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\uzi.tga" />
+    <Image Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\w_eq_medkit.tga" />
     <Image Include="resource\mesh\L4D1\Biker\francis_color.tga" />
     <Image Include="resource\mesh\L4D1\Biker\francis_color_normal.tga" />
     <Image Include="resource\mesh\L4D1\Biker\francis_hair.tga" />
@@ -418,6 +422,20 @@
     <Image Include="resource\mesh\L4D1\Teenangst\zoey_normal.tga" />
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp" />
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_w_diff.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="resource\effect\example_11.fx" />
+    <FxCompile Include="resource\effect\example_12.fx" />
+    <FxCompile Include="resource\effect\example_13.fx" />
+    <FxCompile Include="resource\effect\example_15.fx" />
+    <FxCompile Include="resource\effect\example_16.fx" />
+    <FxCompile Include="resource\effect\example_17.fx" />
+    <FxCompile Include="resource\effect\field_node.fx" />
+    <FxCompile Include="resource\effect\outline.fx" />
+    <FxCompile Include="resource\effect\outlineBlur.fx" />
+    <FxCompile Include="resource\effect\practice_06.fx" />
+    <FxCompile Include="resource\effect\skinnedMesh.fx" />
+    <FxCompile Include="resource\effect\Survivor.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
