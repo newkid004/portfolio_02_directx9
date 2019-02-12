@@ -42,7 +42,7 @@ HRESULT allocateHierarchy::CreateMeshContainer(
 	LPD3DXSKININFO pSkinInfo, 
 	LPD3DXMESHCONTAINER * ppNewMeshContainer)
 {
-	auto result = new meshContainer;
+	auto result = new meshContainer();
 
 	if (pMeshData->Type == D3DXMESHDATATYPE::D3DXMESHTYPE_MESH)
 	{
