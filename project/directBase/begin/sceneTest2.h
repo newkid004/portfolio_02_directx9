@@ -2,7 +2,8 @@
 #include "kGlobalDefine.h"
 #include "mainGame.h"
 
-class staticMesh;
+class nodeMesh;
+
 class aStar_node;
 class aStar_grape;
 class aStar_runner;
@@ -19,7 +20,7 @@ public :
 	};
 	
 private:
-	staticMesh* _staticMesh = nullptr;
+	nodeMesh* _customMesh = nullptr;
 	aStar_grape* _grape = nullptr;
 	
 	aStar_path* _pathResult = nullptr;
@@ -40,7 +41,7 @@ public :
 
 public :
 	aStar_grape* createGrape(void);
-	staticMesh* createStaticMesh(void);
+	nodeMesh* createCustomMesh(void);
 
 public:
 	sceneTest2() {};

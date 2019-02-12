@@ -430,7 +430,7 @@
     <Filter Include="main\classes\scene\01_mapTool\classes\brush\trigger">
       <UniqueIdentifier>{2a08e740-7a59-4b22-8cb6-fd73a6a31158}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\global\utility\object\renderObject\mesh\customMesh">
+    <Filter Include="classes\global\utility\object\renderObject\mesh\nodeMesh">
       <UniqueIdentifier>{8fc2f507-4855-4fd6-a23c-73003c19cfa0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -732,8 +732,8 @@
     <ClInclude Include="maptool_brush_prop.h">
       <Filter>main\classes\scene\01_mapTool\classes\brush\prop</Filter>
     </ClInclude>
-    <ClInclude Include="customMesh.h">
-      <Filter>classes\global\utility\object\renderObject\mesh\customMesh</Filter>
+    <ClInclude Include="nodeMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -989,8 +989,8 @@
     <ClCompile Include="maptool_brush_prop.cpp">
       <Filter>main\classes\scene\01_mapTool\classes\brush\prop</Filter>
     </ClCompile>
-    <ClCompile Include="customMesh.cpp">
-      <Filter>classes\global\utility\object\renderObject\mesh\customMesh</Filter>
+    <ClCompile Include="nodeMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ public :
 	};
 
 
-private :
+protected :
 	LPD3DXEFFECT _effect = nullptr;
 	meshSet* _meshSet = nullptr;
 	mParam _param;

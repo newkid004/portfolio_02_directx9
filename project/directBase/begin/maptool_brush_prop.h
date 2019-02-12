@@ -5,7 +5,7 @@
 class maptool_brush_prop : public maptool_brush
 {
 public:
-	maptool_brush_prop(windowCtlogMaptool** bindWindow);
+	maptool_brush_prop(sceneMapTool* viewData);
 	~maptool_brush_prop();
 };
 

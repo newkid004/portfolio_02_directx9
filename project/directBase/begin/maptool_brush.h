@@ -5,10 +5,10 @@ class sceneMapTool;
 
 class windowCtlogMaptool;
 
+class maptool_window;
 class maptool_field;
 class maptool_io;
 
-template<typename T>
 class maptool_brush
 {
 public :
@@ -39,4 +39,3 @@ public:
 	maptool_brush(sceneMapTool* viewData);
 	~maptool_brush() {};
 };
-

@@ -170,7 +170,7 @@
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
-    <ClInclude Include="customMesh.h" />
+    <ClInclude Include="nodeMesh.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
     <ClInclude Include="debugDraw.h" />
@@ -272,7 +272,7 @@
     <ClCompile Include="buttonMoveBar.cpp" />
     <ClCompile Include="buttonScrollVertical.cpp" />
     <ClCompile Include="buttonStatic.cpp" />
-    <ClCompile Include="customMesh.cpp" />
+    <ClCompile Include="nodeMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
     <ClCompile Include="debugGrid.cpp" />

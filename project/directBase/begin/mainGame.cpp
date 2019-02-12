@@ -17,7 +17,7 @@ void mainGame::init(void)
 	MN_SCENE->add("sceneMapTool", new sceneMapTool);
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 
-	MN_SCENE->change("sceneMapTool");
+	MN_SCENE->change("scene2");
 	//MN_SCENE->change("sceneCollisionTest");
 }
 

@@ -8,6 +8,7 @@
 #include "windowCtlogMaptool.h"
 #include "maptool_field.h"
 
+POINT maptool_brush::_mousePrev = { 0, };
 
 maptool_brush::maptool_brush(sceneMapTool* viewData)
 {

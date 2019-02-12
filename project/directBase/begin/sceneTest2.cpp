@@ -5,7 +5,7 @@
 
 #include "pickRay.h"
 
-#include "staticMesh.h"
+#include "nodeMesh.h"
 
 #include "aStar_node.h"
 #include "aStar_grape.h"
@@ -26,8 +26,10 @@ void sceneTest2::init(void)
 {
 	sceneBase::init();
 
-	_staticMesh = createStaticMesh();
+	_customMesh = createCustomMesh();
 	_grape = createGrape();
+
+	_customMesh->setPlaneScale(1.0f);
 }
 
 void sceneTest2::update(void)
@@ -78,22 +80,17 @@ void sceneTest2::updateMouse(void)
 						}
 					}
 				}
-
-				if (isFind)
-					_staticMesh->setScale(SIZE_BIG);
-				else
-					_staticMesh->setScale(SIZE_LOW);
 				
 				aStar_node::info *nodeInfo;
 				viewNode->getInfo(nodeInfo);
-				_staticMesh->setPosition(nodeInfo->pos);
+				_customMesh->setPosition(nodeInfo->pos);
 
-				_staticMesh->update();
+				_customMesh->update();
 
 				pick::ray pRay;
 				pick::info pInfo;
-				pick::applyMatrix(&pRay, NULL, &_staticMesh->getMatrixFinal());
-				if (pick::chkPick(&pInfo, &pRay, _staticMesh->getMeshSet()->mesh))
+				pick::applyMatrix(&pRay, NULL, &_customMesh->getMatrixFinal());
+				if (pick::chkPick(&pInfo, &pRay, _customMesh->getMeshSet()->mesh))
 					gMng::add(viewNode, _vSelectionNode);
 			}
 		}
@@ -174,16 +171,16 @@ void sceneTest2::drawMesh(void)
 			}
 
 			if (isFind)
-				_staticMesh->setScale(SIZE_BIG);
+				_customMesh->setNodeColor(D3DXVECTOR4(1, 0, 0, 1));
 			else
-				_staticMesh->setScale(SIZE_LOW);
+				_customMesh->setNodeColor(D3DXVECTOR4(1, 1, 1, 1));
 
 			aStar_node::info *nodeInfo;
 			viewNode->getInfo(nodeInfo);
-			_staticMesh->setPosition(nodeInfo->pos);
+			_customMesh->setPosition(nodeInfo->pos);
 
-			_staticMesh->update();
-			_staticMesh->draw();
+			_customMesh->update();
+			_customMesh->draw();
 		}
 	}
 }
@@ -235,11 +232,11 @@ aStar_grape * sceneTest2::createGrape(void)
 	return result;
 }
 
-staticMesh * sceneTest2::createStaticMesh(void)
+nodeMesh * sceneTest2::createCustomMesh(void)
 {
-	staticMesh::mParam param;
-	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
-	param.effectFilePath = "resource/effect/example_16.fx";
+	nodeMesh::mParam param;
+	param.meshFilePath = "resource/mesh/sphere.x";
+	param.effectFilePath = "resource/effect/field_node.fx";
 
-	return new staticMesh(param);
+	return new nodeMesh(param);
 }

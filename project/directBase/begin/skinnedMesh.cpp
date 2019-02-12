@@ -102,7 +102,7 @@ void skinnedMesh::updateBoneMatrix(LPD3DXFRAME frame, const D3DXMATRIXA16 & mUpd
 		}
 	}
 	
-	setBoundMatrix(bone->Name, bone->combineMatrix);
+	// setBoundMatrix(bone->Name, bone->combineMatrix);
 
 	// 연관 본 갱신
 	if (bone->pFrameSibling != nullptr)		updateBoneMatrix(bone->pFrameSibling, mUpdate);
