@@ -3,6 +3,8 @@
 #include "managerList.h"
 #include "gFunc.h"
 
+using namespace std;
+
 allocateHierarchy::allocateHierarchy(const mParam & param) :
 	_param(param)
 {
@@ -69,6 +71,7 @@ HRESULT allocateHierarchy::CreateMeshContainer(
 		for (int i = 0; i < NumMaterials; ++i)
 		{
 			LPDIRECT3DTEXTURE9 t = nullptr;
+			LPDIRECT3DTEXTURE9 normal = nullptr;
 
 			if (pMaterials[i].pTextureFilename != nullptr)
 			{
@@ -76,8 +79,30 @@ HRESULT allocateHierarchy::CreateMeshContainer(
 				sprintf(filePath, "%s%s", _param.basePath.c_str(), pMaterials[i].pTextureFilename);
 
 				t = MN_SRC->getTexture(filePath);
+
+				string textureFileName = pMaterials[i].pTextureFilename;
+				if (textureFileName.rfind(".") != string::npos)
+				{
+					textureFileName = textureFileName.substr(0,
+						textureFileName.rfind("."));
+				}
+
+				//문자열 검색 후 노말 텍스처 추가
+				if (textureFileName.find("head") != string::npos ||
+					textureFileName.find("color") != string::npos ||
+					textureFileName.find("smoker") != string::npos ||
+					textureFileName.find("01") != string::npos)
+				{
+					char szNormalFilepath[MAX_PATH] = "";
+
+					sprintf(szNormalFilepath, "%s%s%s", _param.basePath.c_str(),
+						textureFileName.c_str(), "_normal.tga");
+
+					normal = MN_SRC->getTexture(szNormalFilepath);
+				}
 			}
 			result->vTextureList.push_back(t);
+			result->vNormalTextureList.push_back(normal);
 		}
 
 		// 스킨 정보 설정

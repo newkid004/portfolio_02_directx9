@@ -10,6 +10,7 @@ debugDraw::debugDraw(renderObject * bind, EDebugDrawType drawType) :
 	switch (drawType)
 	{
 	case EDebugDrawType::BOX: createBoundingBox(bind->getBoundingBoxList()); break;
+	//case EDebugDrawType::BOX: createBoundingBox(bind->getBoundingBoxSetList()); break;
 	case EDebugDrawType::SPHERE: createBoundingSphere(bind->getBoundingSphereList()); break;
 	}
 }
@@ -68,6 +69,12 @@ void debugDraw::drawBoundingBox(void)
 		_vMeshBoundingBoxList[i]->DrawSubset(0);
 	}
 	
+	//for (auto rValue : _mMeshBoundingBoxSetList)
+	//{
+	//	D3DXMATRIXA16 mWorld = _mbBoxSet.find(rValue.first)->second;
+	//
+	//	rValue.second->DrawSubset(0);
+	//}
 
 }
 
@@ -204,6 +211,25 @@ void debugDraw::createBoundingBox(std::vector<boundingBox> & input)
 		_vMeshBoundingBoxList.push_back(result);
 	}
 }
+
+//void debugDraw::createBoundingBox(std::unordered_map<string, boundingBox> & input)
+//{
+//	LPD3DXMESH result = nullptr;
+//
+//	_mbBoxSet = input;
+//	for(auto rValue : _mbBoxSet)
+//	{
+//		D3DXCreateBox(
+//			MN_DEV,
+//			rValue.second.max.x - rValue.second.min.x,
+//			rValue.second.max.y - rValue.second.min.y,
+//			rValue.second.max.z - rValue.second.min.z,
+//			&result,
+//			NULL);
+//
+//		_mMeshBoundingBoxSetList.insert(std::unordered_map<string, LPD3DXMESH>::value_type(rValue.first, result));
+//	}
+//}
 
 void debugDraw::createBoundingSphere(std::vector<boundingSphere> & input)
 {

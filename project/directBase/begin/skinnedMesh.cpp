@@ -14,6 +14,7 @@
 #define SKINNED_MESH_TYPE_SHADER	2
 #define SKINNED_MESH_TYPE			SKINNED_MESH_TYPE_SHADER
 
+using namespace std;
 skinnedMesh::skinnedMesh(const mParam & param, ECharacterType characterType) :
 	_param(param),
 	_characterType(characterType)
@@ -102,7 +103,7 @@ void skinnedMesh::updateBoneMatrix(LPD3DXFRAME frame, const D3DXMATRIXA16 & mUpd
 		}
 	}
 	
-	// setBoundMatrix(bone->Name, bone->combineMatrix);
+	//setBoundMatrix(bone->Name, bone->combineMatrix);
 
 	// 연관 본 갱신
 	if (bone->pFrameSibling != nullptr)		updateBoneMatrix(bone->pFrameSibling, mUpdate);
@@ -217,6 +218,10 @@ void skinnedMesh::drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshC
 
 		int attributeID = boneComb.AttribId;
 		_effect->SetTexture("_texture", meshCont->vTextureList[attributeID]);
+		if (meshCont->vNormalTextureList[attributeID] != nullptr)
+		{
+			_effect->SetTexture("_normalTexture", meshCont->vNormalTextureList[attributeID]);
+		}
 
 		gFunc::runEffectLoop(_effect, "myTechnique", [&](int passNum)->void {
 			meshCont->pSkinndMesh->DrawSubset(i);
@@ -240,9 +245,9 @@ void skinnedMesh::setBoundBox(void)
 					&_vBoneInfoList.find(_vBoneNameList[i])->second.position,
 					&_vBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
 
-				setBoundingBox(gFunc::createBoundingBox(
-					this->getPosition() + _vBoneInfoList.find(_vBoneNameList[i])->second.position,
-					3, 3, 3));
+				//setBoundingBox(_vBoneNameList[i], gFunc::createBoundingBox(
+				//	this->getPosition() + _vBoneInfoList.find(_vBoneNameList[i])->second.position,
+				//	3, 3, 3));
 			}
 		}
 	}
@@ -408,7 +413,7 @@ LPD3DXMESH skinnedMesh::createSkinnedMesh(LPD3DXMESHCONTAINER meshContainer, int
 
 	for (int i = 0; i < numBoneCombinations; ++i)
 	{
-		D3DXBONECOMBINATION & boneComb = boneCombinations[i];
+		D3DXBONECOMBINATION  boneComb = boneCombinations[i];
 
 		auto copiedBoneComb = boneComb;
 		copiedBoneComb.BoneId = (DWORD*)malloc(sizeof(DWORD) * numBoneCombinations);

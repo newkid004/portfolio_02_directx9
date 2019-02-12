@@ -18,6 +18,7 @@ private:
 	LPD3DXMESH _meshBoundingSphere = nullptr;
 	std::vector<LPD3DXMESH> _vMeshBoundingBoxList;
 	std::vector<LPD3DXMESH> _vMeshBoundingSphereList;
+	//std::unordered_map<string, LPD3DXMESH> _mMeshBoundingBoxSetList;
 
 	renderObject* _bindObject = nullptr;
 	EDebugDrawType _drawType;
@@ -35,6 +36,7 @@ private:
 	void drawGuideLineBox(void);
 
 	void createBoundingBox(std::vector<boundingBox> & input);
+	//void createBoundingBox(std::unordered_map<string, boundingBox> & input);
 	void createBoundingSphere(std::vector<boundingSphere> & input);
 
 public:

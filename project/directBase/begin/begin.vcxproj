@@ -162,6 +162,9 @@
     <ClInclude Include="aStar_node.h" />
     <ClInclude Include="aStar_path.h" />
     <ClInclude Include="aStar_runner.h" />
+    <ClInclude Include="animationControllerDigit.h" />
+    <ClInclude Include="AnimationDef.h" />
+    <ClInclude Include="AnimationTester.h" />
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="boxObject.h" />
     <ClInclude Include="buttonBase.h" />
@@ -218,6 +221,8 @@
     <ClInclude Include="particlePoint.h" />
     <ClInclude Include="particleQuad.h" />
     <ClInclude Include="particleSystem.h" />
+    <ClInclude Include="PatternManager.h" />
+    <ClInclude Include="patternMesh.h" />
     <ClInclude Include="pathfind_grape.h" />
     <ClInclude Include="pathfind_node.h" />
     <ClInclude Include="pickRay.h" />
@@ -260,6 +265,8 @@
   <ItemGroup>
     <ClCompile Include="allocateHierarchy.cpp" />
     <ClCompile Include="animationController.cpp" />
+    <ClCompile Include="animationControllerDigit.cpp" />
+    <ClCompile Include="AnimationTester.cpp" />
     <ClCompile Include="aStar_grape.cpp" />
     <ClCompile Include="aStar_node.cpp" />
     <ClCompile Include="aStar_path.cpp" />
@@ -310,6 +317,8 @@
     <ClCompile Include="particlePoint.cpp" />
     <ClCompile Include="particleQuad.cpp" />
     <ClCompile Include="particleSystem.cpp" />
+    <ClCompile Include="PatternManager.cpp" />
+    <ClCompile Include="patternMesh.cpp" />
     <ClCompile Include="pathfind_grape.cpp" />
     <ClCompile Include="pathfind_node.cpp" />
     <ClCompile Include="pickRay.cpp" />
@@ -346,14 +355,67 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl" />
+    <None Include="resource\mesh\L4D1\Biker\biker.X" />
+    <None Include="resource\mesh\L4D1\bill\bill.X" />
+    <None Include="resource\mesh\L4D1\c130\c130.X" />
+    <None Include="resource\mesh\L4D1\c130\c130_1.X" />
+    <None Include="resource\mesh\L4D1\female\female.X" />
+    <None Include="resource\mesh\L4D1\hulk\hulk.X" />
     <None Include="resource\mesh\L4D1\male\male.X" />
+    <None Include="resource\mesh\L4D1\Manager\manager.X" />
+    <None Include="resource\mesh\L4D1\Namvet\namvet.X" />
+    <None Include="resource\mesh\L4D1\smoker\smoker.X" />
+    <None Include="resource\mesh\L4D1\Teenangst\teenangst.X" />
     <None Include="resource\mesh\L4D1\male\male1.X" />
     <None Include="resource\mesh\WitchApprentice\WitchApprentice.x" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resource\mesh\L4D1\Biker\francis_color.tga" />
+    <Image Include="resource\mesh\L4D1\Biker\francis_color_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Biker\francis_hair.tga" />
+    <Image Include="resource\mesh\L4D1\Biker\francis_head.tga" />
+    <Image Include="resource\mesh\L4D1\Biker\francis_head_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Biker\green_iris.tga" />
+    <Image Include="resource\mesh\L4D1\bill\bill_color.tga" />
+    <Image Include="resource\mesh\L4D1\bill\bill_hair.tga" />
+    <Image Include="resource\mesh\L4D1\bill\bill_head.tga" />
+    <Image Include="resource\mesh\L4D1\bill\blue_iris.tga" />
+    <Image Include="resource\mesh\L4D1\c130\c130_1.tga" />
+    <Image Include="resource\mesh\L4D1\c130\c130_2.tga" />
+    <Image Include="resource\mesh\L4D1\c130\c130_propeller.tga" />
+    <Image Include="resource\mesh\L4D1\c130\c130_propeller_static.tga" />
+    <Image Include="resource\mesh\L4D1\female\common_female_casual_head_01.tga" />
+    <Image Include="resource\mesh\L4D1\female\common_female_casual_lower_01.tga" />
+    <Image Include="resource\mesh\L4D1\female\common_female_casual_upper_01.tga" />
+    <Image Include="resource\mesh\L4D1\hulk\hulk_01.tga" />
+    <Image Include="resource\mesh\L4D1\hulk\hulk_01_normal.tga" />
     <Image Include="resource\mesh\L4D1\male\common_male_lower_01.tga" />
     <Image Include="resource\mesh\L4D1\male\common_male_suit_01_head_01.tga" />
     <Image Include="resource\mesh\L4D1\male\common_male_upper_01.tga" />
+    <Image Include="resource\mesh\L4D1\Manager\blue_iris.tga" />
+    <Image Include="resource\mesh\L4D1\Manager\brown_iris.tga" />
+    <Image Include="resource\mesh\L4D1\Manager\louis_color.tga" />
+    <Image Include="resource\mesh\L4D1\Manager\louis_color_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Manager\louis_head.tga" />
+    <Image Include="resource\mesh\L4D1\Manager\louis_head_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Namvet\bill_color.tga" />
+    <Image Include="resource\mesh\L4D1\Namvet\bill_color_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Namvet\bill_hair.tga" />
+    <Image Include="resource\mesh\L4D1\Namvet\bill_head.tga" />
+    <Image Include="resource\mesh\L4D1\Namvet\bill_head_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Namvet\blue_iris.tga" />
+    <Image Include="resource\mesh\L4D1\Namvet\green_iris.tga" />
+    <Image Include="resource\mesh\L4D1\smoker\boomer_hair.tga" />
+    <Image Include="resource\mesh\L4D1\smoker\smoker.tga" />
+    <Image Include="resource\mesh\L4D1\smoker\smoker_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\blue_iris.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\brown_iris.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_color.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_color_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_hair.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_head.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_head_normal.tga" />
+    <Image Include="resource\mesh\L4D1\Teenangst\zoey_normal.tga" />
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp" />
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_w_diff.bmp" />
   </ItemGroup>
