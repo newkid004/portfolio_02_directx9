@@ -30,9 +30,23 @@ public :
 	void update(void);
 
 protected :
-	virtual void updateMouse(void);
-	virtual void updateKey(void);
+	void updateMouse(void);
+	void updateKey(void);
 
+protected :
+	// mouse
+	virtual void updatePickObject(void);
+	virtual void updateReleaseSelection(void);
+	virtual void updateObjectMove(POINT & mouseMove);
+	virtual void updateObjectRotate(POINT & mouseMove);
+	virtual void updateObjectScale(void);
+
+	// key
+	virtual void updateWindowClose(void);
+	virtual void updateIO(void);
+	virtual void updateObjectDelete(void);
+
+	// mouse active
 	virtual void putObject(void) = 0;
 
 public:

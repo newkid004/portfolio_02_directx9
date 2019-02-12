@@ -21,7 +21,7 @@ public :
 		D3DXMATRIXA16 combineMatrix;
 	};
 
-	typedef unordered_map<string, BoneInfo> BONEINFO;
+	typedef std::unordered_map<std::string, BoneInfo> BONEINFO;
 
 protected :
 	LPD3DXMESH _mesh = nullptr;
@@ -39,7 +39,7 @@ protected :
 	BONEINFO _vBoneInfoList;
 	ECharacterType _characterType = ECharacterType::NONE;
 
-	vector<string> _vBoneNameList;
+	std::vector<std::string> _vBoneNameList;
 	
 public :
 	void init(void);
@@ -72,7 +72,7 @@ private :
 
 public :
 
-	void setupBoneInfo(string name, const D3DXVECTOR3 & position);
+	void setupBoneInfo(std::string name, const D3DXVECTOR3 & position);
 
 	animationController* getAniController(void) { return _aniController; }
 	mParam & getMakeParam(void) { return _param; }

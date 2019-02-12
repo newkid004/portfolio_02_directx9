@@ -13,6 +13,7 @@
 #include "maptool_io.h"
 
 #include "maptool_brush.h"
+#include "maptool_brush_prop.h"
 
 #include "mapObject.h"
 
@@ -47,6 +48,10 @@ void sceneMapTool::init(void)
 	_render	= new maptool_render();
 	_io		= new maptool_io(_field, &_window->getSet().mv_file->getIndex());
 
+	_mBrush.insert(decltype(_mBrush)::value_type("prop", new maptool_brush_prop(this)));
+
+	_currentBrush = _mBrush.find("prop")->second;
+
 	// _grid->setVisible(false);
 	// ((cameraControlable*)_camera)->setVisible(false);
 }
@@ -55,7 +60,6 @@ void sceneMapTool::update(void)
 {
 	MN_UI->update();
 	updateControl_brush();
-	updateControl_key();
 
 	sceneBase::update();
 
@@ -98,178 +102,20 @@ void sceneMapTool::initMap(void)
 
 void sceneMapTool::updateControl_brush(void)
 {
-	if (MN_KEY->getClickIgnore())
-		return;
+	int focusWindow = 0;
+	windowCtlogMaptool** viewWindow = ((windowCtlogMaptool**)&_window->getSet()) + 3;
 
-	windowCtlogMaptool* viewWindow = nullptr;
-	if (viewWindow = _window->getSet().focusedWindow)
+	for (int i = 0; i < 4; ++i)
 	{
-		if (0 <= viewWindow->getIndex())
-		{
-			// 01. prop put
-			if (MN_KEY->mousePress())
-			{
-				putProp();
-				viewWindow->getIndex() = -1;
-			}
-		}
+		if (viewWindow + i == &_window->getSet().focusedWindow)
+			focusWindow |= 1 << i;
 	}
 
-	if (viewWindow == nullptr || viewWindow->getIndex() < 0)
-	{
-		// ready to mouse
-		if (MN_KEY->mousePress())
-			_mousePrev = MN_KEY->getMousePos();
+	if (focusWindow & 0b0100)
+		_currentBrush = _mBrush.find("trigger")->second;
+	else if (focusWindow & 0b1011)
+		_currentBrush  = _mBrush.find("prop")->second;
 
-		renderObject* pickObject = nullptr;
-		baseObject* & selection = _field->getSet().selectionObject;
+	_currentBrush->update();
 
-		if (MN_KEY->mousePress())
-		{
-			// 02. pick check
-			if (pickObject = _field->getPickObject())
-				selection = pickObject;
-		}
-		if (MN_KEY->mousePress(EMouseInput::RIGHT) &&
-			_window->getSet().focusedWindow != _window->getSet().mv_file)
-			selection = nullptr;
-
-		if (MN_KEY->mouseDown())
-		{
-			POINT mouseMove = {
-				MN_KEY->getMousePos().x - _mousePrev.x,
-				MN_KEY->getMousePos().y - _mousePrev.y };
-
-			if (MN_KEY->keyDown(DIK_LCONTROL))
-			{
-				// 03. prop move
-				if (selection != nullptr) // && pickObject != _field->getSet().selectionObject)
-				{
-					if (MN_KEY->mousePressDb())
-					{
-						D3DXVECTOR3 pickPos;
-						if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
-							selection->setPosition(pickPos);
-					}
-					else
-					{
-						// x, z
-						if (MN_KEY->keyDown(DIK_SPACE))
-						{
-							selection->moveCameraX(mouseMove.x / 3.0f, true);
-							selection->moveCameraZ(-mouseMove.y / 3.0f, true);
-						}
-						// x, y
-						else
-						{
-							selection->moveCameraX(mouseMove.x / 3.0f, true);
-							selection->moveCameraY(-mouseMove.y / 3.0f);
-						}
-					}
-				}
-			}
-			else if (MN_KEY->keyDown(DIK_LSHIFT))
-			{
-				// 04. prop rotate
-				if (_field->getSet().selectionObject != nullptr)
-				{
-					if (!MN_KEY->keyDown(DIK_SPACE))
-						selection->rotateY(-mouseMove.x / 8.0f, false);
-					else
-					{
-						selection->rotateCameraX(-mouseMove.y / 8.0f);
-						selection->rotateCameraY(-mouseMove.x / 8.0f);
-					}
-				}
-			}
-
-			MN_KEY->setMousePos(_mousePrev);
-		}
-	}
-}
-
-void sceneMapTool::updateControl_key(void)
-{
-	// window close
-	if (MN_KEY->keyPress(DIK_ESCAPE))
-	{
-		_window->getSet().focusedWindow->getIndex() = -1;
-		_window->getSet().focusedWindow->close();
-	}
-
-	// save, load
-	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_S))
-		_io->write();
-	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_L))
-	{
-		int fileSelection = _window->getSet().mv_file->getIndex();
-		
-		_io->read();
-
-		_window->getSet().mv_file->getIndex() = fileSelection;
-	}
-
-	// prop delete
-	if (MN_KEY->keyPress(DIK_DELETE) && _field->getSet().selectionObject != nullptr)
-	{
-		auto & vObjList = _field->getSet().objList;
-		auto & vDataList = _field->getSet().dataList;
-
-		auto & selection = _field->getSet().selectionObject;
-		for (int i = 0; i < vObjList.size(); ++i)
-		{
-			if (vObjList[i] == selection)
-			{
-				vObjList.erase(vObjList.begin() + i);
-				vDataList.erase(vDataList.begin() + i);
-
-				selection = nullptr;
-
-				break;
-			}
-		}
-	}
-}
-
-void sceneMapTool::putProp(void)
-{
-	typedef maptool_data_catalog CATALOG;
-	typedef CATALOG::OBJ CATA_OBJ;
-	
-	windowCtlogMaptool* viewWindow = _window->getSet().focusedWindow;
-	
-	CATA_OBJ::BASE* item = viewWindow->getItem();
-	renderObject* duplication = nullptr;
-
-	// 카탈로그 내 아이템정보 복사
-	if (item->_baseType & CATALOG::baseType::CHAR)			CATALOG::duplicate((skinnedMesh**)&duplication, (CATA_OBJ::CHAR*)item);
-	// else if (item->_baseType & CATALOG::baseType::EVENT)	CATALOG::duplicate((CATA_OBJ::EVENT**)&duplication, (CATA_OBJ::EVENT*)item);
-	else if (item->_baseType & CATALOG::baseType::PROP)		CATALOG::duplicate((staticMesh**)&duplication, (CATA_OBJ::PROP*)item);
-
-	if (duplication)
-	{
-		typedef maptool_data_io DATA_IO;
-
-		DATA_IO::OBJ::BASE* ioBase = nullptr;
-
-		if (item->_baseType & CATALOG::baseType::CHAR)			DATA_IO::create((DATA_IO::OBJ::CHAR**)&ioBase, (skinnedMesh*)duplication);
-		// else if (item->_baseType & CATALOG::baseType::EVENT)	DATA_IO::create((DATA_IO::OBJ::EVENT**)&ioBase, (skinnedMesh*)duplicateObject);
-		else if (item->_baseType & CATALOG::baseType::PROP)		DATA_IO::create((DATA_IO::OBJ::PROP**)&ioBase, (staticMesh*)duplication);
-
-		// 복사한 정보 field내 리스트에 추가
-		if (ioBase)
-		{
-			_field->getSet().objList.push_back(duplication);
-			_field->getSet().dataList.push_back(ioBase);
-
-			_field->getSet().selectionObject = duplication;
-
-			// 위치, 회전 초기화
-			D3DXVECTOR3 pickPos;
-			if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
-				_field->getSet().selectionObject->setPosition(pickPos);
-
-			_field->getSet().selectionObject->rotateBillboard(true, true);
-		}
-	}
 }
