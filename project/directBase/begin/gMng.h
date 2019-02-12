@@ -31,7 +31,7 @@ public :	// find
 	template<typename tValue>
 	static tValue find(tValue & key, std::list<tValue> & container, PLACE place = PLACE::FRONT);
 	template<typename tValue>
-	static tValue find(tValue & key, std::vector<tValue> & container, PLACE place = PLACE::FRONT);
+	static tValue find(tValue & key, std::vector<tValue> & container);
 	template<typename tValue>
 	static tValue find(tValue & key, dbList<tValue> & container, PLACE place = PLACE::FRONT);
 

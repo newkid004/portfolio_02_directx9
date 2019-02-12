@@ -39,10 +39,8 @@ private :
 	void initMap(void);
 
 	void updateControl_brush(void);
-	void updateControl_key(void);
 
-private :
-	void putProp(void);
+	void drawSelection(void);
 
 public:
 	sceneMapTool() {};

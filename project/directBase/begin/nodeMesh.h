@@ -2,6 +2,8 @@
 #include "kGlobalDefine.h"
 #include "staticMesh.h"
 
+class aStar_node;
+
 class nodeMesh : public staticMesh
 {
 public :
@@ -15,10 +17,12 @@ public :
 protected :
 	D3DXVECTOR4 _nodeColor = D3DXVECTOR4(1, 1, 1, 1);
 
-	float _planeScale = 1.0f;
+	float _planeRadius = 1.0f;
 	LPD3DXMESH _plane = nullptr;
 
 	D3DXMATRIXA16 _mWorldPlane;
+
+	aStar_node* _bindNode = nullptr;
 
 public :
 	virtual void update(void) override;
@@ -26,10 +30,12 @@ public :
 
 public :
 	const D3DXVECTOR4 & getNodeColor(void) { return _nodeColor; }
-	float getPlaneScale(void) { return _planeScale; };
+	float getPlaneRadius(void) { return _planeRadius; }
+	aStar_node* getBindNode(void) { return _bindNode; }
 
 	void setNodeColor(const D3DXVECTOR4 & input) { _nodeColor = input; }
-	void setPlaneScale(float input) { _planeScale = input; }
+	void setPlaneRadius(float input) { _planeRadius = input; }
+	void setBindNode(aStar_node* input) { _bindNode = input; }
 
 private :
 	LPD3DXMESH createPlane(void);

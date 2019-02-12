@@ -109,10 +109,6 @@ quadTree_Frustum::quadTree_Frustum(int sizeX, int sizeY) :
 {
 }
 
-quadTree_Frustum::~quadTree_Frustum()
-{
-}
-
 void quadTree_Frustum::build(void)
 {
 	_root = new node_frustum(this, _size.x, _size.y);

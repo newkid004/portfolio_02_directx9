@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -159,6 +159,8 @@
     <ClInclude Include="allocateHierarchy.h" />
     <ClInclude Include="animationController.h" />
     <ClInclude Include="aStar_grape.h" />
+    <ClInclude Include="aStar_grape_bind.h" />
+    <ClInclude Include="aStar_grape_bind.hpp" />
     <ClInclude Include="aStar_node.h" />
     <ClInclude Include="aStar_path.h" />
     <ClInclude Include="aStar_runner.h" />

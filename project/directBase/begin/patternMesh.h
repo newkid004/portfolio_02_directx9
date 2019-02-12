@@ -51,8 +51,6 @@ protected:
 	void drawPost(void) override;
 
 public:
-	void updateBoneMatrix(void);
-
 	void drawpreMesh(ACInfo& acInfo);
 
 private:

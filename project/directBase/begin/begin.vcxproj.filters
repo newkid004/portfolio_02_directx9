@@ -478,6 +478,12 @@
     <Filter Include="Resource\mesh\L4D1\items">
       <UniqueIdentifier>{e9c2cbf5-ce30-47be-9c1d-6064ce4d43a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\pathfind\aStar\grape\_base">
+      <UniqueIdentifier>{6f09de3e-470d-48ae-89be-efbe00c480f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\pathfind\aStar\grape\bind">
+      <UniqueIdentifier>{cd1a0a64-d043-4b1a-b3aa-5728c072799d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -750,9 +756,6 @@
     <ClInclude Include="pathfind_node.h">
       <Filter>main\classes\pathfind\_base\node</Filter>
     </ClInclude>
-    <ClInclude Include="aStar_grape.h">
-      <Filter>main\classes\pathfind\aStar\grape</Filter>
-    </ClInclude>
     <ClInclude Include="aStar_node.h">
       <Filter>main\classes\pathfind\aStar\node</Filter>
     </ClInclude>
@@ -794,6 +797,15 @@
     </ClInclude>
     <ClInclude Include="nodeMesh.h">
       <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_grape.h">
+      <Filter>main\classes\pathfind\aStar\grape\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_grape_bind.h">
+      <Filter>main\classes\pathfind\aStar\grape\bind</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_grape_bind.hpp">
+      <Filter>main\classes\pathfind\aStar\grape\bind</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1025,9 +1037,6 @@
     <ClCompile Include="pathfind_node.cpp">
       <Filter>main\classes\pathfind\_base\node</Filter>
     </ClCompile>
-    <ClCompile Include="aStar_grape.cpp">
-      <Filter>main\classes\pathfind\aStar\grape</Filter>
-    </ClCompile>
     <ClCompile Include="aStar_node.cpp">
       <Filter>main\classes\pathfind\aStar\node</Filter>
     </ClCompile>
@@ -1063,6 +1072,9 @@
     </ClCompile>
     <ClCompile Include="nodeMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar_grape.cpp">
+      <Filter>main\classes\pathfind\aStar\grape\_base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -25,8 +25,8 @@ public :
 
 		std::vector<boneFrame*> vBoneList;
 		std::vector<D3DXMATRIXA16> vBoneMatrixList;
-		std::vector<LPDIRECT3DTEXTURE9> vNormalTextureList;
 		std::vector<LPDIRECT3DTEXTURE9> vTextureList;
+		std::vector<LPDIRECT3DTEXTURE9> vNormalTextureList;
 		std::vector<D3DXBONECOMBINATION> vBoneCombinationList;
 	};
 

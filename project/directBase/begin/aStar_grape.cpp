@@ -20,24 +20,63 @@ void aStar_grape::addNode(aStar_node * input)
 {
 	input->getBindGrape() = this;
 	gMng::add(input, _vNodeList);
+
+	input->getIndex() = _vNodeList.size() - 1;
 }
 
-void aStar_grape::deleteNode(aStar_node * input)
+bool aStar_grape::deleteNode(aStar_node * input)
 {
-	for (int i = 0; i < _vNodeList.size(); ++i)
-	{
-		if (input == _vNodeList[i])
-		{
-			deleteNode(i);
-			break;
-		}
-	}
+	if (gMng::find(input, _vNodeList))
+		return deleteNode(input->getIndex());
+
+	return false;
 }
 
-void aStar_grape::deleteNode(int index)
+bool aStar_grape::deleteNode(int index)
 {
 	SAFE_DELETE(_vNodeList[index]);
 	_vNodeList.erase(_vNodeList.begin() + index);
+
+	for (int i = index; i < _vNodeList.size(); ++i)
+		_vNodeList[i]->getIndex() = i;
+
+	return true;
+}
+
+bool aStar_grape::connectNode(aStar_node * n1, aStar_node * n2, bool reConnect)
+{
+	bool isConnected = false;
+	auto & nodeConnection = n1->getLinkedNodeList();
+
+	// 중복 시, 거리 재계산
+	for (auto & iter : nodeConnection)
+	{
+		if (iter.connector == n2)
+		{
+			iter.distance = aStar_grape::calDistance(n1, n2);
+			return true;
+		}
+	}
+
+	float distance = aStar_grape::calDistance(n1, n2);
+	nodeConnection.push_back(aStar_node::LIST::value_type({ n2, distance }));
+	_mConnection[n1->getIndex()] = n2->getIndex();
+
+	if (reConnect)
+		return connectNode(n2, n1, false);
+
+	return true;
+}
+
+bool aStar_grape::connectNode(int index1, int index2)
+{
+	if (index1 < _vNodeList.size() && index2 < _vNodeList.size())
+	{
+		connectNode(_vNodeList[index1], _vNodeList[index2]);
+
+		return true;
+	}
+	return false;
 }
 
 void aStar_grape::pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* dest)

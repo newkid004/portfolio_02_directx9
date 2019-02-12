@@ -38,9 +38,9 @@ void nodeMesh::update(void)
 
 	D3DXMATRIXA16 mScalsePlane;
 	D3DXMatrixScaling(&mScalsePlane,
-		_planeScale,
+		_planeRadius,
 		1.0f,
-		_planeScale);
+		_planeRadius);
 
 	// È¸Àü
 	D3DXMATRIXA16 mRotation;

@@ -58,6 +58,6 @@ public :
 
 public:
 	quadTree_Frustum(int sizeX, int sizeY);
-	~quadTree_Frustum();
+	~quadTree_Frustum() {};
 };
 

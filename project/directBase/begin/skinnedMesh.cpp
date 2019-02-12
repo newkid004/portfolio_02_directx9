@@ -119,7 +119,7 @@ void skinnedMesh::drawBone(LPD3DXFRAME frame)
 	{
 		drawMeshContainer(frame, meshCont);
 
-		meshCont = meshCont->pNextMeshContainer;
+		meshCont = (LPD3DXMESHCONTAINER)meshCont->pNextMeshContainer;
 	}
 
 	// 형제 본 정보가 있을 경우

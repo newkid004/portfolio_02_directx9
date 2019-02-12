@@ -21,21 +21,22 @@ public :
 	typedef std::list<nodeSet> LIST;
 
 private :
+	int _index;
+
 	LIST _linkedNodeList;
 
 	info _info;
 
 public :
-	float connect(aStar_node* connector, bool reConnect = true);
 	aStar_node* getClosestNode(aStar_node* dest);
 
-
 public :
+	int & getIndex(void) { return _index; }
 	LIST & getLinkedNodeList(void) { return _linkedNodeList; }
 	virtual void getInfo(info* & out) { out = &_info; }
 
 public:
-	aStar_node(D3DXVECTOR3 position);
+	aStar_node(D3DXVECTOR3 & position);
 	~aStar_node();
 };
 

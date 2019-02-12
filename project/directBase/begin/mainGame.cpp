@@ -13,8 +13,8 @@ void mainGame::init(void)
 	direct3dApplication::init();
 	_bindScene = &MN_SCENE->getCurrentScene();
 
-	MN_SCENE->add("scene1", new sceneTest1);
-	MN_SCENE->add("scene2", new sceneTest2);
+	MN_SCENE->add("scene1", new sceneTest1);			// json
+	MN_SCENE->add("scene2", new sceneTest2);			// a* node
 	MN_SCENE->add("sceneMapTool", new sceneMapTool);
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
