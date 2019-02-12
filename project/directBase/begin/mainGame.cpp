@@ -19,7 +19,7 @@ void mainGame::init(void)
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
 
-	MN_SCENE->change("sceneMapTool");
+	MN_SCENE->change("animation");
 	//MN_SCENE->change("sceneCollisionTest");
 }
 

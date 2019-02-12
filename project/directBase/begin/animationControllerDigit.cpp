@@ -48,8 +48,8 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 			acInfo.isNextCancel = check.cancel;
 			acInfo.maxMixTime = 0.2f / max(acInfo.timeScale, acInfo.nextTimeScale);
 			acInfo.leftMixTime = acInfo.maxMixTime;
-
-			
+			acInfo.trackPositionB = 0.0f;
+			acInfo.trackWeightB = 0.0f;
 		}
 	}
 
@@ -72,18 +72,20 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 		acInfo.trackWeightB = 1.0f - acInfo.trackWeightA;
 
 		// 전환중 0번 트랙 고정
-		acInfo.trackPositionB += highDeltaTime;
+		acInfo.trackPositionB = min(m_pNextAnimationSet->GetPeriod() * 0.95f, 
+			acInfo.trackPositionB + highDeltaTime);
 	}
 	else
 	{
-		acInfo.trackPositionA += highDeltaTime;
+		acInfo.trackPositionA = min(m_pAnimationSet->GetPeriod() *0.95f, 
+			acInfo.trackPositionA +highDeltaTime);
 	}
 
 	_trackPersent = acInfo.trackPositionA / m_pAnimationSet->GetPeriod();
 
 	// 검사
 	// 애니메이션이 끝나갈 경우(같은 모션 반복)
-	if (_trackPersent >= 0.95f && acInfo.leftMixTime <= FLT_EPSILON && acInfo.maxMixTime <= FLT_EPSILON)
+	if (_trackPersent >= 0.90f && acInfo.leftMixTime <= FLT_EPSILON && acInfo.maxMixTime <= FLT_EPSILON)
 	{
 		acInfo.maxMixTime = 0.2f / acInfo.timeScale;
 		acInfo.leftMixTime = acInfo.maxMixTime;
@@ -98,6 +100,10 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 		else if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_FEMALE)
 		{
 			returnMotion(32, acInfo.nextAniCount);
+		}
+		else if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_HULK)
+		{
+			returnMotion(39, acInfo.nextAniCount);
 		}
 		else if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_SMOKER)
 		{
@@ -134,10 +140,12 @@ void animationControllerDigit::resetAnimationController(void)
 	m_pNextAnimationSet = nullptr;
 	m_pAnimationController->SetTrackPosition(0, 0.0f);
 	m_pAnimationController->SetTrackAnimationSet(0, NULL);
+	m_pAnimationController->SetTrackWeight(0, 1.0f);
 
 	m_pAnimationController->SetTrackEnable(1, FALSE);
 	m_pAnimationController->SetTrackPosition(1, 0.0f);
 	m_pAnimationController->SetTrackAnimationSet(1, NULL);
+	m_pAnimationController->SetTrackWeight(1, 0.0f);
 	_trackPersent = 0.0f;
 }
 
@@ -179,22 +187,36 @@ void animationControllerDigit::changeAnimationControll(ACInfo& acInfo)
 			// 다음트랙의 모션 조정
 			if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_SURVIVOR)
 			{
+				//acInfo.trackPositionB = 0.35f;
 				controllTrack(20, acInfo.trackPositionB, 0.8f);
-				controllTrack(20, acInfo.trackPositionB, 0.8f);
-				controllTrack(20, acInfo.trackPositionB, 0.8f);
-				controllTrack(20, acInfo.trackPositionB, 0.8f);
+				controllTrack(22, acInfo.trackPositionB, 0.8f);
+				controllTrack(5, acInfo.trackPositionB, 0.99f);
+				controllTrack(6, acInfo.trackPositionB, 0.99f);
 			}
 			else if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_MALE)
 			{
-
+				controllTrack(37, acInfo.trackPositionB, 0.95f);
+				controllTrack(30, acInfo.trackPositionB, 0.95f);
+				controllTrack(31, acInfo.trackPositionB, 0.95f);
 			}
 			else if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_FEMALE)
 			{
-
+				controllTrack(47, acInfo.trackPositionB, 0.8f);
+				controllTrack(34, acInfo.trackPositionB, 0.95f);
+				controllTrack(33, acInfo.trackPositionB, 0.95f);
+				controllTrack(51, acInfo.trackPositionB, 0.95f);
+				controllTrack(37, acInfo.trackPositionB, 0.95f);
+				controllTrack(22, acInfo.trackPositionB, 0.2f);
+				controllTrack(50, acInfo.trackPositionB, 0.35f);
 			}
 			else if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_HULK)
 			{
-
+				controllTrack(5, acInfo.trackPositionB, 0.9f);
+				controllTrack(31, acInfo.trackPositionB, 0.9f);
+				controllTrack(17, acInfo.trackPositionB, 0.2f);
+				controllTrack(44, acInfo.trackPositionB, 0.5f);
+				controllTrack(45, acInfo.trackPositionB, 0.5f);
+				controllTrack(39, acInfo.trackPositionB, 0.8f);
 			}
 
 			m_pAnimationController->SetTrackEnable(1, TRUE);
@@ -239,7 +261,8 @@ void animationControllerDigit::returnMotion(int motionName, int &count)
 
 void animationControllerDigit::stopMotion(int motionName, ACInfo &acInfo)
 {
-	if ((m_pNextAnimationSet->GetName() == m_oAnimationNameList[motionName]))
+	if ((m_pNextAnimationSet->GetName() == m_oAnimationNameList[motionName])||
+		(m_pAnimationSet->GetName() == m_oAnimationNameList[motionName]))
 	{
 		acInfo.leftMixTime = 0.0f;
 	}
@@ -249,7 +272,7 @@ void animationControllerDigit::controllTrack(int motionName, float& nextPosition
 {
 	if ((m_pNextAnimationSet->GetName() == m_oAnimationNameList[motionName]))
 	{
-		nextPosition = customPosition;
+		nextPosition = m_pNextAnimationSet->GetPeriod()*customPosition;
 	}
 }
 

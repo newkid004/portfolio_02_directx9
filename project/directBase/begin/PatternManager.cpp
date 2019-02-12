@@ -661,7 +661,7 @@ void PatternManager::initMaleZombie(void)
 		ATYPE_ZOMBIE_MALE |
 		AWEAPON_RIFLE |
 		MALE_DEAD |
-		MALE_DEAD_RIGHT_FRONT,
+		MALE_DEAD_MIDDLE_FRONT,
 		arr, 1, 1.0f, false);
 
 	//라이플, 피격, 머리/앞
@@ -931,7 +931,7 @@ void PatternManager::initFemaleZombie(void)
 		AWEAPON_PUMPSHOTGUN |
 		FEMALE_DEAD |
 		FEMALE_DEAD_LEFT_FRONT,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 샷건, 피격, 오른쪽/앞
 	arr[0] = 8;
@@ -940,7 +940,7 @@ void PatternManager::initFemaleZombie(void)
 		AWEAPON_PUMPSHOTGUN |
 		FEMALE_DEAD |
 		FEMALE_DEAD_RIGHT_FRONT,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 샷건, 피격, 중간/앞
 	arr[0] = 7;
@@ -967,7 +967,7 @@ void PatternManager::initFemaleZombie(void)
 		AWEAPON_PUMPSHOTGUN |
 		FEMALE_DEAD |
 		FEMALE_DEAD_LEFT_BACK,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 샷건, 피격, 오른쪽/뒤
 	arr[0] = 9;
@@ -1203,7 +1203,7 @@ void PatternManager::initFemaleZombie(void)
 		ATYPE_ZOMBIE_FEMALE |
 		FEMALE_SHOVED |
 		FEMALE_SHOVED_FRONTWARD,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// --, 밀린 동작, 달리는 도중 뒤에서
 	arr[0] = 21;
@@ -1486,7 +1486,7 @@ void PatternManager::initSmokerZombie(void)
 		ATYPE_ZOMBIE_SMOKER |
 		SMOKER_FLINCH |
 		SMOKER_FLINCH_BACK,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 움찔하는, 가슴
 	arr[0] = 12;
@@ -1494,7 +1494,7 @@ void PatternManager::initSmokerZombie(void)
 		ATYPE_ZOMBIE_SMOKER |
 		SMOKER_FLINCH |
 		SMOKER_FLINCH_CHEST,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 움찔하는, 머리
 	arr[0] = 13;
@@ -1502,7 +1502,7 @@ void PatternManager::initSmokerZombie(void)
 		ATYPE_ZOMBIE_SMOKER |
 		SMOKER_FLINCH |
 		SMOKER_FLINCH_HEAD,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 움찔하는, 왼쪽
 	arr[0] = 14;
@@ -1510,7 +1510,7 @@ void PatternManager::initSmokerZombie(void)
 		ATYPE_ZOMBIE_SMOKER |
 		SMOKER_FLINCH |
 		SMOKER_FLINCH_LEFT,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 움찔하는, 왼쪽다리
 	arr[0] = 15;
@@ -1518,7 +1518,7 @@ void PatternManager::initSmokerZombie(void)
 		ATYPE_ZOMBIE_SMOKER |
 		SMOKER_FLINCH |
 		SMOKER_FLINCH_LEFTLEG,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 움찔하는, 오른쪽
 	arr[0] = 16;
@@ -1526,7 +1526,7 @@ void PatternManager::initSmokerZombie(void)
 		ATYPE_ZOMBIE_SMOKER |
 		SMOKER_FLINCH |
 		SMOKER_FLINCH_RIGHT,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 
 	// 움찔하는, 오른쪽다리
 	arr[0] = 17;
@@ -1534,7 +1534,7 @@ void PatternManager::initSmokerZombie(void)
 		ATYPE_ZOMBIE_SMOKER |
 		SMOKER_FLINCH |
 		SMOKER_FLINCH_RIGHTLEG,
-		arr, 1, 1.0f, false);
+		arr, 1, 0.8f, false);
 }
 
 void PatternManager::initMotionAirplane(void)
