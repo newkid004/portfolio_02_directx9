@@ -9,6 +9,7 @@ class aStar_grape : public pathfind_grape
 {
 public :
 	typedef std::vector<aStar_node*> LIST;
+	typedef std::unordered_map<int, int> CONNECTION;
 
 public :
 	struct info_distance
@@ -20,15 +21,20 @@ public :
 
 protected :
 	LIST _vNodeList;
+	CONNECTION _mConnection;
 
 	// test
 	aStar_node* _currentNode = nullptr;
 	aStar_node* _destNode = nullptr;
 
 public :
-	void addNode(aStar_node* input);
-	void deleteNode(aStar_node* input);
-	void deleteNode(int index);
+	virtual void addNode(aStar_node* input);
+
+	virtual bool deleteNode(aStar_node* input);
+	virtual bool deleteNode(int index);
+
+	virtual bool connectNode(aStar_node* n1, aStar_node* n2, bool reConnect = true);
+	virtual bool connectNode(int index1, int index2);
 
 	void pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* dest);
 
@@ -50,4 +56,3 @@ public:
 	aStar_grape() {};
 	~aStar_grape();
 };
-

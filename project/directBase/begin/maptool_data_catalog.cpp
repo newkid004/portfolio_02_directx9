@@ -5,6 +5,7 @@
 
 #include "staticMesh.h"
 #include "skinnedMesh.h"
+#include "nodeMesh.h"
 
 maptool_data_catalog::OBJ::PROP::~PROP()
 {
@@ -31,6 +32,14 @@ void maptool_data_catalog::create(OBJ::CHAR ** out, void * param)
 {
 	OBJ::CHAR* result = new OBJ::CHAR();
 	result->_object = new skinnedMesh(*(skinnedMesh::mParam*)param);
+
+	*out = result;
+}
+
+void maptool_data_catalog::create(OBJ::NODE ** out, void * param)
+{
+	OBJ::NODE* result = new OBJ::NODE();
+	result->_object = new nodeMesh(*(nodeMesh::mParam*)param);
 
 	*out = result;
 }
@@ -63,6 +72,15 @@ void maptool_data_catalog::duplicate(skinnedMesh ** outObject, OBJ::CHAR * targe
 	*outObject = result;
 }
 
+void maptool_data_catalog::duplicate(nodeMesh ** outObject, OBJ::NODE * targetObject)
+{
+	nodeMesh* obj = (nodeMesh*)targetObject->_object;
+	nodeMesh* result = new nodeMesh(obj->getMakeParam());
+
+	applyObject(result, obj);
+	*outObject = result;
+}
+
 void maptool_data_catalog::applyObject(renderObject * target, renderObject * own)
 {
 	target->setScale(own->getScale());
@@ -72,4 +90,12 @@ void maptool_data_catalog::applyObject(renderObject * target, renderObject * own
 	target->setDirectionRight(own->getDirectRight());
 
 	target->setMatrixOffset(own->getOffsetMatrix());
+}
+
+void maptool_data_catalog::applyObject(nodeMesh * target, nodeMesh * own)
+{
+	applyObject((renderObject*)target, (renderObject*)own);
+
+	target->setNodeColor(own->getNodeColor());
+	target->setPlaneRadius(own->getPlaneRadius());
 }

@@ -5,7 +5,7 @@
 class maptool_brush_prop : public maptool_brush
 {
 protected :
-	virtual void putObject(void);
+	virtual void putObject(void) override;
 
 public:
 	maptool_brush_prop(sceneMapTool* viewData);

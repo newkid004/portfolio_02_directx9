@@ -159,6 +159,8 @@
     <ClInclude Include="allocateHierarchy.h" />
     <ClInclude Include="animationController.h" />
     <ClInclude Include="aStar_grape.h" />
+    <ClInclude Include="aStar_grape_bind.h" />
+    <ClInclude Include="aStar_grape_bind.hpp" />
     <ClInclude Include="aStar_node.h" />
     <ClInclude Include="aStar_path.h" />
     <ClInclude Include="aStar_runner.h" />

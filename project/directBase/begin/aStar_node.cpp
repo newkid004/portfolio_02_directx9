@@ -2,7 +2,7 @@
 #include "aStar_grape.h"
 #include "aStar_runner.h"
 
-aStar_node::aStar_node(D3DXVECTOR3 position)
+aStar_node::aStar_node(D3DXVECTOR3 & position)
 {
 	_info.pos = position;
 }
@@ -24,6 +24,7 @@ aStar_node::~aStar_node()
 	}
 }
 
+/*
 float aStar_node::connect(aStar_node * connector, bool reConnect)
 {
 	// 중복 시, 거리 재계산
@@ -42,6 +43,7 @@ float aStar_node::connect(aStar_node * connector, bool reConnect)
 
 	return distance;
 }
+*/
 
 aStar_node * aStar_node::getClosestNode(aStar_node * dest)
 {

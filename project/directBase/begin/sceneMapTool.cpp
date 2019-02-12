@@ -12,8 +12,8 @@
 #include "maptool_render.h"
 #include "maptool_io.h"
 
-#include "maptool_brush.h"
 #include "maptool_brush_prop.h"
+#include "maptool_brush_trigger.h"
 
 #include "mapObject.h"
 
@@ -49,6 +49,7 @@ void sceneMapTool::init(void)
 	_io		= new maptool_io(_field, &_window->getSet().mv_file->getIndex());
 
 	_mBrush.insert(decltype(_mBrush)::value_type("prop", new maptool_brush_prop(this)));
+	_mBrush.insert(decltype(_mBrush)::value_type("trigger", new maptool_brush_trigger(this)));
 
 	_currentBrush = _mBrush.find("prop")->second;
 
@@ -69,20 +70,12 @@ void sceneMapTool::update(void)
 
 void sceneMapTool::draw(void)
 {
-	// selection outline
-	baseObject*& selection = _field->getSet().selectionObject;
-	if (selection)
-	{
-		if (staticMesh* obj = dynamic_cast<staticMesh*>(selection))
-		{
-			if (!obj->isCull())
-				_render->drawOutLine(obj);
-		}
-	}
+	sceneBase::draw();
+
+	drawSelection();
 
 	_field->draw();
 
-	sceneBase::draw();
 }
 
 void sceneMapTool::drawUI(void)
@@ -102,20 +95,44 @@ void sceneMapTool::initMap(void)
 
 void sceneMapTool::updateControl_brush(void)
 {
-	int focusWindow = 0;
-	windowCtlogMaptool** viewWindow = ((windowCtlogMaptool**)&_window->getSet()) + 3;
-
-	for (int i = 0; i < 4; ++i)
+	// selection
+	if (auto viewData = _field->getSet().selectionData)
 	{
-		if (viewWindow + i == &_window->getSet().focusedWindow)
-			focusWindow |= 1 << i;
+		typedef maptool_data_io::baseType TYPE;
+
+		if (viewData->_baseType & TYPE::NODE)
+			_currentBrush = _mBrush.find("trigger")->second;
+
+		else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
+			_currentBrush = _mBrush.find("prop")->second;
+	}
+	// window
+	else if (_window->getSet().focusedWindow && 0 <= _window->getSet().focusedWindow->getIndex())
+	{
+		if (auto viewData = _window->getSet().focusedWindow->getItem())
+		{
+			typedef maptool_data_catalog::baseType TYPE;
+
+			if (viewData->_baseType & TYPE::NODE)
+				_currentBrush = _mBrush.find("trigger")->second;
+
+			else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
+				_currentBrush = _mBrush.find("prop")->second;
+		}
 	}
 
-	if (focusWindow & 0b0100)
-		_currentBrush = _mBrush.find("trigger")->second;
-	else if (focusWindow & 0b1011)
-		_currentBrush  = _mBrush.find("prop")->second;
-
 	_currentBrush->update();
+}
 
+void sceneMapTool::drawSelection(void)
+{
+	baseObject*& selection = _field->getSet().selectionObject;
+	if (selection)
+	{
+		if (staticMesh* obj = dynamic_cast<staticMesh*>(selection))
+		{
+			if (!obj->isCull())
+				_render->drawOutLine(obj);
+		}
+	}
 }

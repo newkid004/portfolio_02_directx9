@@ -86,26 +86,18 @@ inline tValue gMng::find(tKey & key, std::unordered_set<tKey, tValue>& container
 template<typename tValue>
 inline tValue gMng::find(tValue & key, std::list<tValue>& container, PLACE place)
 {
-	list<tValue>::iterator iter;
-	switch (place)
-	{
-	case gMng::PLACE::FRONT: iter = std::find(container.begin(), container.end(), key); break;
-	case gMng::PLACE::BACK: iter = std::find_end(container.begin(), container.end(), key); break;
-	}
+	list<tValue>::iterator iter = std::find(container.begin(), container.end(), key);
+
 	if (iter == container.end()) return NULL;
 
 	return *iter;
 }
 
 template<typename tValue>
-inline tValue gMng::find(tValue & key, std::vector<tValue>& container, PLACE place)
+inline tValue gMng::find(tValue & key, std::vector<tValue>& container)
 {
-	vector<tValue>::iterator iter;
-	switch (place)
-	{
-	case gMng::PLACE::FRONT: iter = std::find(container.begin(), container.end(), key); break;
-	case gMng::PLACE::BACK: iter = std::find_end(container.begin(), container.end(), key); break;
-	}
+	vector<tValue>::iterator iter = std::find(container.begin(), container.end(), key);
+
 	if (iter == container.end()) return NULL;
 
 	return *iter;

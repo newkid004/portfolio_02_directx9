@@ -23,7 +23,7 @@ public :
 
 		windowCtlogMaptool* mv_prop = nullptr;
 		windowCtlogMaptool* mv_bump = nullptr;
-		windowCtlogMaptool* mv_event = nullptr;
+		windowCtlogMaptool* mv_node = nullptr;
 		windowCtlogMaptool* mv_file = nullptr;
 		windowMoveable* mv_option = nullptr;
 
@@ -45,13 +45,13 @@ private :
 
 	windowCtlogMaptool * create_mvProp(void);
 	windowCtlogMaptool * create_mvBump(void);
-	windowCtlogMaptool* create_mvEvent(void);
+	windowCtlogMaptool* create_mvNode(void);
 	windowCtlogMaptool* create_mvFile(void);
 	windowMoveable* create_mvOption(void);
 
 	void createContent_prop(std::vector<maptool_data_catalog::OBJ::PROP*> & vContent);
 	void createContent_bump(std::vector<maptool_data_catalog::OBJ::BUMP*> & vContent);
-	void createContent_event(std::vector<maptool_data_catalog::OBJ::EVENT*> & vContent);
+	void createContent_node(std::vector<maptool_data_catalog::OBJ::NODE*> & vContent);
 	void createContent_file(std::vector<maptool_data_catalog::OBJ::FILE*> & vContent);
 	void createContent_option(std::vector<maptool_data_catalog::OBJ::PROP*> & vContent);
 
