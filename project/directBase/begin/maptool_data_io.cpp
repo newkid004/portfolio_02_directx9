@@ -80,7 +80,7 @@ void maptool_data_io::OBJ::NODE::write(json & in_Json)
 	in_Json["radius"] = _radius;
 }
 
-void maptool_data_io::OBJ::GRAPE::write(json & in_Json)
+void maptool_data_io::OBJ::PATH::write(json & in_Json)
 {
 	OBJ::BASE::write(in_Json);
 
@@ -187,7 +187,7 @@ bool maptool_data_io::parse(OBJ::NODE * own, json & j_in)
 	return true;
 }
 
-bool maptool_data_io::parse(OBJ::GRAPE * own, json & j_in)
+bool maptool_data_io::parse(OBJ::PATH * own, json & j_in)
 {
 	if (!parse((OBJ::BASE*)own, j_in))
 		return false;
@@ -276,7 +276,7 @@ void maptool_data_io::apply(OBJ::NODE * in, nodeMesh * obj)
 	in->_radius = obj->getPlaneRadius();
 }
 
-void maptool_data_io::apply(OBJ::GRAPE * in, grape * obj)
+void maptool_data_io::apply(OBJ::PATH * in, grape * obj)
 {
 	in->_node.resize(obj->getBindList().size());
 	for (int i = 0 ; i < in->_node.size(); ++i)
@@ -363,7 +363,7 @@ void maptool_data_io::apply(nodeMesh * in, OBJ::NODE * data)
 	in->setPlaneRadius(data->_radius);
 }
 
-void maptool_data_io::apply(grape * in, OBJ::GRAPE * data)
+void maptool_data_io::apply(grape * in, OBJ::PATH * data)
 {
 	for (int i = 0; i < data->_node.size(); ++i)
 	{
@@ -429,9 +429,9 @@ void maptool_data_io::create(OBJ::NODE ** out, nodeMesh * obj)
 	*out = result;
 }
 
-void maptool_data_io::create(OBJ::GRAPE ** out, grape * obj)
+void maptool_data_io::create(OBJ::PATH ** out, grape * obj)
 {
-	OBJ::GRAPE* result = new OBJ::GRAPE();
+	OBJ::PATH* result = new OBJ::PATH();
 	apply(result, obj);
 	*out = result;
 }
@@ -499,7 +499,7 @@ void maptool_data_io::create(nodeMesh ** out, OBJ::NODE * data)
 	*out = result;
 }
 
-void maptool_data_io::create(grape ** out, OBJ::GRAPE * data)
+void maptool_data_io::create(grape ** out, OBJ::PATH * data)
 {
 	grape* result = new grape();
 

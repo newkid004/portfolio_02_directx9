@@ -2,9 +2,11 @@
 
 #include "managerList.h"
 
+#include "sceneMapTool.h"
+#include "sceneInGame.h"
+
 #include "sceneTest1.h"
 #include "sceneTest2.h"
-#include "sceneMapTool.h"
 #include "sceneCollisionTest.h"
 #include "AnimationTester.h"
 
@@ -13,9 +15,13 @@ void mainGame::init(void)
 	direct3dApplication::init();
 	_bindScene = &MN_SCENE->getCurrentScene();
 
+	// current
+	MN_SCENE->add("sceneMapTool", new sceneMapTool());
+	MN_SCENE->add("sceneInGame", new sceneInGame());
+
+	// test
 	MN_SCENE->add("scene1", new sceneTest1);			// json
 	MN_SCENE->add("scene2", new sceneTest2);			// a* node
-	MN_SCENE->add("sceneMapTool", new sceneMapTool);
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
 

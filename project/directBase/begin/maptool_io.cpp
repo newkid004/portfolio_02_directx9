@@ -1,5 +1,6 @@
 #include "maptool_io.h"
 
+#include "maptool_data_io.h"
 #include "maptool_field.h"
 
 #include "gJson.h"
@@ -23,7 +24,7 @@ maptool_io::maptool_io(maptool_field * bindData, int* bindMapIndex) :
 	_bindMapIndex(bindMapIndex)
 {
 	insertJson("object");
-	insertJson("event");
+	insertJson("trigger");
 	insertJson("field");
 	insertJson("grape");
 }
@@ -94,7 +95,7 @@ void maptool_io::buildGrape(void)
 
 	if (IO_DATA::grape* grape = _bindData->getSet().pathGrape)
 	{
-		IO_DATA::OBJ::GRAPE data;
+		IO_DATA::OBJ::PATH data;
 		IO_DATA::apply(&data, grape);
 		data.write(*j);
 	}
@@ -205,7 +206,7 @@ void maptool_io::spreadGrape(void)
 	SAFE_DELETE(grape);
 	SAFE_DELETE(_bindData->getSet().pathData);
 
-	IO_DATA::OBJ::GRAPE data;
+	IO_DATA::OBJ::PATH data;
 	IO_DATA::parse(&data, *j);
 	IO_DATA::create(&grape, &data);
 
