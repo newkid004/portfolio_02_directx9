@@ -2,10 +2,13 @@
 
 #include "managerList.h"
 #include "gFunc.h"
+#include "gMng.h"
 #include "pickRay.h"
 
 #include "sceneBase.h"
 #include "camera.h"
+#include "frustum.h"
+#include "heap.h"
 
 #include "terrain.h"
 #include "mapObject.h"
@@ -16,6 +19,8 @@
 #include "nodeMesh.h"
 
 #include "aStar_grape_bind.h"
+#include "aStar_path.h"
+#include "aStar_node.h"
 
 maptool_field::maptool_field(mapObject* inTerrain)
 {
@@ -44,6 +49,7 @@ maptool_field::~maptool_field()
 		SAFE_DELETE(i);
 
 	SAFE_DELETE(_fieldSet.pathGrape);
+	SAFE_DELETE(_fieldSet.pathData);
 }
 
 void maptool_field::update(void)
@@ -63,14 +69,53 @@ void maptool_field::draw(void)
 			rObject->draw();
 	}
 	if (_fieldSet.field) _fieldSet.field->draw();
+
+	drawPathGrape();
 }
 
 void maptool_field::updateBindGrape(void)
 {
-	for (int i = 0; i < _fieldSet.pathGrape->getBindList().size(); ++i)
+	for (auto i : _fieldSet.pathGrape->getBindList())
 	{
-
+		auto viewNode = i->getBindNode();
+		i->setNodeColor(D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+		
+		if (_fieldSet.pathData)
+		{
+			for (auto path : _fieldSet.pathData->unpack())
+			{
+				if (viewNode == path->getMember().placedNode)
+				{
+					i->setNodeColor(D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f));
+					break;
+				}
+			}
+		}
 	}
+}
+
+void maptool_field::drawPathGrape(void)
+{
+	_fieldSet.pathGrape->runGrape([&](auto from, auto to)->void {
+
+		aStar_node::info *infoA, *infoB;
+		from->getInfo(infoA);
+		to->getInfo(infoB);
+
+		if (!(GET_FRUSTUM()->isCull(infoA->pos) && GET_FRUSTUM()->isCull(infoB->pos)))
+		{
+			static auto effect = MN_SRC->getEffect("resource/effect/simpleLine.fx");
+			D3DXVECTOR3 v[2] = { infoA->pos, infoB->pos };
+
+			effect->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
+			effect->SetVector("_diffuse", &D3DXVECTOR4(0.0f, 1.0f, 0.0f, 1.0f));
+
+			gFunc::runEffectLoop(effect, "techMain", [&](int passNum)->void {
+				MN_DEV->DrawPrimitiveUP(D3DPT_LINELIST, 1, v, sizeof(D3DXVECTOR3));
+			});
+		}
+
+	});
 }
 
 void maptool_field::getPickObject(baseObject** out_object, maptool_data_io::OBJ::BASE** out_data)

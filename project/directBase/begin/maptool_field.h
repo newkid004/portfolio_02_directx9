@@ -13,6 +13,7 @@ class nodeMesh;
 
 template<typename T>
 class aStar_grape_bind;
+class aStar_path;
 
 class maptool_field : public iUpdateble
 {
@@ -24,15 +25,21 @@ public :
 		using DATA = maptool_data_io::OBJ::BASE*;
 
 	public :
-		std::vector<OBJ> objList;
-		std::vector<DATA> dataList;
-		aStar_grape_bind<nodeMesh>* pathGrape;
+		std::vector<OBJ>				objList;
+		std::vector<DATA>				dataList;
 
-		mapObject* field = nullptr;
-		quadTree_Frustum* qTree = nullptr;
+		aStar_grape_bind<nodeMesh>*		pathGrape = nullptr;
+		aStar_path*						pathData = nullptr;
 
-		OBJ selectionObject = nullptr;
-		DATA selectionData = nullptr;
+		mapObject*						field = nullptr;
+		quadTree_Frustum*				qTree = nullptr;
+
+		std::vector<OBJ>				selectionObject;
+		std::vector<DATA>				selectionData;
+
+	public :
+		OBJ getLastObject(void) { if (!selectionObject.empty()) return selectionObject.back(); return nullptr; }
+		DATA getLastData(void) { if (!selectionData.empty()) return selectionData.back(); return nullptr; }
 	};
 
 private :
@@ -44,6 +51,8 @@ public :
 
 protected :
 	void updateBindGrape(void);
+
+	void drawPathGrape(void);
 
 public :
 	void getPickObject(baseObject** out_object, maptool_data_io::OBJ::BASE** out_data);	// update보다 먼저 확인 필요

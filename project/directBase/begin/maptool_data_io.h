@@ -103,7 +103,6 @@ public :
 
 		struct NODE : public PROP
 		{
-			std::array<float, 4> _color;
 			float _radius;
 
 			virtual void write(json & in_Json) override;
@@ -114,7 +113,7 @@ public :
 		struct GRAPE : public BASE
 		{
 			std::vector<NODE> _node;
-			std::unordered_map<int, int> _connection;
+			std::unordered_map<int, std::vector<int>> _connection;
 
 			virtual void write(json & in_Json) override;
 
@@ -168,7 +167,7 @@ public :	// ----- creater ----- //
 	static void create(staticMesh** out,	OBJ::BUMP* data);
 	static void create(mapObject** out,		OBJ::FIELD* data);
 	static void create(nodeMesh** out,		OBJ::NODE* data);
-	static void create(grape** out,			OBJ::GRAPE* obj);
+	static void create(grape** out,			OBJ::GRAPE* data);
 
 private:
 	maptool_data_io() {};

@@ -6,6 +6,8 @@
 #include "sceneBase.h"
 #include "camera.h"
 
+#include "aStar_node.h"
+
 nodeMesh::nodeMesh(const mParam & param) :
 	staticMesh(param)
 {
@@ -78,6 +80,12 @@ void nodeMesh::drawDo(void)
 	});
 }
 
+void nodeMesh::setBindNode(aStar_node * input)
+{
+	_bindNode = input; 
+	input->getBindData() = this;
+}
+
 LPD3DXMESH nodeMesh::createPlane(void)
 {
 	LPD3DXMESH result = nullptr;
@@ -93,10 +101,10 @@ LPD3DXMESH nodeMesh::createPlane(void)
 	vertex* v = NULL;
 	if (SUCCEEDED(result->LockVertexBuffer(0, (void**)&v)))
 	{
-		v[0].pos = D3DXVECTOR3(-0.5, 0, -0.5);
-		v[1].pos = D3DXVECTOR3(-0.5, 0,  0.5);
-		v[2].pos = D3DXVECTOR3( 0.5, 0,  0.5);
-		v[3].pos = D3DXVECTOR3( 0.5, 0, -0.5);
+		v[0].pos = D3DXVECTOR3(-1, 0, -1);
+		v[1].pos = D3DXVECTOR3(-1, 0,  1);
+		v[2].pos = D3DXVECTOR3( 1, 0,  1);
+		v[3].pos = D3DXVECTOR3( 1, 0, -1);
 
 		v[0].uv = D3DXVECTOR2(0, 1);
 		v[1].uv = D3DXVECTOR2(0, 0);

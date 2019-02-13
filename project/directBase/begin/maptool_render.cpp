@@ -154,3 +154,66 @@ void maptool_render::drawOutLine(staticMesh * obj)
 void maptool_render::drawOutLine(skinnedMesh * obj)
 {
 }
+
+void maptool_render::drawOutList(std::vector<baseObject*> & objList)
+{
+	renderSet & rsOrigin = _vRenderTarget[0];
+	renderSet & rsTarget = _vRenderTarget[1];
+
+	gFunc::runRenderTarget(rsOrigin.renderTarget, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, rsOrigin.depthStensil, [](void)->void {});
+
+	for (auto viewObject : objList)
+	{
+		staticMesh* obj = dynamic_cast<staticMesh*>(viewObject);
+		if (obj == nullptr) 
+			continue;
+
+		auto meshSet = obj->getMeshSet();
+
+		_outline->SetMatrix("_mWorld", &obj->getMatrixFinal());
+		_outline->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
+		_outline->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
+		_outline->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
+
+		// ±¤¿ø
+		D3DXMATRIXA16 mRotation = GET_CAMERA()->getMatrixRotate();
+		D3DXVECTOR3 offset = GET_CAMERA()->getOffset();
+		D3DXVec3TransformCoord(&offset, &offset, &mRotation);
+
+		D3DXVECTOR4 viewPosition(GET_CAMERA()->getPosition() - offset, 1.0f);
+		D3DXVECTOR4 lightDirection(GET_LIGHT()->getDirectForward(), 0.0f);
+
+		_outline->SetVector("_viewPosition", &viewPosition);
+		_outline->SetVector("_lightDirection", &lightDirection);
+
+		// ÅØ½ºÃÄ
+		_outline->SetTexture("_renderOrigin", rsOrigin.renderTarget);
+		_outline->SetTexture("_renderOutline", rsTarget.renderTarget);
+
+		_outline->SetFloat("_winSizeX", (float)GET_WINDOW_SIZE().cx);
+		_outline->SetFloat("_winSizeY", (float)GET_WINDOW_SIZE().cy);
+
+		gFunc::runRenderTarget(rsOrigin.renderTarget, NULL, rsOrigin.depthStensil, [&](void)->void {
+			for (int i = 0; i < meshSet->numMaterial; ++i)
+			{
+				_outline->SetTexture("_textureDiffuse", meshSet->vTextureList[i]);
+
+				gFunc::runEffectLoop(_outline, "techOrigin", [&](int passNum)->void {
+					meshSet->mesh->DrawSubset(i);
+				});
+			}
+		}, true);
+	}
+
+	gFunc::runRenderTarget(rsTarget.renderTarget, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, rsTarget.depthStensil, [&](void)->void {
+		gFunc::runEffectLoop(_outline, "techOutline", [&](int passNum)->void {
+			_screen->DrawSubset(0);
+		});
+	}, true);
+
+	gFunc::runRenderTarget(nullptr, NULL, nullptr, [&](void)->void {
+		gFunc::runEffectLoop(_outline, "techBlur", [&](int passNum)->void {
+			_screen->DrawSubset(0);
+		});
+	}, true);
+}

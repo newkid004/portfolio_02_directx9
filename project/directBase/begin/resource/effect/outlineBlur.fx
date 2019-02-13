@@ -165,7 +165,7 @@ float4 psBlur(output iput) : COLOR0
 		color += tex2D(_samplerRenderOutline, iput.uv + offset) * filter[i].w;
 	}
 
-	return color;
+	return color * float4(0.5f, 0.5f, 1.0f, 1.0f);
 }
 
 technique techOrigin

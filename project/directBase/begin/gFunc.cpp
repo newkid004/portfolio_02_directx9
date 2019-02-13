@@ -54,19 +54,30 @@ void gFunc::runRenderTarget(LPDIRECT3DTEXTURE9 renderTarget, int clearOption, LP
 			MN_DEV->Clear(0, NULL, clearOption, backColor, 1, 0);
 	}
 
-	// 알파블렌딩 확인
+	// 알파 사용 확인
 	if (isAlpha)
 	{
+		// 알파 블렌딩
 		MN_DEV->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 		MN_DEV->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 		MN_DEV->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+		// 알파 테스팅
+		MN_DEV->SetRenderState(D3DRS_ALPHATESTENABLE, true);
+		MN_DEV->SetRenderState(D3DRS_ALPHAREF, 0x01);
+		MN_DEV->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
+
 	}
 
 	// 구문 실행
 	callback();
 
+	// 알파 사용 복구
 	if (isAlpha)
+	{
 		MN_DEV->SetRenderState(D3DRS_ALPHABLENDENABLE, false);
+		MN_DEV->SetRenderState(D3DRS_ALPHATESTENABLE, false);
+	}
 
 	// 원본 복구
 	MN_DEV->SetRenderTarget(0, originRenderTarget);
