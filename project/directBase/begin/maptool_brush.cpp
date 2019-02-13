@@ -1,12 +1,18 @@
 #include "maptool_brush.h"
 
+#include "gMng.h"
+
 #include "sceneMapTool.h"
 
 #include "maptool_window.h"
 #include "maptool_io.h"
+#include "maptool_field.h"
 
 #include "windowCtlogMaptool.h"
-#include "maptool_field.h"
+
+#include "nodeMesh.h"
+
+#include "aStar_path.h"
 
 POINT maptool_brush::_mousePrev = { 0, };
 
@@ -52,8 +58,7 @@ void maptool_brush::updateMouse(void)
 		if (MN_KEY->mousePress())
 			_mousePrev = MN_KEY->getMousePos();
 
-		renderObject* pickObject = nullptr;
-		baseObject* & selection = _set.data_field->getSet().selectionObject;
+		auto & selectionList = _set.data_field->getSet().selectionObject;
 
 		// pick check
 		if (MN_KEY->mousePress())
@@ -62,10 +67,13 @@ void maptool_brush::updateMouse(void)
 		// release selection
 		if (MN_KEY->mousePress(EMouseInput::RIGHT) &&
 			_set.data_window->getSet().focusedWindow != _set.data_window->getSet().mv_file)
+		{
+			SAFE_DELETE(_set.data_field->getSet().pathData);
 			updateReleaseSelection();
+		}
 
 		// object control
-		if (selection != nullptr)
+		if (!selectionList.empty())
 		{
 			if (MN_KEY->mouseDown())
 			{
@@ -93,62 +101,84 @@ void maptool_brush::updateMouse(void)
 
 void maptool_brush::updateReleaseSelection(void)
 {
-	_set.data_field->getSet().selectionObject = nullptr;
-	_set.data_field->getSet().selectionData = nullptr;
+	_set.data_field->getSet().selectionObject.clear();
+	_set.data_field->getSet().selectionData.clear();
 }
 
 void maptool_brush::updatePickObject(void)
 {
 	auto data_field = _set.data_field;
 
-	auto & pickData = data_field->getSet().selectionData;
-	baseObject* & pickObject = data_field->getSet().selectionObject;
+	maptool_field::set::OBJ pickObject = nullptr;
+	maptool_field::set::DATA pickData = nullptr;
 
 	data_field->getPickObject(&pickObject, &pickData);
+
+	if (pickObject && !gMng::find(pickObject, data_field->getSet().selectionObject))
+	{
+		data_field->getSet().selectionObject.push_back(pickObject);
+		data_field->getSet().selectionData.push_back(pickData);
+
+		MN_KEY->resetMousePressDb();
+	}
 }
 
 void maptool_brush::updateObjectRotate(POINT & mouseMove)
 {
-	baseObject* & selection = _set.data_field->getSet().selectionObject;
+	auto & selectionList = _set.data_field->getSet().selectionObject;
 
-	if (!MN_KEY->keyDown(DIK_SPACE))
-		selection->rotateY(-mouseMove.x / 8.0f, false);
-	else
+	for (auto selection : selectionList)
 	{
-		selection->rotateCameraX(-mouseMove.y / 8.0f);
-		selection->rotateCameraY(-mouseMove.x / 8.0f);
+		if (!MN_KEY->keyDown(DIK_SPACE))
+			selection->rotateY(-mouseMove.x / 8.0f, false);
+		else
+		{
+			selection->rotateCameraX(-mouseMove.y / 8.0f);
+			selection->rotateCameraY(-mouseMove.x / 8.0f);
+		}
 	}
 }
 
 void maptool_brush::updateObjectScale(void)
 {
-	baseObject* & selection = _set.data_field->getSet().selectionObject;
+	auto & selectionList = _set.data_field->getSet().selectionObject;
 
-	D3DXVECTOR3 scale = selection->getScale();
+	for (auto selection : selectionList)
+	{
+		auto selectObject = dynamic_cast<nodeMesh*>(selection);
+		if (selectObject == nullptr)	// 선택개체가 nodeMesh가 아닐경우만
+		{
+			D3DXVECTOR3 scale = selection->getScale();
 
-	float ratio = 1.0f;
-	if (MN_KEY->keyDown(DIK_LCONTROL))
-		ratio *= 0.33f;
-	else if (MN_KEY->keyDown(DIK_LSHIFT))
-		ratio *= 3.0f;
+			float ratio = 1.0f;
+			if (MN_KEY->keyDown(DIK_LCONTROL))
+				ratio *= 0.33f;
+			else if (MN_KEY->keyDown(DIK_LSHIFT))
+				ratio *= 3.0f;
 
-	if (MN_KEY->wheelUp())
-		scale *= std::powf(1.1f, ratio);
-	else if (MN_KEY->wheelDown())
-		scale *= std::powf(0.9f, ratio);
+			if (MN_KEY->wheelUp())
+				scale *= std::powf(1.1f, ratio);
+			else if (MN_KEY->wheelDown())
+				scale *= std::powf(0.9f, ratio);
 
-	selection->setScale(scale);
+			selection->setScale(scale);
+		}
+	}
+
 }
 
 void maptool_brush::updateObjectMove(POINT & mouseMove)
 {
-	baseObject* & selection = _set.data_field->getSet().selectionObject;
+	auto & selectionList = _set.data_field->getSet().selectionObject;
 
 	if (MN_KEY->mousePressDb())
 	{
 		D3DXVECTOR3 pickPos;
 		if (pick::chkPick(&pickPos, NULL, &terrain::getDefPlane()))
-			selection->setPosition(pickPos);
+		{
+			for (auto selection : selectionList)
+				selection->setPosition(pickPos);
+		}
 	}
 	else
 	{
@@ -157,14 +187,20 @@ void maptool_brush::updateObjectMove(POINT & mouseMove)
 		// x, y
 		if (MN_KEY->keyDown(DIK_SPACE))
 		{
-			selection->moveCameraX(mouseMove.x / dev);
-			selection->moveCameraY(-mouseMove.y / dev);
+			for (auto selection : selectionList)
+			{
+				selection->moveCameraX(mouseMove.x / dev);
+				selection->moveCameraY(-mouseMove.y / dev);
+			}
 		}
 		// x, z
 		else
 		{
-			selection->moveCameraX(mouseMove.x / dev, true);
-			selection->moveCameraZ(-mouseMove.y / dev, true);
+			for (auto selection : selectionList)
+			{
+				selection->moveCameraX(mouseMove.x / dev, true);
+				selection->moveCameraZ(-mouseMove.y / dev, true);
+			}
 		}
 	}
 }
@@ -179,7 +215,7 @@ void maptool_brush::updateKey(void)
 	updateIO();
 
 	// object delete
-	if (MN_KEY->keyPress(DIK_DELETE) && _set.data_field->getSet().selectionObject != nullptr)
+	if (MN_KEY->keyPress(DIK_DELETE) && !_set.data_field->getSet().selectionObject.empty())
 		updateObjectDelete();
 }
 
@@ -205,24 +241,31 @@ void maptool_brush::updateIO(void)
 
 void maptool_brush::updateObjectDelete(void)
 {
-	auto & selection = _set.data_field->getSet().selectionObject;
+	auto & selectionList = _set.data_field->getSet().selectionObject;
 
 	auto & vObjList = _set.data_field->getSet().objList;
 	auto & vDataList = _set.data_field->getSet().dataList;
 
-	for (int i = 0; i < vObjList.size(); ++i)
+	for (int i = selectionList.size() - 1; 0 <= i; --i)
 	{
-		if (vObjList[i] == selection)
+		auto & selection = selectionList[i];
+
+		for (int j = 0; j < vObjList.size(); ++j)
 		{
-			SAFE_DELETE(vObjList[i]);
-			SAFE_DELETE(vDataList[i]);
+			if (vObjList[j] == selection)
+			{
+				SAFE_DELETE(vObjList[j]);
+				SAFE_DELETE(vDataList[j]);
 
-			vObjList.erase(vObjList.begin() + i);
-			vDataList.erase(vDataList.begin() + i);
+				vObjList.erase(vObjList.begin() + j);
+				vDataList.erase(vDataList.begin() + j);
 
-			selection = nullptr;
+				selectionList.erase(selectionList.begin() + i);
 
-			break;
+				break;
+			}
 		}
 	}
+
+	SAFE_DELETE(_set.data_field->getSet().pathData);
 }

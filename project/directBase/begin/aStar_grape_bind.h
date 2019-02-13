@@ -7,13 +7,14 @@ class aStar_grape_bind : public aStar_grape
 {
 public :
 	using BIND = T*;
-	using BIND_LIST = std::vector<BIND*>;
+	using BIND_LIST = std::vector<BIND>;
+	using BIND_OUT = BIND*;
 
 protected :
 	BIND_LIST _vBindList;
 
 public:
-	virtual void addNode(aStar_node* input, BIND** out_bind = nullptr);
+	virtual void addNode(aStar_node* input, BIND_OUT & out_bind = nullptr);
 	virtual bool deleteNode(aStar_node* input) override;
 	virtual bool deleteNode(int index) override;
 

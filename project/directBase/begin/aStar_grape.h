@@ -9,7 +9,7 @@ class aStar_grape : public pathfind_grape
 {
 public :
 	typedef std::vector<aStar_node*> LIST;
-	typedef std::unordered_map<int, int> CONNECTION;
+	typedef std::unordered_map<int, std::vector<int>> CONNECTION;
 
 public :
 	struct info_distance
@@ -39,6 +39,9 @@ public :
 	void pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* dest);
 
 public :
+	void runGrape(const std::function<void(aStar_node* from, aStar_node* to)> & callback);
+
+public :
 	static float calDistance(aStar_node* n1, aStar_node* n2);
 	static float calDistance(aStar_node* n1, D3DXVECTOR3 & pos);
 
@@ -47,6 +50,7 @@ public :
 
 public :
 	constexpr LIST & getNodeList(void) { return _vNodeList; }
+	constexpr CONNECTION & getNodeConnection(void) { return _mConnection; }
 
 	// test
 	aStar_node* getCurrentNode(void) { return _currentNode; }

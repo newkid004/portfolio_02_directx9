@@ -58,6 +58,9 @@ public :
 	LONG wheel(void);
 
 public :
+	void resetMousePressDb(void);
+
+public :
 	constexpr pick::ray & getPickRay(void) { return _pickRay; }
 	constexpr POINT & getMousePos(void) { return _mousePos; }
 	float getDbClickTurm(void) { return _mouseDbClickTurm; }

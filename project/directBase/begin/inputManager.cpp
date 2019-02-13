@@ -149,6 +149,11 @@ LONG inputManager::wheel(void)
 	return _mouseState.lZ;
 }
 
+void inputManager::resetMousePressDb(void)
+{
+	_mouseDbClickTime = _mouseClickTime + _mouseDbClickTurm;
+}
+
 void inputManager::setMousePos(POINT input)
 {
 	ClientToScreen(GET_WINDOW_MANAGER()->getHWnd(), &input);

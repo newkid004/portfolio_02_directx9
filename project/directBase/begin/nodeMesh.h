@@ -35,7 +35,7 @@ public :
 
 	void setNodeColor(const D3DXVECTOR4 & input) { _nodeColor = input; }
 	void setPlaneRadius(float input) { _planeRadius = input; }
-	void setBindNode(aStar_node* input) { _bindNode = input; }
+	void setBindNode(aStar_node* input);
 
 private :
 	LPD3DXMESH createPlane(void);

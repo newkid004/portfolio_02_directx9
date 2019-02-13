@@ -2,6 +2,7 @@
 #include "kGlobalDefine.h"
 #include "singletonBase.h"
 
+class baseObject;
 class staticMesh;
 class skinnedMesh;
 
@@ -37,6 +38,8 @@ private :
 public :
 	void drawOutLine(staticMesh* obj);
 	void drawOutLine(skinnedMesh* obj);
+
+	void drawOutList(std::vector<baseObject*> & objList);
 
 public :
 	maptool_render();

@@ -6,6 +6,8 @@
 #include "mapObject.h"
 #include "mapObjectBase.h"
 #include "nodeMesh.h"
+#include "aStar_node.h"
+#include "aStar_grape_bind.h"
 
 using namespace std;
 
@@ -75,7 +77,6 @@ void maptool_data_io::OBJ::NODE::write(json & in_Json)
 {
 	OBJ::PROP::write(in_Json);
 
-	in_Json["color"] = _color;
 	in_Json["radius"] = _radius;
 }
 
@@ -85,6 +86,9 @@ void maptool_data_io::OBJ::GRAPE::write(json & in_Json)
 
 	for (int i = 0; i < _node.size(); ++i)
 		_node[i].write(in_Json["node"][i]);
+
+	for (auto i : _connection)
+		in_Json["connection"][i.first] = i.second;
 }
 
 bool maptool_data_io::parse(OBJ::BASE * own, json & j_in)
@@ -178,9 +182,26 @@ bool maptool_data_io::parse(OBJ::NODE * own, json & j_in)
 	if (!parse((OBJ::PROP*)own, j_in))
 		return false;
 
-	j_in["color"].get_to<array<float, 4>>(own->_color);
 	j_in["radius"].get_to<float>(own->_radius);
 
+	return true;
+}
+
+bool maptool_data_io::parse(OBJ::GRAPE * own, json & j_in)
+{
+	if (!parse((OBJ::BASE*)own, j_in))
+		return false;
+
+	own->_node.resize(j_in["node"].size());
+	for (int i = 0; i < own->_node.size(); ++i)
+		parse(&own->_node[i], j_in["node"][i]);
+
+	auto & jTarget = j_in["connection"];
+	for (int i = 0; i < jTarget.size(); ++i)
+	{
+		if (!jTarget[i].is_null())
+			jTarget[i].get_to<vector<int>>(own->_connection[i]);
+	}
 	return true;
 }
 
@@ -245,10 +266,24 @@ void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
 
 void maptool_data_io::apply(OBJ::FIELD * in, terrain::params * obj)
 {
+	apply((OBJ::BASE*)in, (baseObject*)obj);
 }
 
 void maptool_data_io::apply(OBJ::NODE * in, nodeMesh * obj)
 {
+	apply((OBJ::PROP*)in, obj);
+
+	in->_radius = obj->getPlaneRadius();
+}
+
+void maptool_data_io::apply(OBJ::GRAPE * in, grape * obj)
+{
+	in->_node.resize(obj->getBindList().size());
+	for (int i = 0 ; i < in->_node.size(); ++i)
+		apply(&in->_node[i], obj->getBindList()[i]);
+
+	for (auto i : obj->getNodeConnection())
+		in->_connection[i.first] = i.second;
 }
 
 void maptool_data_io::apply(baseObject * in, OBJ::BASE * data)
@@ -326,7 +361,29 @@ void maptool_data_io::apply(nodeMesh * in, OBJ::NODE * data)
 	apply((staticMesh*)in, (OBJ::PROP*)data);
 
 	in->setPlaneRadius(data->_radius);
-	CopyMemory((void*)&in->getNodeColor(), &data->_color[0], sizeof(D3DXVECTOR4));
+}
+
+void maptool_data_io::apply(grape * in, OBJ::GRAPE * data)
+{
+	for (int i = 0; i < data->_node.size(); ++i)
+	{
+		nodeMesh* item = nullptr;
+		create(&item, &data->_node[i]);
+
+		aStar_node* node = new aStar_node(item->getPosition());
+		grape::BIND_OUT binder = nullptr;
+		in->addNode(node, binder);
+		*binder = item;
+		item->setBindNode(node);
+	}
+
+	for (auto & pConnection : data->_connection)
+	{
+		int own = pConnection.first;
+
+		for (auto & linkingNode : pConnection.second)
+			in->connectNode(own, linkingNode);
+	}
 }
 
 void maptool_data_io::create(OBJ::BASE ** out, baseObject * obj)
@@ -368,6 +425,13 @@ void maptool_data_io::create(OBJ::FIELD ** out, mapObject * obj)
 void maptool_data_io::create(OBJ::NODE ** out, nodeMesh * obj)
 {
 	OBJ::NODE* result = new OBJ::NODE();
+	apply(result, obj);
+	*out = result;
+}
+
+void maptool_data_io::create(OBJ::GRAPE ** out, grape * obj)
+{
+	OBJ::GRAPE* result = new OBJ::GRAPE();
 	apply(result, obj);
 	*out = result;
 }
@@ -430,6 +494,15 @@ void maptool_data_io::create(nodeMesh ** out, OBJ::NODE * data)
 	param.effectFilePath = data->_effect;
 
 	result = new nodeMesh(param);
+	apply(result, data);
+
+	*out = result;
+}
+
+void maptool_data_io::create(grape ** out, OBJ::GRAPE * data)
+{
+	grape* result = new grape();
+
 	apply(result, data);
 
 	*out = result;
