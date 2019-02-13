@@ -61,6 +61,7 @@ public :
 	static boundingBox				createBoundingBox(LPD3DXMESH mesh);
 	static boundingBox				createBoundingBox(D3DXVECTOR3 position, float width, float height, float depth);
 	static boundingSphere			createBoundingSphere(LPD3DXMESH mesh);
+	static boundingSphere			createBoundingSphere(D3DXVECTOR3 position, float radius);
 
 	// За·Д
 	static const D3DXMATRIXA16 *	getIdentity(bool isCoord = false) { return isCoord ? &g_IdentityCoord : &g_IdentityNormal; };

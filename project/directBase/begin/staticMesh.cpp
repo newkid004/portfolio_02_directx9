@@ -48,7 +48,7 @@ void staticMesh::drawDo(void)
 	{
 		if (_meshSet->vTextureList[i])
 		{
-			//_effect->SetTexture("_texture", _meshSet->vTextureList[i]);
+			_effect->SetTexture("_texture", _meshSet->vTextureList[i]);
 		}
 
 		gFunc::runEffectLoop(_effect, "myTechnique", [&](int passNum)->void {

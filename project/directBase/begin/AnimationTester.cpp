@@ -730,7 +730,7 @@ else if (MN_KEY->keyDown(DIK_9))
 
 	if (MN_KEY->keyDown(DIK_SPACE))
 	{
-		printf("CurrentMotionBit : %d\n", _cloneACInfo[0].CurrentMotionBit);
+		/*printf("CurrentMotionBit : %d\n", _cloneACInfo[0].CurrentMotionBit);
 		printf("NextMotionBit : %d\n", _cloneACInfo[0].NextMotionBit);
 		printf("AniCount : %d\n", _cloneACInfo[0].aniCount);
 		printf("LeftMixTime : %f\n", _cloneACInfo[0].leftMixTime);
@@ -738,7 +738,8 @@ else if (MN_KEY->keyDown(DIK_9))
 		printf("TrackPositionA : %f\n", _cloneACInfo[0].trackPositionA);
 		printf("TrackPositionB : %f\n", _cloneACInfo[0].trackPositionB);
 		printf("timeScale : %f\n", _cloneACInfo[0].timeScale);
-		printf("NextTimeScale : %f\n\n", _cloneACInfo[0].nextTimeScale);
+		printf("NextTimeScale : %f\n\n", _cloneACInfo[0].nextTimeScale);*/
+		printf("persent: %f\n", _cloneACInfo[0].persent);
 	}
 }
 

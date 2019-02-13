@@ -14,10 +14,11 @@
 #include "mapObject.h"
 
 #define ZOMBIE_NUM 1
+#define FLAGPOSITION 0.16 / 1015.227
+
 #define DEBUG_TYPE_MAP			1
 #define DEBUG_TYPE_COLLISION	2
 #define DEBUG_TYPE				DEBUG_TYPE_COLLISION
-
 sceneCollisionTest::~sceneCollisionTest()
 {
 	SAFE_DELETE(m_pBoxObject);
@@ -40,23 +41,22 @@ void sceneCollisionTest::init(void)
 	{
 		m_pSkinnedMesh[i] = this->createZombieMesh(ECharacterType::NORMAL_ZOMBIE);
 
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Head1", D3DXVECTOR3(0.0f, 15.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Spine1", D3DXVECTOR3(0.0f, 8.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Foot", D3DXVECTOR3(3.0f, 0.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Foot", D3DXVECTOR3(-3.0f, 0.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Calf", D3DXVECTOR3(3.0f, 4.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Calf", D3DXVECTOR3(-3.0f, 4.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Hand", D3DXVECTOR3(5.0f, 8.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Hand", D3DXVECTOR3(-5.0f, 8.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Forearm", D3DXVECTOR3(4.5f, 10.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Forearm", D3DXVECTOR3(-4.5f, 10.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_UpperArm", D3DXVECTOR3(4.0f, 12.0f, 2.0f));
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_UpperArm", D3DXVECTOR3(-4.0f, 12.0f, 2.0f));
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Head1",			FLAGPOSITION * D3DXVECTOR3(       0,   915.227, 380.302), 9, 9, 9);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Spine1",			FLAGPOSITION * D3DXVECTOR3(       0,   324.65,  -7.926), 25, 17, 12);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Foot",			FLAGPOSITION * D3DXVECTOR3( 39.007,  -251.624,  30.187), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Foot",			FLAGPOSITION * D3DXVECTOR3(-39.007,  -251.624,  30.187), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Calf",			FLAGPOSITION * D3DXVECTOR3( 192.893,  -304.16,  -13.551), 9, 9, 9);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Calf",			FLAGPOSITION * D3DXVECTOR3(-192.893,  -304.16,  -13.551), 9, 9, 9);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Hand",			FLAGPOSITION * D3DXVECTOR3( 178.917, -200.057,  230.219), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Hand",			FLAGPOSITION * D3DXVECTOR3(-178.917, -200.057,  230.219), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Forearm",		FLAGPOSITION * D3DXVECTOR3( 563.117,   178.276, -94.635), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Forearm",		FLAGPOSITION * D3DXVECTOR3(-563.117,   178.276, -94.635), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_UpperArm",		FLAGPOSITION * D3DXVECTOR3( 263.026,   788.266, -35.374), 7, 7, 7);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_UpperArm",		FLAGPOSITION * D3DXVECTOR3(-263.026,   788.266, -35.374), 7, 7, 7);
 
 		m_pSkinnedMesh[i]->init();
 
-		m_pSkinnedMesh[i]->setDebugEnable(true);
-		//m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::SPHERE);
+		m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::BOX);
 
 		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
 		m_pSkinnedMesh[i]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -66,9 +66,9 @@ void sceneCollisionTest::init(void)
 
 	}
 
-	//m_pSkinnedMesh[1] = this->createObjectMesh();
-	//m_pSkinnedMesh[1]->setScale(D3DXVECTOR3(0.00021f, 0.0021f, 0.0021f));
-	//m_pSkinnedMesh[1]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	m_pObjectMesh = this->createObjectMesh();
+	m_pObjectMesh->setScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
+	m_pObjectMesh->setPosition(D3DXVECTOR3(0.0f, 2.0f, 5.0f));
 	
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject = new mapObject;
@@ -96,6 +96,7 @@ void sceneCollisionTest::update(void)
 		
 		//gFunc::obj2bound(m_pSkinnedMesh[i]->getObjectBox(),)
 	}
+	m_pObjectMesh->update();
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->update();
 #else
@@ -112,6 +113,7 @@ void sceneCollisionTest::draw(void)
 		m_pSkinnedMesh[i]->draw();
 	}
 
+	m_pObjectMesh->draw();
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->draw();
 #else
@@ -194,11 +196,11 @@ skinnedMesh * sceneCollisionTest::createZombieMesh(ECharacterType characterType)
 	return new skinnedMesh(stParameters, characterType);
 }
 
-skinnedMesh * sceneCollisionTest::createObjectMesh(void)
+staticMesh * sceneCollisionTest::createObjectMesh(void)
 {
-	skinnedMesh::mParam stParameters = {
-	"resource/mesh/L4D1/c130/c130.x",
-	"resource/effect/skinnedMesh.fx"
+	staticMesh::mParam stParameters = {
+	"resource/mesh/L4D1/items/uzi.x",
+	"resource/effect/example_16.fx"
 	};
-	return new skinnedMesh(stParameters);
+	return new staticMesh(stParameters);
 }

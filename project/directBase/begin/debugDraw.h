@@ -18,7 +18,8 @@ private:
 	LPD3DXMESH _meshBoundingSphere = nullptr;
 	std::vector<LPD3DXMESH> _vMeshBoundingBoxList;
 	std::vector<LPD3DXMESH> _vMeshBoundingSphereList;
-	//std::unordered_map<string, LPD3DXMESH> _mMeshBoundingBoxSetList;
+	std::unordered_map<std::string, LPD3DXMESH> _mMeshBoundingBoxSetList;
+	std::unordered_map<std::string, LPD3DXMESH> _mMeshBoundingSphereSetList;
 
 	renderObject* _bindObject = nullptr;
 	EDebugDrawType _drawType;
@@ -29,6 +30,8 @@ protected:
 	virtual void drawPost(void) override;
 
 private:
+	void updateBoundingMatrix(void);
+
 	void drawBoundingBox(void);
 	void drawBoundingSphere(void);
 
@@ -36,12 +39,14 @@ private:
 	void drawGuideLineBox(void);
 
 	void createBoundingBox(std::vector<boundingBox> & input);
-	//void createBoundingBox(std::unordered_map<string, boundingBox> & input);
+	void createBoundingBox(BOUNDBOXMATRIXSET & input);
 	void createBoundingSphere(std::vector<boundingSphere> & input);
+	void createBoundingSphere(BOUNDSPHEREMATRIXSET & input);
 
 public:
 	LPD3DXMESH getBoundMesh(EDebugDrawType type = EDebugDrawType::NONE);
 	void getMatrixBound(int index, D3DXMATRIXA16 * outMat, EDebugDrawType type = EDebugDrawType::NONE);
+	void getMatrixBound(std::string name, D3DXMATRIXA16 * outMat, D3DXMATRIXA16 & combineMat, EDebugDrawType type = EDebugDrawType::NONE);
 public:
 	debugDraw(renderObject* bind, EDebugDrawType drawType);
 	~debugDraw();

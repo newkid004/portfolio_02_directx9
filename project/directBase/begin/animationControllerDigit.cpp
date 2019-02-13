@@ -81,11 +81,11 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 			acInfo.trackPositionA +highDeltaTime);
 	}
 
-	_trackPersent = acInfo.trackPositionA / m_pAnimationSet->GetPeriod();
+	acInfo.persent = acInfo.trackPositionA / m_pAnimationSet->GetPeriod();
 
 	// 검사
 	// 애니메이션이 끝나갈 경우(같은 모션 반복)
-	if (_trackPersent >= 0.90f && acInfo.leftMixTime <= FLT_EPSILON && acInfo.maxMixTime <= FLT_EPSILON)
+	if (acInfo.persent >= 0.90f && acInfo.leftMixTime <= FLT_EPSILON && acInfo.maxMixTime <= FLT_EPSILON)
 	{
 		acInfo.maxMixTime = 0.2f / acInfo.timeScale;
 		acInfo.leftMixTime = acInfo.maxMixTime;
@@ -120,6 +120,7 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 		acInfo.trackPositionB = 0.0f;
 		acInfo.trackWeightA = 1.0f;
 		acInfo.trackWeightB = 0.0f;
+		acInfo.persent = acInfo.trackPositionA/ m_pNextAnimationSet->GetPeriod();
 		// 동작이 전환되는 경우
 		if (acInfo.nextMotionVector.size() != 0)
 		{
@@ -146,7 +147,6 @@ void animationControllerDigit::resetAnimationController(void)
 	m_pAnimationController->SetTrackPosition(1, 0.0f);
 	m_pAnimationController->SetTrackAnimationSet(1, NULL);
 	m_pAnimationController->SetTrackWeight(1, 0.0f);
-	_trackPersent = 0.0f;
 }
 
 void animationControllerDigit::changeAnimationControll(ACInfo& acInfo)
