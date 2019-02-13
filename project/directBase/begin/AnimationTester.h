@@ -16,7 +16,7 @@ class patternMesh;
 #define ZOMBIE_SMOKER   5
 #define AIRPLANE		6
 
-#define CURRENT_MESH	ZOMBIE_MALE
+#define CURRENT_MESH	AIRPLANE
 
 class AnimationTester : public sceneBase
 {
