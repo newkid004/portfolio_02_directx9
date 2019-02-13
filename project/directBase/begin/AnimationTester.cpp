@@ -2,12 +2,21 @@
 #include "managerList.h"
 #include "gFunc.h"
 #include "patternMesh.h"
+#include "staticMesh.h"
+#include "debugGizmo.h"
 
 void AnimationTester::init(void)
 {
 	sceneBase::init();
 
+	_rifle = this->createRifle();
+	_rifle->setScale(0.03f);
+	_shotgun = this->createShotgun();
+	_shotgun->setScale(0.03f);
+	_healKit = this->createHealKit();
+	_healKit->setScale(0.03f);
 	_skinnedMesh = this->createSkinnedMesh();
+	_skinnedMesh->setWeapon(_shotgun);
 #if		CURRENT_MESH ==	SURVIVOR
 	_skinnedMesh->setScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
 #elif	CURRENT_MESH == ZOMBIE_MALE
@@ -21,7 +30,9 @@ void AnimationTester::init(void)
 #else
 	_skinnedMesh->setScale(D3DXVECTOR3(0.007f, 0.007f, 0.007f));
 #endif
-
+	_rifle->addChild(new debugGizmo(1000.0f));
+	_shotgun->addChild(new debugGizmo(1000.0f));
+	_healKit->addChild(new debugGizmo(1000.0f));
 	for (int i = 0; i < MAX_NUM; ++i)
 	{
 		ZeroMemory(&_cloneACInfo[i], sizeof(_cloneACInfo[i]));
@@ -216,7 +227,6 @@ void AnimationTester::draw(void)
 		_skinnedMesh->drawpreMesh(_cloneACInfo[i]);
 		_skinnedMesh->draw();
 	}
-
 }
 
 void AnimationTester::drawUI(void)
@@ -227,6 +237,19 @@ void AnimationTester::drawUI(void)
 void AnimationTester::updateControl(void)
 {
 #if		CURRENT_MESH ==	SURVIVOR
+	if (MN_KEY->keyPress(DIK_NUMPAD1))
+	{
+		_skinnedMesh->setWeapon(_rifle);
+	}
+	else if (MN_KEY->keyPress(DIK_NUMPAD1))
+	{
+		_skinnedMesh->setWeapon(_shotgun);
+	}
+	else if (MN_KEY->keyPress(DIK_NUMPAD1))
+	{
+		_skinnedMesh->setWeapon(_healKit);
+	}
+
 	if (MN_KEY->keyPress(DIK_1))
 	{
 		for (int i = 0; i < MAX_NUM; ++i)
@@ -234,7 +257,7 @@ void AnimationTester::updateControl(void)
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
 				AWEAPON_PUMPSHOTGUN |
-				AMIX_UNHOLSTER;
+				AMIX_SHOOT;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_2))
@@ -243,7 +266,7 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
-				AWEAPON_RIFLE |
+				AWEAPON_PUMPSHOTGUN |
 				AMIX_UNHOLSTER;
 		}
 	}
@@ -253,8 +276,11 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
-				AWEAPON_FIRSTAIDKIT |
-				AMIX_UNHOLSTER;
+				AWEAPON_PUMPSHOTGUN |
+				ACONDITION_NORMAL |
+				AMAIN_IDLE |
+				AMIX_NONE |
+				AIDLE_STANDING;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_4))
@@ -263,7 +289,7 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
-				AWEAPON_PUMPSHOTGUN |
+				AWEAPON_RIFLE |
 				AMIX_SHOOT;
 		}
 	}
@@ -273,8 +299,11 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
-				AWEAPON_RIFLE |
-				AMIX_SHOOT;
+				AWEAPON_PUMPSHOTGUN |
+				ACONDITION_INJURED |
+				AMAIN_IDLE |
+				AMIX_NONE |
+				AIDLE_STANDING;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_6))
@@ -284,7 +313,9 @@ void AnimationTester::updateControl(void)
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
 				AWEAPON_PUMPSHOTGUN |
-				AMIX_ATTACK;
+				AMAIN_IDLE |
+				AMIX_NONE |
+				AIDLE_SIT;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_7))
@@ -293,8 +324,10 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
-				AWEAPON_RIFLE |
-				AMIX_ATTACK;
+				AWEAPON_PUMPSHOTGUN |
+				AMAIN_RUN |
+				AMIX_NONE |
+				ARUN_SIT;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_8))
@@ -304,7 +337,9 @@ void AnimationTester::updateControl(void)
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
 				AWEAPON_PUMPSHOTGUN |
-				AMIX_RELOAD;
+				AMAIN_RUN |
+				AMIX_NONE |
+				ARUN_STANDING;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_9))
@@ -313,8 +348,10 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
-				AWEAPON_RIFLE |
-				AMIX_RELOAD;
+				AWEAPON_PUMPSHOTGUN |
+				AMAIN_WALK |
+				AMIX_NONE |
+				AWALK_SIT;
 		}
 	}
 
@@ -748,7 +785,7 @@ patternMesh * AnimationTester::createSkinnedMesh(void)
 	patternMesh::mParam param;
 #if		CURRENT_MESH ==	SURVIVOR
 
-		int rndValue = gFunc::rndInt(0, 3);
+	int rndValue = 3;// gFunc::rndInt(0, 3);
 		switch (rndValue)
 		{
 		case 0:
@@ -782,4 +819,37 @@ patternMesh * AnimationTester::createSkinnedMesh(void)
 	param.effectFilePath = "resource/effect/Survivor.fx";
 
 	return new patternMesh(param);
+}
+
+staticMesh * AnimationTester::createRifle(void)
+{
+	staticMesh::mParam stParam =
+	{
+		"resource/mesh/L4D1/items/rifle.x",
+		"resource/effect/example_15.fx"
+	};
+
+	return new staticMesh(stParam);
+}
+
+staticMesh * AnimationTester::createHealKit(void)
+{
+	staticMesh::mParam stParam =
+	{
+		"resource/mesh/L4D1/items/medikit.x",
+		"resource/effect/example_15.fx"
+	};
+
+	return new staticMesh(stParam);
+}
+
+staticMesh * AnimationTester::createShotgun(void)
+{
+	staticMesh::mParam stParam =
+	{
+		"resource/mesh/L4D1/items/shotgun.x",
+		"resource/effect/example_15.fx"
+	};
+
+	return new staticMesh(stParam);
 }

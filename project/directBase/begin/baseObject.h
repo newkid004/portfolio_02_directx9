@@ -70,7 +70,8 @@ public :	// 접근, 지정자
 	D3DXVECTOR3 getOffset(void) { return D3DXVECTOR3(_mOffset(3, 0), _mOffset(3, 1), _mOffset(3, 2)); }
 	constexpr D3DXMATRIXA16 & getOffsetMatrix(void) { return _mOffset; }
 	constexpr D3DXVECTOR3 & getOffsetPosition(void) { return _offsetPosition; }
-	
+	constexpr std::vector<baseObject*> &getChildren(void) { return _vChildren; }
+
 	// 지정자
 	void setParent					(baseObject* input);
 	void setRotation				(const D3DXVECTOR3 & input);

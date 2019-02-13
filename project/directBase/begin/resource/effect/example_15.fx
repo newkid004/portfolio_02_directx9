@@ -86,8 +86,8 @@ float4 psMain(output iput) : COLOR0
     float4 diffuseColor = tex2D(_sampler, iput.uv);
 
 	float4 finalColor = diffuseColor * diffuse;
-	finalColor.rgb = finalColor.rgb + (float3(1.0f, 1.0f, 1.0f) * specular);
-	finalColor.rgb = finalColor.rgb + (diffuseColor * 0.2f);    // ȯ�汤
+	finalColor.rgb = finalColor.rgb + (diffuseColor.rgb  * specular);
+	finalColor.rgb = finalColor.rgb + (diffuseColor * 0.5f);    // ȯ�汤
 
 	return finalColor;
 }
@@ -96,7 +96,7 @@ technique myTechnique
 {
     pass P0
     {
-        CULLMODE = NONE;
+        CULLMODE = CCW;
 
         VertexShader = compile vs_3_0 vsMain();
         PixelShader = compile ps_3_0 psMain();

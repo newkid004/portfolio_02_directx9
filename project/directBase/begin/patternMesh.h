@@ -5,6 +5,7 @@
 #include "AnimationDef.h"
 
 class animationControllerDigit;
+class staticMesh;
 
 class patternMesh : public renderObject
 {
@@ -25,7 +26,8 @@ public:
 		D3DXVECTOR4 m_stBlendWeight;
 	};
 
-protected:
+private:
+	staticMesh * _weapon = nullptr;
 	LPD3DXMESH _mesh = nullptr;
 	LPD3DXMESH _cloneMesh = nullptr;
 	LPD3DXEFFECT _effect = nullptr;
@@ -41,9 +43,10 @@ protected:
 	std::vector<D3DXVECTOR4> _vVertexList;
 
 	int num = 0;
-
+	int fingerNumber = -1;
 public:
 	void update(void) override;
+	int findFinger(void);
 
 protected:
 	void drawPre(void) override;
@@ -53,6 +56,8 @@ protected:
 public:
 	void drawpreMesh(ACInfo& acInfo);
 
+	void setWeapon(staticMesh* weapon);
+
 private:
 	// 본 행렬 갱신
 	void updateBoneMatrix(LPD3DXFRAME frame, const D3DXMATRIXA16 & mUpdate);
@@ -60,7 +65,7 @@ private:
 	// 정보 출력
 	void drawBone(LPD3DXFRAME frame);
 	void drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshContainer);
-	void drawBox(void);
+	//void drawBox(void);
 
 	// 본
 	void setupBone(LPD3DXFRAME frame);
