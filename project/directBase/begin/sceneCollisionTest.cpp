@@ -2,6 +2,7 @@
 
 #include "gFunc.h"
 #include "camera.h"
+#include "pickRay.h"
 
 #include "managerList.h"
 
@@ -12,6 +13,7 @@
 #include "staticMesh.h"
 #include "boxObject.h"
 #include "mapObject.h"
+#include "bulletManager.h"
 
 #define ZOMBIE_NUM 1
 #define FLAGPOSITION 0.16 / 1015.227
@@ -29,6 +31,9 @@ sceneCollisionTest::~sceneCollisionTest()
 	}
 
 	SAFE_DELETE(m_pMapObject);
+	SAFE_DELETE(m_pBulletManager);
+
+	SAFE_RELEASE(m_pSphereMesh);
 }
 
 void sceneCollisionTest::init(void)
@@ -56,7 +61,7 @@ void sceneCollisionTest::init(void)
 
 		m_pSkinnedMesh[i]->init();
 
-		m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::BOX);
+		m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::SPHERE);
 
 		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
 		m_pSkinnedMesh[i]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
@@ -66,9 +71,8 @@ void sceneCollisionTest::init(void)
 
 	}
 
-	m_pObjectMesh = this->createObjectMesh();
-	m_pObjectMesh->setScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
-	m_pObjectMesh->setPosition(D3DXVECTOR3(0.0f, 2.0f, 5.0f));
+	m_pBulletManager = new bulletManager;
+	m_pSphereMesh = this->createSphereMesh();
 	
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject = new mapObject;
@@ -96,7 +100,9 @@ void sceneCollisionTest::update(void)
 		
 		//gFunc::obj2bound(m_pSkinnedMesh[i]->getObjectBox(),)
 	}
-	m_pObjectMesh->update();
+	//m_pObjectMesh->update();
+	m_pBulletManager->update();
+
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->update();
 #else
@@ -112,8 +118,15 @@ void sceneCollisionTest::draw(void)
 	{
 		m_pSkinnedMesh[i]->draw();
 	}
+	D3DXMATRIXA16 stWorld;
+	D3DXMatrixIdentity(&stWorld);
+	MN_DEV->SetTransform(D3DTS_WORLD, &stWorld);
+	MN_DEV->SetRenderState(D3DRS_LIGHTING, false);
+	m_pSphereMesh->DrawSubset(0);
+	MN_DEV->SetRenderState(D3DRS_LIGHTING, true);
+	//m_pObjectMesh->draw();
+	m_pBulletManager->draw();
 
-	m_pObjectMesh->draw();
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->draw();
 #else
@@ -184,6 +197,34 @@ void sceneCollisionTest::updateControl(void)
 			printf("%s\n", oAnimationNameList[m_nAnimationIndex].c_str());
 		}
 	}
+
+	if (MN_KEY->mouseDown(EMouseInput::LEFT))
+	{
+		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+
+		m_pBulletManager->addBullet(stRay.origin, stRay.direction, 1);
+	}
+
+	auto mBoundSet = m_pSkinnedMesh[0]->getBoundingBoxSetList();
+	auto mSphere = m_pSkinnedMesh[0]->getBoundingSphere();
+	auto vBullet = m_pBulletManager->getBulletList();
+	mSphere.center = D3DXVECTOR3(0, 0, 0);
+	mSphere.radius = 3;
+
+	for (int i = 0; i < vBullet.size(); i++)
+	{
+		//printf("%d vBullet To Sphere Distance : %f\n", i, gFunc::Vec3Distance(vBullet[i]->getPosition(), mSphere.center * 0.03));
+		if (pick::chkPick(&vBullet[i]->getPickRay(), &mSphere))
+		{
+			if (pick::chkPick(&vBullet[i]->getPickRay(), vBullet[i]->getPosition(), vBullet[i]->getSpeed(), &mSphere))
+			{
+				printf("Ãæµ¹!!\n");
+				m_pBulletManager->deleteBullet(i);
+			}
+		}
+	}
+	
+	
 }
 
 skinnedMesh * sceneCollisionTest::createZombieMesh(ECharacterType characterType)
@@ -203,4 +244,14 @@ staticMesh * sceneCollisionTest::createObjectMesh(void)
 	"resource/effect/example_16.fx"
 	};
 	return new staticMesh(stParameters);
+}
+
+LPD3DXMESH sceneCollisionTest::createSphereMesh(void)
+{
+	LPD3DXMESH pMesh = nullptr;
+
+	D3DXCreateSphere(MN_DEV,
+		3, 10, 10, &pMesh, NULL);
+
+	return pMesh;
 }

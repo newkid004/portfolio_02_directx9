@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -169,6 +169,8 @@
     <ClInclude Include="AnimationTester.h" />
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="boxObject.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="bulletManager.h" />
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="buttonItem.h" />
     <ClInclude Include="buttonItemText.h" />
@@ -275,6 +277,8 @@
     <ClCompile Include="aStar_runner.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="boxObject.cpp" />
+    <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="bulletManager.cpp" />
     <ClCompile Include="buttonBase.cpp" />
     <ClCompile Include="buttonItem.cpp" />
     <ClCompile Include="buttonItemText.cpp" />
@@ -424,20 +428,6 @@
     <Image Include="resource\mesh\L4D1\Teenangst\zoey_normal.tga" />
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp" />
     <Image Include="resource\mesh\WitchApprentice\WitchApprentice_w_diff.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="resource\effect\example_11.fx" />
-    <FxCompile Include="resource\effect\example_12.fx" />
-    <FxCompile Include="resource\effect\example_13.fx" />
-    <FxCompile Include="resource\effect\example_15.fx" />
-    <FxCompile Include="resource\effect\example_16.fx" />
-    <FxCompile Include="resource\effect\example_17.fx" />
-    <FxCompile Include="resource\effect\field_node.fx" />
-    <FxCompile Include="resource\effect\outline.fx" />
-    <FxCompile Include="resource\effect\outlineBlur.fx" />
-    <FxCompile Include="resource\effect\practice_06.fx" />
-    <FxCompile Include="resource\effect\skinnedMesh.fx" />
-    <FxCompile Include="resource\effect\Survivor.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

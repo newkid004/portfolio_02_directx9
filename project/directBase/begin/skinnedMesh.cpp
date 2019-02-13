@@ -290,6 +290,8 @@ void skinnedMesh::setBoneBoundSphere(void)
 				setBoundingSphere(_vBoneNameList[i], boundSet);
 			}
 		}
+		
+		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 15, 0), 100));
 		break;
 	}
 	}

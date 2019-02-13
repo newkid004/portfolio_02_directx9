@@ -32,7 +32,7 @@ public :
 	static LPDIRECT3DINDEXBUFFER9	createIndexBuffer(int size, DWORD options, DWORD format);
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, DWORD FVF);
 	static LPD3DXMESH				createMesh(int faceSize, int vertexSize, DWORD options, D3DVERTEXELEMENT9* elements);
-	static pick::ray				createPickRay(const POINT & clickPos);
+	static pick::ray				createPickRay(const POINT & clickPos, const D3DXVECTOR3 & origin = D3DXVECTOR3(0, 0, 0));
 	static LPDIRECT3DTEXTURE9		createRenderTarget(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));
 	static LPDIRECT3DTEXTURE9		createRenderTargetShadowMap(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));
 	static LPDIRECT3DSURFACE9		createDepthStensil(D3DXVECTOR2 size = D3DXVECTOR2(0, 0));

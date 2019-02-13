@@ -807,6 +807,12 @@
     <ClInclude Include="aStar_grape_bind.hpp">
       <Filter>main\classes\pathfind\aStar\grape\bind</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>main\classes\collision\test</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>main\classes\collision\test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1076,6 +1082,12 @@
     <ClCompile Include="aStar_grape.cpp">
       <Filter>main\classes\pathfind\aStar\grape\_base</Filter>
     </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>main\classes\collision\test</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>main\classes\collision\test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">
@@ -1278,43 +1290,5 @@
     <Image Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\uzi.tga">
       <Filter>Resource\mesh\L4D1\items</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="resource\effect\skinnedMesh.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\Survivor.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\example_11.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\example_12.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\example_13.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\example_15.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\example_16.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\example_17.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\field_node.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\outline.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\outlineBlur.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
-    <FxCompile Include="resource\effect\practice_06.fx">
-      <Filter>Resource\effect</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

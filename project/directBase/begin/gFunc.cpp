@@ -201,7 +201,7 @@ LPD3DXMESH gFunc::createMesh(int faceSize, int vertexSize, DWORD options, D3DVER
 	return result;
 }
 
-pick::ray gFunc::createPickRay(const POINT & clickPos)
+pick::ray gFunc::createPickRay(const POINT & clickPos, const D3DXVECTOR3 & origin)
 {
 	// ºä -> Åõ¿µ º¯È¯
 	D3DVIEWPORT9 viewPort;
@@ -217,6 +217,7 @@ pick::ray gFunc::createPickRay(const POINT & clickPos)
 	pick::ray ray;
 	ZeroMemory(&ray, sizeof(ray));
 
+	ray.origin = origin;
 	ray.direction = D3DXVECTOR3(
 		normalizePos.x / mProjection._11,
 		normalizePos.y / mProjection._22,
@@ -229,7 +230,10 @@ pick::ray gFunc::createPickRay(const POINT & clickPos)
 	D3DXMATRIXA16 miView;
 	D3DXMatrixInverse(&miView, NULL, &mView);
 
-	D3DXVec3TransformCoord(&ray.origin, &ray.origin, &miView);
+	if (origin == D3DXVECTOR3(0, 0, 0))
+	{
+		D3DXVec3TransformCoord(&ray.origin, &ray.origin, &miView);
+	}
 	D3DXVec3TransformNormal(&ray.direction, &ray.direction, &miView);
 
 	D3DXVec3Normalize(&ray.direction, &ray.direction);

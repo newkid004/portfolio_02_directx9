@@ -14,6 +14,7 @@ debugDraw::debugDraw(renderObject * bind, EDebugDrawType drawType) :
 	//case EDebugDrawType::BOX:		createBoundingBox(bind->getBoundingBoxSetList()); break;
 	//case EDebugDrawType::SPHERE:	createBoundingSphere(bind->getBoundingSphereSetList()); break;
 	//}
+	_meshBoundingSphere = createBoundingSphere(bind->getBoundingSphere());
 	createBoundingBox(bind->getBoundingBoxSetList());
 	createBoundingSphere(bind->getBoundingSphereSetList());
 }
@@ -132,6 +133,15 @@ void debugDraw::drawBoundingBox(void)
 
 void debugDraw::drawBoundingSphere(void)
 {
+	if (_meshBoundingSphere != nullptr)
+	{
+		D3DXMATRIXA16 mWorld;
+		getMatrixBound(&mWorld, EDebugDrawType::SPHERE);
+		MN_DEV->SetTransform(D3DTS_WORLD, &mWorld);
+
+		_meshBoundingSphere->DrawSubset(0);
+	}
+
 	for (int i = 0; i < _vMeshBoundingSphereList.size(); ++i)
 	{
 		if (_vMeshBoundingSphereList[i] == nullptr) return;
@@ -292,6 +302,23 @@ void debugDraw::createBoundingBox(BOUNDBOXMATRIXSET & input)
 	}
 }
 
+LPD3DXMESH debugDraw::createBoundingSphere(boundingSphere & input)
+{
+	LPD3DXMESH result = nullptr;
+
+	_bSphere = input;
+
+	D3DXCreateSphere(
+		MN_DEV,
+		input.radius,
+		10,
+		10,
+		&result,
+		NULL);
+	
+	return result;
+}
+
 void debugDraw::createBoundingSphere(std::vector<boundingSphere> & input)
 {
 	LPD3DXMESH result = nullptr;
@@ -315,6 +342,7 @@ void debugDraw::createBoundingSphere(std::vector<boundingSphere> & input)
 void debugDraw::createBoundingSphere(BOUNDSPHEREMATRIXSET & input)
 {
 	LPD3DXMESH result = nullptr;
+
 
 	_mbSphereSet = input;
 	for (auto rValue : _mbSphereSet)
@@ -343,6 +371,38 @@ LPD3DXMESH debugDraw::getBoundMesh(EDebugDrawType type)
 	}
 
 	return nullptr;
+}
+
+void debugDraw::getMatrixBound(D3DXMATRIXA16 * outMat, EDebugDrawType type)
+{
+	if (type == EDebugDrawType::NONE)
+		type = _drawType;
+
+	switch (type)
+	{
+	case EDebugDrawType::BOX: {
+
+		D3DXMATRIXA16 mTranslate;
+		D3DXMatrixTranslation(
+			&mTranslate,
+			(_bBox.min.x + _bBox.max.x) / 2.0f,
+			(_bBox.min.y + _bBox.max.y) / 2.0f,
+			(_bBox.min.z + _bBox.max.z) / 2.0f);
+
+		*outMat = mTranslate * _bindObject->getMatrixFinal();
+	} break;
+
+	case EDebugDrawType::SPHERE: {
+		D3DXMATRIXA16 mTranslate;
+		D3DXMatrixTranslation(
+			&mTranslate,
+			_bSphere.center.x,
+			_bSphere.center.y,
+			_bSphere.center.z);
+
+		*outMat = mTranslate * _bindObject->getMatrixFinal();
+	} break;
+	}
 }
 
 void debugDraw::getMatrixBound(int index, D3DXMATRIXA16 * outMat, EDebugDrawType type)
