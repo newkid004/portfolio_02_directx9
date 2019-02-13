@@ -59,6 +59,9 @@ void sceneMapTool::init(void)
 
 void sceneMapTool::update(void)
 {
+	if (MN_KEY->mouseDown())
+		int a = 0;
+
 	MN_UI->update();
 	updateControl_brush();
 
@@ -75,7 +78,6 @@ void sceneMapTool::draw(void)
 	drawSelection();
 
 	_field->draw();
-
 }
 
 void sceneMapTool::drawUI(void)
@@ -86,7 +88,7 @@ void sceneMapTool::drawUI(void)
 
 	char text[MAX_PATH] = "";
 	sprintf(text, "open file window and,\nsave : Ctrl + S\nload : Ctrl + L");
-	gFunc::drawText(0, 100, string(text));
+	gFunc::drawText(0, 100, string(text), COLOR_WHITE(255));
 }
 
 void sceneMapTool::initMap(void)
@@ -96,7 +98,7 @@ void sceneMapTool::initMap(void)
 void sceneMapTool::updateControl_brush(void)
 {
 	// selection
-	if (auto viewData = _field->getSet().selectionData)
+	if (auto viewData = _field->getSet().getLastData())
 	{
 		typedef maptool_data_io::baseType TYPE;
 
@@ -126,13 +128,7 @@ void sceneMapTool::updateControl_brush(void)
 
 void sceneMapTool::drawSelection(void)
 {
-	baseObject*& selection = _field->getSet().selectionObject;
-	if (selection)
-	{
-		if (staticMesh* obj = dynamic_cast<staticMesh*>(selection))
-		{
-			if (!obj->isCull())
-				_render->drawOutLine(obj);
-		}
-	}
+	auto & selectionList = _field->getSet().selectionObject;
+	if (!selectionList.empty())
+		_render->drawOutList(selectionList);
 }

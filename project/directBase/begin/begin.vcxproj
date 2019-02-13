@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -74,6 +74,8 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -177,6 +179,7 @@
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
+    <ClInclude Include="inGame_data_status.h" />
     <ClInclude Include="nodeMesh.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
@@ -236,6 +239,7 @@
     <ClInclude Include="resourceManager.h" />
     <ClInclude Include="sceneBase.h" />
     <ClInclude Include="sceneCollisionTest.h" />
+    <ClInclude Include="sceneInGame.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="sceneMapTool.h" />
     <ClInclude Include="sceneTest1.h" />
@@ -252,6 +256,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
+    <ClInclude Include="weaponBase.h" />
     <ClInclude Include="windowBase.h" />
     <ClInclude Include="windowCtlogMaptool.h" />
     <ClInclude Include="windowManager.h" />
@@ -334,6 +339,7 @@
     <ClCompile Include="resourceManager.cpp" />
     <ClCompile Include="sceneBase.cpp" />
     <ClCompile Include="sceneCollisionTest.cpp" />
+    <ClCompile Include="sceneInGame.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneMapTool.cpp" />
     <ClCompile Include="sceneTest1.cpp" />
@@ -349,6 +355,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
+    <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="windowBase.cpp" />
     <ClCompile Include="windowCtlogMaptool.cpp" />
     <ClCompile Include="windowManager.cpp" />

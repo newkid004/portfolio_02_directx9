@@ -15,8 +15,9 @@ struct ACInfo
 	float trackWeightB;
 	float timeScale;
 	float nextTimeScale;
-	bool isCancel;
-	bool isNextCancel;
+	float persent;
+	//bool isCancel;
+	//bool isNextCancel;
 	std::vector<int> motionVector;
 	std::vector<int> nextMotionVector;
 };

@@ -91,6 +91,7 @@ technique techPlane
     pass P0
     {
         cullMode = none;
+        zWriteEnable = false;
         
         alphaBlendEnable = true;
         srcBlend = srcAlpha;

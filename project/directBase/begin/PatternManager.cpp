@@ -394,7 +394,7 @@ void PatternManager::initMotionSurvivor(void)
 		AHEAL_SELF_STANDING,
 		arr, 1, 0.8f, false); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-							  //±¸±Þ»óÀÚ, --, Ä¡·á, ¹Í½ºx, ½º½º·Î|¾É¾Æ¼­
+	//±¸±Þ»óÀÚ, --, Ä¡·á, ¹Í½ºx, ½º½º·Î|¾É¾Æ¼­
 	arr[0] = 27;
 	arr[1] = 26;
 	this->CreateMotion(
@@ -503,7 +503,7 @@ void PatternManager::initMotionSurvivor(void)
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_RIFLE |
-		AMIX_RELOAD, arr, 1, 1.0f, false);
+		AMIX_RELOAD, arr, 1, 0.8f, false);
 
 	//¼¦°Ç, --, --, ÃÑ»Ì±â, --
 	arr[0] = 88;

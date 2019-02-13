@@ -5,8 +5,8 @@
 
 using namespace std;
 
-allocateHierarchy::allocateHierarchy(const mParam & param) :
-	_param(param)
+allocateHierarchy::allocateHierarchy(const mParam & param) 
+	:_param(param)
 {
 }
 

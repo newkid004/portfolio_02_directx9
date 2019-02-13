@@ -1,13 +1,19 @@
 #include "maptool_io.h"
 
+#include "maptool_data_io.h"
 #include "maptool_field.h"
 
 #include "gJson.h"
 
-#include "mapObject.h"
+#include "quadTree_Frustum.h"
+
 #include "skinnedMesh.h"
 #include "staticMesh.h"
-#include "quadTree_Frustum.h"
+#include "mapObject.h"
+#include "nodeMesh.h"
+
+#include "aStar_grape_bind.h"
+#include "aStar_path.h"
 
 constexpr char* filepath = "resource/json/maptool/";
 
@@ -18,8 +24,9 @@ maptool_io::maptool_io(maptool_field * bindData, int* bindMapIndex) :
 	_bindMapIndex(bindMapIndex)
 {
 	insertJson("object");
-	insertJson("event");
+	insertJson("trigger");
 	insertJson("field");
+	insertJson("grape");
 }
 
 maptool_io::~maptool_io()
@@ -49,14 +56,15 @@ void maptool_io::buildObject()
 		auto & vData = vDataList[i];
 		auto & vObj = vObjList[i];
 
-		if (vData->_baseType & IO_DATA::baseType::CHAR)
-		{
+		if (vData->_baseType & IO_DATA::baseType::NODE)
+			continue;	// grape에서 따로 적용
+
+		else if (vData->_baseType & IO_DATA::baseType::CHAR)
 			IO_DATA::apply((IO_DATA::OBJ::CHAR*)vData, (skinnedMesh*)vObj);
-		}
+
 		else if (vData->_baseType & IO_DATA::baseType::PROP)
-		{
 			IO_DATA::apply((IO_DATA::OBJ::PROP*)vData, (staticMesh*)vObj);
-		}
+
 		vData->write((*j)[i]);
 	}
 }
@@ -77,9 +85,25 @@ void maptool_io::buildField(void)
 	}
 }
 
+void maptool_io::buildGrape(void)
+{
+	auto iter = _mJson.find("grape");
+	json*& j = iter->second;
+
+	SAFE_DELETE(j);
+	j = new json;
+
+	if (IO_DATA::grape* grape = _bindData->getSet().pathGrape)
+	{
+		IO_DATA::OBJ::PATH data;
+		IO_DATA::apply(&data, grape);
+		data.write(*j);
+	}
+}
+
 void maptool_io::spreadObject(void)
 {
-	_bindData->getSet().selectionObject = nullptr;
+	_bindData->getSet().selectionObject.clear();
 
 	auto iter = _mJson.find("object");
 	json*& j = iter->second;
@@ -173,12 +197,38 @@ void maptool_io::spreadField(void)
 	quad->build();
 }
 
+void maptool_io::spreadGrape(void)
+{
+	auto iter = _mJson.find("grape");
+	json*& j = iter->second;
+
+	IO_DATA::grape*& grape = _bindData->getSet().pathGrape;
+	SAFE_DELETE(grape);
+	SAFE_DELETE(_bindData->getSet().pathData);
+
+	IO_DATA::OBJ::PATH data;
+	IO_DATA::parse(&data, *j);
+	IO_DATA::create(&grape, &data);
+
+	auto & vDataList = _bindData->getSet().dataList;
+	auto & vObjList = _bindData->getSet().objList;
+
+	auto & bindList = grape->getBindList();
+
+	for (int i = 0; i < bindList.size(); ++i)
+	{
+		vDataList.push_back(new IO_DATA::OBJ::NODE(data._node[i]));
+		vObjList.push_back(bindList[i]);
+	}
+}
+
 void maptool_io::write(void)
 {
 	*_bindMapIndex = *_bindMapIndex < 0 ? 0 : *_bindMapIndex;
 
 	buildObject();
 	buildField();
+	buildGrape();
 
 	for (auto & i : _mJson)
 	{
@@ -210,4 +260,5 @@ void maptool_io::read(void)
 
 	spreadObject();
 	spreadField();
+	spreadGrape();
 }

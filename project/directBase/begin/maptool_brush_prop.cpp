@@ -40,8 +40,12 @@ void maptool_brush_prop::putObject(void)
 			_set.data_field->getSet().objList.push_back(duplication);
 			_set.data_field->getSet().dataList.push_back(ioBase);
 
-			auto & selection = _set.data_field->getSet().selectionObject;
-			selection = duplication;
+			auto & selectionList = _set.data_field->getSet().selectionObject;
+
+			selectionList.clear();
+			selectionList.push_back(duplication);
+
+			auto & selection = selectionList.front();
 
 			// 위치, 회전 초기화
 			D3DXVECTOR3 pickPos;

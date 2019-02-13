@@ -4,9 +4,10 @@
 #include "AnimationDef.h"
 
 class patternMesh;
+class staticMesh;
 
-#define 가로 3
-#define 세로 3
+#define 가로 2
+#define 세로 2
 #define MAX_NUM		가로	 * 세로
 
 #define SURVIVOR		1
@@ -16,15 +17,21 @@ class patternMesh;
 #define ZOMBIE_SMOKER   5
 #define AIRPLANE		6
 
-#define CURRENT_MESH	ZOMBIE_MALE
+#define CURRENT_MESH	SURVIVOR
 
 class AnimationTester : public sceneBase
 {
 private:
 	patternMesh * _skinnedMesh = nullptr;
+	staticMesh* _rifle = nullptr;
+	staticMesh* _shotgun = nullptr;
+	staticMesh* _healKit = nullptr;
 
 private:
 	patternMesh * createSkinnedMesh(void);
+	staticMesh* createRifle(void);
+	staticMesh* createHealKit(void);
+	staticMesh* createShotgun(void);
 
 private:
 	ACInfo _cloneACInfo[MAX_NUM];

@@ -32,8 +32,6 @@ private:
 	LPD3DXANIMATIONSET findAnimationSet(const std::string& animationName);
 
 private:
-	float _trackPersent;
-
 	LPD3DXANIMATIONSET m_pAnimationSet = nullptr;
 	LPD3DXANIMATIONSET m_pNextAnimationSet = nullptr;
 	LPD3DXANIMATIONCONTROLLER m_pAnimationController = nullptr;

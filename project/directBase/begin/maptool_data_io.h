@@ -27,7 +27,7 @@ public :
 		BUMP	= 1 << 3,
 		FIELD	= 1 << 4,
 		NODE	= 1 << 5,
-		GRAPE	= 1 << 6,
+		PATH	= 1 << 6,
 
 		BASE	= 0 << 0
 	};
@@ -103,7 +103,6 @@ public :
 
 		struct NODE : public PROP
 		{
-			std::array<float, 4> _color;
 			float _radius;
 
 			virtual void write(json & in_Json) override;
@@ -111,14 +110,14 @@ public :
 			NODE() { _baseType |= baseType::NODE; }
 		};
 
-		struct GRAPE : public BASE
+		struct PATH : public BASE
 		{
 			std::vector<NODE> _node;
-			std::unordered_map<int, int> _connection;
+			std::unordered_map<int, std::vector<int>> _connection;
 
 			virtual void write(json & in_Json) override;
 
-			GRAPE() { _baseType |= baseType::GRAPE; }
+			PATH() { _baseType |= baseType::PATH; }
 		};
 
 	private :
@@ -134,7 +133,7 @@ public :	// ----- parse ----- //
 	static bool parse(OBJ::FIELD* own,		json & j_in);
 	static bool parse(terrain::params* own,	json & j_in);
 	static bool parse(OBJ::NODE* own,		json & j_in);
-	static bool parse(OBJ::GRAPE* own,		json & j_in);
+	static bool parse(OBJ::PATH* own,		json & j_in);
 
 public :	// ----- apply ----- //
 	static void apply(OBJ::BASE* in,		baseObject* obj);
@@ -144,7 +143,7 @@ public :	// ----- apply ----- //
 	static void apply(OBJ::FIELD* in,		mapObject* obj);
 	static void apply(OBJ::FIELD* in,		terrain::params* obj);
 	static void apply(OBJ::NODE* in,		nodeMesh* obj);
-	static void apply(OBJ::GRAPE* in,		grape* obj);
+	static void apply(OBJ::PATH* in,		grape* obj);
 
 	static void apply(baseObject* in,		OBJ::BASE* data);
 	static void apply(staticMesh* in,		OBJ::PROP* data);
@@ -153,7 +152,7 @@ public :	// ----- apply ----- //
 	static void apply(mapObject* in,		OBJ::FIELD* data);
 	static void apply(terrain::params* in,	OBJ::FIELD* data);
 	static void apply(nodeMesh* in,			OBJ::NODE* data);
-	static void apply(grape* in,			OBJ::GRAPE* data);
+	static void apply(grape* in,			OBJ::PATH* data);
 
 public :	// ----- creater ----- //
 	static void create(OBJ::BASE** out,		baseObject* obj);
@@ -162,13 +161,13 @@ public :	// ----- creater ----- //
 	static void create(OBJ::BUMP** out,		staticMesh* obj);
 	static void create(OBJ::FIELD** out,	mapObject* obj);
 	static void create(OBJ::NODE** out,		nodeMesh* obj);
-	static void create(OBJ::GRAPE** out,	grape* obj);
+	static void create(OBJ::PATH** out,	grape* obj);
 
 	static void create(staticMesh** out,	OBJ::PROP* data);
 	static void create(staticMesh** out,	OBJ::BUMP* data);
 	static void create(mapObject** out,		OBJ::FIELD* data);
 	static void create(nodeMesh** out,		OBJ::NODE* data);
-	static void create(grape** out,			OBJ::GRAPE* obj);
+	static void create(grape** out,			OBJ::PATH* data);
 
 private:
 	maptool_data_io() {};

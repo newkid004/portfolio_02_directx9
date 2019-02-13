@@ -1,5 +1,5 @@
 #include "patternMesh.h"
-
+#include "staticMesh.h"
 #include "camera.h"
 #include "direct3dApplication.h"
 #include "gFunc.h"
@@ -22,6 +22,9 @@ patternMesh::patternMesh(const mParam & a_rstParameters)
 
 	_effect = MN_SRC->getEffect(a_rstParameters.effectFilePath);
 	_mesh = this->createSkinnedMeshFromX(a_rstParameters.filePath);
+
+	
+		
 }
 
 patternMesh::~patternMesh(void)
@@ -33,7 +36,75 @@ void patternMesh::update(void)
 {
 	renderObject::update();
 	
+	_isCull = false;
 	this->updateBoneMatrix(_rootBone, getMatrixFinal());
+
+	if (_weapon != nullptr)
+	{
+		D3DXMATRIXA16 stWeaponMatrix;
+		D3DXMATRIXA16 stRotationMatrix;
+		D3DXMATRIXA16 stTranslation;
+		if (fingerNumber != -1)
+		{
+			stWeaponMatrix =_vMeshContainerList[0]->vBoneList[fingerNumber]->combineMatrix;
+		}
+		else
+		{
+			fingerNumber = findFinger();
+			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[fingerNumber]->combineMatrix;
+		}
+		/*
+		Rifle
+		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
+			D3DXToRadian(90.0f), D3DXToRadian(175.0f), D3DXToRadian(-15.0f));
+		D3DXMatrixTranslation(&stTranslation, 0.0f, 0.0f, -1.0f);*/
+
+/*		SHOTGUN
+		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
+			D3DXToRadian(70.0f), D3DXToRadian(190.0f), D3DXToRadian(-10.0f));
+		D3DXMatrixTranslation(&stTranslation, 1.5f, 0.5f, -2.5f);*/
+									//¾ç¼ö//¾ÕÀ¸·Î , ¹ØÀ¸·Î
+
+
+		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
+			D3DXToRadian(70.0f), D3DXToRadian(190.0f), D3DXToRadian(-10.0f));
+		D3DXMatrixTranslation(&stTranslation, 1.5f, 0.5f, -2.5f);
+		
+		
+		
+		stWeaponMatrix = stRotationMatrix * stTranslation * stWeaponMatrix;
+		_weapon->update();
+		_weapon->getIsCull() = _isCull;
+		(*_weapon->getMatrixWorldPoint()) = (*_weapon->getMatrixWorldPoint())* stWeaponMatrix;
+		for (auto rvalue : _weapon->getChildren())
+		{
+			(*rvalue->getMatrixWorldPoint()) = (*_weapon->getMatrixWorldPoint());
+		}
+	}
+}
+
+int patternMesh::findFinger(void)
+{
+	for (int i = 0; i < _vMeshContainerList[0]->vBoneList.size(); ++i)
+	{
+		std::string name = _vMeshContainerList[0]->vBoneList[i]->Name;
+		if (name.find("R_Wrist") != string::npos)
+		{
+			return i;
+		}
+
+		printf("%s\n", name.c_str());
+		//R_Wrist
+		//Finger12
+		//Finger11
+		//Finger22
+		//Finger31  x
+		//Finger3 // ¤Ó
+		//Finger0 // ¿Þ¼Õ
+		//R_Hand
+		int a = 0;
+	}
+	return 0;
 }
 
 void patternMesh::drawPre(void)
@@ -58,6 +129,10 @@ void patternMesh::drawDo(void)
 	renderObject::drawDo();
 
 	this->drawBone(_rootBone);
+	if (_weapon != nullptr)
+	{
+		_weapon->draw();
+	}
 }
 
 void patternMesh::drawPost(void)
@@ -69,6 +144,11 @@ void patternMesh::drawPost(void)
 void patternMesh::drawpreMesh(ACInfo & acInfo)
 {
 	_aniControllerDigit->drawPre(acInfo);
+}
+
+void patternMesh::setWeapon(staticMesh * weapon)
+{
+	_weapon = weapon;
 }
 
 void patternMesh::updateBoneMatrix(LPD3DXFRAME a_pstFrame, const D3DXMATRIXA16 & a_rstMatrix)
