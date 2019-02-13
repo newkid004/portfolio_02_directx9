@@ -3,6 +3,7 @@
 #include "sceneBase.h"
 
 class skinnedMesh;
+class staticMesh;
 class mapObject;
 class boxObject;
 
@@ -11,6 +12,7 @@ class sceneCollisionTest : public sceneBase
 private:
 
 	skinnedMesh* m_pSkinnedMesh[10];
+	staticMesh* m_pObjectMesh;
 	boxObject* m_pBoxObject = nullptr;
 	mapObject* m_pMapObject = nullptr;
 
@@ -28,7 +30,7 @@ private:
 
 private:
 	skinnedMesh* createZombieMesh(ECharacterType characterType = ECharacterType::NONE);
-	skinnedMesh* createObjectMesh(void);
+	staticMesh* createObjectMesh(void);
 
 public:
 	sceneCollisionTest() {};

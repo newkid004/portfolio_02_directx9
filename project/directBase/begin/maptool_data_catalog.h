@@ -5,6 +5,7 @@ class renderObject;
 
 class staticMesh;
 class skinnedMesh;
+class nodeMesh;
 
 class maptool_data_catalog
 {
@@ -14,7 +15,7 @@ public :
 	{
 		BUMP	= 1 << 5,
 		FILE	= 1 << 4,
-		EVENT	= 1 << 3,
+		NODE	= 1 << 3,
 		CHAR	= 1 << 2,
 		PROP	= 1 << 1,
 		BASE	= 1 << 0,
@@ -48,9 +49,9 @@ public :
 			CHAR() { _baseType |= baseType::CHAR; }
 		};
 
-		struct EVENT : public BASE
+		struct NODE : public PROP
 		{
-			EVENT() { _baseType |= baseType::EVENT; }
+			NODE() { _baseType |= baseType::NODE; }
 		};
 
 		struct FILE : public BASE
@@ -71,15 +72,17 @@ public :
 	static void create(OBJ::PROP** out, void * param);
 	static void create(OBJ::BUMP** out, void * param);
 	static void create(OBJ::CHAR** out, void * param);
+	static void create(OBJ::NODE** out, void * param);
 
 public :
-	static void duplicate(staticMesh** outObject, OBJ::PROP* targetObject);
-	static void duplicate(staticMesh** outObject, OBJ::BUMP* targetObject);
-	static void duplicate(skinnedMesh** outObject, OBJ::CHAR* targetObject);
-	// static void duplicate(OBJ::EVENT** outObject, OBJ::EVENT* targetObject);
+	static void duplicate(staticMesh**	outObject, OBJ::PROP* targetObject);
+	static void duplicate(staticMesh**	outObject, OBJ::BUMP* targetObject);
+	static void duplicate(skinnedMesh**	outObject, OBJ::CHAR* targetObject);
+	static void duplicate(nodeMesh**	outObject, OBJ::NODE* targetObject);
 
 private :
 	static void applyObject(renderObject* target, renderObject* own);
+	static void applyObject(nodeMesh* target, nodeMesh* own);
 
 private :
 	maptool_data_catalog() {};

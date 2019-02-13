@@ -5,6 +5,7 @@
 aStar_path::aStar_path(std::list<aStar_runner*>& p) :
 	_path(p)
 {
+	sizeof(aStar_runner);
 }
 
 aStar_path::~aStar_path()

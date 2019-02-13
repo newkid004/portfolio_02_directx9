@@ -40,6 +40,8 @@ private :
 
 	void updateControl_brush(void);
 
+	void drawSelection(void);
+
 public:
 	sceneMapTool() {};
 	~sceneMapTool();

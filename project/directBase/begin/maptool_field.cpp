@@ -13,6 +13,9 @@
 
 #include "staticMesh.h"
 #include "skinnedMesh.h"
+#include "nodeMesh.h"
+
+#include "aStar_grape_bind.h"
 
 maptool_field::maptool_field(mapObject* inTerrain)
 {
@@ -25,6 +28,8 @@ maptool_field::maptool_field(mapObject* inTerrain)
 
 		_fieldSet.qTree->build();
 	}
+
+	_fieldSet.pathGrape = new aStar_grape_bind<nodeMesh>();
 }
 
 maptool_field::~maptool_field()
@@ -37,6 +42,8 @@ maptool_field::~maptool_field()
 
 	for (auto i : _fieldSet.dataList)
 		SAFE_DELETE(i);
+
+	SAFE_DELETE(_fieldSet.pathGrape);
 }
 
 void maptool_field::update(void)
@@ -58,7 +65,15 @@ void maptool_field::draw(void)
 	if (_fieldSet.field) _fieldSet.field->draw();
 }
 
-renderObject * maptool_field::getPickObject(void)
+void maptool_field::updateBindGrape(void)
+{
+	for (int i = 0; i < _fieldSet.pathGrape->getBindList().size(); ++i)
+	{
+
+	}
+}
+
+void maptool_field::getPickObject(baseObject** out_object, maptool_data_io::OBJ::BASE** out_data)
 {
 	float distance = FLT_MAX;
 	renderObject* result = nullptr;
@@ -115,8 +130,15 @@ renderObject * maptool_field::getPickObject(void)
 					}
 				} // 형태 확인 끝
 			} // frustum culling 확인 끝
+
+			if (result)
+			{
+				*out_data = _fieldSet.dataList[i];
+				break;
+			}
 		} // renderObject 확인 끝
 	}
 
-	return result;
+	if (result) 
+		*out_object = result;
 }

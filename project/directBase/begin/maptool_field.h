@@ -9,18 +9,30 @@ class baseObject;
 class renderObject;
 class quadTree_Frustum;
 
+class nodeMesh;
+
+template<typename T>
+class aStar_grape_bind;
+
 class maptool_field : public iUpdateble
 {
 public :
 	struct set
 	{
-		std::vector<baseObject*> objList;
-		std::vector<maptool_data_io::OBJ::BASE*> dataList;
+	public :
+		using OBJ = baseObject*;
+		using DATA = maptool_data_io::OBJ::BASE*;
+
+	public :
+		std::vector<OBJ> objList;
+		std::vector<DATA> dataList;
+		aStar_grape_bind<nodeMesh>* pathGrape;
 
 		mapObject* field = nullptr;
 		quadTree_Frustum* qTree = nullptr;
 
-		baseObject* selectionObject = nullptr;
+		OBJ selectionObject = nullptr;
+		DATA selectionData = nullptr;
 	};
 
 private :
@@ -30,8 +42,11 @@ public :
 	void update(void) override;
 	void draw(void);
 
+protected :
+	void updateBindGrape(void);
+
 public :
-	renderObject* getPickObject(void);	// update보다 먼저 확인 필요
+	void getPickObject(baseObject** out_object, maptool_data_io::OBJ::BASE** out_data);	// update보다 먼저 확인 필요
 
 	constexpr set & getSet(void) { return _fieldSet; }
 

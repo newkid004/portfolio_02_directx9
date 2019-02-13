@@ -94,12 +94,17 @@ void maptool_brush::updateMouse(void)
 void maptool_brush::updateReleaseSelection(void)
 {
 	_set.data_field->getSet().selectionObject = nullptr;
+	_set.data_field->getSet().selectionData = nullptr;
 }
 
 void maptool_brush::updatePickObject(void)
 {
-	if (renderObject* pickObject = _set.data_field->getPickObject())
-		_set.data_field->getSet().selectionObject = pickObject;
+	auto data_field = _set.data_field;
+
+	auto & pickData = data_field->getSet().selectionData;
+	baseObject* & pickObject = data_field->getSet().selectionObject;
+
+	data_field->getPickObject(&pickObject, &pickData);
 }
 
 void maptool_brush::updateObjectRotate(POINT & mouseMove)
@@ -118,13 +123,19 @@ void maptool_brush::updateObjectRotate(POINT & mouseMove)
 void maptool_brush::updateObjectScale(void)
 {
 	baseObject* & selection = _set.data_field->getSet().selectionObject;
-	
+
 	D3DXVECTOR3 scale = selection->getScale();
 
+	float ratio = 1.0f;
+	if (MN_KEY->keyDown(DIK_LCONTROL))
+		ratio *= 0.33f;
+	else if (MN_KEY->keyDown(DIK_LSHIFT))
+		ratio *= 3.0f;
+
 	if (MN_KEY->wheelUp())
-		scale *= 1.1f;
+		scale *= std::powf(1.1f, ratio);
 	else if (MN_KEY->wheelDown())
-		scale *= 0.9f;
+		scale *= std::powf(0.9f, ratio);
 
 	selection->setScale(scale);
 }
@@ -141,17 +152,19 @@ void maptool_brush::updateObjectMove(POINT & mouseMove)
 	}
 	else
 	{
-		// x, z
+		float dev = 20.0f;
+
+		// x, y
 		if (MN_KEY->keyDown(DIK_SPACE))
 		{
-			selection->moveCameraX(mouseMove.x / 3.0f, true);
-			selection->moveCameraZ(-mouseMove.y / 3.0f, true);
+			selection->moveCameraX(mouseMove.x / dev);
+			selection->moveCameraY(-mouseMove.y / dev);
 		}
-		// x, y
+		// x, z
 		else
 		{
-			selection->moveCameraX(mouseMove.x / 3.0f, true);
-			selection->moveCameraY(-mouseMove.y / 3.0f);
+			selection->moveCameraX(mouseMove.x / dev, true);
+			selection->moveCameraZ(-mouseMove.y / dev, true);
 		}
 	}
 }
@@ -201,6 +214,9 @@ void maptool_brush::updateObjectDelete(void)
 	{
 		if (vObjList[i] == selection)
 		{
+			SAFE_DELETE(vObjList[i]);
+			SAFE_DELETE(vDataList[i]);
+
 			vObjList.erase(vObjList.begin() + i);
 			vDataList.erase(vDataList.begin() + i);
 

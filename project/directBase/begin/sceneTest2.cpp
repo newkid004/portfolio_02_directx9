@@ -29,7 +29,7 @@ void sceneTest2::init(void)
 	_customMesh = createCustomMesh();
 	_grape = createGrape();
 
-	_customMesh->setPlaneScale(1.0f);
+	_customMesh->setPlaneRadius(1.0f);
 }
 
 void sceneTest2::update(void)
@@ -127,7 +127,7 @@ void sceneTest2::updateKey(void)
 			for (int i = 0; i < _vSelectionNode.size(); ++i)
 			{
 				for (int j = i + 1; j < _vSelectionNode.size(); ++j)
-					_vSelectionNode[i]->connect(_vSelectionNode[j]);
+					_grape->connectNode(_vSelectionNode[i], _vSelectionNode[j]);
 			}
 		}
 

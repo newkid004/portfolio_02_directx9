@@ -397,6 +397,17 @@ boundingSphere gFunc::createBoundingSphere(LPD3DXMESH mesh)
 	return result;
 }
 
+boundingSphere gFunc::createBoundingSphere(D3DXVECTOR3 position, float radius)
+{
+	boundingSphere result;
+
+	// 경계 정보 설정
+	result.center = position;
+	result.radius = radius;
+
+	return result;
+}
+
 bool gFunc::isIntersect(const objectBox & boundA, const objectBox & boundB)
 {
 	float cutoffValue = 0.99999f;

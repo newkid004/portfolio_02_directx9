@@ -5,6 +5,9 @@
 #include "terrain.h"
 #include "mapObject.h"
 #include "mapObjectBase.h"
+#include "nodeMesh.h"
+
+using namespace std;
 
 void maptool_data_io::OBJ::BASE::write(json & in_Json)
 {
@@ -45,7 +48,7 @@ void maptool_data_io::OBJ::FIELD::write(json & in_Json)
 {
 	OBJ::BASE::write(in_Json);
 	
-	for (auto i : _wall)
+	for (auto & i : _wall)
 		i.second.write(in_Json["wall"][i.first]);
 
 	_ceil.write(in_Json["ceil"]);
@@ -68,13 +71,29 @@ void maptool_data_io::OBJ::FIELD::writeTerrain(json & in_Json)
 		in_Json["texture"][i] = _terrain.vPathTextureFile[i];
 }
 
+void maptool_data_io::OBJ::NODE::write(json & in_Json)
+{
+	OBJ::PROP::write(in_Json);
+
+	in_Json["color"] = _color;
+	in_Json["radius"] = _radius;
+}
+
+void maptool_data_io::OBJ::GRAPE::write(json & in_Json)
+{
+	OBJ::BASE::write(in_Json);
+
+	for (int i = 0; i < _node.size(); ++i)
+		_node[i].write(in_Json["node"][i]);
+}
+
 bool maptool_data_io::parse(OBJ::BASE * own, json & j_in)
 {
 	if (j_in.empty()) 
 		return false;
 
 	j_in["baseType"].get_to<int>(own->_baseType);
-	j_in["position"].get_to<std::array<float, 3>>(own->_position);
+	j_in["position"].get_to<array<float, 3>>(own->_position);
 
 	return true;
 }
@@ -84,13 +103,13 @@ bool maptool_data_io::parse(OBJ::PROP * own, json & j_in)
 	if (!parse((OBJ::BASE*)own, j_in))
 		return false;
 
-	j_in["source"].get_to<std::string>(own->_source);
-	j_in["effect"].get_to<std::string>(own->_effect);
-	j_in["scale"].get_to<std::array<float, 3>>(own->_scale);
+	j_in["source"].get_to<string>(own->_source);
+	j_in["effect"].get_to<string>(own->_effect);
+	j_in["scale"].get_to<array<float, 3>>(own->_scale);
 
-	j_in["rotate"][0].get_to<std::array<float, 3>>(own->_rotateX);
-	j_in["rotate"][1].get_to<std::array<float, 3>>(own->_rotateY);
-	j_in["rotate"][2].get_to<std::array<float, 3>>(own->_rotateZ);
+	j_in["rotate"][0].get_to<array<float, 3>>(own->_rotateX);
+	j_in["rotate"][1].get_to<array<float, 3>>(own->_rotateY);
+	j_in["rotate"][2].get_to<array<float, 3>>(own->_rotateZ);
 
 	return true;
 }
@@ -134,9 +153,9 @@ bool maptool_data_io::parse(terrain::params * own, json & j_in)
 	j_in["smoothLevel"].get_to<int>(own->smoothLevel);
 	j_in["heightScale"].get_to<float>(own->heightScale);
 
-	j_in["pathSplat"].get_to<std::string>(own->pathSplat);
-	j_in["pathHeight"].get_to<std::string>(own->pathHeight);
-	j_in["pathEffect"].get_to<std::string>(own->pathEffect);
+	j_in["pathSplat"].get_to<string>(own->pathSplat);
+	j_in["pathHeight"].get_to<string>(own->pathHeight);
+	j_in["pathEffect"].get_to<string>(own->pathEffect);
 
 	j_in["tileSize"][0].get_to<LONG>(own->tileSize.cx);
 	j_in["tileSize"][1].get_to<LONG>(own->tileSize.cy);
@@ -145,11 +164,22 @@ bool maptool_data_io::parse(terrain::params * own, json & j_in)
 
 	for (auto i : j_in["texture"])
 	{
-		std::string path;
-		i.get_to<std::string>(path);
+		string path;
+		i.get_to<string>(path);
 
 		own->vPathTextureFile.push_back(path);
 	}
+
+	return true;
+}
+
+bool maptool_data_io::parse(OBJ::NODE * own, json & j_in)
+{
+	if (!parse((OBJ::PROP*)own, j_in))
+		return false;
+
+	j_in["color"].get_to<array<float, 4>>(own->_color);
+	j_in["radius"].get_to<float>(own->_radius);
 
 	return true;
 }
@@ -214,6 +244,10 @@ void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
 }
 
 void maptool_data_io::apply(OBJ::FIELD * in, terrain::params * obj)
+{
+}
+
+void maptool_data_io::apply(OBJ::NODE * in, nodeMesh * obj)
 {
 }
 
@@ -284,7 +318,15 @@ void maptool_data_io::apply(terrain::params * in, OBJ::FIELD * data)
 
 	CopyMemory(&in->tileSize, &terData.tileSize, sizeof(SIZE));
 	CopyMemory(&in->mapSize, &terData.mapSize, sizeof(SIZE));
-	std::copy(in->vPathTextureFile.begin(), in->vPathTextureFile.end(), terData.vPathTextureFile.begin());
+	copy(in->vPathTextureFile.begin(), in->vPathTextureFile.end(), terData.vPathTextureFile.begin());
+}
+
+void maptool_data_io::apply(nodeMesh * in, OBJ::NODE * data)
+{
+	apply((staticMesh*)in, (OBJ::PROP*)data);
+
+	in->setPlaneRadius(data->_radius);
+	CopyMemory((void*)&in->getNodeColor(), &data->_color[0], sizeof(D3DXVECTOR4));
 }
 
 void maptool_data_io::create(OBJ::BASE ** out, baseObject * obj)
@@ -323,6 +365,13 @@ void maptool_data_io::create(OBJ::FIELD ** out, mapObject * obj)
 	*out = result;
 }
 
+void maptool_data_io::create(OBJ::NODE ** out, nodeMesh * obj)
+{
+	OBJ::NODE* result = new OBJ::NODE();
+	apply(result, obj);
+	*out = result;
+}
+
 void maptool_data_io::create(staticMesh ** out, OBJ::PROP * data)
 {
 	staticMesh* result = nullptr;
@@ -332,7 +381,7 @@ void maptool_data_io::create(staticMesh ** out, OBJ::PROP * data)
 	param.effectFilePath = data->_effect;
 
 	result = new staticMesh(param);
-	apply((staticMesh*)result, data);
+	apply(result, data);
 
 	*out = result;
 }
@@ -367,6 +416,20 @@ void maptool_data_io::create(mapObject ** out, OBJ::FIELD * data)
 	// apply mapObject
 	result->getTerrain() = ter;
 	result->getCeilObject() = ceil;
+	apply(result, data);
+
+	*out = result;
+}
+
+void maptool_data_io::create(nodeMesh ** out, OBJ::NODE * data)
+{
+	nodeMesh* result = nullptr;
+
+	nodeMesh::mParam param;
+	param.meshFilePath = data->_source;
+	param.effectFilePath = data->_effect;
+
+	result = new nodeMesh(param);
 	apply(result, data);
 
 	*out = result;

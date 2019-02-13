@@ -68,6 +68,6 @@ public :
 
 public:
 	quadTree(int sizeX, int sizeY);
-	~quadTree();
+	virtual ~quadTree();
 };
 

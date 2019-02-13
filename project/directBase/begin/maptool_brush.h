@@ -30,8 +30,8 @@ public :
 	void update(void);
 
 protected :
-	void updateMouse(void);
-	void updateKey(void);
+	virtual void updateMouse(void);
+	virtual void updateKey(void);
 
 protected :
 	// mouse

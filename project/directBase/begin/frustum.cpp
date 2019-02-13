@@ -40,18 +40,22 @@ void frustum::updatePlane(void)
 
 	D3DXMATRIXA16 mInverse = c->getMatrixView() * c->getMatrixProjection();
 	D3DXMatrixInverse(&mInverse, NULL, &mInverse);
+	
+	D3DXVECTOR3 dublicateVertex[8];
+	CopyMemory(dublicateVertex, planeVertex, sizeof(planeVertex));
 
 	// view, projection 역행렬 적용
-	for (D3DXVECTOR3 & vertex : planeVertex)
+	for (D3DXVECTOR3 & vertex : dublicateVertex)
 		D3DXVec3TransformCoord(&vertex, &vertex, &mInverse);
 
+
 	// 절두체 평면 제작
-	D3DXPlaneFromPoints(&_plane[0], &planeVertex[0], &planeVertex[3], &planeVertex[2]); //Near
-	D3DXPlaneFromPoints(&_plane[1], &planeVertex[4], &planeVertex[5], &planeVertex[6]); //Far
-	D3DXPlaneFromPoints(&_plane[2], &planeVertex[0], &planeVertex[4], &planeVertex[7]); //Left
-	D3DXPlaneFromPoints(&_plane[3], &planeVertex[1], &planeVertex[2], &planeVertex[6]); //Right
-	D3DXPlaneFromPoints(&_plane[4], &planeVertex[0], &planeVertex[1], &planeVertex[5]); //Top
-	D3DXPlaneFromPoints(&_plane[5], &planeVertex[3], &planeVertex[7], &planeVertex[6]); //Bottom
+	D3DXPlaneFromPoints(&_plane[0], &dublicateVertex[0], &dublicateVertex[3], &dublicateVertex[2]); //Near
+	D3DXPlaneFromPoints(&_plane[1], &dublicateVertex[4], &dublicateVertex[5], &dublicateVertex[6]); //Far
+	D3DXPlaneFromPoints(&_plane[2], &dublicateVertex[0], &dublicateVertex[4], &dublicateVertex[7]); //Left
+	D3DXPlaneFromPoints(&_plane[3], &dublicateVertex[1], &dublicateVertex[2], &dublicateVertex[6]); //Right
+	D3DXPlaneFromPoints(&_plane[4], &dublicateVertex[0], &dublicateVertex[1], &dublicateVertex[5]); //Top
+	D3DXPlaneFromPoints(&_plane[5], &dublicateVertex[3], &dublicateVertex[7], &dublicateVertex[6]); //Bottom
 }
 
 bool frustum::isCull(const D3DXVECTOR3 & pos, int c)
