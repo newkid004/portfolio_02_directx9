@@ -60,6 +60,7 @@ public:
 	bool isCull(void) { return _isCull; }
 	bool getVisible(void) { return _isVisible; }
 	bool getDebugEnalbe(void) { return _isDebugEnable; }
+	bool &getIsCull(void) { return _isCull; }
 
 	std::vector<boundingBox> & getBoundingBoxList(void) { return _vbBox; }
 	std::vector<boundingSphere> & getBoundingSphereList(void) { return _vbSphere; }

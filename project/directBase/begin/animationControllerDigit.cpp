@@ -42,10 +42,24 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 
 		if (acInfo.motionVector.size() != 0)
 		{
+			if (acInfo.leftMixTime > 0)
+			{
+				//트랙 전환
+				acInfo.aniCount = acInfo.nextAniCount;
+				acInfo.trackPositionA = acInfo.trackPositionB;
+				acInfo.trackWeightA = 1.0f;
+				if (acInfo.nextMotionVector.size() != 0)
+				{
+					acInfo.aniCount = 0;
+					acInfo.motionVector = acInfo.nextMotionVector;
+					acInfo.timeScale = acInfo.nextTimeScale;
+				}
+
+			}
 			PatternManager::AniInfo check = checkAnimationOut(acInfo.CurrentMotionBit);
 			acInfo.nextMotionVector = check.motionArray;
 			acInfo.nextTimeScale = check.timeScale;
-			acInfo.isNextCancel = check.cancel;
+			//acInfo.isNextCancel = check.cancel;
 			acInfo.maxMixTime = 0.2f / max(acInfo.timeScale, acInfo.nextTimeScale);
 			acInfo.leftMixTime = acInfo.maxMixTime;
 			acInfo.trackPositionB = 0.0f;
@@ -127,7 +141,7 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 			acInfo.aniCount = 0;
 			acInfo.timeScale = acInfo.nextTimeScale;
 			acInfo.nextTimeScale = 0.0f;
-			acInfo.isCancel = acInfo.isNextCancel;
+			//acInfo.isCancel = acInfo.isNextCancel;
 			acInfo.motionVector = acInfo.nextMotionVector;
 			acInfo.nextMotionVector.clear();
 		}
@@ -157,7 +171,7 @@ void animationControllerDigit::changeAnimationControll(ACInfo& acInfo)
 		PatternManager::AniInfo check = checkAnimationOut(acInfo.CurrentMotionBit);
 		acInfo.motionVector = check.motionArray;
 		acInfo.timeScale = check.timeScale;
-		acInfo.isCancel = check.cancel;
+		//acInfo.isCancel = check.cancel;
 		acInfo.trackWeightA = 1.0f;
 
 		m_pAnimationSet = findAnimationSet(m_oAnimationNameList[acInfo.motionVector[acInfo.aniCount]]);

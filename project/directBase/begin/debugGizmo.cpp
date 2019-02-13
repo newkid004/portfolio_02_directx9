@@ -20,6 +20,7 @@ debugGizmo::~debugGizmo()
 void debugGizmo::update(void)
 {
 	renderObject::update();
+	_isCull = false;
 }
 
 void debugGizmo::drawPre(void)
@@ -59,33 +60,33 @@ LPDIRECT3DVERTEXBUFFER9 debugGizmo::createVertexBuffer(void)
 		int index = 0;
 		// x
 		v[index++].pos = D3DXVECTOR3(0, 0, 0);
-		v[index++].pos = D3DXVECTOR3(1, 0, 0);
+		v[index++].pos = D3DXVECTOR3(_length, 0, 0);
 
-		v[index++].pos = D3DXVECTOR3(0.9, 0, 0.1);
-		v[index++].pos = D3DXVECTOR3(1, 0, 0);
+		v[index++].pos = D3DXVECTOR3(_length * 0.9f, 0, _length * 0.1f);
+		v[index++].pos = D3DXVECTOR3(_length, 0, 0);
 
-		v[index++].pos = D3DXVECTOR3(0.9, 0, -0.1);
-		v[index++].pos = D3DXVECTOR3(1, 0, 0);
+		v[index++].pos = D3DXVECTOR3(_length * 0.9f, 0, -_length * 0.1f);
+		v[index++].pos = D3DXVECTOR3(_length, 0, 0);
 
 		// y
 		v[index++].pos = D3DXVECTOR3(0, 0, 0);
-		v[index++].pos = D3DXVECTOR3(0, 1, 0);
+		v[index++].pos = D3DXVECTOR3(0, _length, 0);
 
-		v[index++].pos = D3DXVECTOR3(0.1, 0.9, 0);
-		v[index++].pos = D3DXVECTOR3(0, 1, 0);
+		v[index++].pos = D3DXVECTOR3(_length * 0.1f, _length * 0.9f, 0);
+		v[index++].pos = D3DXVECTOR3(0, _length, 0);
 
-		v[index++].pos = D3DXVECTOR3(-0.1, 0.9, 0);
-		v[index++].pos = D3DXVECTOR3(0, 1, 0);
+		v[index++].pos = D3DXVECTOR3(-_length * 0.1f, _length * 0.9f, 0);
+		v[index++].pos = D3DXVECTOR3(0, _length, 0);
 
 		// z
 		v[index++].pos = D3DXVECTOR3(0, 0, 0);
-		v[index++].pos = D3DXVECTOR3(0, 0, 1);
+		v[index++].pos = D3DXVECTOR3(0, 0, _length);
 
-		v[index++].pos = D3DXVECTOR3(0, 0.1, 0.9);
-		v[index++].pos = D3DXVECTOR3(0, 0, 1);
+		v[index++].pos = D3DXVECTOR3(0, _length * 0.1f, _length * 0.9f);
+		v[index++].pos = D3DXVECTOR3(0, 0, _length);
 
-		v[index++].pos = D3DXVECTOR3(0, -0.1, 0.9);
-		v[index++].pos = D3DXVECTOR3(0, 0, 1);
+		v[index++].pos = D3DXVECTOR3(0, -_length * 0.1f, _length * 0.9f);
+		v[index++].pos = D3DXVECTOR3(0, 0, _length);
 
 		for (int i = 0; i < 6; ++i)
 			v[i].diffuse = COLOR_RED(255);
