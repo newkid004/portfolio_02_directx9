@@ -54,23 +54,31 @@ void patternMesh::update(void)
 			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[fingerNumber]->combineMatrix;
 		}
 		/*
+		¿À¸¥¼Õ ÀåÂø
+
 		Rifle
 		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
 			D3DXToRadian(90.0f), D3DXToRadian(175.0f), D3DXToRadian(-15.0f));
-		D3DXMatrixTranslation(&stTranslation, 0.0f, 0.0f, -1.0f);*/
+		D3DXMatrixTranslation(&stTranslation, 0.0f, 0.0f, -1.0f);
 
-/*		SHOTGUN
-		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-			D3DXToRadian(70.0f), D3DXToRadian(190.0f), D3DXToRadian(-10.0f));
-		D3DXMatrixTranslation(&stTranslation, 1.5f, 0.5f, -2.5f);*/
-									//¾ç¼ö//¾ÕÀ¸·Î , ¹ØÀ¸·Î
-
-
+		SHOTGUN
 		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
 			D3DXToRadian(70.0f), D3DXToRadian(190.0f), D3DXToRadian(-10.0f));
 		D3DXMatrixTranslation(&stTranslation, 1.5f, 0.5f, -2.5f);
+									//¾ç¼ö//¾ÕÀ¸·Î , ¹ØÀ¸·Î*/
+
+
+		/*
+		¿Þ¼Õ ÀåÂø 
+		Rilfe
+		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
+			D3DXToRadian(60.0f), D3DXToRadian(195.0f), D3DXToRadian(160.0f));
+		D3DXMatrixTranslation(&stTranslation, -19.0f, 3.0f, -14.0f);
 		
-		
+		ShotGun*/
+		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
+			D3DXToRadian(70.0f), D3DXToRadian(205.0f), D3DXToRadian(180.0f));
+		D3DXMatrixTranslation(&stTranslation, -15.0f, 3.0f, -8.0f);
 		
 		stWeaponMatrix = stRotationMatrix * stTranslation * stWeaponMatrix;
 		_weapon->update();
@@ -88,7 +96,7 @@ int patternMesh::findFinger(void)
 	for (int i = 0; i < _vMeshContainerList[0]->vBoneList.size(); ++i)
 	{
 		std::string name = _vMeshContainerList[0]->vBoneList[i]->Name;
-		if (name.find("R_Wrist") != string::npos)
+		if (name.find("Finger0") != string::npos)
 		{
 			return i;
 		}

@@ -16,7 +16,7 @@ void AnimationTester::init(void)
 	_healKit = this->createHealKit();
 	_healKit->setScale(0.03f);
 	_skinnedMesh = this->createSkinnedMesh();
-	_skinnedMesh->setWeapon(_shotgun);
+	_skinnedMesh->setWeapon(_rifle);
 #if		CURRENT_MESH ==	SURVIVOR
 	_skinnedMesh->setScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
 #elif	CURRENT_MESH == ZOMBIE_MALE
@@ -256,8 +256,11 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
-				AWEAPON_PUMPSHOTGUN |
-				AMIX_SHOOT;
+				AWEAPON_RIFLE |
+				ACONDITION_NORMAL |
+				AMAIN_IDLE |
+				AMIX_NONE |
+				AIDLE_STANDING;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_2))
@@ -266,8 +269,11 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
-				AWEAPON_PUMPSHOTGUN |
-				AMIX_UNHOLSTER;
+				AWEAPON_RIFLE |
+				ACONDITION_INJURED |
+				AMAIN_IDLE |
+				AMIX_NONE |
+				AIDLE_STANDING;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_3))
@@ -276,11 +282,8 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
-				AWEAPON_PUMPSHOTGUN |
-				ACONDITION_NORMAL |
-				AMAIN_IDLE |
-				AMIX_NONE |
-				AIDLE_STANDING;
+				AWEAPON_RIFLE |
+				AMIX_SHOOT;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_4))
@@ -299,11 +302,8 @@ void AnimationTester::updateControl(void)
 		{
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
-				AWEAPON_PUMPSHOTGUN |
-				ACONDITION_INJURED |
-				AMAIN_IDLE |
-				AMIX_NONE |
-				AIDLE_STANDING;
+				AWEAPON_RIFLE |
+				AMIX_UNHOLSTER;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_6))
