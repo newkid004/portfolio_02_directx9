@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -179,6 +179,7 @@
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
+    <ClInclude Include="charaterArea.h" />
     <ClInclude Include="inGame_data_status.h" />
     <ClInclude Include="nodeMesh.h" />
     <ClInclude Include="dbList.h" />
@@ -256,6 +257,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
+    <ClInclude Include="wallCollision.h" />
     <ClInclude Include="weaponBase.h" />
     <ClInclude Include="windowBase.h" />
     <ClInclude Include="windowCtlogMaptool.h" />
@@ -290,6 +292,7 @@
     <ClCompile Include="buttonMoveBar.cpp" />
     <ClCompile Include="buttonScrollVertical.cpp" />
     <ClCompile Include="buttonStatic.cpp" />
+    <ClCompile Include="charaterArea.cpp" />
     <ClCompile Include="nodeMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
@@ -355,6 +358,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
+    <ClCompile Include="wallCollision.cpp" />
     <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="windowBase.cpp" />
     <ClCompile Include="windowCtlogMaptool.cpp" />
