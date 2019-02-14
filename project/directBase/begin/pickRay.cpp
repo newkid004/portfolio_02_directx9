@@ -130,32 +130,7 @@ bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 	return false;
 }
 
-bool pick::chkPick(ray * in_ray, const D3DXVECTOR3 & position, float speed, boundingBox * bBox)
-{
-	//in_ray->origin = position;
-	//in_ray->direction = position + in_ray->direction * speed;
-
-	float bulletToNextPosDist = gFunc::Vec3Distance(position, position + in_ray->direction * speed);
-
-	float bulletToBoxMinDist = gFunc::Vec3Distance(position, bBox->min);
-	float bulletToBoxMaxDist = gFunc::Vec3Distance(position, bBox->max);
-
-	float bulletToBoxDist = min(bulletToBoxMinDist, bulletToBoxMaxDist);
-
-	D3DXVec3Normalize(&in_ray->direction, &in_ray->direction);
-
-	if (bulletToBoxDist < bulletToNextPosDist)
-	{
-		if (chkPick(in_ray, bBox))
-		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool pick::chkPick(ray * in_ray, const D3DXVECTOR3 & position, float speed, boundingSphere * bSphere)
+bool pick::isPickRay2Sphere(ray * in_ray, const D3DXVECTOR3 & position, float speed, boundingSphere * bSphere)
 {
 	if (in_ray == NULL)
 		in_ray = &MN_KEY->getPickRay();
@@ -164,18 +139,27 @@ bool pick::chkPick(ray * in_ray, const D3DXVECTOR3 & position, float speed, boun
 	D3DXVECTOR3 & rayOrigin = in_ray->origin;
 
 	D3DXVECTOR3 delta = bSphere->center - rayOrigin;
-	D3DXVECTOR3 myDelta = position + (rayDir * speed) - rayOrigin;
 
 	float deltaLength = D3DXVec3Dot(&delta, &delta);
+
+	float radius = bSphere->radius * bSphere->radius;
+	float dotValue = D3DXVec3Dot(&delta, &rayDir);
+
+	if (dotValue < 0.0f && deltaLength > radius)
+		return false;
+
+	D3DXVECTOR3 myDelta = position + (rayDir * speed) - rayOrigin;
 	float myDeltaLength = D3DXVec3Dot(&myDelta, &myDelta);
-	
-	if (myDeltaLength > deltaLength)
+
+	if (deltaLength - (dotValue * dotValue) <= radius)
 	{
-		return true;
+		if (myDeltaLength > deltaLength)
+		{
+			return true;
+		}
 	}
 	return false;
 	
-
 }
 
 bool pick::chkPick(ray * in_ray, boundingBox * bBox)

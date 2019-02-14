@@ -72,7 +72,6 @@ void sceneCollisionTest::init(void)
 	}
 
 	m_pBulletManager = new bulletManager;
-	m_pSphereMesh = this->createSphereMesh();
 	
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject = new mapObject;
@@ -100,8 +99,9 @@ void sceneCollisionTest::update(void)
 		
 		//gFunc::obj2bound(m_pSkinnedMesh[i]->getObjectBox(),)
 	}
-	//m_pObjectMesh->update();
+
 	m_pBulletManager->update();
+	collisionCheck();
 
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->update();
@@ -120,11 +120,7 @@ void sceneCollisionTest::draw(void)
 	}
 	D3DXMATRIXA16 stWorld;
 	D3DXMatrixIdentity(&stWorld);
-	MN_DEV->SetTransform(D3DTS_WORLD, &stWorld);
-	MN_DEV->SetRenderState(D3DRS_LIGHTING, false);
-	m_pSphereMesh->DrawSubset(0);
-	MN_DEV->SetRenderState(D3DRS_LIGHTING, true);
-	//m_pObjectMesh->draw();
+
 	m_pBulletManager->draw();
 
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
@@ -204,27 +200,39 @@ void sceneCollisionTest::updateControl(void)
 
 		m_pBulletManager->addBullet(stRay.origin, stRay.direction, 1);
 	}
+}
 
-	auto mBoundSet = m_pSkinnedMesh[0]->getBoundingBoxSetList();
+bool sceneCollisionTest::collisionCheck(void)
+{
+	auto mBoundBoxSet = m_pSkinnedMesh[0]->getBoundingBoxSetList();
+	auto mBoundSphereSet = m_pSkinnedMesh[0]->getBoundingSphereSetList();
 	auto mSphere = m_pSkinnedMesh[0]->getBoundingSphere();
 	auto vBullet = m_pBulletManager->getBulletList();
-	mSphere.center = D3DXVECTOR3(0, 0, 0);
-	mSphere.radius = 3;
+	mSphere.center += m_pSkinnedMesh[0]->getBoundingSphereOffset();;
+	mSphere.radius = m_pSkinnedMesh[0]->getBoundingSphere().radius * m_pSkinnedMesh[0]->getScale().x;
 
 	for (int i = 0; i < vBullet.size(); i++)
 	{
-		//printf("%d vBullet To Sphere Distance : %f\n", i, gFunc::Vec3Distance(vBullet[i]->getPosition(), mSphere.center * 0.03));
-		if (pick::chkPick(&vBullet[i]->getPickRay(), &mSphere))
+		if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), vBullet[i]->getPosition(),
+			vBullet[i]->getSpeed(), &mSphere))
 		{
-			if (pick::chkPick(&vBullet[i]->getPickRay(), vBullet[i]->getPosition(), vBullet[i]->getSpeed(), &mSphere))
+			for (auto rValue : mBoundSphereSet)
 			{
-				printf("충돌!!\n");
-				m_pBulletManager->deleteBullet(i);
+				auto sphere = rValue.second.sphere;
+				sphere.center = rValue.second.drawPosition;
+				sphere.radius *= m_pSkinnedMesh[0]->getScale().x;
+				
+				if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), vBullet[i]->getPosition(),
+					vBullet[i]->getSpeed(), &sphere))
+				{
+					printf("%s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
+					m_pBulletManager->deleteBullet(i);
+					return true;
+				}
 			}
 		}
 	}
-	
-	
+	return false;
 }
 
 skinnedMesh * sceneCollisionTest::createZombieMesh(ECharacterType characterType)
@@ -251,7 +259,7 @@ LPD3DXMESH sceneCollisionTest::createSphereMesh(void)
 	LPD3DXMESH pMesh = nullptr;
 
 	D3DXCreateSphere(MN_DEV,
-		3, 10, 10, &pMesh, NULL);
+		0.1, 10, 10, &pMesh, NULL);
 
 	return pMesh;
 }

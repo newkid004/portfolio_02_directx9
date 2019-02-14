@@ -12,12 +12,14 @@ public:
 	struct BOUNDBOXSET
 	{
 		boundingBox box;
+		D3DXVECTOR3 drawPosition;
 		D3DXMATRIXA16 matrix;
 	};
 
 	struct BOUNDSPHERESET
 	{
 		boundingSphere sphere;
+		D3DXVECTOR3 drawPosition;
 		D3DXMATRIXA16 matrix;
 	};
 
@@ -28,6 +30,8 @@ protected:
 	bool _isCull = false;
 	bool _isVisible = true;
 	bool _isDebugEnable = false;
+	
+	D3DXVECTOR3 _offset;
 
 	boundingBox _bBox;
 	boundingSphere _bSphere;
@@ -69,6 +73,7 @@ public:
 
 	constexpr boundingBox & getBoundingBox(void) { return _bBox; }
 	constexpr boundingSphere & getBoundingSphere(void) { return _bSphere; }
+	const D3DXVECTOR3 & getBoundingSphereOffset(void) { return _offset; }
 
 	void getBoundingBoxFinal(boundingBox * out);
 	void getBoundingSphereFinal(boundingSphere * out);
@@ -80,7 +85,7 @@ public:
 	void setDebugEnable(bool input, EDebugDrawType drawType = EDebugDrawType::BOX);
 	void setBoundingBox(const boundingBox & input) { _vbBox.push_back(input); }
 	void setBoundingBox(std::string name, BOUNDBOXSET & input) { _mbBoxSet.insert(BOUNDBOXMATRIXSET::value_type(name, input)); }
-	void setBoundingSphere(const boundingSphere & input) { _bSphere = input; }
+	void setBoundingSphere(const boundingSphere & input, const D3DXVECTOR3 & offset = D3DXVECTOR3(0.0f,0.0f,0.0f)) { _bSphere = input; _offset = offset; }
 	void setBoundingSphere(std::string name, BOUNDSPHERESET & input) { _mbSphereSet.insert(BOUNDSPHEREMATRIXSET::value_type(name, input)); }
 
 	void setBoundingBoxMatrix(std::string name, D3DXMATRIXA16 & mat) { _mbBoxSet.find(name)->second.matrix = mat; }

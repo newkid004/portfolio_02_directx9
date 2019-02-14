@@ -45,6 +45,27 @@ void skinnedMesh::update(void)
 	_aniController->update();
 
 	updateBoneMatrix(_rootBone, getMatrixFinal());
+
+	// 바운딩 스피어 업데이트
+	// {
+	D3DXVec3TransformCoord(&_bSphere.center, &_bSphere.center, &getMatrixFinal());
+	setBoundingSphere(_bSphere, _offset);
+	// }
+
+	// 스피어 드로잉 위치 업데이트
+	for (int i = 0; i < _vBoneNameList.size(); ++i)
+	{
+		boundingSphere mSphere = _mbSphereSet.find(_vBoneNameList[i])->second.sphere;
+		D3DXMATRIXA16 stMat = _mbBoxSet.find(_vBoneNameList[i])->second.matrix;
+		D3DXMATRIXA16 stTrans;
+		D3DXMatrixTranslation(&stTrans, mSphere.center.x, mSphere.center.y, mSphere.center.z);
+		D3DXMATRIXA16 mWorld = stMat * stTrans;
+
+		D3DXVECTOR3 stPos(0, 0, 0);
+		D3DXVec3TransformCoord(&stPos, &stPos, &mWorld);
+		_mbSphereSet.find(_vBoneNameList[i])->second.drawPosition = stPos;
+	}
+
 }
 
 void skinnedMesh::drawPre(void)
@@ -281,17 +302,25 @@ void skinnedMesh::setBoneBoundSphere(void)
 				STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
 				BOUNDSPHERESET boundSet;
 				ZeroMemory(&boundSet, sizeof(boundSet));
+				D3DXMATRIXA16 stTrans;
+				D3DXVECTOR3 stDrawPosition(0, 0, 0);
+				D3DXMatrixTranslation(&stTrans, boundSet.sphere.center.x, boundSet.sphere.center.y, boundSet.sphere.center.z);
+				D3DXVec3TransformCoord(&stDrawPosition, &stDrawPosition, &(boundSet.matrix * stTrans));
+
 				boundSet.sphere = gFunc::createBoundingSphere(
 					this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
 					stBoxSize.width / 1.3);
 
 				boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
+				boundSet.drawPosition = stDrawPosition;
 
 				setBoundingSphere(_vBoneNameList[i], boundSet);
 			}
 		}
 		
-		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 15, 0), 100));
+		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 1.4f, 0.0f), 60),
+			D3DXVECTOR3(0.0f, 1.4f, 0.0f));
+
 		break;
 	}
 	}

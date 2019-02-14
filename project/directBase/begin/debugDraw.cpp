@@ -95,6 +95,7 @@ void debugDraw::updateBoundingMatrix(void)
 		_mbSphereSet.find(rValue.first)->second.matrix = _bindObject->getBoundingBoxSetList().find(rValue.first)->second.matrix;
 	}
 
+	
 
 	if (MN_KEY->keyPress(DIK_1))
 	{
@@ -389,7 +390,7 @@ void debugDraw::getMatrixBound(D3DXMATRIXA16 * outMat, EDebugDrawType type)
 			(_bBox.min.y + _bBox.max.y) / 2.0f,
 			(_bBox.min.z + _bBox.max.z) / 2.0f);
 
-		*outMat = mTranslate * _bindObject->getMatrixFinal();
+		*outMat = _bindObject->getMatrixFinal() * mTranslate;
 	} break;
 
 	case EDebugDrawType::SPHERE: {
@@ -400,7 +401,7 @@ void debugDraw::getMatrixBound(D3DXMATRIXA16 * outMat, EDebugDrawType type)
 			_bSphere.center.y,
 			_bSphere.center.z);
 
-		*outMat = mTranslate * _bindObject->getMatrixFinal();
+		*outMat = _bindObject->getMatrixFinal() * mTranslate;
 	} break;
 	}
 }

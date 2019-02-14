@@ -42,14 +42,15 @@ protected :
 	allocateHierarchy::boneFrame* _rootBone = nullptr;
 	std::vector<allocateHierarchy::meshContainer*> _vMeshContainerList;
 
+	BONEINFOLIST _mBoneInfoList;
+	BOXSIZELIST _mBoxSizeList;
+	std::vector<std::string> _vBoneNameList;
+
 	animationController* _aniController = nullptr;
 
 	ECharacterType _characterType = ECharacterType::NONE;
 
-	BONEINFOLIST _mBoneInfoList;
-	BOXSIZELIST _mBoxSizeList;
-	std::vector<std::string> _vBoneNameList;
-	
+
 public :
 	void init(void);
 	void update(void) override;

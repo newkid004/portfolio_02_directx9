@@ -30,6 +30,7 @@ private:
 
 	void initEvent(void);
 	void updateControl(void);
+	bool collisionCheck(void);
 
 private:
 	skinnedMesh* createZombieMesh(ECharacterType characterType = ECharacterType::NONE);
