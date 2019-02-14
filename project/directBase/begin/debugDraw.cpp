@@ -15,6 +15,7 @@ debugDraw::debugDraw(renderObject * bind, EDebugDrawType drawType) :
 	//case EDebugDrawType::SPHERE:	createBoundingSphere(bind->getBoundingSphereSetList()); break;
 	//}
 	_meshBoundingSphere = createBoundingSphere(bind->getBoundingSphere());
+	createBoundingBox(bind->getBoundingBoxList());
 	createBoundingBox(bind->getBoundingBoxSetList());
 	createBoundingSphere(bind->getBoundingSphereSetList());
 }

@@ -43,7 +43,9 @@ private:
 	std::vector<D3DXVECTOR4> _vVertexList;
 
 	int num = 0;
-	int fingerNumber = -1;
+	int _leftFingerNumber = -1;
+	int _rightFingerNumber = -1;
+	bool _IsleftHand = true;
 public:
 	void update(void) override;
 	int findFinger(void);
