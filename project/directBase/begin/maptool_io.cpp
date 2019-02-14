@@ -190,10 +190,7 @@ void maptool_io::spreadField(void)
 	quadTree_Frustum* & quad = _bindData->getSet().qTree;
 	SAFE_DELETE(quad);
 
-	auto & ter = field->getTerrain();
-	if (ter)	quad = new quadTree_Frustum(ter->getSizeMap().cx, ter->getSizeMap().cy);
-	else		quad = new quadTree_Frustum(256, 256);
-
+	quad = new quadTree_Frustum(256, 256);
 	quad->build();
 }
 

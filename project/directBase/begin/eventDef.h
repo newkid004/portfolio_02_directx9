@@ -1,9 +1,160 @@
 #pragma once
 
-// ----- type : 0x000f ----- //
-// 이벤트로 전달되는 인자의 형태
-// 각 sour, destParam의 0x000f번째(0x000f 000f)의 형태로 전달
-// 예) enemy -> player에게 전달(param = 0x0009 0008)
+struct EVENT
+{
+#define DEF_TYPE constexpr static int
+
+	DEF_TYPE shift_TYPE	= 0;
+	DEF_TYPE shift_KIND	= 1;
+	DEF_TYPE shift_ACT	= 2;
+	DEF_TYPE shift_CALL	= 3;
+
+	DEF_TYPE NONE = 0;
+
+	// ----- type : 0x000f ----- //
+	// 이벤트로 전달되는 인자의 형태
+	// 각 sour, destParam의 0x000f번째(0x000f 000f)의 형태로 전달
+	// 예) enemy -> player에게 전달(param = 0x0009 0008)
+	struct TYPE
+	{
+		DEF_TYPE shiftCount = shift_TYPE;
+
+		DEF_TYPE EVENT			= 0x1 << shiftCount;
+		DEF_TYPE OBJECT			= 0x2 << shiftCount;
+		DEF_TYPE TERRAIN		= 0x3 << shiftCount;
+		DEF_TYPE EFFECT			= 0x4 << shiftCount;
+		DEF_TYPE ITEM			= 0x5 << shiftCount;
+		DEF_TYPE WINDOW			= 0x6 << shiftCount;
+		DEF_TYPE SYSTEM			= 0x7 << shiftCount;
+		DEF_TYPE CHARACTER		= 0x8 << shiftCount;
+		DEF_TYPE ENEMY			= 0x9 << shiftCount;
+	};
+
+	// ----- kind : 0x00f0 ----- //
+	// 이벤트로 전달되는 인자의 세부형태
+	// 각 sour, destParam의 0x00f0번째(0x00f0 00f0)의 형태로 전달
+	// 세부형태가 딱히 없으면 비워둠(0)
+	struct KIND
+	{
+		DEF_TYPE shiftCount = shift_KIND;
+
+		struct OBJECT
+		{
+			DEF_TYPE BASE		= 0x1 << shiftCount;
+			DEF_TYPE BULLET		= 0x2 << shiftCount;
+			DEF_TYPE VEHICLE	= 0x3 << shiftCount;
+		};
+
+		struct TERRAIN
+		{
+			DEF_TYPE BASE		= 0x1 << shiftCount;
+			DEF_TYPE WALL		= 0x2 << shiftCount;
+			DEF_TYPE STAIRS		= 0x3 << shiftCount;
+		};
+
+		struct EFFECT
+		{
+			DEF_TYPE BLOOD		= 0x1 << shiftCount;
+			DEF_TYPE SHADE		= 0x2 << shiftCount;
+			DEF_TYPE LIGHT		= 0x3 << shiftCount;
+			DEF_TYPE SHOTFIRE	= 0x4 << shiftCount;
+		};
+
+		struct ITEM
+		{
+			DEF_TYPE RIFLE		= 0x1 << shiftCount;
+			DEF_TYPE SHOTGUN	= 0x2 << shiftCount;
+			DEF_TYPE HEALKIT	= 0x3 << shiftCount;
+			DEF_TYPE BULLET		= 0x4 << shiftCount;
+			DEF_TYPE ETC		= 0x5 << shiftCount;
+		};
+
+		struct WINDOW
+		{
+			DEF_TYPE BASE		= 0x1 << shiftCount;
+			DEF_TYPE MAPTOOL	= 0x2 << shiftCount;
+			DEF_TYPE OPTION		= 0x3 << shiftCount;
+			DEF_TYPE EXIT		= 0x4 << shiftCount;
+		};
+
+		struct SYSTEM
+		{
+			DEF_TYPE MAPSAVE	= 0x1 << shiftCount;
+			DEF_TYPE MAPLOAD	= 0x2 << shiftCount;
+			DEF_TYPE SOUND		= 0x3 << shiftCount;
+		};
+
+		struct CHARACTER
+		{
+			DEF_TYPE PLAYER		= 0x1 << shiftCount;
+			DEF_TYPE NAMVET		= 0x2 << shiftCount;
+			DEF_TYPE TEENANGST	= 0x3 << shiftCount;
+			DEF_TYPE MANAGER	= 0x4 << shiftCount;
+		};
+
+		struct ENEMY
+		{
+			DEF_TYPE BASE		= 0x1 << shiftCount;
+			DEF_TYPE TANKER		= 0x2 << shiftCount;
+			DEF_TYPE SMOKER		= 0x3 << shiftCount;
+		};
+	};
+
+	// ----- act : 0x0f00 ----- //
+	// 인자 간 이벤트의 실행 형태
+	// 각 sour, destParam의 0x0f00번째(0x0f00 0f00)의 형태로 전달
+	// 각 enum에 원하는 구분요소가 없을때마다 임의로 추가
+	struct ACT
+	{
+		DEF_TYPE shiftCount = shift_ACT;
+
+		struct CHARACTER
+		{
+			DEF_TYPE WALK		= 0x1 << shiftCount;
+			DEF_TYPE RUN		= 0x2 << shiftCount;
+			DEF_TYPE JUMP		= 0x3 << shiftCount;
+			DEF_TYPE SHOOT		= 0x4 << shiftCount;
+			DEF_TYPE ATTACK		= 0x5 << shiftCount;
+			DEF_TYPE HEAL		= 0x6 << shiftCount;
+			DEF_TYPE ONHIT		= 0x7 << shiftCount;
+			DEF_TYPE STUN		= 0x8 << shiftCount;
+			DEF_TYPE DEATH		= 0x9 << shiftCount;
+		};
+
+		struct ENEMY
+		{
+			DEF_TYPE WALK		= 0x1 << shiftCount;
+			DEF_TYPE RUN		= 0x2 << shiftCount;
+			DEF_TYPE ATTACK		= 0x3 << shiftCount;
+			DEF_TYPE FALL		= 0x4 << shiftCount;
+			DEF_TYPE ONHIT		= 0x5 << shiftCount;
+			DEF_TYPE DEATH		= 0x6 << shiftCount;
+		};
+
+		struct ITEM
+		{
+			DEF_TYPE GET		= 0x1 << shiftCount;
+			DEF_TYPE USE		= 0x2 << shiftCount;
+			DEF_TYPE EQUIPMENT	= 0x3 << shiftCount;
+		};
+	};
+
+	// ----- call : 0xf000 ---- //
+	// 위 사항의 형태에 따른 캐쳐 호출형태(index)
+	// 각 sour, destParam의 0xf000번째(0xf000 f000)의 형태로 전달
+	// 세부형태가 딱히 없으면 비워둠(0)
+	struct CALL
+	{
+		DEF_TYPE shiftCount = shift_CALL;
+
+		struct PLAYER_STATE_CHANGE
+		{
+			DEF_TYPE INCREASE	= 0x1 << shiftCount;
+			DEF_TYPE DECREASE	= 0x2 << shiftCount;
+		};
+	};
+};
+
 enum e_EVENT_TYPE
 {
 	ET_EVENT			= 0x1,
@@ -19,10 +170,6 @@ enum e_EVENT_TYPE
 	ET_NONE = 0
 };
 
-// ----- kind : 0x00f0 ----- //
-// 이벤트로 전달되는 인자의 세부형태
-// 각 sour, destParam의 0x00f0번째(0x00f0 00f0)의 형태로 전달
-// 세부형태가 딱히 없으면 비워둠(0)
 
 // kind : object
 enum e_EVENT_KIND_OBJECT
@@ -109,10 +256,6 @@ enum e_EVENT_KIND_ENEMY
 	EK_ENEMY_NONE = 0
 };
 
-// ----- act : 0x0f00 ----- //
-// 인자 간 이벤트의 실행 형태
-// 각 sour, destParam의 0x0f00번째(0x0f00 0f00)의 형태로 전달
-// 각 enum에 원하는 구분요소가 없을때마다 임의로 추가
 
 // act : character
 enum e_EVENT_ACT_CHARACTER
@@ -153,10 +296,6 @@ enum e_EVENT_ACT_ITEM
 	EA_ITEM_NONE = 0
 };
 
-// ----- call : 0xf000 ---- //
-// 위 사항의 형태에 따른 캐쳐 호출형태(index)
-// 각 sour, destParam의 0xf000번째(0xf000 f000)의 형태로 전달
-// 세부형태가 딱히 없으면 비워둠(0)
 
 // call : player - status - change
 enum e_EVENT_CALL_PLAYER_STATE_CHANGE

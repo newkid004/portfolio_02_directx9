@@ -54,23 +54,6 @@ void maptool_data_io::OBJ::FIELD::write(json & in_Json)
 		i.second.write(in_Json["wall"][i.first]);
 
 	_ceil.write(in_Json["ceil"]);
-	writeTerrain(in_Json["terrain"]);
-}
-
-void maptool_data_io::OBJ::FIELD::writeTerrain(json & in_Json)
-{
-	in_Json["smoothLevel"] = _terrain.smoothLevel;
-	in_Json["heightScale"] = _terrain.heightScale;
-
-	in_Json["pathSplat"] = _terrain.pathSplat;
-	in_Json["pathHeight"] = _terrain.pathHeight;
-	in_Json["pathEffect"] = _terrain.pathEffect;
-
-	in_Json["tileSize"] = { _terrain.tileSize.cx , _terrain.tileSize.cy };
-	in_Json["mapSize"] = { _terrain.mapSize.cx , _terrain.mapSize.cy };
-
-	for (int i = 0; i < _terrain.vPathTextureFile.size(); ++i)
-		in_Json["texture"][i] = _terrain.vPathTextureFile[i];
 }
 
 void maptool_data_io::OBJ::NODE::write(json & in_Json)
@@ -134,9 +117,6 @@ bool maptool_data_io::parse(OBJ::FIELD * own, json & j_in)
 		return false;
 
 	if (!parse((OBJ::PROP*)&own->_ceil, j_in["ceil"]))
-		return false;
-
-	if (!parse(&own->_terrain, j_in["terrain"]))
 		return false;
 
 	auto & jTarget = j_in["wall"];
@@ -245,9 +225,6 @@ void maptool_data_io::apply(OBJ::BUMP * in, staticMesh * obj)
 
 void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
 {
-	if (obj->getTerrain())
-		in->_terrain = obj->getTerrain()->getMakeParam();
-
 	auto & mObject = obj->getMapList();
 	for (auto & subset : mObject)
 	{
@@ -262,11 +239,6 @@ void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
 
 	if (obj->getCeilObject())
 		apply(&in->_ceil, obj->getCeilObject());
-}
-
-void maptool_data_io::apply(OBJ::FIELD * in, terrain::params * obj)
-{
-	apply((OBJ::BASE*)in, (baseObject*)obj);
 }
 
 void maptool_data_io::apply(OBJ::NODE * in, nodeMesh * obj)
@@ -339,21 +311,6 @@ void maptool_data_io::apply(mapObject * in, OBJ::FIELD * data)
 
 		mObjectList.insert(mapObject::MAPLIST::value_type(i.first, wall));
 	}
-}
-
-void maptool_data_io::apply(terrain::params * in, OBJ::FIELD * data)
-{
-	auto & terData = data->_terrain;
-	in->smoothLevel = terData.smoothLevel;
-	in->heightScale = terData.heightScale;
-
-	in->pathSplat = terData.pathSplat;
-	in->pathHeight = terData.pathHeight;
-	in->pathEffect = terData.pathEffect;
-
-	CopyMemory(&in->tileSize, &terData.tileSize, sizeof(SIZE));
-	CopyMemory(&in->mapSize, &terData.mapSize, sizeof(SIZE));
-	copy(in->vPathTextureFile.begin(), in->vPathTextureFile.end(), terData.vPathTextureFile.begin());
 }
 
 void maptool_data_io::apply(nodeMesh * in, OBJ::NODE * data)
@@ -459,11 +416,6 @@ void maptool_data_io::create(mapObject ** out, OBJ::FIELD * data)
 {
 	mapObject* result = new mapObject();
 
-	// apply terrain
-	terrain* ter = nullptr;
-	if (data->_terrain.vPathTextureFile.size() != 0)
-		ter = new terrain(data->_terrain);
-
 	// apply ceil
 	staticMesh* ceil = nullptr;
 	if (!data->_ceil._source.empty() && !data->_ceil._effect.empty())
@@ -478,7 +430,6 @@ void maptool_data_io::create(mapObject ** out, OBJ::FIELD * data)
 	}
 
 	// apply mapObject
-	result->getTerrain() = ter;
 	result->getCeilObject() = ceil;
 	apply(result, data);
 

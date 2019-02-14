@@ -119,7 +119,7 @@ void aStar_grape::pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* 
 					break;
 				}
 			}
-			if (isInCloseList) 
+			if (isInCloseList)
 				continue;
 
 			// open check
@@ -129,7 +129,7 @@ void aStar_grape::pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* 
 				if (viewNode == i->getMember().placedNode)
 				{
 					isInOpenList = true;
-					
+
 					// distance check
 					if (runner->getMember().distance.G < i->getMember().distance.G)
 						i->setPrevRunner(runner);
@@ -168,48 +168,6 @@ void aStar_grape::pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* 
 	// memory delete
 	for (auto i : runnerContainer)
 		SAFE_DELETE(i);
-}
-
-void aStar_grape::runGrape(const std::function<void(aStar_node*from, aStar_node*to)>& callback)
-{
-	auto & vNodeList = _vNodeList;
-
-	if (vNodeList.empty())
-		return;
-
-	heap<int> openList;
-	heap<int, std::greater<>> closeList;
-
-	for (int i = 0; i < vNodeList.size(); ++i)
-	{
-		if (gMng::find(i, closeList.getContainer()))
-			continue;
-
-		openList.push(i);
-		while (!openList.empty())
-		{
-			int currentIndex = openList.top();
-			auto viewNode = vNodeList[currentIndex];
-
-			openList.pop();
-			closeList.push(currentIndex);
-
-			for (auto & i : viewNode->getLinkedNodeList())
-			{
-				auto linkedNode = i.connector;
-				int linkedIndex = linkedNode->getIndex();
-
-				if (gMng::find(linkedIndex, closeList.getContainer()))
-					continue;
-
-				if (!gMng::find(linkedIndex, openList.getContainer()))
-					callback(viewNode, linkedNode);
-
-				else
-					openList.push(linkedIndex);
-			}
-		}
-	}
 }
 
 float aStar_grape::calDistance(aStar_node * n1, aStar_node * n2)

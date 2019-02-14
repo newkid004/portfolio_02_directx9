@@ -90,12 +90,8 @@ public :
 			std::unordered_map<std::string, BUMP> _wall;
 
 			PROP _ceil;
-			terrain::params _terrain;
 
 			virtual void write(json & in_Json);
-
-		private :
-			virtual void writeTerrain(json & in_Json);
 
 		public :
 			FIELD() { _baseType |= baseType::FIELD; }
@@ -141,7 +137,6 @@ public :	// ----- apply ----- //
 	static void apply(OBJ::CHAR* in,		skinnedMesh* obj);
 	static void apply(OBJ::BUMP* in,		staticMesh* obj);
 	static void apply(OBJ::FIELD* in,		mapObject* obj);
-	static void apply(OBJ::FIELD* in,		terrain::params* obj);
 	static void apply(OBJ::NODE* in,		nodeMesh* obj);
 	static void apply(OBJ::PATH* in,		grape* obj);
 
@@ -150,7 +145,6 @@ public :	// ----- apply ----- //
 	static void apply(skinnedMesh* in,		OBJ::CHAR* data);
 	static void apply(staticMesh* in,		OBJ::BUMP* data);
 	static void apply(mapObject* in,		OBJ::FIELD* data);
-	static void apply(terrain::params* in,	OBJ::FIELD* data);
 	static void apply(nodeMesh* in,			OBJ::NODE* data);
 	static void apply(grape* in,			OBJ::PATH* data);
 

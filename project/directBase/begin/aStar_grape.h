@@ -39,7 +39,8 @@ public :
 	void pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* dest);
 
 public :
-	void runGrape(const std::function<void(aStar_node* from, aStar_node* to)> & callback);
+	template<typename compare = std::less<>, typename breaker = pathfind_grape::breakNone>
+	void runGrape(const std::function<void(aStar_node* from, aStar_node* to)> & callback, breaker* brk = nullptr, compare* view = nullptr);
 
 public :
 	static float calDistance(aStar_node* n1, aStar_node* n2);
@@ -60,3 +61,5 @@ public:
 	aStar_grape() {};
 	~aStar_grape();
 };
+
+#include "aStar_grape.hpp"

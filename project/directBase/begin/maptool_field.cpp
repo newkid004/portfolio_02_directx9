@@ -27,10 +27,7 @@ maptool_field::maptool_field(mapObject* inTerrain)
 	_fieldSet.field = inTerrain;
 	if (_fieldSet.field)
 	{
-		auto & ter = _fieldSet.field->getTerrain();
-		if (ter)	_fieldSet.qTree = new quadTree_Frustum(ter->getSizeMap().cx, ter->getSizeMap().cy);
-		else		_fieldSet.qTree = new quadTree_Frustum(256, 256);
-
+		_fieldSet.qTree = new quadTree_Frustum(256, 256);
 		_fieldSet.qTree->build();
 	}
 

@@ -40,6 +40,7 @@ public :
 	// getter
 	static void						getTextureSize(D3DXVECTOR2* out_size, LPDIRECT3DTEXTURE9 texture);
 	static void						getNormal(D3DXVECTOR3* out, D3DXVECTOR3* v0, D3DXVECTOR3* v1, D3DXVECTOR3* v2);
+	static float					getAngle(D3DXVECTOR3 v1, D3DXVECTOR3 v2);
 	
 	// º¯È¯
 	static D3DXVECTOR2				Vec2Mlt(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x * v2.x, v1.y * v2.y); }

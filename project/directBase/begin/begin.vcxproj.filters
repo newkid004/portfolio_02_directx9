@@ -499,6 +499,51 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\weapon\_base">
       <UniqueIdentifier>{3ad410a1-ded0-4f51-a781-b3cb966d605d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\character">
+      <UniqueIdentifier>{5072b7b2-a780-4709-809d-6009bd0e795b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\function\gDigit">
+      <UniqueIdentifier>{776d5603-d0b9-4777-8245-78ee3bd2e9e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\character\_base">
+      <UniqueIdentifier>{c2d7a0d3-4ba7-45f3-957b-207be844ca39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\character\enemy">
+      <UniqueIdentifier>{e98f11f9-6c4e-4626-b1d0-0e2a653ba6e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\character\playerable">
+      <UniqueIdentifier>{fc857a7b-ce72-4367-881b-9b6b23559210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI">
+      <UniqueIdentifier>{bd3119ef-a233-4a32-984c-314d7db86d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI\_base">
+      <UniqueIdentifier>{d294b784-84d3-45f7-8c71-8996306c2742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI\enemy">
+      <UniqueIdentifier>{8a84f33f-227b-4792-b5b3-d88d4897020b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI\playerable">
+      <UniqueIdentifier>{c5eff594-4245-459a-884b-a46563068850}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI\player">
+      <UniqueIdentifier>{e564546c-52cf-4388-a2e2-51cb3a1a7aef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI\enemy\_base">
+      <UniqueIdentifier>{eeca79e8-b1c2-4d92-ad78-5303974f1c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI\enemy\smoker">
+      <UniqueIdentifier>{14826bcd-50c9-44ac-a528-7aef8d269ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\AI\enemy\tank">
+      <UniqueIdentifier>{119810ab-a967-4322-b268-895814561350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\character\playerable\player">
+      <UniqueIdentifier>{b06746c5-4a2c-46e8-9803-c6144cbff008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\singleton">
+      <UniqueIdentifier>{83bd8694-4de2-4767-8cc0-812537a3a22c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -825,11 +870,35 @@
     <ClInclude Include="sceneInGame.h">
       <Filter>main\classes\scene\02_inGame</Filter>
     </ClInclude>
-    <ClInclude Include="inGame_data_status.h">
-      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
-    </ClInclude>
     <ClInclude Include="weaponBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="gDigit.h">
+      <Filter>classes\global\function\gDigit</Filter>
+    </ClInclude>
+    <ClInclude Include="characterBase.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\character\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="controllerBase.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\AI\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="gameSystem.h">
+      <Filter>main\classes\scene\02_inGame\classes\singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="aStar_grape.hpp">
+      <Filter>main\classes\pathfind\aStar\grape\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_digit.h">
+      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_struct.h">
+      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_value.h">
+      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyBase.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\character\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1097,14 +1166,29 @@
     <ClCompile Include="nodeMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
     </ClCompile>
-    <ClCompile Include="aStar_grape.cpp">
-      <Filter>main\classes\pathfind\aStar\grape\_base</Filter>
-    </ClCompile>
     <ClCompile Include="sceneInGame.cpp">
       <Filter>main\classes\scene\02_inGame</Filter>
     </ClCompile>
     <ClCompile Include="weaponBase.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="gDigit.cpp">
+      <Filter>classes\global\function\gDigit</Filter>
+    </ClCompile>
+    <ClCompile Include="characterBase.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\character\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="controllerBase.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\AI\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="gameSystem.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="aStar_grape.cpp">
+      <Filter>main\classes\pathfind\aStar\grape\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyBase.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\character\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

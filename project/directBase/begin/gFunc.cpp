@@ -330,6 +330,19 @@ void gFunc::getNormal(D3DXVECTOR3 * out, D3DXVECTOR3 * v0, D3DXVECTOR3 * v1, D3D
 	D3DXVec3Normalize(out, out);
 }
 
+float gFunc::getAngle(D3DXVECTOR3 v1, D3DXVECTOR3 v2)
+{
+	D3DXVec3Normalize(&v1, &v1);
+	D3DXVec3Normalize(&v2, &v2);
+
+	float angle = std::acosf(D3DXVec3Dot(&v1, &v2));
+
+	if (v1.x * v2.y - v1.y * v2.x < 0.0f)
+		angle = -angle;
+
+	return angle;
+}
+
 int gFunc::rndInt(int min, int max)
 {
 	random_device rDevice;
@@ -463,7 +476,7 @@ bool gFunc::isIntersect(const objectBox & boundA, const objectBox & boundB)
 			return false;
 	}
 
-	// ----- A기준 충돌 ----- //
+	// ----- B기준 충돌 ----- //
 	// X Y Z 순
 	for (int i = 0; i < 3; ++i)
 	{

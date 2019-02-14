@@ -1,7 +1,7 @@
 #pragma once
 #include "kGlobalDefine.h"
 
-#include "inGame_data_status.h"
+#include "inGame_struct.h"
 
 class viewDefBullet;
 
@@ -11,17 +11,10 @@ public :
 	using bulletBase = viewDefBullet;
 
 protected :
-	// info
-	bulletBase*		_bindBullet = nullptr;
+	bulletBase*					_bindBullet = nullptr;	// delete : disable (bulletManager)
+	std::list<D3DXMATRIXA16>	_baseMatrixList;
+	
 	weapon_set		_infoWeapon;
-	D3DXMATRIXA16	_baseMatrix;
-
-	// weapon
-	bool			_isPressed = false;
-	bool			_isReloading = false;
-
-	float			_nextFireTime = 0.0f;
-	float			_nextReloadTime = 0.0f;
 
 public :
 	void update(void);
@@ -48,7 +41,7 @@ public :
 public :
 	bulletBase* &	getBindBullet(void) { return _bindBullet; }
 	weapon_set &	getInfoWeapon(void) { return _infoWeapon; }
-	D3DXMATRIXA16 &	getBaseMatrix(void) { return _baseMatrix; }
+	std::list<D3DXMATRIXA16> &	getBaseMatrixList(void) { return _baseMatrixList; }
 
 public:
 	weaponBase();

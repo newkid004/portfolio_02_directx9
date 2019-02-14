@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -159,6 +159,7 @@
     <ClInclude Include="allocateHierarchy.h" />
     <ClInclude Include="animationController.h" />
     <ClInclude Include="aStar_grape.h" />
+    <ClInclude Include="aStar_grape.hpp" />
     <ClInclude Include="aStar_grape_bind.h" />
     <ClInclude Include="aStar_grape_bind.hpp" />
     <ClInclude Include="aStar_node.h" />
@@ -175,7 +176,14 @@
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
-    <ClInclude Include="inGame_data_status.h" />
+    <ClInclude Include="characterBase.h" />
+    <ClInclude Include="controllerBase.h" />
+    <ClInclude Include="enemyBase.h" />
+    <ClInclude Include="gameSystem.h" />
+    <ClInclude Include="gDigit.h" />
+    <ClInclude Include="inGame_struct.h" />
+    <ClInclude Include="inGame_digit.h" />
+    <ClInclude Include="inGame_value.h" />
     <ClInclude Include="nodeMesh.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
@@ -284,6 +292,11 @@
     <ClCompile Include="buttonMoveBar.cpp" />
     <ClCompile Include="buttonScrollVertical.cpp" />
     <ClCompile Include="buttonStatic.cpp" />
+    <ClCompile Include="characterBase.cpp" />
+    <ClCompile Include="controllerBase.cpp" />
+    <ClCompile Include="enemyBase.cpp" />
+    <ClCompile Include="gameSystem.cpp" />
+    <ClCompile Include="gDigit.cpp" />
     <ClCompile Include="nodeMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />

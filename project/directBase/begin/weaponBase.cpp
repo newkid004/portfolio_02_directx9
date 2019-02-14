@@ -1,10 +1,14 @@
 #include "weaponBase.h"
 
 #include "managerList.h"
+#include "gDigit.h"
+
+#include "inGame_digit.h"
+
+using DIGIT = inGame_digit;
 
 weaponBase::weaponBase()
 {
-	D3DXMatrixIdentity(&_baseMatrix);
 }
 
 weaponBase::~weaponBase()
@@ -25,13 +29,13 @@ void weaponBase::updateFire(void)
 	{
 		if (!_infoWeapon.autoFire)
 		{
-			if (_isPressed)
+			if (gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::PRESS))
 				return;
 		}
 
 		if (MN_KEY->mouseDown())
 		{
-			_isReloading = false;
+			gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::RELOAD);
 
 			fireDo();
 			firePost();
@@ -56,17 +60,17 @@ void weaponBase::updateReload(void)
 void weaponBase::firePre(void)
 {
 	if (MN_KEY->mouseUp())
-		_isPressed = false;
+		gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::PRESS);
 }
 
 void weaponBase::fireDo(void)
 {
-	_isPressed = true;
+	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::PRESS);
 }
 
 void weaponBase::firePost(void)
 {
-	_nextFireTime = _infoWeapon.shotDelay + MN_TIME->getRunningTime();
+	_infoWeapon.nextFireTime = _infoWeapon.shotDelay + MN_TIME->getRunningTime();
 }
 
 void weaponBase::reloadPre(void)
@@ -75,30 +79,30 @@ void weaponBase::reloadPre(void)
 
 void weaponBase::reloadDo(void)
 {
-	_isReloading = true;
+	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::RELOAD);
 }
 
 void weaponBase::reloadPost(void)
 {
-	_nextReloadTime = _infoWeapon.reloadDelay + MN_TIME->getRunningTime();
+	_infoWeapon.nextReloadTime = _infoWeapon.reloadDelay + MN_TIME->getRunningTime();
 }
 
 bool weaponBase::isShotPossible(void)
 {
-	return 0 < _infoWeapon.current && (_nextFireTime < MN_TIME->getRunningTime());
+	return 0 < _infoWeapon.current && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime());
 }
 
 bool weaponBase::isReloadPossible(void)
 {
-	return _infoWeapon.current < _infoWeapon.reload && 0 < _infoWeapon.maximum && (_nextFireTime < MN_TIME->getRunningTime());
+	return _infoWeapon.current < _infoWeapon.reload && 0 < _infoWeapon.maximum && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime());
 }
 
 bool weaponBase::isStillFire(void)
 {
-	return _isPressed || (MN_TIME->getRunningTime() < _nextFireTime);
+	return gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::PRESS) || (MN_TIME->getRunningTime() < _infoWeapon.nextFireTime);
 }
 
 bool weaponBase::needReload(void)
 {
-	return !_isPressed && _infoWeapon.current < _infoWeapon.reload;
+	return !gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::PRESS) && _infoWeapon.current < _infoWeapon.reload;
 }
