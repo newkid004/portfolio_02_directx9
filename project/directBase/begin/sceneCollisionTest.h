@@ -6,6 +6,7 @@ class skinnedMesh;
 class staticMesh;
 class mapObject;
 class boxObject;
+class bulletManager;
 
 class sceneCollisionTest : public sceneBase
 {
@@ -15,6 +16,8 @@ private:
 	staticMesh* m_pObjectMesh;
 	boxObject* m_pBoxObject = nullptr;
 	mapObject* m_pMapObject = nullptr;
+	bulletManager* m_pBulletManager = nullptr;
+	LPD3DXMESH m_pSphereMesh = nullptr;
 
 	int m_nAnimationIndex = 0;
 
@@ -27,10 +30,12 @@ private:
 
 	void initEvent(void);
 	void updateControl(void);
+	bool collisionCheck(void);
 
 private:
 	skinnedMesh* createZombieMesh(ECharacterType characterType = ECharacterType::NONE);
 	staticMesh* createObjectMesh(void);
+	LPD3DXMESH createSphereMesh(void);
 
 public:
 	sceneCollisionTest() {};

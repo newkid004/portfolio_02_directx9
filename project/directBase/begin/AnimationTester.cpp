@@ -4,6 +4,7 @@
 #include "patternMesh.h"
 #include "staticMesh.h"
 #include "debugGizmo.h"
+#include "charaterArea.h"
 
 void AnimationTester::init(void)
 {
@@ -30,9 +31,7 @@ void AnimationTester::init(void)
 #else
 	_skinnedMesh->setScale(D3DXVECTOR3(0.007f, 0.007f, 0.007f));
 #endif
-	_rifle->addChild(new debugGizmo(1000.0f));
-	_shotgun->addChild(new debugGizmo(1000.0f));
-	_healKit->addChild(new debugGizmo(1000.0f));
+	_skinnedMesh->addChild(new charaterArea(10));
 	for (int i = 0; i < MAX_NUM; ++i)
 	{
 		ZeroMemory(&_cloneACInfo[i], sizeof(_cloneACInfo[i]));
@@ -241,36 +240,16 @@ void AnimationTester::updateControl(void)
 	{
 		_skinnedMesh->setWeapon(_rifle);
 	}
-	else if (MN_KEY->keyPress(DIK_NUMPAD1))
+	else if (MN_KEY->keyPress(DIK_NUMPAD2))
 	{
 		_skinnedMesh->setWeapon(_shotgun);
 	}
-	else if (MN_KEY->keyPress(DIK_NUMPAD1))
+	else if (MN_KEY->keyPress(DIK_NUMPAD3))
 	{
 		_skinnedMesh->setWeapon(_healKit);
 	}
 
 	if (MN_KEY->keyPress(DIK_1))
-	{
-		for (int i = 0; i < MAX_NUM; ++i)
-		{
-			_cloneACInfo[i].NextMotionBit =
-				ATYPE_SURVIVOR |
-				AWEAPON_PUMPSHOTGUN |
-				AMIX_SHOOT;
-		}
-	}
-	else if (MN_KEY->keyPress(DIK_2))
-	{
-		for (int i = 0; i < MAX_NUM; ++i)
-		{
-			_cloneACInfo[i].NextMotionBit = 
-				ATYPE_SURVIVOR |
-				AWEAPON_PUMPSHOTGUN |
-				AMIX_UNHOLSTER;
-		}
-	}
-	else if (MN_KEY->keyPress(DIK_3))
 	{
 		for (int i = 0; i < MAX_NUM; ++i)
 		{
@@ -283,14 +262,41 @@ void AnimationTester::updateControl(void)
 				AIDLE_STANDING;
 		}
 	}
+	else if (MN_KEY->keyPress(DIK_2))
+	{
+		for (int i = 0; i < MAX_NUM; ++i)
+		{
+			_cloneACInfo[i].NextMotionBit = 
+				ATYPE_SURVIVOR |
+				AWEAPON_PUMPSHOTGUN |
+				ACONDITION_INJURED |
+				AMAIN_IDLE |
+				AMIX_NONE |
+				AIDLE_STANDING;
+		}
+	}
+	else if (MN_KEY->keyPress(DIK_3))
+	{
+		for (int i = 0; i < MAX_NUM; ++i)
+		{
+			_cloneACInfo[i].NextMotionBit =
+				ATYPE_SURVIVOR |
+				AWEAPON_PUMPSHOTGUN |
+				AMAIN_IDLE |
+				AMIX_NONE |
+				AIDLE_SIT;
+		}
+	}
 	else if (MN_KEY->keyPress(DIK_4))
 	{
 		for (int i = 0; i < MAX_NUM; ++i)
 		{
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
-				AWEAPON_RIFLE |
-				AMIX_SHOOT;
+				AWEAPON_PUMPSHOTGUN |
+				AMAIN_WALK |
+				AMIX_NONE |
+				ARUN_STANDING;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_5))
@@ -300,10 +306,7 @@ void AnimationTester::updateControl(void)
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
 				AWEAPON_PUMPSHOTGUN |
-				ACONDITION_INJURED |
-				AMAIN_IDLE |
-				AMIX_NONE |
-				AIDLE_STANDING;
+				AMIX_UNHOLSTER;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_6))
@@ -313,9 +316,7 @@ void AnimationTester::updateControl(void)
 			_cloneACInfo[i].NextMotionBit = 
 				ATYPE_SURVIVOR |
 				AWEAPON_PUMPSHOTGUN |
-				AMAIN_IDLE |
-				AMIX_NONE |
-				AIDLE_SIT;
+				AMIX_RELOAD;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_7))
@@ -325,9 +326,7 @@ void AnimationTester::updateControl(void)
 			_cloneACInfo[i].NextMotionBit =
 				ATYPE_SURVIVOR |
 				AWEAPON_PUMPSHOTGUN |
-				AMAIN_RUN |
-				AMIX_NONE |
-				ARUN_SIT;
+				AMIX_SHOOT;
 		}
 	}
 	else if (MN_KEY->keyPress(DIK_8))

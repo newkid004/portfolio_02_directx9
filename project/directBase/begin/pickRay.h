@@ -29,6 +29,7 @@ public:
 	static bool chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh);
 	static bool chkPick(D3DXVECTOR3* out_info, ray* in_ray, const D3DXPLANE* plane);
 	static bool chkPick(ray* in_ray, renderObject* sMesh, EDebugDrawType type = EDebugDrawType::SPHERE);
+	static bool isPickRay2Sphere(ray* in_ray, const D3DXVECTOR3 & position, float speed, boundingSphere * bSphere);
 
 private:
 	static bool chkPick(ray* in_ray, boundingBox* bBox);

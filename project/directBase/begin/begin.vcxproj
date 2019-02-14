@@ -72,7 +72,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\WorkSpace\L4DGame\project\directBase\begin\include;D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -170,12 +172,16 @@
     <ClInclude Include="AnimationTester.h" />
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="boxObject.h" />
+    <ClInclude Include="bullet.h" />
+    <ClInclude Include="bulletManager.h" />
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="buttonItem.h" />
     <ClInclude Include="buttonItemText.h" />
     <ClInclude Include="buttonMoveBar.h" />
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
+    <ClInclude Include="charaterArea.h" />
+    <ClInclude Include="inGame_data_status.h" />
     <ClInclude Include="characterBase.h" />
     <ClInclude Include="controllerBase.h" />
     <ClInclude Include="enemyBase.h" />
@@ -260,6 +266,7 @@
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
+    <ClInclude Include="wallCollision.h" />
     <ClInclude Include="weaponBase.h" />
     <ClInclude Include="windowBase.h" />
     <ClInclude Include="windowCtlogMaptool.h" />
@@ -286,6 +293,8 @@
     <ClCompile Include="aStar_runner.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="boxObject.cpp" />
+    <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="bulletManager.cpp" />
     <ClCompile Include="buttonBase.cpp" />
     <ClCompile Include="buttonItem.cpp" />
     <ClCompile Include="buttonItemText.cpp" />
@@ -297,6 +306,7 @@
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="gameSystem.cpp" />
     <ClCompile Include="gDigit.cpp" />
+    <ClCompile Include="charaterArea.cpp" />
     <ClCompile Include="nodeMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
@@ -362,6 +372,7 @@
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
+    <ClCompile Include="wallCollision.cpp" />
     <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="windowBase.cpp" />
     <ClCompile Include="windowCtlogMaptool.cpp" />

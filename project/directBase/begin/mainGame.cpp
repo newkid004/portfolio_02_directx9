@@ -9,6 +9,7 @@
 #include "sceneTest2.h"
 #include "sceneCollisionTest.h"
 #include "AnimationTester.h"
+#include "wallCollision.h"
 
 void mainGame::init(void)
 {
@@ -24,8 +25,9 @@ void mainGame::init(void)
 	MN_SCENE->add("scene2", new sceneTest2);			// a* node
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
+	MN_SCENE->add("wallC", new wallCollision);
 
-	MN_SCENE->change("sceneMapTool");
+	MN_SCENE->change("wallC");
 	//MN_SCENE->change("sceneCollisionTest");
 }
 

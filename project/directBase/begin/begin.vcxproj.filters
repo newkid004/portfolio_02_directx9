@@ -544,6 +544,9 @@
     <Filter Include="main\classes\scene\02_inGame\classes\singleton">
       <UniqueIdentifier>{83bd8694-4de2-4767-8cc0-812537a3a22c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\debug\area">
+      <UniqueIdentifier>{d9bd4c5b-7865-4897-a98a-99cdc8c33366}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -900,6 +903,18 @@
     <ClInclude Include="enemyBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy</Filter>
     </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>main\classes\collision\test</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>main\classes\collision\test</Filter>
+    </ClInclude>
+    <ClInclude Include="charaterArea.h">
+      <Filter>classes\global\utility\debug\area</Filter>
+    </ClInclude>
+    <ClInclude Include="wallCollision.h">
+      <Filter>main\classes\collision\test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1171,6 +1186,18 @@
     </ClCompile>
     <ClCompile Include="weaponBase.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>main\classes\collision\test</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>main\classes\collision\test</Filter>
+    </ClCompile>
+    <ClCompile Include="charaterArea.cpp">
+      <Filter>classes\global\utility\debug\area</Filter>
+    </ClCompile>
+    <ClCompile Include="wallCollision.cpp">
+      <Filter>main\classes\collision\test</Filter>
     </ClCompile>
     <ClCompile Include="gDigit.cpp">
       <Filter>classes\global\function\gDigit</Filter>

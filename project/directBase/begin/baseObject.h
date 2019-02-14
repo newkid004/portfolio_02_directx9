@@ -60,6 +60,7 @@ public :	// 접근, 지정자
 	D3DXMATRIXA16 getMatrixWorld(void) { return _mWorld; }
 	D3DXMATRIXA16 getMatrixFinal(void);
 	D3DXMATRIXA16 getMatrixRotate(void);
+	D3DXVECTOR3 getParentPosition(void) { return _parent->getPosition(); }
 
 	constexpr D3DXVECTOR3 & getPosition			(void) { return _position; }
 	constexpr D3DXVECTOR3 & getScale			(void) { return _scale; }

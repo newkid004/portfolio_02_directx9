@@ -130,6 +130,38 @@ bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 	return false;
 }
 
+bool pick::isPickRay2Sphere(ray * in_ray, const D3DXVECTOR3 & position, float speed, boundingSphere * bSphere)
+{
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
+	D3DXVECTOR3 & rayDir = in_ray->direction;
+	D3DXVECTOR3 & rayOrigin = in_ray->origin;
+
+	D3DXVECTOR3 delta = bSphere->center - rayOrigin;
+
+	float deltaLength = D3DXVec3Dot(&delta, &delta);
+
+	float radius = bSphere->radius * bSphere->radius;
+	float dotValue = D3DXVec3Dot(&delta, &rayDir);
+
+	if (dotValue < 0.0f && deltaLength > radius)
+		return false;
+
+	D3DXVECTOR3 myDelta = position + (rayDir * speed) - rayOrigin;
+	float myDeltaLength = D3DXVec3Dot(&myDelta, &myDelta);
+
+	if (deltaLength - (dotValue * dotValue) <= radius)
+	{
+		if (myDeltaLength > deltaLength)
+		{
+			return true;
+		}
+	}
+	return false;
+	
+}
+
 bool pick::chkPick(ray * in_ray, boundingBox * bBox)
 {
 	if (in_ray == NULL)

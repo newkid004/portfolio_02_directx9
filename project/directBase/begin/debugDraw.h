@@ -38,6 +38,7 @@ private:
 	void drawGuideLine(void);
 	void drawGuideLineBox(void);
 
+	LPD3DXMESH createBoundingSphere(boundingSphere & input);
 	void createBoundingBox(std::vector<boundingBox> & input);
 	void createBoundingBox(BOUNDBOXMATRIXSET & input);
 	void createBoundingSphere(std::vector<boundingSphere> & input);
@@ -45,6 +46,7 @@ private:
 
 public:
 	LPD3DXMESH getBoundMesh(EDebugDrawType type = EDebugDrawType::NONE);
+	void getMatrixBound(D3DXMATRIXA16 * outMat, EDebugDrawType type = EDebugDrawType::NONE);
 	void getMatrixBound(int index, D3DXMATRIXA16 * outMat, EDebugDrawType type = EDebugDrawType::NONE);
 	void getMatrixBound(std::string name, D3DXMATRIXA16 * outMat, D3DXMATRIXA16 & combineMat, EDebugDrawType type = EDebugDrawType::NONE);
 public:
