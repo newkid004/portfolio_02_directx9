@@ -12,9 +12,6 @@ private:
 	patternMesh * _skinnedMesh = nullptr;
 
 private:
-	patternMesh * createSkinnedMesh(void);
-
-private:
 	boxObject * m_pBox = nullptr;
 
 	ACInfo _cloneACInfo;
@@ -22,12 +19,9 @@ private:
 	D3DXVECTOR3 m_stRotation;
 	D3DXVECTOR3 baseR;
 
-	int _circle;
+	int _radius;
 	float _speed;
 
-private:
-	bool isCollsionWall(void);
-	
 public:
 	virtual void init(void) override;
 	virtual void update(void) override;
@@ -36,6 +30,12 @@ public:
 
 public:
 	void updateControl(void);
+
+private:
+	bool isCollisionWall(D3DXVECTOR3 position, float radius, boxObject* box);
+
+private:
+	patternMesh * createSkinnedMesh(void);
 
 public:
 	wallCollision() :sceneBase() {};

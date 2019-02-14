@@ -915,6 +915,7 @@
     <ClInclude Include="wallCollision.h">
       <Filter>main\classes\collision\test</Filter>
     </ClInclude>
+    <ClInclude Include="inGame_data_status.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
