@@ -130,21 +130,7 @@ bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 	return false;
 }
 
-bool pick::isPickRay2Box(ray * in_ray, D3DXVECTOR3 * outCollisionPos, float speed, boundingBox * bBox)
-{
-	if (in_ray == NULL)
-		in_ray = &MN_KEY->getPickRay();
-
-	D3DXVECTOR3 & rayOrigin = in_ray->origin;
-	D3DXVECTOR3 & rayDir = in_ray->direction;
-
-
-
-
-	return false;
-}
-
-bool pick::isPickRay2Sphere(ray * in_ray, D3DXVECTOR3 * outCollisionPos, float speed, boundingSphere * bSphere)
+bool pick::isPickRay2Sphere(ray * in_ray, D3DXVECTOR3 * outCollisionPos, float speed, const boundingSphere & bSphere)
 {
 	if (in_ray == NULL)
 		in_ray = &MN_KEY->getPickRay();
@@ -160,14 +146,14 @@ bool pick::isPickRay2Sphere(ray * in_ray, D3DXVECTOR3 * outCollisionPos, float s
 	D3DXVECTOR3 d = (nextOrigin - rayOrigin) / lineLength;
 
 	// 구에서 선분 시작점 까지 벡터
-	D3DXVECTOR3 m = rayOrigin - bSphere->center;
+	D3DXVECTOR3 m = rayOrigin - bSphere.center;
 
 	// 방향 벡터 각도 (90도 넘으면 false)
 	float b = D3DXVec3Dot(&m, &d);
 	if (b > 0.0f) return false;
 
 	// 구안에 선분 시작점이 있는지
-	float c = D3DXVec3Dot(&m, &m) - bSphere->radius * bSphere->radius;
+	float c = D3DXVec3Dot(&m, &m) - bSphere.radius * bSphere.radius;
 	if (c < 0.0f) return true;
 
 	float disc = b * b - c;

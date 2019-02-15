@@ -197,11 +197,11 @@ void sceneCollisionTest::updateControl(void)
 		}
 	}
 
-	if (MN_KEY->mousePress(EMouseInput::LEFT))
+	if (MN_KEY->mouseDown(EMouseInput::LEFT))
 	{
 		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 
-		m_pBulletManager->addBullet(stRay.origin, stRay.direction, 10);
+		m_pBulletManager->addBullet(stRay.origin, stRay.direction, 1);
 	}
 }
 
@@ -218,7 +218,7 @@ bool sceneCollisionTest::collisionCheck(void)
 		{
 			
 			if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(),
-				vBullet[i]->getSpeed(), &mSphere))
+				vBullet[i]->getSpeed(), mSphere))
 			{
 				for (auto rValue : mBoundSphereSet)
 				{
@@ -227,7 +227,7 @@ bool sceneCollisionTest::collisionCheck(void)
 					sphere.radius *= m_pSkinnedMesh[index]->getScale().x;
 				
 					if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(),
-						vBullet[i]->getSpeed(), &sphere))
+						vBullet[i]->getSpeed(), sphere))
 					{
 						printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
 						//printf("충돌!! %d\n", rand() % 100);
@@ -244,11 +244,20 @@ bool sceneCollisionTest::collisionCheck(void)
 bool sceneCollisionTest::collisionCheck2(void)
 {
 	auto vBullet = m_pBulletManager->getBulletList();
-
+	auto sphere = m_pBoxObject->getBoundingSphere();
 	for (int i = 0; i < vBullet.size(); i++)
 	{
-		pick::info info;
-		//if(pick::chkPick(&info, vBullet[i]->getPickRay(), m_pBoxObject->)
+		if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(), vBullet[i]->getSpeed(), sphere))
+		{
+			pick::info info;
+			if (pick::chkPick(&info, &vBullet[i]->getPickRay(), m_pBoxObject->getMesh()))
+			{
+				printf("충돌!! %d\n", rand() % 100);
+				m_pBulletManager->deleteBullet(i);
+				return true;
+			}
+		}
+		
 	}
 	return false;
 }

@@ -26,6 +26,9 @@ public:
 
 	virtual ~boxObject(void);
 
+public:
+
+	LPD3DXMESH & getMesh(void) { return m_pWallMesh; }
 private:
 
 	//! 벽 메쉬를 생성한다
