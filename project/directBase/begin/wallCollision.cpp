@@ -4,13 +4,14 @@
 #include "charaterArea.h"
 #include "managerList.h"
 #include "boxObject.h"
+#include "staticMesh.h"
 
 void wallCollision::init(void)
 {
 	sceneBase::init();
 
-	_radius = 10;
-	_speed = 0.05f;
+	_radius = 10.0f;
+	_speed = 0.1f;
 
 	_skinnedMesh = this->createSkinnedMesh();
 	_skinnedMesh->setScale(0.01f);
@@ -29,26 +30,34 @@ void wallCollision::init(void)
 	baseR = D3DXVECTOR3(0.0f, 180.0f, 180.0f);
 
 	m_pBox = new boxObject();
-	//m_pBox->setScale(5.0f);
-	//m_pBox->moveZ(5.0f);
-
+	m_pBox->setScale(5.0f);
 	m_pBox->setDebugEnable(true,EDebugDrawType::BOX);
+	m_pBox->getBoundingBoxFinal(&m_pBox->getBoundingBoxList()[0]);
 
-	//m_pBox->getBoundingBoxFinal(&m_pBox->getBoundingBoxList()[0]);
+	m_pStaticMesh = this->createStaticMesh();
+	m_pStaticMesh->setScale(0.01f);
+	m_pStaticMesh->setBoundingBox(gFunc::createBoundingBox(m_pStaticMesh->getMeshSet()->mesh));
+	m_pStaticMesh->setDebugEnable(true, EDebugDrawType::BOX);
+	m_pStaticMesh->getBoundingBoxFinal(&m_pStaticMesh->getBoundingBoxList()[0]);
 }
 
 void wallCollision::update(void)
 {
 	sceneBase::update();
 
-	//_skinnedMesh->getChildren()[0]->getPosition() = m_stPosition;
 	updateControl();
 
 	m_pBox->update();
+	m_pStaticMesh->update();
 
-	if (isCollisionWall(m_stPosition, _radius, m_pBox))
+	if (isCollisionWall(m_stPosition, _radius, &m_pBox->getBoundingBoxList()[0]))
 	{
-		printf("충돌 발생 !! %d\n", gFunc::rndInt(1,10));
+		boxToObjectBounce(m_stPosition, _radius, &m_pBox->getBoundingBoxList()[0]);
+	}
+
+	if (isCollisionWall(m_stPosition, _radius, &m_pStaticMesh->getBoundingBoxList()[0]))
+	{
+		boxToObjectBounce(m_stPosition, _radius, &m_pStaticMesh->getBoundingBoxList()[0]);
 	}
 }
 
@@ -62,6 +71,7 @@ void wallCollision::draw(void)
 	_skinnedMesh->draw();
 
 	m_pBox->draw();
+	m_pStaticMesh->draw();
 }
 
 void wallCollision::drawUI(void)
@@ -102,37 +112,35 @@ void wallCollision::updateControl(void)
 	}
 }
 
-bool wallCollision::isCollisionWall(D3DXVECTOR3 position, float radius, boxObject* box)
+bool wallCollision::isCollisionWall(const D3DXVECTOR3 position,const float radius, boundingBox* box)
 {
-	D3DXVECTOR2 boxCenter = D3DXVECTOR2((box->getBoundingBoxList()[0].max.x + box->getBoundingBoxList()[0].min.x)/2.0f,
-		(box->getBoundingBoxList()[0].max.z + box->getBoundingBoxList()[0].min.z) / 2.0f);
+	D3DXVECTOR2 boxCenter = D3DXVECTOR2((box->max.x + box->min.x)/2.0f,
+		(box->max.z + box->min.z) / 2.0f);
 	
-	float distanceX = std::fabsf((box->getBoundingBoxList()[0].max.x - box->getBoundingBoxList()[0].min.x) / 2.0f);
-	float distanceZ = std::fabsf((box->getBoundingBoxList()[0].max.z - box->getBoundingBoxList()[0].min.z) / 2.0f);
+	float distanceX = std::fabsf((box->max.x - box->min.x) / 2.0f);
+	float distanceZ = std::fabsf((box->max.z - box->min.z) / 2.0f);
 
-	float centerDX = (boxCenter.x - position.x);
-	float centerDZ = (boxCenter.y - position.z);
+	float centerGap = gFunc::Vec2Distance(D3DXVECTOR2(boxCenter.x, boxCenter.y), D3DXVECTOR2(position.x , position.z));
 
-	float corner = std::sqrtf((distanceX * distanceX) + (distanceZ * distanceZ));
+	float cornerD = gFunc::Vec2Distance(boxCenter,D3DXVECTOR2(boxCenter.x + distanceX, boxCenter.y + distanceZ));
 
 	//이탈 범위 재조사
-	if ((centerDX*centerDX + centerDZ * centerDZ) > ((corner + radius) * (corner + radius)))
+	if ((centerGap * centerGap) > (FLT_EPSILON + (cornerD + radius) * (cornerD + radius)))
 	{
-		printf("충돌 범위를 이탈하였습니다\n");
 		return false;
 	}
 
 	//케이스 1
-	if (((boxCenter.x - distanceX) < position.x) &&
-		(position.x < (boxCenter.x + distanceX)))
+	if (((boxCenter.x - distanceX) <= position.x) &&
+		(position.x <= (boxCenter.x + distanceX)))
 	{
 		if (std::abs(boxCenter.y - position.z) < (radius + distanceZ))
 		{
 			return true;
 		}
 	} 
-	else if (((boxCenter.y - distanceZ) < position.z) &&
-		(position.z < (boxCenter.y + distanceZ)))
+	else if (((boxCenter.y - distanceZ) <= position.z) &&
+		(position.z <= (boxCenter.y + distanceZ)))
 	{
 		if (std::abs(boxCenter.x - position.x) < (radius + distanceX))
 		{
@@ -148,9 +156,9 @@ bool wallCollision::isCollisionWall(D3DXVECTOR3 position, float radius, boxObjec
 		if (position.x > boxCenter.x)
 		{
 			// 오른쪽 위 모서리
-			if (position.z > boxCenter.y)
+			if (position.z >= boxCenter.y)
 			{
-				if ((radius*radius) >
+				if ((radius*radius) >=
 					((cornerX - position.x)*(cornerX - position.x) + (cornerZ - position.z)*(cornerZ - position.z)))
 				{
 					return true;
@@ -160,7 +168,7 @@ bool wallCollision::isCollisionWall(D3DXVECTOR3 position, float radius, boxObjec
 			else
 			{
 				cornerZ = boxCenter.y - distanceZ;
-				if ((radius*radius) >
+				if ((radius*radius) >=
 					((cornerX - position.x)*(cornerX - position.x) + (cornerZ - position.z)*(cornerZ - position.z)))
 				{
 					return true;
@@ -170,11 +178,11 @@ bool wallCollision::isCollisionWall(D3DXVECTOR3 position, float radius, boxObjec
 		else
 		{
 			// 왼쪽 위 모서리
-			if (position.z > boxCenter.y)
+			if (position.z >= boxCenter.y)
 			{
 				cornerX = boxCenter.x - distanceX;
 				cornerZ = boxCenter.y + distanceZ;
-				if ((radius*radius) >
+				if ((radius*radius) >=
 					((cornerX - position.x)*(cornerX - position.x) + (cornerZ - position.z)*(cornerZ - position.z)))
 				{
 					return true;
@@ -185,7 +193,7 @@ bool wallCollision::isCollisionWall(D3DXVECTOR3 position, float radius, boxObjec
 			{
 				cornerX = boxCenter.x - distanceX;
 				cornerZ = boxCenter.y - distanceZ;
-				if ((radius*radius) >
+				if ((radius*radius) >=
 					((cornerX - position.x)*(cornerX - position.x) + (cornerZ - position.z)*(cornerZ - position.z)))
 				{
 					return true;
@@ -194,6 +202,80 @@ bool wallCollision::isCollisionWall(D3DXVECTOR3 position, float radius, boxObjec
 		}
 	}
 	return false;
+}
+
+void wallCollision::boxToObjectBounce(D3DXVECTOR3 & position,const float radius, boundingBox * box)
+{
+	D3DXVECTOR2 boxCenter = D3DXVECTOR2((box->max.x + box->min.x) / 2.0f,
+		(box->max.z + box->min.z) / 2.0f);
+
+	float boxWidth = std::fabsf(box->max.x - boxCenter.x);
+	float boxHeight = std::fabsf(box->max.z - boxCenter.y);
+
+	//상하
+	if (boxCenter.x - boxWidth <= position.x &&
+		position.x <= boxCenter.x + boxWidth)
+	{
+		//상
+		if (boxCenter.y < position.z)
+		{
+			position.z = boxCenter.y + boxHeight + radius;
+		}
+		//하
+		else 
+		{
+			position.z = boxCenter.y - boxHeight - radius;
+		}
+	}
+	//좌우
+	else if (boxCenter.y - boxHeight <= position.z &&
+		position.z <= boxCenter.y + boxHeight)
+	{
+		//좌
+		if (boxCenter.x > position.x)
+		{
+			position.x = boxCenter.x - boxWidth - radius;
+		}
+		//우
+		else
+		{
+			position.x = boxCenter.x + boxWidth + radius;
+		}
+	}
+	//꼭지점
+	else
+	{
+		float cornerX = boxCenter.x + boxWidth;
+		float cornerZ = boxCenter.y + boxHeight;
+		if (position.x > boxCenter.x)
+		{
+			// 오른쪽 위 모서리
+			if (position.z >= boxCenter.y);
+			// 오른쪽 아래 모서리
+			else
+			{
+				cornerZ = boxCenter.y - boxHeight; 
+			}
+		}
+		else
+		{
+			cornerX = boxCenter.x - boxWidth;
+			// 왼쪽 위 모서리
+			if (position.z >= boxCenter.y)
+			{
+				cornerZ = boxCenter.y + boxHeight;
+			}
+			// 왼쪽 아래 모서리
+			else
+			{
+				cornerZ = boxCenter.y - boxHeight;
+			}
+		}
+		D3DXVECTOR2 stDirection = D3DXVECTOR2((position.x - cornerX), (position.z - cornerZ));
+		D3DXVec2Normalize(&stDirection, &stDirection);
+		position.x = cornerX + stDirection.x * radius;
+		position.z = cornerZ + stDirection.y * radius;
+	}
 }
 
 patternMesh * wallCollision::createSkinnedMesh(void)
@@ -219,4 +301,15 @@ patternMesh * wallCollision::createSkinnedMesh(void)
 	param.effectFilePath = "resource/effect/Survivor.fx";
 
 	return new patternMesh(param);
+}
+
+staticMesh * wallCollision::createStaticMesh(void)
+{
+	staticMesh::mParam stParam =
+	{
+		"resource/mesh/L4D1/props/bathtube.x",
+		"resource/effect/example_15.fx"
+	};
+
+	return new staticMesh(stParam);
 }

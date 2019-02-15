@@ -5,6 +5,7 @@
 
 class patternMesh;
 class boxObject;
+class staticMesh;
 
 class wallCollision : public sceneBase
 {
@@ -13,13 +14,14 @@ private:
 
 private:
 	boxObject * m_pBox = nullptr;
+	staticMesh* m_pStaticMesh = nullptr;
 
 	ACInfo _cloneACInfo;
 	D3DXVECTOR3 m_stPosition;
 	D3DXVECTOR3 m_stRotation;
 	D3DXVECTOR3 baseR;
 
-	int _radius;
+	float _radius;
 	float _speed;
 
 public:
@@ -32,11 +34,13 @@ public:
 	void updateControl(void);
 
 private:
-	bool isCollisionWall(D3DXVECTOR3 position, float radius, boxObject* box);
+	bool isCollisionWall(const D3DXVECTOR3 position,const float radius, boundingBox* box);
+
+	void boxToObjectBounce(D3DXVECTOR3& position,const float radius, boundingBox* box);
 
 private:
 	patternMesh * createSkinnedMesh(void);
-
+	staticMesh * createStaticMesh(void);
 public:
 	wallCollision() :sceneBase() {};
 	~wallCollision() {};
