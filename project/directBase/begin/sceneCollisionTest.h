@@ -21,6 +21,7 @@ private:
 
 	int m_nAnimationIndex = 0;
 
+	std::vector<boundingSphere> m_vCollisionSphereList;
 public:
 	virtual void init(void) override;
 	virtual void update(void) override;
@@ -31,6 +32,7 @@ private:
 	void initEvent(void);
 	void updateControl(void);
 	bool collisionCheck(void);
+	bool collisionCheck2(void);
 
 private:
 	skinnedMesh* createZombieMesh(ECharacterType characterType = ECharacterType::NONE);

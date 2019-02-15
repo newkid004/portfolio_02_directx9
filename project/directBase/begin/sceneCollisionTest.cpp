@@ -46,25 +46,27 @@ void sceneCollisionTest::init(void)
 	{
 		m_pSkinnedMesh[i] = this->createZombieMesh(ECharacterType::NORMAL_ZOMBIE);
 
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Head1",			FLAGPOSITION * D3DXVECTOR3(       0,   915.227, 380.302), 9, 9, 9);
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Spine1",			FLAGPOSITION * D3DXVECTOR3(       0,   324.65,  -7.926), 25, 17, 12);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Head1",			FLAGPOSITION * D3DXVECTOR3(       0,   915.227, 380.302), 7, 7, 7);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Spine1",			FLAGPOSITION * D3DXVECTOR3(       0,   324.65,  -7.926), 12, 17, 12);
 		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Foot",			FLAGPOSITION * D3DXVECTOR3( 39.007,  -251.624,  30.187), 8, 8, 8);
 		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Foot",			FLAGPOSITION * D3DXVECTOR3(-39.007,  -251.624,  30.187), 8, 8, 8);
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Calf",			FLAGPOSITION * D3DXVECTOR3( 192.893,  -304.16,  -13.551), 9, 9, 9);
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Calf",			FLAGPOSITION * D3DXVECTOR3(-192.893,  -304.16,  -13.551), 9, 9, 9);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Calf",			FLAGPOSITION * D3DXVECTOR3( 192.893,  -104.16,  -13.551), 9, 9, 9);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Calf",			FLAGPOSITION * D3DXVECTOR3(-192.893,  -104.16,  -13.551), 9, 9, 9);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Thigh",		FLAGPOSITION * D3DXVECTOR3( 63.026,  -518.266, -35.374), 9, 9, 9);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Thigh",		FLAGPOSITION * D3DXVECTOR3(-63.026,  -518.266, -35.374), 9, 9, 9);
 		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Hand",			FLAGPOSITION * D3DXVECTOR3( 178.917, -200.057,  230.219), 8, 8, 8);
 		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Hand",			FLAGPOSITION * D3DXVECTOR3(-178.917, -200.057,  230.219), 8, 8, 8);
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Forearm",		FLAGPOSITION * D3DXVECTOR3( 563.117,   178.276, -94.635), 8, 8, 8);
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Forearm",		FLAGPOSITION * D3DXVECTOR3(-563.117,   178.276, -94.635), 8, 8, 8);
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_UpperArm",		FLAGPOSITION * D3DXVECTOR3( 263.026,   788.266, -35.374), 7, 7, 7);
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_UpperArm",		FLAGPOSITION * D3DXVECTOR3(-263.026,   788.266, -35.374), 7, 7, 7);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Forearm",		FLAGPOSITION * D3DXVECTOR3( 563.117,   108.276, -94.635), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Forearm",		FLAGPOSITION * D3DXVECTOR3(-563.117,   108.276, -94.635), 8, 8, 8);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_UpperArm",		FLAGPOSITION * D3DXVECTOR3( 363.026,   18.266, -35.374), 7, 7, 7);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_UpperArm",		FLAGPOSITION * D3DXVECTOR3(-363.026,   18.266, -35.374), 7, 7, 7);
 
 		m_pSkinnedMesh[i]->init();
 
 		m_pSkinnedMesh[i]->setDebugEnable(true, EDebugDrawType::SPHERE);
 
 		m_pSkinnedMesh[i]->setScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
-		m_pSkinnedMesh[i]->setPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		m_pSkinnedMesh[i]->setPosition(D3DXVECTOR3(i*5.0f, 0.0f, i*10.0f));
 
 		m_pSkinnedMesh[i]->rotateX(-90, true);
 		m_pSkinnedMesh[i]->rotateZ(180, true);
@@ -101,7 +103,8 @@ void sceneCollisionTest::update(void)
 	}
 
 	m_pBulletManager->update();
-	collisionCheck();
+	//collisionCheck();
+	collisionCheck2();
 
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->update();
@@ -126,7 +129,7 @@ void sceneCollisionTest::draw(void)
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->draw();
 #else
-	//m_pBoxObject->draw();
+	m_pBoxObject->draw();
 #endif // DEBUG_TYPE == DEBUG_TYPE_MAP
 }
 
@@ -142,7 +145,7 @@ void sceneCollisionTest::initEvent(void)
 		EC_PLAYER_STATE_CHANGE_INCREASE);
 
 	stEventCatcher1->getAfterActive() = [this](eventBase* e) -> void {
-		((skinnedMesh*)e->getDest())->moveY(2.0f * MN_TIME->getDeltaTime());
+		((skinnedMesh*)e->getDest())->moveX(2.0f * MN_TIME->getDeltaTime());
 	};
 
 	stEventCatcher2->getParam() = makeDestParam(
@@ -152,7 +155,7 @@ void sceneCollisionTest::initEvent(void)
 		EC_PLAYER_STATE_CHANGE_DECREASE);
 
 	stEventCatcher2->getAfterActive() = [this](eventBase* e) -> void {
-		((skinnedMesh*)e->getDest())->moveY(-2.0f * MN_TIME->getDeltaTime());
+		((skinnedMesh*)e->getDest())->moveX(-2.0f * MN_TIME->getDeltaTime());
 	};
 
 	MN_EVENT->getEventCatcherArray(stEventCatcher1->getParam()).push_back(stEventCatcher1);
@@ -194,40 +197,43 @@ void sceneCollisionTest::updateControl(void)
 		}
 	}
 
-	if (MN_KEY->mouseDown(EMouseInput::LEFT))
+	if (MN_KEY->mousePress(EMouseInput::LEFT))
 	{
 		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 
-		m_pBulletManager->addBullet(stRay.origin, stRay.direction, 1);
+		m_pBulletManager->addBullet(stRay.origin, stRay.direction, 10);
 	}
 }
 
 bool sceneCollisionTest::collisionCheck(void)
 {
-	auto mBoundBoxSet = m_pSkinnedMesh[0]->getBoundingBoxSetList();
-	auto mBoundSphereSet = m_pSkinnedMesh[0]->getBoundingSphereSetList();
-	auto mSphere = m_pSkinnedMesh[0]->getBoundingSphere();
-	auto vBullet = m_pBulletManager->getBulletList();
-	mSphere.center += m_pSkinnedMesh[0]->getBoundingSphereOffset();;
-	mSphere.radius = m_pSkinnedMesh[0]->getBoundingSphere().radius * m_pSkinnedMesh[0]->getScale().x;
-
-	for (int i = 0; i < vBullet.size(); i++)
+	for (int index = 0; index < ZOMBIE_NUM; index++)
 	{
-		if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), vBullet[i]->getPosition(),
-			vBullet[i]->getSpeed(), &mSphere))
+		auto mBoundBoxSet = m_pSkinnedMesh[index]->getBoundingBoxSetList();
+		auto mBoundSphereSet = m_pSkinnedMesh[index]->getBoundingSphereSetList();
+		auto mSphere = m_pSkinnedMesh[index]->getBoundingSphere();
+		auto vBullet = m_pBulletManager->getBulletList();
+
+		for (int i = 0; i < vBullet.size(); i++)
 		{
-			for (auto rValue : mBoundSphereSet)
+			
+			if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(),
+				vBullet[i]->getSpeed(), &mSphere))
 			{
-				auto sphere = rValue.second.sphere;
-				sphere.center = rValue.second.drawPosition;
-				sphere.radius *= m_pSkinnedMesh[0]->getScale().x;
-				
-				if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), vBullet[i]->getPosition(),
-					vBullet[i]->getSpeed(), &sphere))
+				for (auto rValue : mBoundSphereSet)
 				{
-					printf("%s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
-					m_pBulletManager->deleteBullet(i);
-					return true;
+					auto sphere = rValue.second.sphere;
+					sphere.center = rValue.second.drawPosition;
+					sphere.radius *= m_pSkinnedMesh[index]->getScale().x;
+				
+					if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(),
+						vBullet[i]->getSpeed(), &sphere))
+					{
+						printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
+						//printf("충돌!! %d\n", rand() % 100);
+						m_pBulletManager->deleteBullet(i);
+						return true;
+					}
 				}
 			}
 		}
@@ -235,10 +241,21 @@ bool sceneCollisionTest::collisionCheck(void)
 	return false;
 }
 
+bool sceneCollisionTest::collisionCheck2(void)
+{
+	auto vBullet = m_pBulletManager->getBulletList();
+
+	for (int i = 0; i < vBullet.size(); i++)
+	{
+		pick::info info;
+		//if(pick::chkPick(&info, vBullet[i]->getPickRay(), m_pBoxObject->)
+	}
+	return false;
+}
+
 skinnedMesh * sceneCollisionTest::createZombieMesh(ECharacterType characterType)
 {
 	skinnedMesh::mParam stParameters = {
-		//"resource/mesh/WitchApprentice/WitchApprentice.x",
 		"resource/mesh/L4D1/male/male1.x",
 		"resource/effect/skinnedMesh.fx"
 	};
