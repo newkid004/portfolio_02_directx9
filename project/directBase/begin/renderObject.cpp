@@ -24,6 +24,7 @@ void renderObject::update(void)
 
 	_isCull = false;
 	_isCull |= cullFrustum();
+
 }
 
 void renderObject::draw(void)
@@ -54,17 +55,40 @@ bool renderObject::cullFrustum(void)
 
 void renderObject::getBoundingBoxFinal(boundingBox * out)
 {
-	D3DXMATRIXA16 mWorld = getMatrixFinal();
+	// 이동
+	D3DXMATRIXA16 mTranslation;
+	D3DXMatrixTranslation(&mTranslation,
+		_position.x,
+		_position.y,
+		_position.z);
+
+	// 척도
+	D3DXMATRIXA16 mScalse;
+	D3DXMatrixScaling(&mScalse,
+		_scale.x,
+		_scale.y,
+		_scale.z);
+
+	// 회전
+	D3DXMATRIXA16 mRotation;
+	D3DXMatrixIdentity(&mRotation);
+
+	CopyMemory(&mRotation(0, 0), &_directionRight, sizeof(D3DXVECTOR3));
+	CopyMemory(&mRotation(1, 0), &_directionUp, sizeof(D3DXVECTOR3));
+	CopyMemory(&mRotation(2, 0), &_directionForward, sizeof(D3DXVECTOR3));
+
+	// world
+	_mWorld = _mOffset * mScalse * mRotation * mTranslation;
 
 	D3DXVec3TransformCoord(
 		&out->min,
-		&_bBox.min,
-		&mWorld);
+		&out->min,
+		&_mWorld);
 
 	D3DXVec3TransformCoord(
 		&out->max,
-		&_bBox.max,
-		&mWorld);
+		&out->max,
+		&_mWorld);
 }
 
 void renderObject::getBoundingSphereFinal(boundingSphere * out)
