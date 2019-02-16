@@ -181,12 +181,14 @@
     <ClInclude Include="buttonScrollVertical.h" />
     <ClInclude Include="buttonStatic.h" />
     <ClInclude Include="charaterArea.h" />
-    <ClInclude Include="inGame_data_status.h" />
     <ClInclude Include="characterBase.h" />
     <ClInclude Include="controllerBase.h" />
     <ClInclude Include="enemyBase.h" />
+    <ClInclude Include="enemyController.h" />
     <ClInclude Include="gameSystem.h" />
     <ClInclude Include="gDigit.h" />
+    <ClInclude Include="inGame_grape.h" />
+    <ClInclude Include="inGame_node.h" />
     <ClInclude Include="inGame_struct.h" />
     <ClInclude Include="inGame_digit.h" />
     <ClInclude Include="inGame_value.h" />
@@ -243,6 +245,8 @@
     <ClInclude Include="pathfind_grape.h" />
     <ClInclude Include="pathfind_node.h" />
     <ClInclude Include="pickRay.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="playerController.h" />
     <ClInclude Include="quadTree.h" />
     <ClInclude Include="quadTree_Frustum.h" />
     <ClInclude Include="renderObject.h" />
@@ -261,6 +265,8 @@
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="spriteBase.h" />
     <ClInclude Include="staticMesh.h" />
+    <ClInclude Include="survivorBase.h" />
+    <ClInclude Include="survivorController.h" />
     <ClInclude Include="terrain.h" />
     <ClInclude Include="textManager.h" />
     <ClInclude Include="timeManager.h" />
@@ -304,9 +310,11 @@
     <ClCompile Include="characterBase.cpp" />
     <ClCompile Include="controllerBase.cpp" />
     <ClCompile Include="enemyBase.cpp" />
+    <ClCompile Include="enemyController.cpp" />
     <ClCompile Include="gameSystem.cpp" />
     <ClCompile Include="gDigit.cpp" />
     <ClCompile Include="charaterArea.cpp" />
+    <ClCompile Include="inGame_node.cpp" />
     <ClCompile Include="nodeMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />
@@ -350,6 +358,8 @@
     <ClCompile Include="pathfind_grape.cpp" />
     <ClCompile Include="pathfind_node.cpp" />
     <ClCompile Include="pickRay.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="playerController.cpp" />
     <ClCompile Include="quadTree.cpp" />
     <ClCompile Include="quadTree_Frustum.cpp" />
     <ClCompile Include="renderObject.cpp" />
@@ -367,6 +377,8 @@
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="spriteBase.cpp" />
     <ClCompile Include="staticMesh.cpp" />
+    <ClCompile Include="survivorBase.cpp" />
+    <ClCompile Include="survivorController.cpp" />
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="textManager.cpp" />
     <ClCompile Include="timeManager.cpp" />

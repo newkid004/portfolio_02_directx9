@@ -93,7 +93,7 @@ void maptool_field::updateBindGrape(void)
 
 void maptool_field::drawPathGrape(void)
 {
-	_fieldSet.pathGrape->runGrape([&](auto from, auto to)->void {
+	_fieldSet.pathGrape->runGrape(nullptr, [&](auto viewData, auto from, auto to)->void {
 
 		aStar_node::info *infoA, *infoB;
 		from->getInfo(infoA);

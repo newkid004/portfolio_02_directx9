@@ -3,6 +3,15 @@
 #include "aStar_node.h"
 
 template<typename T>
+inline void aStar_grape_bind<T>::addNode(aStar_node * input, BIND in_bind)
+{
+	aStar_grape::addNode(input);
+	_vBindList.push_back(nullptr);
+
+	_vBindList.back() = in_bind;
+}
+
+template<typename T>
 inline void aStar_grape_bind<T>::addNode(aStar_node * input, BIND_OUT & out_bind)
 {
 	aStar_grape::addNode(input);

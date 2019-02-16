@@ -4,14 +4,16 @@
 
 class player;
 class mapObject;
+class inGame_grape;
 
 class gameSystem : public singletonBase<gameSystem>
 {
 public :
 	struct set
 	{
-		player*		player		= nullptr;
-		mapObject*	mapObject	= nullptr;
+		player*			player		= nullptr;
+		mapObject*		mapObject	= nullptr;
+		inGame_grape*	grape		= nullptr;
 	};
 
 private :
@@ -25,4 +27,4 @@ public:
 	~gameSystem() {};
 };
 
-#define SN_GAME gameSystem::getInstance()
+#define SGT_GAME gameSystem::getInstance()

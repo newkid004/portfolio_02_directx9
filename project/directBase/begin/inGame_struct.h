@@ -5,8 +5,11 @@ struct character_set
 {
 	int status				= 0;
 
+	float colRadian			= 1.0f;
+
 	int maxHp				= 1;
 	int nowHp				= 1;
+
 };
 
 struct move_set
