@@ -550,6 +550,15 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\character\survivor\_base">
       <UniqueIdentifier>{6caa8899-17ad-4c89-9948-a851182e77d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\data\node">
+      <UniqueIdentifier>{3182e40e-cd96-4369-81ba-57f3cd7b7a3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\data\field">
+      <UniqueIdentifier>{8f3571b6-d94b-44fd-ab42-8dec61f9241a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\data\io">
+      <UniqueIdentifier>{43b9a9af-2cb6-4955-943a-1c0ba97bc1da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -927,9 +936,6 @@
     <ClInclude Include="survivorController.h">
       <Filter>main\classes\scene\02_inGame\classes\object\AI\survivor</Filter>
     </ClInclude>
-    <ClInclude Include="inGame_node.h">
-      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
-    </ClInclude>
     <ClInclude Include="inGame_grape.h">
       <Filter>main\classes\scene\02_inGame\classes\data</Filter>
     </ClInclude>
@@ -939,7 +945,18 @@
     <ClInclude Include="player.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\survivor\player</Filter>
     </ClInclude>
-    <ClInclude Include="inGame_data_status.h" />
+    <ClInclude Include="sceneTest3.h">
+      <Filter>main\classes\scene\test</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_node.h">
+      <Filter>main\classes\scene\02_inGame\classes\data\node</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_field.h">
+      <Filter>main\classes\scene\02_inGame\classes\data\field</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_io.h">
+      <Filter>main\classes\scene\02_inGame\classes\data\io</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1257,8 +1274,17 @@
     <ClCompile Include="player.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\character\survivor\player</Filter>
     </ClCompile>
+    <ClCompile Include="sceneTest3.cpp">
+      <Filter>main\classes\scene\test</Filter>
+    </ClCompile>
     <ClCompile Include="inGame_node.cpp">
-      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
+      <Filter>main\classes\scene\02_inGame\classes\data\node</Filter>
+    </ClCompile>
+    <ClCompile Include="inGame_field.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\data\field</Filter>
+    </ClCompile>
+    <ClCompile Include="inGame_io.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\data\io</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

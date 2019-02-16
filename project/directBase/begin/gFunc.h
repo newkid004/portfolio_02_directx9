@@ -45,9 +45,11 @@ public :
 	// º¯È¯
 	static D3DXVECTOR2				Vec2Mlt(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x * v2.x, v1.y * v2.y); }
 	static D3DXVECTOR2				Vec2Dev(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVECTOR2(v1.x / v2.x, v1.y / v2.y); }
+	static D3DXVECTOR2				Vec2Dir(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { D3DXVECTOR2 result; D3DXVec2Normalize(&result, &(v2 - v1)); return result; }
 	static float					Vec2Distance(const D3DXVECTOR2 & v1, const D3DXVECTOR2 & v2) { return D3DXVec2Length(&(v1 - v2)); }
 	static D3DXVECTOR3				Vec3Mlt(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVECTOR3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z); }
 	static D3DXVECTOR3				Vec3Dev(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVECTOR3(v1.x / v2.x, v1.y / v2.y, v1.z / v2.z); }
+	static D3DXVECTOR3				Vec2Dir(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { D3DXVECTOR3 result; D3DXVec3Normalize(&result, &(v2 - v1)); return result; }
 	static float					Vec3Distance(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVec3Length(&(v1 - v2)); }
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
 

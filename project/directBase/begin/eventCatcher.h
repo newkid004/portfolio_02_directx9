@@ -29,6 +29,7 @@ public:
 
 public:
 	eventCatcher(void);
+	eventCatcher(unsigned long param, eventCatcherActive & beforeActive, eventCatcherActive & afterActive);
 	~eventCatcher(void) {};
 };
 

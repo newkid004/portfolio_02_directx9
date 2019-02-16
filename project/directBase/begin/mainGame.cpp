@@ -7,6 +7,7 @@
 
 #include "sceneTest1.h"
 #include "sceneTest2.h"
+#include "sceneTest3.h"
 #include "sceneCollisionTest.h"
 #include "AnimationTester.h"
 #include "wallCollision.h"
@@ -23,11 +24,12 @@ void mainGame::init(void)
 	// test
 	MN_SCENE->add("scene1", new sceneTest1);			// json
 	MN_SCENE->add("scene2", new sceneTest2);			// a* node
+	MN_SCENE->add("scene3", new sceneTest3);			// character
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
 	MN_SCENE->add("wallC", new wallCollision);
 
-	MN_SCENE->change("wallC");
+	MN_SCENE->change("scene3");
 	//MN_SCENE->change("sceneCollisionTest");
 }
 

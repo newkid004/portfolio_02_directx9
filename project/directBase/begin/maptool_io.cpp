@@ -243,16 +243,11 @@ void maptool_io::read(void)
 
 	for (auto & js : _mJson)
 	{
-		if (js.second == nullptr)
-			js.second = new json;
-		else
-		{
-			SAFE_DELETE(js.second);
-			js.second = new json;
+		SAFE_DELETE(js.second);
+		js.second = new json;
 
-			string dirPath = "map" + to_string(*_bindMapIndex) + '/';
-			gJson::read(*js.second, filepath + dirPath + js.first + ".json");
-		}
+		string dirPath = "map" + to_string(*_bindMapIndex) + '/';
+		gJson::read(*js.second, filepath + dirPath + js.first + ".json");
 	}
 
 	spreadObject();

@@ -27,3 +27,7 @@ void sceneInGame::drawUI(void)
 {
 	sceneBase::drawUI();
 }
+
+void sceneInGame::initEvent(void)
+{
+}

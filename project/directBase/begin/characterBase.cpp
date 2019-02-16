@@ -2,15 +2,40 @@
 
 #include "managerList.h"
 #include "gFunc.h"
+#include "gMng.h"
 #include "gDigit.h"
 
 #include "inGame_value.h"
 #include "inGame_digit.h"
+#include "inGame_node.h"
+#include "inGame_grape.h"
+#include "inGame_field.h"
+
+#include "aStar_node.h"
 
 #include "controllerBase.h"
+#include "player.h"
+#include "staticMesh.h"
+
+#include "heap.h"
 
 using DIGIT = inGame_digit;
 using VALUE = inGame_value;
+
+bool characterBase::heapCompare::operator()(aStar_node * n1, aStar_node * n2)
+{
+	auto & vBindList = SGT_GAME->getSet().field->getMember().grape->getBindList();
+	inGame_node* infoA = vBindList[n1->getIndex()];
+	inGame_node* infoB = vBindList[n1->getIndex()];
+
+	D3DXVECTOR3 & playerPos = SGT_GAME->getSet().player->getPosition();
+	D3DXVECTOR2 player2D = D3DXVECTOR2(playerPos.x, playerPos.z);
+
+	float distanceA = gFunc::Vec2Distance(D3DXVECTOR2(infoA->getPosition().x, infoA->getPosition().z), player2D);
+	float distanceB = gFunc::Vec2Distance(D3DXVECTOR2(infoB->getPosition().x, infoB->getPosition().z), player2D);
+
+	return distanceA < distanceB;
+}
 
 characterBase::characterBase(const patternMesh::mParam & param) :
 	patternMesh(param)
@@ -24,10 +49,12 @@ characterBase::~characterBase()
 
 void characterBase::update(void)
 {
-	updateLanding();
-	updateMove();
+	patternMesh::update();
 
 	_controller->update();
+
+	updateLanding();
+	updateMove();
 }
 
 void characterBase::updateLanding(void)
@@ -48,8 +75,9 @@ void characterBase::updateLanding(void)
 void characterBase::updateMove(void)
 {
 	updateGravity();
-	updateVelocity();
 	updateFriction();
+	updateVelocity();
+	updateCollision();
 }
 
 void characterBase::updateGravity(void)
@@ -84,13 +112,160 @@ void characterBase::updateFriction(void)
 	}
 }
 
+void characterBase::updateCollision(void)
+{
+	vector<aStar_node*> vColNodeList;
+	createCollisionNode(&vColNodeList);
+
+	auto & vBindList = *SGT_GAME->getSet().field->getMember().grape;
+	vector<staticMesh*> closeList(vColNodeList.size() * 2);
+	for (auto i : vColNodeList)
+	{
+		auto & wallList = vBindList[i]->getListSet().wall;
+		for (auto wall : wallList)
+		{
+			if (!gMng::find(wall, closeList))
+			{
+				moveByCollistion(wall);
+				closeList.push_back(wall);
+			}
+		}
+	}
+}
+
 void characterBase::updateVelocity(void)
 {
-	// ***** 상속된 자식, AI에서 벽 충돌 필요 ***** //
-
 	_position.x += _infoMove.velHorizon.x;
 	_position.y += _infoMove.velVertical;
 	_position.z += _infoMove.velHorizon.y;
+}
+
+void characterBase::createCollisionNode(std::vector<aStar_node*>* out_list)
+{
+	D3DXVECTOR2 charPos(_position.x, _position.z);
+	float charRange = _infoCharacter.colRadian;
+
+	auto & vBindList = *SGT_GAME->getSet().field->getMember().grape;
+
+	heap<aStar_node*, heapCompare> openList;
+	vector<aStar_node*> closeList;
+
+	openList.push(_placedNode);
+	while (!openList.empty())
+	{
+		aStar_node* currentNode = openList.top();
+
+		openList.pop();
+		out_list->push_back(currentNode);
+		closeList.push_back(currentNode);
+
+		for (auto & i : currentNode->getLinkedNodeList())
+		{
+			auto linkedNode = i.connector;
+
+			auto bindData = vBindList[linkedNode];
+			D3DXVECTOR2 bindPosition(bindData->getPosition().x, bindData->getPosition().z);
+			float distance = gFunc::Vec2Distance(bindPosition, charPos);
+			if (charRange + bindData->getRadius() < distance)
+				continue;
+
+			if (gMng::find(linkedNode, closeList))
+				continue;
+
+			if (!gMng::find(linkedNode, openList.getContainer()))
+				openList.push(linkedNode);
+		}
+	}
+}
+
+void characterBase::moveByCollistion(staticMesh * wall)
+{
+	// box
+	boundingBox & bBox = wall->getBoundingBox();
+	D3DXVECTOR2 bMin(bBox.min.x, bBox.min.z);
+	D3DXVECTOR2 bMax(bBox.max.x, bBox.max.z);
+	D3DXVECTOR2 bCenter = (bMin + bMax) / 2.0f;
+	float bRadius = gFunc::Vec2Distance(bCenter, bMax);
+
+	// player
+	D3DXVECTOR2 & velocity = _infoMove.velHorizon;
+	D3DXVECTOR2 planePos(_position.x, _position.z);
+	D3DXVECTOR2 deltaPos(planePos.x + velocity.x, planePos.y + velocity.y);
+	float radius = _infoCharacter.colRadian;
+
+	// compare
+	float distance = gFunc::Vec2Distance(bCenter, deltaPos) - bRadius - radius;
+
+	// 충돌범위 내
+	if (0.0f < distance)
+		return;
+
+	//상하
+	if (bMin.x <= deltaPos.x && deltaPos.x <= bMax.x)
+	{
+		//상
+		if (bCenter.y < deltaPos.y)
+			deltaPos.y -= bMax.y - (deltaPos.y + radius);
+
+		//하
+		else
+			deltaPos.y += bMin.y - (deltaPos.y - radius);
+	}
+	//좌우
+	else if (bMin.y <= deltaPos.y && deltaPos.y <= bMax.y)
+	{
+		//좌
+		if (bCenter.x < deltaPos.x)
+			deltaPos.x -= bMax.x - (deltaPos.x + radius);
+
+		//우
+		else
+			deltaPos.x += bMin.x - (deltaPos.x - radius);
+	}
+	//꼭지점
+	else
+	{
+		D3DXVECTOR2 edgePos;
+
+		// 좌
+		if (deltaPos.x < bCenter.x)
+		{
+			edgePos.x = bMin.x;
+
+			// 상
+			if (bCenter.y < deltaPos.y)
+				edgePos.y = bMax.y;
+
+			// 하
+			else
+				edgePos.y = bMin.y;
+		}
+		// 우
+		else
+		{
+			edgePos.x = bMax.x;
+
+			// 상
+			if (bCenter.y < deltaPos.y)
+				edgePos.y = bMax.y;
+
+			// 하
+			else
+				edgePos.y = bMin.y;
+		}
+
+		deltaPos = gFunc::Vec2Dir(edgePos, deltaPos) * radius;
+	}
+
+	// 속도 재지정
+	D3DXVECTOR2 direction(gFunc::Vec2Dir(planePos, deltaPos));
+	_infoMove.currentSpeed = gFunc::Vec2Distance(direction, deltaPos);
+
+	velocity = direction * _infoMove.currentSpeed;
+}
+
+void characterBase::put2Node(void)
+{
 }
 
 void characterBase::moveDo(D3DXVECTOR3 & direction)
@@ -170,4 +345,5 @@ void characterBase::moveBe(D3DXVECTOR3 & direction)
 void characterBase::setController(controllerBase * input)
 {
 	_controller = input;
+	input->getBindCharacter() = this;
 }

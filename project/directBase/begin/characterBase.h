@@ -11,6 +11,9 @@ class controllerBase;
 
 class characterBase : public patternMesh
 {
+public :
+	struct heapCompare { bool operator()(aStar_node* n1, aStar_node* n2); };
+
 protected :
 	aStar_node*		_placedNode		= nullptr;	// delete : disable (aStar_grape)
 	weaponBase*		_weapon			= nullptr;	// delete : disable (weaponManager)
@@ -29,7 +32,14 @@ private :
 protected :
 	virtual void updateGravity(void);
 	virtual void updateFriction(void);
+	virtual void updateCollision(void);
 	virtual void updateVelocity(void);
+
+private :
+	void createCollisionNode(std::vector<aStar_node*> * out_list);
+	void moveByCollistion(staticMesh* wall);
+	
+	void put2Node(void);
 
 public :
 	// 주체 이동 : local always
@@ -41,6 +51,7 @@ public :
 public :
 	aStar_node* &		getPlacedNode(void)		{ return _placedNode; }
 	weaponBase* &		getWeapon(void)			{ return _weapon; }
+	controllerBase* &	getController(void)		{ return _controller; }
 
 	character_set &		getInfoCharacter(void)	{ return _infoCharacter; }
 	move_set &			getInfoMove(void)		{ return _infoMove; }

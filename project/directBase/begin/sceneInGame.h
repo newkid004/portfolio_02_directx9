@@ -10,6 +10,9 @@ public:
 	virtual void draw(void)		override;
 	virtual void drawUI(void)	override;
 
+private :
+	void initEvent(void);
+
 public:
 	sceneInGame();
 	~sceneInGame();

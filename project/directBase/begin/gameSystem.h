@@ -5,19 +5,22 @@
 class player;
 class mapObject;
 class inGame_grape;
+class inGame_field;
 
 class gameSystem : public singletonBase<gameSystem>
 {
 public :
-	struct set
+	struct set	// bind
 	{
 		player*			player		= nullptr;
-		mapObject*		mapObject	= nullptr;
-		inGame_grape*	grape		= nullptr;
+		inGame_field*	field		= nullptr;
 	};
 
 private :
 	set _set;
+
+public :
+	void update(void);
 
 public :
 	set & getSet(void) { return _set; }

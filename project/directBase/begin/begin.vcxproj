@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -187,7 +187,9 @@
     <ClInclude Include="enemyController.h" />
     <ClInclude Include="gameSystem.h" />
     <ClInclude Include="gDigit.h" />
+    <ClInclude Include="inGame_field.h" />
     <ClInclude Include="inGame_grape.h" />
+    <ClInclude Include="inGame_io.h" />
     <ClInclude Include="inGame_node.h" />
     <ClInclude Include="inGame_struct.h" />
     <ClInclude Include="inGame_digit.h" />
@@ -258,6 +260,7 @@
     <ClInclude Include="sceneMapTool.h" />
     <ClInclude Include="sceneTest1.h" />
     <ClInclude Include="sceneTest2.h" />
+    <ClInclude Include="sceneTest3.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
     <ClInclude Include="skinnedMeshDup.h" />
@@ -314,6 +317,8 @@
     <ClCompile Include="gameSystem.cpp" />
     <ClCompile Include="gDigit.cpp" />
     <ClCompile Include="charaterArea.cpp" />
+    <ClCompile Include="inGame_field.cpp" />
+    <ClCompile Include="inGame_io.cpp" />
     <ClCompile Include="inGame_node.cpp" />
     <ClCompile Include="nodeMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
@@ -371,6 +376,7 @@
     <ClCompile Include="sceneMapTool.cpp" />
     <ClCompile Include="sceneTest1.cpp" />
     <ClCompile Include="sceneTest2.cpp" />
+    <ClCompile Include="sceneTest3.cpp" />
     <ClCompile Include="skinnedMesh.cpp" />
     <ClCompile Include="skinnedMeshDup.cpp" />
     <ClCompile Include="sound.cpp" />
