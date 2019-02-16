@@ -41,14 +41,14 @@ private:
 	animationControllerDigit* _aniControllerDigit = nullptr;
 
 	std::vector<D3DXVECTOR4> _vVertexList;
+	D3DXMATRIXA16 _vHandMatrix[2];
 
 	int num = 0;
 	int _leftFingerNumber = -1;
 	int _rightFingerNumber = -1;
-	bool _IsleftHand = true;
 public:
 	void update(void) override;
-	int findFinger(void);
+	int findFinger(bool isLeft);
 
 protected:
 	void drawPre(void) override;

@@ -1,23 +1,26 @@
 #pragma once
 #include "kGlobalDefine.h"
-
+#include "staticMesh.h"
 #include "inGame_struct.h"
 
 class viewDefBullet;
 
-class weaponBase
+
+class weaponBase:public staticMesh
 {
 public :
 	using bulletBase = viewDefBullet;
 
 protected :
 	bulletBase*					_bindBullet = nullptr;	// delete : disable (bulletManager)
-	std::list<D3DXMATRIXA16>	_baseMatrixList;
+	D3DXMATRIXA16	_baseMatrix[2];
+
 	
 	weapon_set		_infoWeapon;
 
+	bool _isLeft = true;
 public :
-	void update(void);
+	void updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull);
 
 private :
 	void updateFire(void);
@@ -41,7 +44,6 @@ public :
 public :
 	bulletBase* &	getBindBullet(void) { return _bindBullet; }
 	weapon_set &	getInfoWeapon(void) { return _infoWeapon; }
-	std::list<D3DXMATRIXA16> &	getBaseMatrixList(void) { return _baseMatrixList; }
 
 public:
 	weaponBase();
