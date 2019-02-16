@@ -966,6 +966,9 @@
     <ClInclude Include="patternMeshDup.h">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClInclude>
+    <ClInclude Include="weaponHealkit.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1303,6 +1306,9 @@
     </ClCompile>
     <ClCompile Include="patternMeshDup.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponHealkit.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

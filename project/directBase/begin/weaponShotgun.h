@@ -16,6 +16,6 @@ public:
 	virtual void reloadPost(void) override;
 
 public:
-	weaponShotgun();
+	weaponShotgun(patternMeshDup* linkPatternDup);
 	virtual ~weaponShotgun();
 };

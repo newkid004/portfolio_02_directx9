@@ -32,90 +32,31 @@ patternMesh::~patternMesh(void)
 void patternMesh::update(void)
 {
 	renderObject::update();
-	
+
 	_isCull = false;
 	this->updateBoneMatrix(_rootBone, getMatrixFinal());
 
-	if (_weapon != nullptr)
+	// 생존자의 경우 handMatrix 업데이트
+	if (_leftFingerNumber != 0 && _rightFingerNumber != 0)
 	{
-		D3DXMATRIXA16 stWeaponMatrix;
-		D3DXMATRIXA16 stRotationMatrix;
-		D3DXMATRIXA16 stTranslation;
 		if (_leftFingerNumber != -1)
 		{
-			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
-			_vHandMatrix[0] = stWeaponMatrix;
+			_handMatrix[0] = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
 		}
 		else
 		{
 			_leftFingerNumber = findFinger(true);
-			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
-			_vHandMatrix[0] = stWeaponMatrix;
+			_handMatrix[0] = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
 		}
 		if (_rightFingerNumber != -1)
 		{
-			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
-			_vHandMatrix[1] = stWeaponMatrix;
+			_handMatrix[1] = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
 		}
 		else
 		{
 			_rightFingerNumber = findFinger(false);
-			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
-			_vHandMatrix[1] = stWeaponMatrix;
+			_handMatrix[1] = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
 		}
-		
-		/*
-		오른손 장착
-
-		Rifle
-		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-			D3DXToRadian(90.0f), D3DXToRadian(175.0f), D3DXToRadian(-15.0f));
-		D3DXMatrixTranslation(&stTranslation, 0.0f, 0.0f, -1.0f);
-
-		SHOTGUN
-		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-			D3DXToRadian(70.0f), D3DXToRadian(190.0f), D3DXToRadian(-10.0f));
-		D3DXMatrixTranslation(&stTranslation, 1.5f, 0.5f, -2.5f);
-									//양수//앞으로 , 밑으로*/
-
-
-		/*
-		왼손 장착 
-		Rilfe
-		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-			D3DXToRadian(70.0f), D3DXToRadian(205.0f), D3DXToRadian(180.0f));
-		D3DXMatrixTranslation(&stTranslation, -15.0f, 3.0f, -8.0f);
-		
-		ShotGun
-		
-		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-			D3DXToRadian(60.0f), D3DXToRadian(195.0f), D3DXToRadian(160.0f));
-		D3DXMatrixTranslation(&stTranslation, -19.0f, 3.0f, -14.0f);
-		
-		healkit
-		D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-			D3DXToRadian(0.0f), D3DXToRadian(0.0f), D3DXToRadian(0.0f));
-		D3DXMatrixTranslation(&stTranslation, 0.0f, 0.0f, 0.0f);
-		*/
-
-		//_IsleftHand = false;
-		//if (_IsleftHand)
-		{
-			D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-				D3DXToRadian(60.0f), D3DXToRadian(195.0f), D3DXToRadian(160.0f));
-			D3DXMatrixTranslation(&stTranslation, -19.0f, 3.0f, -14.0f);
-		}
-		//else
-		{
-			D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
-				D3DXToRadian(70.0f), D3DXToRadian(190.0f), D3DXToRadian(-10.0f));
-			D3DXMatrixTranslation(&stTranslation, 1.5f, 0.5f, -2.5f);
-		}
-
-		stWeaponMatrix = stRotationMatrix * stTranslation * stWeaponMatrix;
-		_weapon->update();
-		_weapon->getIsCull() = _isCull;
-		(*_weapon->getMatrixWorldPoint()) = (*_weapon->getMatrixWorldPoint())* stWeaponMatrix;
 	}
 }
 
@@ -165,10 +106,6 @@ void patternMesh::drawDo(void)
 	renderObject::drawDo();
 
 	this->drawBone(_rootBone);
-	if (_weapon != nullptr)
-	{
-		_weapon->draw();
-	}
 }
 
 void patternMesh::drawPost(void)
@@ -180,11 +117,6 @@ void patternMesh::drawPost(void)
 void patternMesh::drawpreMesh(ACInfo & acInfo)
 {
 	_aniControllerDigit->drawPre(acInfo);
-}
-
-void patternMesh::setWeapon(staticMesh * weapon)
-{
-	_weapon = weapon;
 }
 
 void patternMesh::updateBoneMatrix(LPD3DXFRAME a_pstFrame, const D3DXMATRIXA16 & a_rstMatrix)

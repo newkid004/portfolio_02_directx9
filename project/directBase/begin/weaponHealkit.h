@@ -4,7 +4,7 @@
 #include "inGame_struct.h"
 #include "weaponBase.h"
 
-class weaponRifle :public weaponBase
+class weaponHealkit :public weaponBase
 {
 public:
 	virtual void firePre(void) override;
@@ -16,6 +16,6 @@ public:
 	virtual void reloadPost(void) override;
 
 public:
-	weaponRifle(patternMeshDup* linkPatternDup);
-	virtual ~weaponRifle();
+	weaponHealkit(patternMeshDup* linkPatternDup);
+	virtual ~weaponHealkit();
 };
