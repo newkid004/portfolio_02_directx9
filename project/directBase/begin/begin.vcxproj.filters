@@ -957,6 +957,15 @@
     <ClInclude Include="inGame_io.h">
       <Filter>main\classes\scene\02_inGame\classes\data\io</Filter>
     </ClInclude>
+    <ClInclude Include="weaponShotgun.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="weaponRifle.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="patternMeshDup.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1285,6 +1294,15 @@
     </ClCompile>
     <ClCompile Include="inGame_io.cpp">
       <Filter>main\classes\scene\02_inGame\classes\data\io</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponRifle.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponShotgun.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="patternMeshDup.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

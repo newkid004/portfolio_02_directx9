@@ -246,6 +246,7 @@
     <ClInclude Include="patternMesh.h" />
     <ClInclude Include="pathfind_grape.h" />
     <ClInclude Include="pathfind_node.h" />
+    <ClInclude Include="patternMeshDup.h" />
     <ClInclude Include="pickRay.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerController.h" />
@@ -277,6 +278,8 @@
     <ClInclude Include="uiManager.h" />
     <ClInclude Include="wallCollision.h" />
     <ClInclude Include="weaponBase.h" />
+    <ClInclude Include="weaponRifle.h" />
+    <ClInclude Include="weaponShotgun.h" />
     <ClInclude Include="windowBase.h" />
     <ClInclude Include="windowCtlogMaptool.h" />
     <ClInclude Include="windowManager.h" />
@@ -362,6 +365,7 @@
     <ClCompile Include="patternMesh.cpp" />
     <ClCompile Include="pathfind_grape.cpp" />
     <ClCompile Include="pathfind_node.cpp" />
+    <ClCompile Include="patternMeshDup.cpp" />
     <ClCompile Include="pickRay.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerController.cpp" />
@@ -392,6 +396,8 @@
     <ClCompile Include="uiManager.cpp" />
     <ClCompile Include="wallCollision.cpp" />
     <ClCompile Include="weaponBase.cpp" />
+    <ClCompile Include="weaponRifle.cpp" />
+    <ClCompile Include="weaponShotgun.cpp" />
     <ClCompile Include="windowBase.cpp" />
     <ClCompile Include="windowCtlogMaptool.cpp" />
     <ClCompile Include="windowManager.cpp" />

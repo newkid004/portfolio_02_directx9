@@ -28,7 +28,8 @@ public:
 	virtual ~bullet(void);
 
 public:
-
+	void setOnOff(bool onOff) { m_onOff = onOff; }
+	void setIntersect(const D3DXVECTOR3 & intersect) { m_stIntersect = intersect; }
 	float getSpeed(void) { return m_fSpeed; }
 	D3DXVECTOR3 & getPosition(void) { return _position; }
 	LPD3DXMESH getBulletMesh(void) { return m_pBulletMesh; }
@@ -40,9 +41,10 @@ private:
 	LPD3DXMESH createBulletMesh(void);
 
 private:
-
+	bool m_onOff = true;
 	float m_fSpeed = 0.0f;
 	LPD3DXMESH m_pBulletMesh = nullptr;
+	D3DXVECTOR3 m_stIntersect;
 
 	pick::ray m_ray;
 };

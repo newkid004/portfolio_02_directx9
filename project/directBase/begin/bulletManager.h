@@ -14,6 +14,7 @@ public:
 public:
 
 	void addBullet(const D3DXVECTOR3 & origin, const D3DXVECTOR3 & direction, float speed);
+	void setPosition(int index, const D3DXVECTOR3 & position, bool onOff);
 	void deleteBullet(void);
 	void deleteBullet(int index);
 	void collisionCheck(void);
