@@ -46,7 +46,7 @@ void sceneCollisionTest::init(void)
 	{
 		m_pSkinnedMesh[i] = this->createZombieMesh(ECharacterType::NORMAL_ZOMBIE);
 
-		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Head1",			FLAGPOSITION * D3DXVECTOR3(       0,   915.227, 380.302), 7, 7, 7);
+		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Head1",			FLAGPOSITION * D3DXVECTOR3(       0,   915.227, 380.302), 8, 8, 8);
 		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_Spine1",			FLAGPOSITION * D3DXVECTOR3(       0,   324.65,  -7.926), 12, 17, 12);
 		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_L_Foot",			FLAGPOSITION * D3DXVECTOR3( 39.007,  -251.624,  30.187), 8, 8, 8);
 		m_pSkinnedMesh[i]->setupBoneInfo("ValveBiped_Bip01_R_Foot",			FLAGPOSITION * D3DXVECTOR3(-39.007,  -251.624,  30.187), 8, 8, 8);
@@ -84,7 +84,7 @@ void sceneCollisionTest::init(void)
 	m_pBoxObject->moveZ(4);
 	m_pBoxObject->moveY(4);
 
-	m_pBoxObject->setDebugEnable(true);
+	m_pBoxObject->setDebugEnable(true, EDebugDrawType::SPHERE);
 #endif // DEBUG_TYPE == DEBUG_TYPE_MAP
 	
 }
@@ -102,9 +102,9 @@ void sceneCollisionTest::update(void)
 		//gFunc::obj2bound(m_pSkinnedMesh[i]->getObjectBox(),)
 	}
 
+	collisionCheck();
 	m_pBulletManager->update();
-	//collisionCheck();
-	collisionCheck2();
+	//collisionCheck2();
 
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->update();
@@ -197,7 +197,7 @@ void sceneCollisionTest::updateControl(void)
 		}
 	}
 
-	if (MN_KEY->mouseDown(EMouseInput::LEFT))
+	if (MN_KEY->mousePress(EMouseInput::LEFT))
 	{
 		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 
@@ -216,8 +216,9 @@ bool sceneCollisionTest::collisionCheck(void)
 
 		for (int i = 0; i < vBullet.size(); i++)
 		{
-			
-			if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(),
+			D3DXVECTOR3 intersect;
+			D3DXVECTOR3 intersect2;
+			if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &intersect,
 				vBullet[i]->getSpeed(), mSphere))
 			{
 				for (auto rValue : mBoundSphereSet)
@@ -226,13 +227,22 @@ bool sceneCollisionTest::collisionCheck(void)
 					sphere.center = rValue.second.drawPosition;
 					sphere.radius *= m_pSkinnedMesh[index]->getScale().x;
 				
-					if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(),
+					if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &intersect2,
 						vBullet[i]->getSpeed(), sphere))
 					{
+						if (stopBulletList.size() > i)
+						{
+							continue;
+						}
+						//printf("충돌!! %d, intersect point : %f, %f, %f\n", rand() % 100, intersect.x, intersect.y, intersect.z);
 						printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
-						//printf("충돌!! %d\n", rand() % 100);
-						m_pBulletManager->deleteBullet(i);
-						return true;
+						m_pBulletManager->setPosition(i,
+							intersect2,
+							false);
+						stopBulletList.push_back(i);
+						m_pBulletManager->setPosition(i, intersect2, false);
+						//m_pBulletManager->deleteBullet(i);
+						//return true;
 					}
 				}
 			}
@@ -245,16 +255,34 @@ bool sceneCollisionTest::collisionCheck2(void)
 {
 	auto vBullet = m_pBulletManager->getBulletList();
 	auto sphere = m_pBoxObject->getBoundingSphere();
+	m_pBoxObject->getBoundingSphereFinal(&sphere);
+	auto box = m_pBoxObject->getBoundingBox();
 	for (int i = 0; i < vBullet.size(); i++)
 	{
 		if (pick::isPickRay2Sphere(&vBullet[i]->getPickRay(), &vBullet[i]->getPosition(), vBullet[i]->getSpeed(), sphere))
 		{
 			pick::info info;
+			pick::applyMatrix(&vBullet[i]->getPickRay(), &vBullet[i]->getPickRay(), &m_pBoxObject->getMatrixFinal());
 			if (pick::chkPick(&info, &vBullet[i]->getPickRay(), m_pBoxObject->getMesh()))
 			{
-				printf("충돌!! %d\n", rand() % 100);
-				m_pBulletManager->deleteBullet(i);
-				return true;
+				if (stopBulletList.size() > i)
+				{
+					continue;
+				}
+				//printf("충돌!! %d\n", rand() % 100);
+		
+				D3DXMATRIXA16 matrix = m_pBoxObject->getMatrixFinal();
+				D3DXMatrixInverse(&matrix, NULL, &matrix);
+				pick::applyMatrix(&vBullet[i]->getPickRay(), &vBullet[i]->getPickRay(), &matrix);
+				D3DXVECTOR3 intersect = vBullet[i]->getPickRay().origin + info.distance * vBullet[i]->getPickRay().direction;
+				m_pBulletManager->setPosition(i, 
+					intersect,
+					false);
+				printf("충돌!! %d, intersect point : %f, %f, %f\n", rand() % 100, 
+					intersect.x, intersect.y, intersect.z);
+				stopBulletList.push_back(i);
+				//m_pBulletManager->deleteBullet(i);
+				//return true;
 			}
 		}
 		

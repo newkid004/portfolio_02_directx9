@@ -21,7 +21,15 @@ void bullet::update(void)
 {
 	renderObject::update();
 
-	m_ray.origin = _position;
+	if (m_onOff)
+	{
+		m_ray.origin = _position;
+	}
+	else
+	{
+		this->setPosition(m_stIntersect);
+	}
+
 }
 
 void bullet::drawPre(void)
@@ -34,16 +42,20 @@ void bullet::drawDo(void)
 	renderObject::drawDo();
 
 	D3DXMATRIXA16 stWorldMatrix = this->getMatrixFinal();
-	D3DXMATRIXA16 stTranslationMatrix;
-	D3DXMatrixTranslation(&stTranslationMatrix, m_ray.direction.x * m_fSpeed,
+	if (m_onOff)
+	{
+		D3DXMATRIXA16 stTranslationMatrix;
+		D3DXMatrixTranslation(&stTranslationMatrix, m_ray.direction.x * m_fSpeed,
 		m_ray.direction.y * m_fSpeed,
 		m_ray.direction.z * m_fSpeed);
 
-	stWorldMatrix *= stTranslationMatrix;
+		stWorldMatrix *= stTranslationMatrix;
 	
-	this->setPosition(D3DXVECTOR3(_position.x + m_ray.direction.x * m_fSpeed,
-		_position.y + m_ray.direction.y * m_fSpeed,
-		_position.z + m_ray.direction.z * m_fSpeed));
+	
+		this->setPosition(D3DXVECTOR3(_position.x + m_ray.direction.x * m_fSpeed,
+			_position.y + m_ray.direction.y * m_fSpeed,
+			_position.z + m_ray.direction.z * m_fSpeed));
+	}
 
 
 	MN_DEV->SetTransform(D3DTS_WORLD, &stWorldMatrix);
@@ -60,7 +72,7 @@ LPD3DXMESH bullet::createBulletMesh(void)
 {
 	LPD3DXMESH pMesh = nullptr;
 
-	D3DXCreateCylinder(MN_DEV, 0.5, 0.5, 1, 20, 20, &pMesh, NULL);
+	D3DXCreateSphere(MN_DEV, 0.1, 20, 20, &pMesh, NULL);
 
 	return pMesh;
 }

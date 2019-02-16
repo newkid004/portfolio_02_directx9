@@ -10,6 +10,13 @@ class bulletManager;
 
 class sceneCollisionTest : public sceneBase
 {
+public:
+	struct Slab
+	{
+		float normal[3];
+		float dNear;
+		float dFar;
+	};
 private:
 
 	skinnedMesh* m_pSkinnedMesh[10];
@@ -21,6 +28,7 @@ private:
 
 	int m_nAnimationIndex = 0;
 
+	std::vector<int> stopBulletList;
 	std::vector<boundingSphere> m_vCollisionSphereList;
 public:
 	virtual void init(void) override;

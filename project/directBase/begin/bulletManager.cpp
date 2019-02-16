@@ -40,6 +40,12 @@ void bulletManager::addBullet(const D3DXVECTOR3 & origin, const D3DXVECTOR3 & di
 	m_vBulletList.push_back(mBullet);
 }
 
+void bulletManager::setPosition(int index, const D3DXVECTOR3 & position, bool onOff)
+{
+	m_vBulletList[index]->setIntersect(position);
+	m_vBulletList[index]->setOnOff(onOff);
+}
+
 void bulletManager::deleteBullet(void)
 {
 	for (int i = 0; i < m_vBulletList.size(); ++i)
