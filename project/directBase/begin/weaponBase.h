@@ -4,7 +4,7 @@
 #include "inGame_struct.h"
 
 class viewDefBullet;
-
+class patternMeshDup;
 
 class weaponBase:public staticMesh
 {
@@ -13,6 +13,8 @@ public :
 
 protected :
 	bulletBase*					_bindBullet = nullptr;	// delete : disable (bulletManager)
+	patternMeshDup*				_bindPMesh = nullptr;
+
 	D3DXMATRIXA16	_baseMatrix[2];
 
 	
@@ -46,7 +48,7 @@ public :
 	weapon_set &	getInfoWeapon(void) { return _infoWeapon; }
 
 public:
-	weaponBase();
+	weaponBase(patternMeshDup* linkPatternDup);
 	virtual ~weaponBase();
 };
 

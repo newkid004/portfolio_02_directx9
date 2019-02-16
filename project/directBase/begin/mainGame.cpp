@@ -29,7 +29,8 @@ void mainGame::init(void)
 	MN_SCENE->add("animation", new AnimationTester);
 	MN_SCENE->add("wallC", new wallCollision);
 
-	MN_SCENE->change("scene3");
+	MN_SCENE->change("wallC");
+	//MN_SCENE->change("scene3");
 	//MN_SCENE->change("sceneCollisionTest");
 }
 

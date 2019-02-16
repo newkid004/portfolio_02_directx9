@@ -1,11 +1,14 @@
 #include "weaponShotgun.h"
 
-weaponShotgun::weaponShotgun()
+weaponShotgun::weaponShotgun(patternMeshDup* linkPatternDup)
+	:weaponBase::weaponBase(linkPatternDup)
 {
 	_infoWeapon.type = weapon_set::type::shotgun;
 	_infoWeapon.current = 5;
 	_infoWeapon.reload = 5;
 	_infoWeapon.maximum = 30;
+	_infoWeapon.nextFireTime = 0.5f;
+	_infoWeapon.nextReloadTime = 2.0f;
 
 	D3DXMATRIXA16 stRotation;
 	D3DXMatrixRotationYawPitchRoll(&stRotation,
@@ -28,24 +31,36 @@ weaponShotgun::~weaponShotgun()
 
 void weaponShotgun::firePre(void)
 {
+	weaponBase::firePre();
 }
 
 void weaponShotgun::fireDo(void)
 {
+	weaponBase::fireDo();
+	//ÃÑ¾Ë ¹ß»ç
+	// 12¹ß
+
 }
 
 void weaponShotgun::firePost(void)
 {
+	weaponBase::firePost();
+	--_infoWeapon.current;
 }
 
 void weaponShotgun::reloadPre(void)
 {
+	weaponBase::reloadPre();
 }
 
 void weaponShotgun::reloadDo(void)
 {
+	weaponBase::reloadDo();
+	++_infoWeapon.current;
+	_isLeft = false;
 }
 
 void weaponShotgun::reloadPost(void)
 {
+	weaponBase::reloadPost();
 }
