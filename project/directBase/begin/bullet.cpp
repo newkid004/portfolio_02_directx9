@@ -21,7 +21,7 @@ void bullet::update(void)
 {
 	renderObject::update();
 
-
+	m_ray.origin = _position;
 }
 
 void bullet::drawPre(void)
@@ -36,7 +36,8 @@ void bullet::drawDo(void)
 	D3DXMATRIXA16 stWorldMatrix = this->getMatrixFinal();
 	D3DXMATRIXA16 stTranslationMatrix;
 	D3DXMatrixTranslation(&stTranslationMatrix, m_ray.direction.x * m_fSpeed,
-		m_ray.direction.y * m_fSpeed, m_ray.direction.z * m_fSpeed);
+		m_ray.direction.y * m_fSpeed,
+		m_ray.direction.z * m_fSpeed);
 
 	stWorldMatrix *= stTranslationMatrix;
 	

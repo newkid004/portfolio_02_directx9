@@ -72,7 +72,13 @@ public:
 	BOUNDSPHEREMATRIXSET & getBoundingSphereSetList(void) { return _mbSphereSet; }
 
 	constexpr boundingBox & getBoundingBox(void) { return _bBox; }
-	constexpr boundingSphere & getBoundingSphere(void) { return _bSphere; }
+	boundingSphere & getBoundingSphere(void) 
+	{
+		boundingSphere mSphere;
+		mSphere.center = _bSphere.center + _offset; 
+		mSphere.radius = _bSphere.radius * this->getScale().x;
+		return mSphere;
+	}
 	const D3DXVECTOR3 & getBoundingSphereOffset(void) { return _offset; }
 
 	void getBoundingBoxFinal(boundingBox * out);

@@ -939,6 +939,7 @@
     <ClInclude Include="player.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\survivor\player</Filter>
     </ClInclude>
+    <ClInclude Include="inGame_data_status.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">

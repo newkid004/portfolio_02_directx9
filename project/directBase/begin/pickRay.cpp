@@ -75,7 +75,7 @@ bool pick::chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh)
 		NULL,
 		NULL);
 
-	return out_info->isHit == TRUE;
+return out_info->isHit == TRUE;
 }
 
 bool pick::chkPick(D3DXVECTOR3 * out_info, ray * in_ray, const D3DXPLANE * plane)
@@ -130,36 +130,42 @@ bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 	return false;
 }
 
-bool pick::isPickRay2Sphere(ray * in_ray, const D3DXVECTOR3 & position, float speed, boundingSphere * bSphere)
+bool pick::isPickRay2Sphere(ray * in_ray, D3DXVECTOR3 * outCollisionPos, float speed, const boundingSphere & bSphere)
 {
 	if (in_ray == NULL)
 		in_ray = &MN_KEY->getPickRay();
 
-	D3DXVECTOR3 & rayDir = in_ray->direction;
 	D3DXVECTOR3 & rayOrigin = in_ray->origin;
+	D3DXVECTOR3 & rayDir = in_ray->direction;
+	D3DXVECTOR3 nextOrigin = rayOrigin + rayDir * speed;
+	D3DXVECTOR3 p = nextOrigin - rayOrigin;
 
-	D3DXVECTOR3 delta = bSphere->center - rayOrigin;
+	float lineLength = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
 
-	float deltaLength = D3DXVec3Dot(&delta, &delta);
+	// 선분 방향 벡터
+	D3DXVECTOR3 d = (nextOrigin - rayOrigin) / lineLength;
 
-	float radius = bSphere->radius * bSphere->radius;
-	float dotValue = D3DXVec3Dot(&delta, &rayDir);
+	// 구에서 선분 시작점 까지 벡터
+	D3DXVECTOR3 m = rayOrigin - bSphere.center;
 
-	if (dotValue < 0.0f && deltaLength > radius)
-		return false;
+	// 방향 벡터 각도 (90도 넘으면 false)
+	float b = D3DXVec3Dot(&m, &d);
+	if (b > 0.0f) return false;
 
-	D3DXVECTOR3 myDelta = position + (rayDir * speed) - rayOrigin;
-	float myDeltaLength = D3DXVec3Dot(&myDelta, &myDelta);
+	// 구안에 선분 시작점이 있는지
+	float c = D3DXVec3Dot(&m, &m) - bSphere.radius * bSphere.radius;
+	if (c < 0.0f) return true;
 
-	if (deltaLength - (dotValue * dotValue) <= radius)
-	{
-		if (myDeltaLength > deltaLength)
-		{
-			return true;
-		}
-	}
+	float disc = b * b - c;
+	if (disc < 0.0f) return false;
+
+	float t1 = -b - sqrt(disc);
+	float t2 = -b + sqrt(disc);
+
+	if ((t1 >= 0.0f) && (t1 < lineLength)) return true;
+	if ((t2 >= 0.0f) && (t2 < lineLength)) return true;
+
 	return false;
-	
 }
 
 bool pick::chkPick(ray * in_ray, boundingBox * bBox)

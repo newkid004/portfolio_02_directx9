@@ -1,5 +1,7 @@
 #include "bulletManager.h"
 #include "gFunc.h"
+#include "camera.h"
+#include "managerList.h"
 
 bulletManager::bulletManager()
 {
@@ -16,7 +18,7 @@ void bulletManager::update(void)
 	{
 		m_vBulletList[i]->update();
 
-		if (gFunc::Vec3Distance(m_vBulletList[i]->getPickRay().origin, m_vBulletList[i]->getPosition()) > 80)
+		if (gFunc::Vec3Distance(D3DXVECTOR3(0,0,0), m_vBulletList[i]->getPosition()) > 100)
 		{
 			deleteBullet(i);
 		}
