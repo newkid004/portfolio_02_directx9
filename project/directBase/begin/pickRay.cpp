@@ -142,32 +142,45 @@ bool pick::isPickRay2Sphere(ray * in_ray, D3DXVECTOR3 * outIntersection, float s
 	
 	float lineLength = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
 	
-	// 선분 방향 벡터
-	D3DXVECTOR3 d = (nextOrigin - rayOrigin) / lineLength;
-	
 	// 구에서 선분 시작점 까지 벡터
 	D3DXVECTOR3 m = rayOrigin - bSphere.center;
+	D3DXVECTOR3 l = bSphere.center - rayOrigin;
 	
+	float l2 = D3DXVec3Dot(&l, &l);
+	float r2 = bSphere.radius * bSphere.radius;
+	float distance;
+
 	// 방향 벡터 각도 (90도 넘으면 false)
-	float b = D3DXVec3Dot(&m, &d);
-	if (b > 0.0f) return false;
+	float b = D3DXVec3Dot(&m, &rayDir);
+	float s = D3DXVec3Dot(&l, &rayDir);
+	if (b > 0.0f) 
+		return false;
+
+	float m2 = l2 - s * s;
 	
 	// 구안에 선분 시작점이 있는지
-	float c = D3DXVec3Dot(&m, &m) - bSphere.radius * bSphere.radius;
-	if (c < 0.0f) return true;
+	float c = l2 - r2;
+	//if (c < 0.0f) return true;
 	
 	float disc = b * b - c;
-	if (disc < 0.0f) return false;
+	if (disc < 0.0f) 
+		return false;
 	
 	float t1 = -b - sqrt(disc);
 	float t2 = -b + sqrt(disc);
-	
-	if ((t1 >= 0.0f) && (t1 < lineLength))
+	float q = sqrt(r2 - m2);
+	if (((t1 >= 0.0f) && (t1 < lineLength)) || ((t2 >= 0.0f) && (t2 < lineLength)))
 	{
-		return true;
-	}
-	if ((t2 >= 0.0f) && (t2 < lineLength)) 
-	{	
+		if (l2 < r2)
+		{
+			distance = s + q;
+		}
+		else
+		{
+			distance = s - q;
+		}
+
+		*outIntersection = rayOrigin + distance * rayDir;
 		return true;
 	}
 	

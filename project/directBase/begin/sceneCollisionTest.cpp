@@ -234,7 +234,7 @@ bool sceneCollisionTest::collisionCheck(void)
 						{
 							continue;
 						}
-						//printf("충돌!! %d, intersect point : %f, %f, %f\n", rand() % 100, intersect.x, intersect.y, intersect.z);
+						printf("충돌!! %d, intersect point : %f, %f, %f\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z);
 						printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
 						m_pBulletManager->setPosition(i,
 							intersect2,
