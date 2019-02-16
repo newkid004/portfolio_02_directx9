@@ -26,6 +26,8 @@ void characterBase::update(void)
 {
 	updateLanding();
 	updateMove();
+
+	_controller->update();
 }
 
 void characterBase::updateLanding(void)
@@ -167,5 +169,5 @@ void characterBase::moveBe(D3DXVECTOR3 & direction)
 
 void characterBase::setController(controllerBase * input)
 {
-	input->getBindCharacter() = this;
+	_controller = input;
 }

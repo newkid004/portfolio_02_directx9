@@ -1,12 +1,16 @@
 #pragma once
 #include "kGlobalDefine.h"
 
+
 struct character_set
 {
 	int status				= 0;
 
+	float colRadian			= 1.0f;
+
 	int maxHp				= 1;
 	int nowHp				= 1;
+
 };
 
 struct move_set
@@ -47,6 +51,16 @@ struct attack_set
 
 struct weapon_set
 {
+	static struct type
+	{
+		static constexpr int none = 0;
+		static constexpr int rifle = 1;
+		static constexpr int shotgun = 2;
+		static constexpr int healkit = 3;
+	};
+
+	int type = 0;
+
 	int status				= 0;
 
 	bool autoFire			= false;

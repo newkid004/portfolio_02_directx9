@@ -15,8 +15,20 @@ weaponBase::~weaponBase()
 {
 }
 
-void weaponBase::update(void)
+void weaponBase::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
 {
+	D3DXMATRIXA16 stLocalMatrix;
+	if (_isLeft)
+	{
+		stLocalMatrix = _baseMatrix[0] * combineMatrix[0];
+	}
+	else
+	{
+		stLocalMatrix = _baseMatrix[1] * combineMatrix[1];
+	}
+	staticMesh::update();
+	_isCull = isCull;
+	(*getMatrixWorldPoint()) = (*getMatrixWorldPoint()) * stLocalMatrix;
 	updateFire();
 	updateReload();
 }

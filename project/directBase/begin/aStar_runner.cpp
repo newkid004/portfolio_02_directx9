@@ -12,6 +12,9 @@ void aStar_runner::setPrevRunner(aStar_runner * prevRunner)
 	_member.prevRunner = prevRunner;
 	_member.prevNode = prevRunner->getMember().placedNode;
 
+	_member.prevRunner->_member.nextRunner = this;
+	_member.prevRunner->_member.nextNode = _member.placedNode;
+
 	aStar_node* dest = ((aStar_grape*)_member.prevNode->getBindGrape())->getDestNode();
 
 	_member.distance.G = aStar_grape::calDistance(_member.prevNode, _member.placedNode) + _member.prevRunner->_member.distance.G;

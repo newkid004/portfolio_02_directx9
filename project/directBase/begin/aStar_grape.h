@@ -39,8 +39,11 @@ public :
 	void pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* dest);
 
 public :
-	template<typename compare = std::less<>, typename breaker = pathfind_grape::breakNone>
-	void runGrape(const std::function<void(aStar_node* from, aStar_node* to)> & callback, breaker* brk = nullptr, compare* view = nullptr);
+	template<typename compare = std::equal_to<>, typename breaker = pathfind_grape::takeFalse, typename continuer = pathfind_grape::takeFalse, typename pusher = pathfind_grape::takeTrue>
+	void runGrape(void* viewData, const std::function<void(void* viewData, aStar_node* from, aStar_node* to)> & callback, breaker* brk = nullptr, continuer* con = nullptr, pusher* push = nullptr, compare* view = nullptr);
+
+	template<typename compare = std::equal_to<>, typename breaker = pathfind_grape::takeFalse, typename continuer = pathfind_grape::takeFalse, typename pusher = pathfind_grape::takeTrue>
+	void runGrape(void* viewData, aStar_node* begin, const std::function<void(void* viewData, aStar_node* from, aStar_node* to)> & callback, breaker* brk = nullptr, continuer* con = nullptr, pusher* push = nullptr, compare* view = nullptr);
 
 public :
 	static float calDistance(aStar_node* n1, aStar_node* n2);

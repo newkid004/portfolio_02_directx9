@@ -41,29 +41,27 @@ void patternMesh::update(void)
 		D3DXMATRIXA16 stWeaponMatrix;
 		D3DXMATRIXA16 stRotationMatrix;
 		D3DXMATRIXA16 stTranslation;
-		if (_IsleftHand)
+		if (_leftFingerNumber != -1)
 		{
-			if (_leftFingerNumber != -1)
-			{
-				stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
-			}
-			else
-			{
-				_leftFingerNumber = findFinger();
-				stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
-			}
+			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
+			_vHandMatrix[0] = stWeaponMatrix;
 		}
 		else
 		{
-			if (_rightFingerNumber != -1)
-			{
-				stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
-			}
-			else
-			{
-				_rightFingerNumber = findFinger();
-				stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
-			}
+			_leftFingerNumber = findFinger(true);
+			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
+			_vHandMatrix[0] = stWeaponMatrix;
+		}
+		if (_rightFingerNumber != -1)
+		{
+			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
+			_vHandMatrix[1] = stWeaponMatrix;
+		}
+		else
+		{
+			_rightFingerNumber = findFinger(false);
+			stWeaponMatrix = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
+			_vHandMatrix[1] = stWeaponMatrix;
 		}
 		
 		/*
@@ -99,14 +97,15 @@ void patternMesh::update(void)
 			D3DXToRadian(0.0f), D3DXToRadian(0.0f), D3DXToRadian(0.0f));
 		D3DXMatrixTranslation(&stTranslation, 0.0f, 0.0f, 0.0f);
 		*/
-		_IsleftHand = false;
-		if (_IsleftHand)
+
+		//_IsleftHand = false;
+		//if (_IsleftHand)
 		{
 			D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
 				D3DXToRadian(60.0f), D3DXToRadian(195.0f), D3DXToRadian(160.0f));
 			D3DXMatrixTranslation(&stTranslation, -19.0f, 3.0f, -14.0f);
 		}
-		else
+		//else
 		{
 			D3DXMatrixRotationYawPitchRoll(&stRotationMatrix,
 				D3DXToRadian(70.0f), D3DXToRadian(190.0f), D3DXToRadian(-10.0f));
@@ -120,13 +119,13 @@ void patternMesh::update(void)
 	}
 }
 
-int patternMesh::findFinger(void)
+int patternMesh::findFinger(bool isLeft)
 {
 	
 	for (int i = 0; i < _vMeshContainerList[0]->vBoneList.size(); ++i)
 	{
 		std::string name = _vMeshContainerList[0]->vBoneList[i]->Name;
-		if (_IsleftHand)
+		if (isLeft)
 		{
 			if (name.find("Finger0") != string::npos)
 			{

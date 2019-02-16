@@ -22,9 +22,11 @@ public :
 	struct member
 	{
 		aStar_runner* prevRunner = nullptr;		// parent
+		aStar_runner* nextRunner = nullptr;		// child
 
 		aStar_node* placedNode = nullptr;
 		aStar_node* prevNode = nullptr;
+		aStar_node* nextNode = nullptr;
 
 		info_distance distance;
 	};

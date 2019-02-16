@@ -6,9 +6,13 @@ class pathfind_node;
 class pathfind_grape
 {
 public :
-	struct breakNone
+	struct takeFalse
 	{
-		bool operator()(pathfind_node* n1, pathfind_node* n2) { return false; }
+		bool operator()(void* viewData, pathfind_node* n1, pathfind_node* n2) { return false; }
+	};
+	struct takeTrue
+	{
+		bool operator()(void* viewData, pathfind_node* n1, pathfind_node* n2) { return true; }
 	};
 
 public:

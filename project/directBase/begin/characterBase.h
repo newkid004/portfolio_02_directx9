@@ -20,7 +20,7 @@ protected :
 	move_set		_infoMove;
 
 public :
-	void update(void);
+	virtual void update(void);
 
 private :
 	void updateLanding(void);
