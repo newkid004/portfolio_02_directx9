@@ -85,6 +85,17 @@ void maptool_io::buildField(void)
 	}
 }
 
+void maptool_io::buildTrigger(void)
+{
+	auto iter = _mJson.find("trigger");
+	json*& j = iter->second;
+
+	SAFE_DELETE(j);
+	j = new json;
+
+
+}
+
 void maptool_io::buildGrape(void)
 {
 	auto iter = _mJson.find("grape");
@@ -192,6 +203,10 @@ void maptool_io::spreadField(void)
 
 	quad = new quadTree_Frustum(256, 256);
 	quad->build();
+}
+
+void maptool_io::spreadTrigger(void)
+{
 }
 
 void maptool_io::spreadGrape(void)

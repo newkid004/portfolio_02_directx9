@@ -17,11 +17,13 @@ private :
 	// write 전, field의 json내용 작성
 	void buildObject(void);
 	void buildField(void);
+	void buildTrigger(void);
 	void buildGrape(void);
 
 	// read 후, field에 json내용 작성
 	void spreadObject(void);
 	void spreadField(void);
+	void spreadTrigger(void);
 	void spreadGrape(void);
 
 public :

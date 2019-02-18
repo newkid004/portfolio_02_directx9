@@ -11,7 +11,7 @@ protected :
 
 
 public:
-	enemyBase(const characterBase::mParam & param);
+	enemyBase(patternMesh* duplicateTarget);
 	~enemyBase();
 };
 

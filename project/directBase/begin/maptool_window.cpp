@@ -27,8 +27,8 @@ maptool_window::maptool_window()
 	vWindow.push_back(MN_UI->add("maptool_mnProp",		_windowSet.mv_prop		= create_mvProp()));
 	vWindow.push_back(MN_UI->add("maptool_mnBump",		_windowSet.mv_bump		= create_mvBump()));
 	vWindow.push_back(MN_UI->add("maptool_mnEvent",		_windowSet.mv_node		= create_mvNode()));
+	vWindow.push_back(MN_UI->add("maptool_mnTrigger",	_windowSet.mv_trigger	= create_mvTrigger()));
 	vWindow.push_back(MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile()));
-	// vWindow.push_back(MN_UI->add("maptool_mnOption",	_windowSet.mv_option	= create_mvOption()));
 
 	for (auto i : vWindow)
 		i->getInfo().pos += D3DXVECTOR2(gFunc::rndFloat(-100, 100), gFunc::rndFloat(-100, 100));
@@ -84,8 +84,8 @@ windowStatic * maptool_window::createBottomBar(void)
 	result->addButton("prop",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/prop.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_prop->trans(); };
 	result->addButton("bump",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/bump.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_bump->trans(); };
 	result->addButton("event",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/event.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_node->trans(); };
+	result->addButton("trigger",createButtonUnderBar(result, "resource/texture/maptool/bottomBar/trigger.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_trigger->trans(); };
 	result->addButton("file",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/file.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_file->trans(); };
-	result->addButton("option",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/option.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_option->trans(); };
 
 	return result;
 }
@@ -208,6 +208,30 @@ windowCtlogMaptool * maptool_window::create_mvNode(void)
 	return result;
 }
 
+windowCtlogMaptool * maptool_window::create_mvTrigger(void)
+{
+	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
+	D3DXVECTOR2 textureSize;
+	gFunc::getTextureSize(&textureSize, transTexture);
+
+	uiInfo winInfo;
+	winInfo.backImage = transTexture;
+	winInfo.size = textureSize;
+	winInfo.pos = D3DXVECTOR2(
+		(WINSIZEX - winInfo.size.x) / 2.0f,
+		(WINSIZEY - winInfo.size.y) / 2.0f);
+
+	auto result = new windowCtlogMaptool(winInfo);
+
+	vector<CATALOG::OBJ::NODE*> content;
+	createContent_node(content);
+
+	for (auto i : content)
+		result->addItem(i);
+
+	return result;
+}
+
 windowCtlogMaptool * maptool_window::create_mvFile(void)
 {
 	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
@@ -244,37 +268,134 @@ windowCtlogMaptool * maptool_window::create_mvFile(void)
 	return result;
 }
 
-windowMoveable * maptool_window::create_mvOption(void)
-{
-	return nullptr;
-}
-
 void maptool_window::createContent_prop(std::vector<CATALOG::OBJ::PROP*>& vContent)
 {
 	CATALOG::OBJ::PROP* item = nullptr;
 	staticMesh::mParam param;
-
-	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
 	param.effectFilePath = "resource/effect/example_15.fx";
 
-	CATALOG::create(&item, &param);
-	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
+	string xPath = "resource/mesh/L4D1/props/";
+	string tPath = "resource/texture/maptool/catalog/prop/funitures/";
 
-	vContent.push_back(item);
+	function<void(char*)> inputContent = [&](char* fName)->void {
+		param.meshFilePath = xPath + fName + ".X";
+		CATALOG::create(&item, &param);
+		item->_standImage = MN_SRC->getSpriteTexture(tPath + fName + ".PNG");
+		vContent.push_back(item);
+	};
+
+	inputContent("cafe_barstool1");
+	inputContent("chair2");
+	inputContent("chandelier1");
+	inputContent("kitchen_shelf");
+	inputContent("lamp1");
+	inputContent("picture_frame1");
+	inputContent("picture_frame10");
+
+
+	tPath = "resource/texture/maptool/catalog/prop/cs_office/";
+	inputContent("chair_office");
+	inputContent("coffee_mug");
+	inputContent("exit_ceiling");
+	inputContent("exit_wall");
+
+	tPath = "resource/texture/maptool/catalog/prop/de_nuke/";
+	inputContent("clock");
+
+	tPath = "resource/texture/maptool/catalog/prop/interiors/";
+	inputContent("clipboard1");
+	inputContent("clothing_pile1");
+	inputContent("clothing_pile2");
+	inputContent("clothing_pile3");
+	inputContent("clothing_pile4");
+	inputContent("clothing_pile5");
+	inputContent("teddybear");
+
+	tPath = "resource/texture/maptool/catalog/prop/junk/";
+	inputContent("food_pile1");
+	inputContent("trashCluster1");
+
+	tPath = "resource/texture/maptool/catalog/prop/misc/";
+	inputContent("flour_sack");
+	inputContent("german_radio");
+	inputContent("hospital_banner");
+	inputContent("military_sign1");
+	inputContent("military_sign2");
+	inputContent("mirror_gib1");
+	inputContent("mirror_gib2");
+	inputContent("mirror_gib3");
+	inputContent("pan");
+	inputContent("pot1");
+	inputContent("pot2");
+	inputContent("teapot");
+
+	tPath = "resource/texture/maptool/catalog/prop/plants/";
+	inputContent("pottedplant_tall");
+
+	tPath = "resource/texture/maptool/catalog/prop/lighting/";
+	inputContent("lightFixture");
+
+	tPath = "resource/texture/maptool/catalog/prop/unique/";
+	inputContent("coffeeammo");
+	inputContent("survival_manual1");
+	inputContent("survival_manual2");
 }
 
 void maptool_window::createContent_bump(std::vector<CATALOG::OBJ::BUMP*>& vContent)
 {
 	CATALOG::OBJ::BUMP* item = nullptr;
 	staticMesh::mParam param;
-
-	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
 	param.effectFilePath = "resource/effect/example_15.fx";
 
-	CATALOG::create(&item, &param);
-	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
+	string xPath = "resource/mesh/L4D1/props/";
+	string tPath = "resource/texture/maptool/catalog/prop/funitures/";
 
-	vContent.push_back(item);
+	function<void(char*)> inputContent = [&](char* fName)->void {
+		param.meshFilePath = xPath + fName + ".X";
+		CATALOG::create(&item, &param);
+		item->_standImage = MN_SRC->getSpriteTexture(tPath + fName + ".PNG");
+		vContent.push_back(item);
+	};
+
+	inputContent("bathtube");
+	inputContent("cupboard1");
+	inputContent("desk1");
+	inputContent("drawer1");
+	inputContent("dresser1");
+	inputContent("kitchen_cabinet");
+	inputContent("kitchen_countertop");
+	inputContent("piano");
+	inputContent("shelf");
+
+
+	tPath = "resource/texture/maptool/catalog/prop/cs_italy/";
+	inputContent("it_mkt_table2");
+	
+	tPath = "resource/texture/maptool/catalog/prop/cs_militia/";
+	inputContent("refrigerator1");
+	inputContent("stove1");
+
+	tPath = "resource/texture/maptool/catalog/prop/cs_office/";
+	inputContent("bookshelf2");
+	
+	tPath = "resource/texture/maptool/catalog/prop/industrial/";
+	inputContent("warehouse_shelf");
+	
+	tPath = "resource/texture/maptool/catalog/prop/interiors/";
+	inputContent("concreteBase");
+	inputContent("concreteHalf");
+	inputContent("concretePiece");
+	inputContent("kids_bed");
+	inputContent("sofa_chair");
+	
+	tPath = "resource/texture/maptool/catalog/prop/junk/";
+	inputContent("barrel_fire");
+	inputContent("cardboard_box");
+	inputContent("wood_crate");
+	
+	tPath = "resource/texture/maptool/catalog/prop/unique/";
+	inputContent("boxes_rooftop");
+
 }
 
 void maptool_window::createContent_node(std::vector<CATALOG::OBJ::NODE*>& vContent)
@@ -287,16 +408,27 @@ void maptool_window::createContent_node(std::vector<CATALOG::OBJ::NODE*>& vConte
 	param.effectFilePath = "resource/effect/field_node.fx";
 
 	CATALOG::create(&item, &param);
+	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/node/node.png");
+
+	vContent.push_back(item);
+}
+
+void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ::TRIGGER*>& vContent)
+{
+	CATALOG::OBJ::TRIGGER* item = nullptr;
+	staticMesh::mParam param;
+
+	// weapon
+	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
+	param.effectFilePath = "resource/effect/example_15.fx";
+
+	CATALOG::create(&item, &param);
 	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
 
 	vContent.push_back(item);
 }
 
 void maptool_window::createContent_file(std::vector<CATALOG::OBJ::FILE*>& vContent)
-{
-}
-
-void maptool_window::createContent_option(std::vector<CATALOG::OBJ::PROP*>& vContent)
 {
 }
 

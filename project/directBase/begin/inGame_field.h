@@ -1,17 +1,22 @@
 #pragma once
 #include "kGlobalDefine.h"
 
+class iUpdateble;
+class iRenderable;
+
 class baseObject;
 class renderObject;
 class staticMesh;
 class enemyBase;
 class playerableBase;
 class weaponBase;
-class mapObject;
 
 class triggerBase;
 
 class inGame_grape;
+
+class mapObject;
+class quadTree_Frustum;
 
 class inGame_field
 {
@@ -24,8 +29,8 @@ public :
 	{
 		vList<renderObject*>	vTotalObject;
 
-		vList<baseObject*>		vUpdateable;
-		vList<renderObject*>	vRenderable;
+		vList<iUpdateble*>		vUpdateable;
+		vList<iRenderable*>		vRenderable;
 
 		vList<staticMesh*>		vProp;
 		vList<staticMesh*>		vWall;

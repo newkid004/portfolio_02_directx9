@@ -5,7 +5,7 @@
 class player : public survivorBase
 {
 public:
-	player(const survivorBase::mParam param);
+	player(patternMesh* duplicateTarget);
 	~player();
 };
 

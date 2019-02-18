@@ -559,6 +559,30 @@
     <Filter Include="main\classes\scene\02_inGame\classes\data\io">
       <UniqueIdentifier>{43b9a9af-2cb6-4955-943a-1c0ba97bc1da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger">
+      <UniqueIdentifier>{5d1440fb-debf-4ecd-bb99-835949c24eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\_base">
+      <UniqueIdentifier>{89af1362-29d7-4602-8abf-34174f4c1c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\shotGun">
+      <UniqueIdentifier>{60fb1e84-68e7-4b16-bf62-a78853fd1f89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\data\grape">
+      <UniqueIdentifier>{7bf7e596-8e72-4d83-a428-5c36535d35a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\skyBox">
+      <UniqueIdentifier>{9287f810-f505-4649-86bc-e7b7f66dd029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\collision\bullet">
+      <UniqueIdentifier>{ca39e95e-3c2e-4620-bd47-c91e35fc581a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\collision\bullet\_base">
+      <UniqueIdentifier>{0bd288cc-5cd8-47dd-9002-8784e5cfdbb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\collision\bullet\object">
+      <UniqueIdentifier>{d079666c-7f10-43a9-8ca4-33253fa8debf}</UniqueIdentifier>
+    </Filter>
     <Filter Include="main\classes\scene\02_inGame\classes\object\weapon\test">
       <UniqueIdentifier>{18542d1e-c790-494b-b178-18e11dbb5c66}</UniqueIdentifier>
     </Filter>
@@ -936,9 +960,6 @@
     <ClInclude Include="survivorController.h">
       <Filter>main\classes\scene\02_inGame\classes\object\AI\survivor</Filter>
     </ClInclude>
-    <ClInclude Include="inGame_grape.h">
-      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
-    </ClInclude>
     <ClInclude Include="survivorBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\survivor\_base</Filter>
     </ClInclude>
@@ -966,8 +987,33 @@
     <ClInclude Include="patternMeshDup.h">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClInclude>
+    <ClInclude Include="triggerBase.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
+    </ClInclude>
     <ClInclude Include="weaponHealkit.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletBase.h">
+      <Filter>main\classes\collision\bullet\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="gunBullet.h">
+      <Filter>main\classes\collision\bullet\object</Filter>
+    </ClInclude>
+    <ClInclude Include="fistBullet.h">
+      <Filter>main\classes\collision\bullet\object</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManage.h">
+      <Filter>main\classes\collision\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="triggerShotGun.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\shotGun</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_grape.h">
+      <Filter>main\classes\scene\02_inGame\classes\data\grape</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_grape.hpp" />
+    <ClInclude Include="skyBox.h">
+      <Filter>classes\global\utility\object\renderObject\skyBox</Filter>
     </ClInclude>
     <ClInclude Include="weaponNormal.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
@@ -1310,11 +1356,32 @@
     <ClCompile Include="patternMeshDup.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClCompile>
+    <ClCompile Include="triggerBase.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
+    </ClCompile>
     <ClCompile Include="weaponHealkit.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
     </ClCompile>
     <ClCompile Include="weaponNormal.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletBase.cpp">
+      <Filter>main\classes\collision\bullet\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManage.cpp">
+      <Filter>main\classes\collision\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="fistBullet.cpp">
+      <Filter>main\classes\collision\bullet\object</Filter>
+    </ClCompile>
+    <ClCompile Include="gunBullet.cpp">
+      <Filter>main\classes\collision\bullet\object</Filter>
+    </ClCompile>
+    <ClCompile Include="triggerShotGun.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\shotGun</Filter>
+    </ClCompile>
+    <ClCompile Include="skyBox.cpp">
+      <Filter>classes\global\utility\object\renderObject\skyBox</Filter>
     </ClCompile>
     <ClCompile Include="weaponTest.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\test</Filter>

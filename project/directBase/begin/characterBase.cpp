@@ -37,8 +37,8 @@ bool characterBase::heapCompare::operator()(aStar_node * n1, aStar_node * n2)
 	return distanceA < distanceB;
 }
 
-characterBase::characterBase(const patternMesh::mParam & param) :
-	patternMesh(param)
+characterBase::characterBase(patternMesh* duplicateTarget) :
+	patternMeshDup(duplicateTarget)
 {
 }
 
@@ -49,7 +49,7 @@ characterBase::~characterBase()
 
 void characterBase::update(void)
 {
-	patternMesh::update();
+	patternMeshDup::update();
 
 	_controller->update();
 
@@ -61,7 +61,7 @@ void characterBase::updateLanding(void)
 {
 	float postPos = _position.y + _infoMove.velVertical;
 
-	if (0.0f <= postPos)
+	if (FLT_EPSILON < postPos)
 	{
 		gDigit::put(_infoMove.status, DIGIT::MOVE::FLOAT);
 		gDigit::pick(_infoMove.status, DIGIT::MOVE::LAND);
@@ -94,7 +94,7 @@ void characterBase::updateFriction(void)
 
 	// 마찰 적용
 	float frictionValue = VALUE::friction * MN_TIME->getDeltaTime();
-	_infoMove.currentSpeed = std::fmaxf(0.0f, (_infoMove.currentSpeed - frictionValue) * (1.0f - frictionValue));
+	_infoMove.currentSpeed = std::fmaxf(0.0f, _infoMove.currentSpeed - frictionValue);
 
 	// 정지 확인
 	if (_infoMove.currentSpeed <= FLT_EPSILON)
@@ -264,10 +264,6 @@ void characterBase::moveByCollistion(staticMesh * wall)
 	velocity = direction * _infoMove.currentSpeed;
 }
 
-void characterBase::put2Node(void)
-{
-}
-
 void characterBase::moveDo(D3DXVECTOR3 & direction)
 {
 	gDigit::put(_infoMove.status, DIGIT::MOVE::MOVEING);
@@ -279,7 +275,7 @@ void characterBase::moveDo(D3DXVECTOR3 & direction)
 
 	float nowSpeed = _infoMove.getSpeedXZ();
 
-	D3DXVECTOR3 moveDirection;
+	D3DXVECTOR3 moveDirection(0.0f, 0.0f, 0.0f);
 	moveDirection += _directionRight	* direction.x;
 	moveDirection += _directionUp		* direction.y;
 	moveDirection += _directionForward	* direction.z;

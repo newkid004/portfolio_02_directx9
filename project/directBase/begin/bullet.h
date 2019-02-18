@@ -31,6 +31,7 @@ public:
 	void setOnOff(bool onOff) { m_onOff = onOff; }
 	void setIntersect(const D3DXVECTOR3 & intersect) { m_stIntersect = intersect; }
 	float getSpeed(void) { return m_fSpeed; }
+	bool getOnOff(void) { return m_onOff; }
 	D3DXVECTOR3 & getPosition(void) { return _position; }
 	LPD3DXMESH getBulletMesh(void) { return m_pBulletMesh; }
 	pick::ray & getPickRay(void) { return m_ray; }

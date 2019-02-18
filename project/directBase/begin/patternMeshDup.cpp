@@ -23,8 +23,8 @@ void patternMeshDup::drawPre(void)
 {
 	_bindPatternMesh->setPosition(_position);
 	_bindPatternMesh->setDirectionForward(_directionForward);
-	_bindPatternMesh->setDirectionRight(_directionRight);
-	_bindPatternMesh->setDirectionUp(_directionUp);
+	_bindPatternMesh->setDirectionRight(-_directionRight);
+	_bindPatternMesh->setDirectionUp(-_directionUp);
 	_bindPatternMesh->update();
 	_bindPatternMesh->drawpreMesh(_controlInfo);
 }

@@ -1,15 +1,16 @@
 #pragma once
 #include "kGlobalDefine.h"
-#include "patternMesh.h"
+#include "patternMeshDup.h"
 
 #include "inGame_struct.h"
 
 class aStar_node;
 
+class staticMesh;
 class weaponBase;
 class controllerBase;
 
-class characterBase : public patternMesh
+class characterBase : public patternMeshDup
 {
 public :
 	struct heapCompare { bool operator()(aStar_node* n1, aStar_node* n2); };
@@ -38,8 +39,6 @@ protected :
 private :
 	void createCollisionNode(std::vector<aStar_node*> * out_list);
 	void moveByCollistion(staticMesh* wall);
-	
-	void put2Node(void);
 
 public :
 	// 주체 이동 : local always
@@ -59,7 +58,7 @@ public :
 	void setController(controllerBase* input);
 
 public :
-	characterBase(const patternMesh::mParam & param);
+	characterBase(patternMesh* duplicateTarget);
 	virtual ~characterBase();
 };
 

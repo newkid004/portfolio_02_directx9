@@ -8,7 +8,7 @@ private :
 
 public :
 	defType gravity		= 0.75f;
-	defType friction	= 0.2f;	// 초당 마찰력
+	defType friction	= 2.0f;	// 초당 마찰력
 	
 	defType PI			= D3DX_PI;
 	defType PIPI		= D3DX_PI * 2.0f;

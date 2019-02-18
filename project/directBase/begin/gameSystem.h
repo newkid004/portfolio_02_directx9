@@ -7,6 +7,8 @@ class mapObject;
 class inGame_grape;
 class inGame_field;
 
+class maptool_render;
+
 class gameSystem : public singletonBase<gameSystem>
 {
 public :
@@ -14,6 +16,8 @@ public :
 	{
 		player*			player		= nullptr;
 		inGame_field*	field		= nullptr;
+
+		maptool_render* map_render	= nullptr;	// delete
 	};
 
 private :
@@ -21,13 +25,14 @@ private :
 
 public :
 	void update(void);
+	void draw(void);
 
 public :
 	set & getSet(void) { return _set; }
 
 public:
-	gameSystem() {};
-	~gameSystem() {};
+	gameSystem();
+	~gameSystem();
 };
 
 #define SGT_GAME gameSystem::getInstance()

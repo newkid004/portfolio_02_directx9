@@ -5,20 +5,20 @@ class inGame_field;
 
 class inGame_io
 {
-private :
-	std::unordered_map<std::string, json*> _mJson;
-
 public :
-	inGame_field* createField2File(int mapIndex = 0);
+	static inGame_field* createField2File(int mapIndex = 0);
 
 private :
 	// read 후, field에 json내용 작성
-	void spreadObject(inGame_field* field);
-	void spreadField(inGame_field* field);
-	void spreadGrape(inGame_field* field);
+	static void spreadObject(inGame_field* field, json & viewJson);
+	static void spreadField(inGame_field* field, json & viewJson);
+	static void spreadTrigger(inGame_field* field, json & viewJson);
+	static void spreadGrape(inGame_field* field, json & viewJson);
 
-public:
-	inGame_io();
-	~inGame_io();
+	static void putObject2grape(inGame_field* field);
+
+private :
+	inGame_io() {};
+	~inGame_io() {};
 };
 

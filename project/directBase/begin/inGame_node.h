@@ -18,16 +18,21 @@ public :
 	};
 
 protected :
+	aStar_node*		_bindNode = nullptr;
+
 	D3DXVECTOR3		_position;
 	float			_radius = 1.0f;
 
 	listSet _listSet;
 
 public :
+	constexpr aStar_node* getBindNode(void) { return _bindNode; }
 	constexpr D3DXVECTOR3 & getPosition(void) { return _position; }
 	constexpr float getRadius(void) { return _radius; }
 
 	constexpr listSet & getListSet(void) { return _listSet; }
+
+	void setBindNode(aStar_node* input);
 
 public :
 	static inGame_node* getData(aStar_node* node);

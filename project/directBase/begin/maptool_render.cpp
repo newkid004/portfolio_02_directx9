@@ -10,6 +10,8 @@
 #include "staticMesh.h"
 #include "skinnedMesh.h"
 
+static D3DXVECTOR4 defColor = D3DXVECTOR4(0.5f, 0.5f, 1.0f, 1.0f);
+
 maptool_render::maptool_render()
 {
 	for (int i = 0; i < 3; ++i)
@@ -96,7 +98,7 @@ void maptool_render::createScreen(LPD3DXMESH * out)
 	*out = result;
 }
 
-void maptool_render::drawOutLine(staticMesh * obj)
+void maptool_render::drawOutLine(staticMesh * obj, D3DXVECTOR4 * color)
 {
 	renderSet & rsOrigin = _vRenderTarget[0];
 	renderSet & rsTarget = _vRenderTarget[1];
@@ -125,9 +127,8 @@ void maptool_render::drawOutLine(staticMesh * obj)
 	_outline->SetFloat("_winSizeX", (float)GET_WINDOW_SIZE().cx);
 	_outline->SetFloat("_winSizeY", (float)GET_WINDOW_SIZE().cy);
 
-	MN_DEV->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
-	MN_DEV->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	MN_DEV->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	// 색상
+	_outline->SetVector("_outLineColor", color == nullptr ? &defColor : color);
 
 	gFunc::runRenderTarget(rsOrigin.renderTarget, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, rsOrigin.depthStensil, [&](void)->void {
 		for (int i = 0; i < meshSet->numMaterial; ++i)
@@ -146,21 +147,48 @@ void maptool_render::drawOutLine(staticMesh * obj)
 		});
 	}, true);
 
-	gFunc::runEffectLoop(_outline, "techBlur", [&](int passNum)->void {
-		_screen->DrawSubset(0);
-	});
+	gFunc::runRenderTarget(nullptr, NULL, nullptr, [&](void)->void {
+		gFunc::runEffectLoop(_outline, "techBlur", [&](int passNum)->void {
+			_screen->DrawSubset(0);
+		});
+	}, true);
 }
 
 void maptool_render::drawOutLine(skinnedMesh * obj)
 {
 }
 
-void maptool_render::drawOutList(std::vector<baseObject*> & objList)
+void maptool_render::drawOutList(std::vector<baseObject*> & objList, D3DXVECTOR4* color)
 {
 	renderSet & rsOrigin = _vRenderTarget[0];
 	renderSet & rsTarget = _vRenderTarget[1];
 
 	gFunc::runRenderTarget(rsOrigin.renderTarget, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, rsOrigin.depthStensil, [](void)->void {});
+
+	_outline->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
+	_outline->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
+	_outline->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
+
+	// 광원
+	D3DXMATRIXA16 mRotation = GET_CAMERA()->getMatrixRotate();
+	D3DXVECTOR3 offset = GET_CAMERA()->getOffset();
+	D3DXVec3TransformCoord(&offset, &offset, &mRotation);
+
+	D3DXVECTOR4 viewPosition(GET_CAMERA()->getPosition() - offset, 1.0f);
+	D3DXVECTOR4 lightDirection(GET_LIGHT()->getDirectForward(), 0.0f);
+
+	_outline->SetVector("_viewPosition", &viewPosition);
+	_outline->SetVector("_lightDirection", &lightDirection);
+
+	// 텍스쳐
+	_outline->SetTexture("_renderOrigin", rsOrigin.renderTarget);
+	_outline->SetTexture("_renderOutline", rsTarget.renderTarget);
+
+	_outline->SetFloat("_winSizeX", (float)GET_WINDOW_SIZE().cx);
+	_outline->SetFloat("_winSizeY", (float)GET_WINDOW_SIZE().cy);
+
+	// 색상
+	_outline->SetVector("_outLineColor", color == nullptr ? &defColor : color);
 
 	for (auto viewObject : objList)
 	{
@@ -171,27 +199,6 @@ void maptool_render::drawOutList(std::vector<baseObject*> & objList)
 		auto meshSet = obj->getMeshSet();
 
 		_outline->SetMatrix("_mWorld", &obj->getMatrixFinal());
-		_outline->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
-		_outline->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
-		_outline->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
-
-		// 광원
-		D3DXMATRIXA16 mRotation = GET_CAMERA()->getMatrixRotate();
-		D3DXVECTOR3 offset = GET_CAMERA()->getOffset();
-		D3DXVec3TransformCoord(&offset, &offset, &mRotation);
-
-		D3DXVECTOR4 viewPosition(GET_CAMERA()->getPosition() - offset, 1.0f);
-		D3DXVECTOR4 lightDirection(GET_LIGHT()->getDirectForward(), 0.0f);
-
-		_outline->SetVector("_viewPosition", &viewPosition);
-		_outline->SetVector("_lightDirection", &lightDirection);
-
-		// 텍스쳐
-		_outline->SetTexture("_renderOrigin", rsOrigin.renderTarget);
-		_outline->SetTexture("_renderOutline", rsTarget.renderTarget);
-
-		_outline->SetFloat("_winSizeX", (float)GET_WINDOW_SIZE().cx);
-		_outline->SetFloat("_winSizeY", (float)GET_WINDOW_SIZE().cy);
 
 		gFunc::runRenderTarget(rsOrigin.renderTarget, NULL, rsOrigin.depthStensil, [&](void)->void {
 			for (int i = 0; i < meshSet->numMaterial; ++i)
