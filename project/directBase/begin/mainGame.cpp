@@ -17,21 +17,25 @@ void mainGame::init(void)
 	direct3dApplication::init();
 	_bindScene = &MN_SCENE->getCurrentScene();
 
-	// current
+	//*/  // current
 	MN_SCENE->add("sceneMapTool", new sceneMapTool());
 	MN_SCENE->add("sceneInGame", new sceneInGame());
 
-	// test
-	// MN_SCENE->add("scene1", new sceneTest1);			// json
-	// MN_SCENE->add("scene2", new sceneTest2);			// a* node
+	/*/ // test complete
+	MN_SCENE->add("scene1", new sceneTest1);			// json
+	MN_SCENE->add("scene2", new sceneTest2);			// a* node
 	MN_SCENE->add("scene3", new sceneTest3);			// character
+
+	/*/ // test current
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
 	MN_SCENE->add("wallC", new wallCollision);
 
+	/*/ // test save
+
+	//*/
+
 	MN_SCENE->change("scene3");
-	//MN_SCENE->change("scene3");
-	//MN_SCENE->change("sceneCollisionTest");
 }
 
 void mainGame::update(void)

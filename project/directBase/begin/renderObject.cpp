@@ -55,30 +55,7 @@ bool renderObject::cullFrustum(void)
 
 void renderObject::getBoundingBoxFinal(boundingBox * out)
 {
-	// ÀÌµ¿
-	D3DXMATRIXA16 mTranslation;
-	D3DXMatrixTranslation(&mTranslation,
-		_position.x,
-		_position.y,
-		_position.z);
-
-	// Ã´µµ
-	D3DXMATRIXA16 mScalse;
-	D3DXMatrixScaling(&mScalse,
-		_scale.x,
-		_scale.y,
-		_scale.z);
-
-	// È¸Àü
-	D3DXMATRIXA16 mRotation;
-	D3DXMatrixIdentity(&mRotation);
-
-	CopyMemory(&mRotation(0, 0), &_directionRight, sizeof(D3DXVECTOR3));
-	CopyMemory(&mRotation(1, 0), &_directionUp, sizeof(D3DXVECTOR3));
-	CopyMemory(&mRotation(2, 0), &_directionForward, sizeof(D3DXVECTOR3));
-
-	// world
-	_mWorld = _mOffset * mScalse * mRotation * mTranslation;
+	// calMatrixFinal();
 
 	D3DXVec3TransformCoord(
 		&out->min,

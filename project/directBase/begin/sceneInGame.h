@@ -11,10 +11,11 @@ public:
 	virtual void drawUI(void)	override;
 
 private :
+	void initSystem(void);
 	void initEvent(void);
 
 public:
-	sceneInGame();
-	~sceneInGame();
+	sceneInGame() {};
+	~sceneInGame() {};
 };
 
