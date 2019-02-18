@@ -1,12 +1,12 @@
 #include "weaponNormal.h"
 #include "characterBase.h"
+#include "weaponManager.h"
 
 weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 	:weaponBase::weaponBase(linkPatternDup)
 {
-	_infoWeapon.type = weapon_set::type::none;
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::normal);
 	_infoWeapon.damage = damage;
-	_infoWeapon.shotDelay = 1.0f;
 
 	D3DXMatrixIdentity(&_baseMatrix[0]);
 	D3DXMatrixIdentity(&_baseMatrix[1]);
@@ -18,11 +18,12 @@ weaponNormal::~weaponNormal(void)
 
 void weaponNormal::firePre(void)
 {
-	weaponBase::firePre();
 }
 
 void weaponNormal::fireDo(void)
 {
+	//동작에 걸어줄 조건이 필요 !
+
 	weaponBase::fireDo();
 	D3DXVECTOR3 stPosition = _position;
 	D3DXVec3TransformCoord(&stPosition, &stPosition, &_bindPMesh->getFinalNeckMatrix());

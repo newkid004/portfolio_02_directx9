@@ -25,6 +25,7 @@ protected :
 
 public :
 	virtual void update(void);
+	virtual void drawDo(void) override;
 
 private :
 	void updateLanding(void);

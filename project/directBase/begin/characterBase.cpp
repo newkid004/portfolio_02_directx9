@@ -55,6 +55,19 @@ void characterBase::update(void)
 
 	updateLanding();
 	updateMove();
+	if (_weapon != nullptr)
+	{
+		_weapon->updateWeapon(_finalHandMatrix, _isCull);
+	}
+}
+
+void characterBase::drawDo(void)
+{
+	patternMeshDup::drawDo();
+	if (_weapon != nullptr)
+	{
+		_weapon->draw();
+	}
 }
 
 void characterBase::updateLanding(void)

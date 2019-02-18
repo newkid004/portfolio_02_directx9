@@ -12,6 +12,7 @@ public:
 
 private :
 	void initEvent(void);
+	
 
 public:
 	sceneInGame();

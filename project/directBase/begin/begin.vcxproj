@@ -268,7 +268,6 @@
     <ClInclude Include="sceneTest3.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
-    <ClInclude Include="skinnedMeshDup.h" />
     <ClInclude Include="skyBox.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="soundManager.h" />
@@ -286,6 +285,7 @@
     <ClInclude Include="wallCollision.h" />
     <ClInclude Include="weaponBase.h" />
     <ClInclude Include="weaponHealkit.h" />
+    <ClInclude Include="weaponManager.h" />
     <ClInclude Include="weaponNormal.h" />
     <ClInclude Include="weaponRifle.h" />
     <ClInclude Include="weaponShotgun.h" />
@@ -397,7 +397,6 @@
     <ClCompile Include="sceneTest2.cpp" />
     <ClCompile Include="sceneTest3.cpp" />
     <ClCompile Include="skinnedMesh.cpp" />
-    <ClCompile Include="skinnedMeshDup.cpp" />
     <ClCompile Include="skyBox.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="soundManager.cpp" />
@@ -415,6 +414,7 @@
     <ClCompile Include="wallCollision.cpp" />
     <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="weaponHealkit.cpp" />
+    <ClCompile Include="weaponManager.cpp" />
     <ClCompile Include="weaponNormal.cpp" />
     <ClCompile Include="weaponRifle.cpp" />
     <ClCompile Include="weaponShotgun.cpp" />

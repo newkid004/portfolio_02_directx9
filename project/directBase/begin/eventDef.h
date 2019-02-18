@@ -5,9 +5,9 @@ struct EVENT
 #define DEF_TYPE constexpr static int
 
 	DEF_TYPE shift_TYPE	= 0;
-	DEF_TYPE shift_KIND	= 1;
-	DEF_TYPE shift_ACT	= 2;
-	DEF_TYPE shift_CALL	= 3;
+	DEF_TYPE shift_KIND	= 4;
+	DEF_TYPE shift_ACT	= 8;
+	DEF_TYPE shift_CALL	= 12;
 
 	DEF_TYPE NONE = 0;
 

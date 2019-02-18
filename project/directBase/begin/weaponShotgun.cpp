@@ -1,17 +1,13 @@
 #include "weaponShotgun.h"
 #include "gDigit.h"
 #include "inGame_digit.h"
+#include "weaponManager.h"
 
 weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon.type = weapon_set::type::shotgun;
-	_infoWeapon.current = 5;
-	_infoWeapon.reload = 5;
-	_infoWeapon.maximum = 30;
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::shotgun);
 	_infoWeapon.damage = damage;
-	_infoWeapon.shotDelay = 0.5f;
-	_infoWeapon.reloadDelay = 2.0f;
 
 	D3DXMATRIXA16 stRotation;
 	D3DXMatrixRotationYawPitchRoll(&stRotation,
@@ -27,6 +23,7 @@ weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatte
 
 	_baseMatrix[1] = stRotation * stTranslation;
 }
+
 
 weaponShotgun::~weaponShotgun()
 {

@@ -1,9 +1,5 @@
 #include "patternMeshDup.h"
 #include "patternMesh.h"
-#include "weaponRifle.h"
-#include "weaponShotgun.h"
-#include "staticMesh.h"
-#include "weaponHealkit.h"
 
 patternMeshDup::patternMeshDup(patternMesh * duplicateTarget)
 	:_bindPatternMesh(duplicateTarget)

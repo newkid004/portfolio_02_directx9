@@ -1,12 +1,10 @@
 #include "weaponHealkit.h"
+#include "weaponManager.h"
 
 weaponHealkit::weaponHealkit(staticMesh::mParam param, characterBase* linkPatternDup)
 : weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon.type = weapon_set::type::healkit;
-	_infoWeapon.current = 1;
-	_infoWeapon.reload = 1;
-	_infoWeapon.maximum = 0;
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::healkit);
 
 	D3DXMATRIXA16 stRotation;
 	D3DXMatrixRotationYawPitchRoll(&stRotation,

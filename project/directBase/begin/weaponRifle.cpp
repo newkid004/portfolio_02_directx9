@@ -3,21 +3,18 @@
 #include "characterBase.h"
 #include "gFunc.h"
 #include "managerList.h"
+#include "weaponManager.h"
 
 //
 #include "bulletManager.h"
 //
 
+
 weaponRifle::weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon.type = weapon_set::type::rifle;
-	_infoWeapon.current = 30;
-	_infoWeapon.reload = 30;
-	_infoWeapon.maximum = 180;
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::rifle);
 	_infoWeapon.damage = damage;
-	_infoWeapon.shotDelay = 0.1f;
-	_infoWeapon.reloadDelay = 2.0f;
 
 	/*¿Þ¼Õ
 	D3DXMatrixRotationYawPitchRoll(&stRotation,

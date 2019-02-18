@@ -41,8 +41,8 @@ void skyBox::drawDo(void)
 	mWorld = mScale * mTranslate;
 
 	_effect->SetMatrix("_mWorld", &mWorld);
-	_effect->SetMatrix("_mView", GET_CAMERA()->getMatrixViewPoint());
-	_effect->SetMatrix("_mProjection", GET_CAMERA()->getMatrixProjectionPoint());
+	_effect->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
+	_effect->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
 
 	// ÅØ½ºÃÄ
 	_effect->SetTexture("_textureCube", _textureCube);

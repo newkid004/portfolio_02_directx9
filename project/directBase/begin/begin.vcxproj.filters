@@ -586,6 +586,9 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\weapon\test">
       <UniqueIdentifier>{18542d1e-c790-494b-b178-18e11dbb5c66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\manager\common\weapon">
+      <UniqueIdentifier>{82bd1cf4-e68a-43a9-9c95-ee6e4697895e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1021,6 +1024,9 @@
     <ClInclude Include="weaponTest.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\test</Filter>
     </ClInclude>
+    <ClInclude Include="weaponManager.h">
+      <Filter>classes\global\utility\manager\common\weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1385,6 +1391,9 @@
     </ClCompile>
     <ClCompile Include="weaponTest.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\test</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponManager.cpp">
+      <Filter>classes\global\utility\manager\common\weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

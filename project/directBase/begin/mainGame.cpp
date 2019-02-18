@@ -31,7 +31,7 @@ void mainGame::init(void)
 	MN_SCENE->add("wallC", new wallCollision);
 	MN_SCENE->add("weaponT", new weaponTest);
 
-	MN_SCENE->change("weaponT");
+	MN_SCENE->change("wallC");
 	//MN_SCENE->change("scene3");
 	//MN_SCENE->change("sceneCollisionTest");
 }
