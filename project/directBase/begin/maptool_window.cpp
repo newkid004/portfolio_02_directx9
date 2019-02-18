@@ -291,6 +291,54 @@ void maptool_window::createContent_prop(std::vector<CATALOG::OBJ::PROP*>& vConte
 	inputContent("lamp1");
 	inputContent("picture_frame1");
 	inputContent("picture_frame10");
+
+
+	tPath = "resource/texture/maptool/catalog/prop/cs_office/";
+	inputContent("chair_office");
+	inputContent("coffee_mug");
+	inputContent("exit_ceiling");
+	inputContent("exit_wall");
+
+	tPath = "resource/texture/maptool/catalog/prop/de_nuke/";
+	inputContent("clock");
+
+	tPath = "resource/texture/maptool/catalog/prop/interiors/";
+	inputContent("clipboard1");
+	inputContent("clothing_pile1");
+	inputContent("clothing_pile2");
+	inputContent("clothing_pile3");
+	inputContent("clothing_pile4");
+	inputContent("clothing_pile5");
+	inputContent("teddybear");
+
+	tPath = "resource/texture/maptool/catalog/prop/junk/";
+	inputContent("food_pile1");
+	inputContent("trashCluster1");
+
+	tPath = "resource/texture/maptool/catalog/prop/misc/";
+	inputContent("flour_sack");
+	inputContent("german_radio");
+	inputContent("hospital_banner");
+	inputContent("military_sign1");
+	inputContent("military_sign2");
+	inputContent("mirror_gib1");
+	inputContent("mirror_gib2");
+	inputContent("mirror_gib3");
+	inputContent("pan");
+	inputContent("pot1");
+	inputContent("pot2");
+	inputContent("teapot");
+
+	tPath = "resource/texture/maptool/catalog/prop/plants/";
+	inputContent("pottedplant_tall");
+
+	tPath = "resource/texture/maptool/catalog/prop/lighting/";
+	inputContent("lightFixture");
+
+	tPath = "resource/texture/maptool/catalog/prop/unique/";
+	inputContent("coffeeammo");
+	inputContent("survival_manual1");
+	inputContent("survival_manual2");
 }
 
 void maptool_window::createContent_bump(std::vector<CATALOG::OBJ::BUMP*>& vContent)
@@ -318,6 +366,36 @@ void maptool_window::createContent_bump(std::vector<CATALOG::OBJ::BUMP*>& vConte
 	inputContent("kitchen_countertop");
 	inputContent("piano");
 	inputContent("shelf");
+
+
+	tPath = "resource/texture/maptool/catalog/prop/cs_italy/";
+	inputContent("it_mkt_table2");
+	
+	tPath = "resource/texture/maptool/catalog/prop/cs_militia/";
+	inputContent("refrigerator1");
+	inputContent("stove1");
+
+	tPath = "resource/texture/maptool/catalog/prop/cs_office/";
+	inputContent("bookshelf2");
+	
+	tPath = "resource/texture/maptool/catalog/prop/industrial/";
+	inputContent("warehouse_shelf");
+	
+	tPath = "resource/texture/maptool/catalog/prop/interiors/";
+	inputContent("concreteBase");
+	inputContent("concreteHalf");
+	inputContent("concretePiece");
+	inputContent("kids_bed");
+	inputContent("sofa_chair");
+	
+	tPath = "resource/texture/maptool/catalog/prop/junk/";
+	inputContent("barrel_fire");
+	inputContent("cardboard_box");
+	inputContent("wood_crate");
+	
+	tPath = "resource/texture/maptool/catalog/prop/unique/";
+	inputContent("boxes_rooftop");
+
 }
 
 void maptool_window::createContent_node(std::vector<CATALOG::OBJ::NODE*>& vContent)

@@ -101,7 +101,6 @@ void sceneCollisionTest::update(void)
 		
 		//gFunc::obj2bound(m_pSkinnedMesh[i]->getObjectBox(),)
 	}
-	//collisionListSort();
 	collisionCheck();
 	collisionCheck2();
 	m_pBulletManager->update();
