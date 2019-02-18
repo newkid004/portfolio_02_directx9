@@ -173,6 +173,7 @@
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="boxObject.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="bulletManage.h" />
     <ClInclude Include="bulletManager.h" />
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="buttonItem.h" />
@@ -185,8 +186,10 @@
     <ClInclude Include="controllerBase.h" />
     <ClInclude Include="enemyBase.h" />
     <ClInclude Include="enemyController.h" />
+    <ClInclude Include="fistBullet.h" />
     <ClInclude Include="gameSystem.h" />
     <ClInclude Include="gDigit.h" />
+    <ClInclude Include="gunBullet.h" />
     <ClInclude Include="inGame_field.h" />
     <ClInclude Include="inGame_grape.h" />
     <ClInclude Include="inGame_io.h" />
@@ -294,6 +297,7 @@
     <ClInclude Include="windowSelectionCatalog.h" />
     <ClInclude Include="windowSelectionCatalog.hpp" />
     <ClInclude Include="windowStatic.h" />
+    <ClInclude Include="bulletBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="allocateHierarchy.cpp" />
@@ -307,6 +311,8 @@
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="boxObject.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="bulletBase.cpp" />
+    <ClCompile Include="bulletManage.cpp" />
     <ClCompile Include="bulletManager.cpp" />
     <ClCompile Include="buttonBase.cpp" />
     <ClCompile Include="buttonItem.cpp" />
@@ -318,9 +324,11 @@
     <ClCompile Include="controllerBase.cpp" />
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="enemyController.cpp" />
+    <ClCompile Include="fistBullet.cpp" />
     <ClCompile Include="gameSystem.cpp" />
     <ClCompile Include="gDigit.cpp" />
     <ClCompile Include="charaterArea.cpp" />
+    <ClCompile Include="gunBullet.cpp" />
     <ClCompile Include="inGame_field.cpp" />
     <ClCompile Include="inGame_io.cpp" />
     <ClCompile Include="inGame_node.cpp" />

@@ -559,6 +559,15 @@
     <Filter Include="main\classes\scene\02_inGame\classes\data\io">
       <UniqueIdentifier>{43b9a9af-2cb6-4955-943a-1c0ba97bc1da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\collision\bullet">
+      <UniqueIdentifier>{ca39e95e-3c2e-4620-bd47-c91e35fc581a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\collision\bullet\_base">
+      <UniqueIdentifier>{0bd288cc-5cd8-47dd-9002-8784e5cfdbb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\collision\bullet\object">
+      <UniqueIdentifier>{d079666c-7f10-43a9-8ca4-33253fa8debf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -969,6 +978,18 @@
     <ClInclude Include="weaponHealkit.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
     </ClInclude>
+    <ClInclude Include="bulletBase.h">
+      <Filter>main\classes\collision\bullet\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="gunBullet.h">
+      <Filter>main\classes\collision\bullet\object</Filter>
+    </ClInclude>
+    <ClInclude Include="fistBullet.h">
+      <Filter>main\classes\collision\bullet\object</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManage.h">
+      <Filter>main\classes\collision\bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1309,6 +1330,18 @@
     </ClCompile>
     <ClCompile Include="weaponHealkit.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletBase.cpp">
+      <Filter>main\classes\collision\bullet\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManage.cpp">
+      <Filter>main\classes\collision\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="fistBullet.cpp">
+      <Filter>main\classes\collision\bullet\object</Filter>
+    </ClCompile>
+    <ClCompile Include="gunBullet.cpp">
+      <Filter>main\classes\collision\bullet\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
