@@ -50,6 +50,11 @@ void maptool_data_io::OBJ::BUMP::write(json & in_Json)
 	OBJ::PROP::write(in_Json);
 }
 
+void maptool_data_io::OBJ::TRIGGER::write(json & in_Json)
+{
+	OBJ::PROP::write(in_Json);
+}
+
 void maptool_data_io::OBJ::FIELD::write(json & in_Json)
 {
 	OBJ::BASE::write(in_Json);
@@ -111,6 +116,11 @@ bool maptool_data_io::parse(OBJ::CHAR * own, json & j_in)
 }
 
 bool maptool_data_io::parse(OBJ::BUMP * own, json & j_in)
+{
+	return parse((OBJ::PROP*)own, j_in);
+}
+
+bool maptool_data_io::parse(OBJ::TRIGGER * own, json & j_in)
 {
 	return parse((OBJ::PROP*)own, j_in);
 }
@@ -227,6 +237,11 @@ void maptool_data_io::apply(OBJ::BUMP * in, staticMesh * obj)
 	apply((OBJ::PROP*)in, obj);
 }
 
+void maptool_data_io::apply(OBJ::TRIGGER * in, staticMesh * obj)
+{
+	apply((OBJ::PROP*)in, obj);
+}
+
 void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
 {
 	auto & mObject = obj->getMapList();
@@ -317,6 +332,11 @@ void maptool_data_io::apply(skinnedMesh * in, OBJ::CHAR * data)
 }
 
 void maptool_data_io::apply(staticMesh * in, OBJ::BUMP * data)
+{
+	apply((staticMesh*)in, (OBJ::PROP*)data);
+}
+
+void maptool_data_io::apply(staticMesh * in, OBJ::TRIGGER * data)
 {
 	apply((staticMesh*)in, (OBJ::PROP*)data);
 }
@@ -424,6 +444,13 @@ void maptool_data_io::create(OBJ::BUMP ** out, staticMesh * obj)
 	*out = result;
 }
 
+void maptool_data_io::create(OBJ::TRIGGER ** out, staticMesh * obj)
+{
+	OBJ::TRIGGER* result = new OBJ::TRIGGER();
+	apply(result, obj);
+	*out = result;
+}
+
 void maptool_data_io::create(OBJ::FIELD ** out, mapObject * obj)
 {
 	OBJ::FIELD* result = new OBJ::FIELD();
@@ -475,6 +502,11 @@ void maptool_data_io::create(staticMesh ** out, OBJ::PROP * data)
 }
 
 void maptool_data_io::create(staticMesh ** out, OBJ::BUMP * data)
+{
+	create(out, (OBJ::PROP*)data);
+}
+
+void maptool_data_io::create(staticMesh ** out, OBJ::TRIGGER * data)
 {
 	create(out, (OBJ::PROP*)data);
 }
@@ -547,8 +579,4 @@ void maptool_data_io::create(inGame_grape ** out, OBJ::PATH * data)
 	apply(result, data);
 
 	*out = result;
-}
-
-void maptool_data_io::OBJ::TRIGGER::write(json & in_Json)
-{
 }

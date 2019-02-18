@@ -27,15 +27,19 @@ void triggerBase::draw(void)
 
 bool triggerBase::pickCheck(void)
 {
+
 	pick::ray pRay;
 	pick::createPickRay(&pRay, &_bindMesh->getMatrixFinal());
+
+	if (50.0f < gFunc::Vec3Distance(_bindMesh->getPosition(), pRay.origin))
+		return false;
 
 	if (pick::chkPick(&pRay, &_bindMesh->getBoundingSphere()))
 	{
 		pick::info pInfo;
 		pick::chkPick(&pInfo, &pRay, _bindMesh->getMeshSet()->mesh);
 
-		return pInfo.isHit == TRUE && pInfo.distance < 50.0f;
+		return pInfo.isHit == TRUE;
 	}
 
 	return false;

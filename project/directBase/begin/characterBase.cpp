@@ -51,7 +51,7 @@ void characterBase::update(void)
 {
 	patternMeshDup::update();
 
-	// _controller->update();
+	_controller->update();
 
 	updateLanding();
 	updateMove();
@@ -77,7 +77,7 @@ void characterBase::updateMove(void)
 	updateGravity();
 	updateFriction();
 	updateVelocity();
-	// updateCollision();
+	updateCollision();
 }
 
 void characterBase::updateGravity(void)
@@ -94,7 +94,7 @@ void characterBase::updateFriction(void)
 
 	// 마찰 적용
 	float frictionValue = VALUE::friction * MN_TIME->getDeltaTime();
-	_infoMove.currentSpeed = std::fmaxf(0.0f, (_infoMove.currentSpeed - frictionValue) * (1.0f - frictionValue));
+	_infoMove.currentSpeed = std::fmaxf(0.0f, _infoMove.currentSpeed - frictionValue);
 
 	// 정지 확인
 	if (_infoMove.currentSpeed <= FLT_EPSILON)
@@ -275,7 +275,7 @@ void characterBase::moveDo(D3DXVECTOR3 & direction)
 
 	float nowSpeed = _infoMove.getSpeedXZ();
 
-	D3DXVECTOR3 moveDirection;
+	D3DXVECTOR3 moveDirection(0.0f, 0.0f, 0.0f);
 	moveDirection += _directionRight	* direction.x;
 	moveDirection += _directionUp		* direction.y;
 	moveDirection += _directionForward	* direction.z;

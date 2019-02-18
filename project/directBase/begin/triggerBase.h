@@ -1,9 +1,11 @@
 #pragma once
 #include "kGlobalDefine.h"
+#include "iUpdateble.h"
+#include "iRenderable.h"
 
 class staticMesh;
 
-class triggerBase
+class triggerBase : public iUpdateble, public iRenderable
 {
 	struct TYPE
 	{
@@ -22,8 +24,8 @@ protected :
 	std::function<void(void)> _active;
 
 public :
-	void update(void);
-	virtual void draw(void);
+	void update(void) override;
+	virtual void draw(void) override;
 
 protected :
 	virtual bool pickCheck(void);

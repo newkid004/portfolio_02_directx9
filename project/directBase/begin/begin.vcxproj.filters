@@ -568,6 +568,12 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\shotGun">
       <UniqueIdentifier>{60fb1e84-68e7-4b16-bf62-a78853fd1f89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\data\grape">
+      <UniqueIdentifier>{7bf7e596-8e72-4d83-a428-5c36535d35a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\skyBox">
+      <UniqueIdentifier>{9287f810-f505-4649-86bc-e7b7f66dd029}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -945,9 +951,6 @@
     <ClInclude Include="survivorController.h">
       <Filter>main\classes\scene\02_inGame\classes\object\AI\survivor</Filter>
     </ClInclude>
-    <ClInclude Include="inGame_grape.h">
-      <Filter>main\classes\scene\02_inGame\classes\data</Filter>
-    </ClInclude>
     <ClInclude Include="survivorBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\survivor\_base</Filter>
     </ClInclude>
@@ -978,9 +981,18 @@
     <ClInclude Include="triggerBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
     </ClInclude>
-    <ClInclude Include="triggerShotGun.h" />
     <ClInclude Include="weaponHealkit.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="triggerShotGun.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\shotGun</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_grape.h">
+      <Filter>main\classes\scene\02_inGame\classes\data\grape</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_grape.hpp" />
+    <ClInclude Include="skyBox.h">
+      <Filter>classes\global\utility\object\renderObject\skyBox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1323,9 +1335,14 @@
     <ClCompile Include="triggerBase.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
     </ClCompile>
-    <ClCompile Include="triggerShotGun.cpp" />
     <ClCompile Include="weaponHealkit.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="triggerShotGun.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\shotGun</Filter>
+    </ClCompile>
+    <ClCompile Include="skyBox.cpp">
+      <Filter>classes\global\utility\object\renderObject\skyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

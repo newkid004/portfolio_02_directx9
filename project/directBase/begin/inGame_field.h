@@ -1,6 +1,9 @@
 #pragma once
 #include "kGlobalDefine.h"
 
+class iUpdateble;
+class iRenderable;
+
 class baseObject;
 class renderObject;
 class staticMesh;
@@ -26,8 +29,8 @@ public :
 	{
 		vList<renderObject*>	vTotalObject;
 
-		vList<renderObject*>	vUpdateable;
-		vList<renderObject*>	vRenderable;
+		vList<iUpdateble*>		vUpdateable;
+		vList<iRenderable*>		vRenderable;
 
 		vList<staticMesh*>		vProp;
 		vList<staticMesh*>		vWall;

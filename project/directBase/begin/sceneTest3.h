@@ -5,11 +5,20 @@
 class patternMesh;
 class characterBase;
 
+class staticMesh;
+
+class inGame_node;
+class inGame_grape;
+
 class sceneTest3 : public sceneBase
 {
 private :
 	patternMesh* _origin = nullptr;
 	characterBase* _char = nullptr;
+
+	inGame_grape * _grape = nullptr;
+	
+	staticMesh* _bump = nullptr;
 
 public:
 	virtual void init(void) override;
