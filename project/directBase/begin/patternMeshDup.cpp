@@ -4,6 +4,11 @@
 patternMeshDup::patternMeshDup(patternMesh * duplicateTarget)
 	:_bindPatternMesh(duplicateTarget)
 {
+	ZeroMemory(&_controlInfo, sizeof(_controlInfo));
+
+	// 충돌범위 복사
+	_bBox = _bindPatternMesh->getBoundingBox();
+	_bSphere = _bindPatternMesh->getBoundingSphere();
 }
 
 patternMeshDup::~patternMeshDup(void)

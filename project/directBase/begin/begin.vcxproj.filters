@@ -1014,9 +1014,11 @@
     <ClInclude Include="inGame_grape.h">
       <Filter>main\classes\scene\02_inGame\classes\data\grape</Filter>
     </ClInclude>
-    <ClInclude Include="inGame_grape.hpp" />
     <ClInclude Include="skyBox.h">
       <Filter>classes\global\utility\object\renderObject\skyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="inGame_grape.hpp">
+      <Filter>main\classes\scene\02_inGame\classes\data\grape</Filter>
     </ClInclude>
     <ClInclude Include="weaponNormal.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>

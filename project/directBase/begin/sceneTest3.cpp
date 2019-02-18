@@ -54,7 +54,7 @@ void sceneTest3::update(void)
 void sceneTest3::draw(void)
 {
 	sceneBase::draw();
-	
+
 	_char->draw();
 	SGT_GAME->draw();
 }

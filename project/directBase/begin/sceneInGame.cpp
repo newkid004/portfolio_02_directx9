@@ -4,14 +4,6 @@
 #include "characterBase.h"
 #include "managerList.h"
 
-sceneInGame::sceneInGame()
-{
-}
-
-sceneInGame::~sceneInGame()
-{
-}
-
 void sceneInGame::init(void)
 {
 	sceneBase::init();
@@ -31,6 +23,10 @@ void sceneInGame::draw(void)
 void sceneInGame::drawUI(void)
 {
 	sceneBase::drawUI();
+}
+
+void sceneInGame::initSystem(void)
+{
 }
 
 void sceneInGame::initEvent(void)

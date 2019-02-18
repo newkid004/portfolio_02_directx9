@@ -39,7 +39,7 @@ protected :
 
 private :
 	void createCollisionNode(std::vector<aStar_node*> * out_list);
-	void moveByCollistion(staticMesh* wall);
+	void moveByCollision(staticMesh* wall);
 
 public :
 	// 주체 이동 : local always

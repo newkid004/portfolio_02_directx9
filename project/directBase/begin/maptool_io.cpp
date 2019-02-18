@@ -51,6 +51,7 @@ void maptool_io::buildObject()
 	auto & vDataList = _bindData->getSet().dataList;
 	auto & vObjList = _bindData->getSet().objList;
 
+	int writeCount = -1;
 	for (int i = 0; i < vDataList.size(); ++i)
 	{
 		auto & vData = vDataList[i];
@@ -59,13 +60,16 @@ void maptool_io::buildObject()
 		if (vData->_baseType & IO_DATA::baseType::NODE)
 			continue;	// grape에서 따로 적용
 
+		else if (vData->_baseType & IO_DATA::baseType::BUMP)
+			IO_DATA::apply((IO_DATA::OBJ::BUMP*)vData, (staticMesh*)vObj);
+
 		else if (vData->_baseType & IO_DATA::baseType::CHAR)
 			IO_DATA::apply((IO_DATA::OBJ::CHAR*)vData, (skinnedMesh*)vObj);
 
 		else if (vData->_baseType & IO_DATA::baseType::PROP)
 			IO_DATA::apply((IO_DATA::OBJ::PROP*)vData, (staticMesh*)vObj);
 
-		vData->write((*j)[i]);
+		vData->write((*j)[++writeCount]);
 	}
 }
 
@@ -148,6 +152,14 @@ void maptool_io::spreadObject(void)
 
 			additionObject = new skinnedMesh(param);
 			IO_DATA::apply((skinnedMesh*)additionObject, convert);
+
+			additionData = convert;
+		}
+		else if (baseType & IO_DATA::baseType::BUMP)
+		{
+			IO_DATA::OBJ::BUMP* convert = new IO_DATA::OBJ::BUMP();
+			IO_DATA::parse(convert, js);
+			IO_DATA::create((staticMesh**)&additionObject, convert);
 
 			additionData = convert;
 		}
