@@ -3,6 +3,10 @@
 #include "renderObject.h"
 #include "AnimationDef.h"
 
+//
+#include "weaponBase.h"
+//
+
 class patternMesh;
 
 class patternMeshDup : public renderObject
@@ -11,6 +15,9 @@ protected:
 	patternMesh * _bindPatternMesh;
 	ACInfo _controlInfo;
 	D3DXMATRIXA16 _finalHandMatrix[2];
+	D3DXMATRIXA16 _finalNeckMatrix;
+
+	weaponBase* _weapon;
 
 public:
 	void update(void) override;
@@ -25,6 +32,7 @@ private:
 
 public:
 	int &getNextBit() { return _controlInfo.NextMotionBit; }
+	D3DXMATRIXA16 &getFinalNeckMatrix() { return _finalNeckMatrix; }
 
 public:
 	patternMeshDup(patternMesh* duplicateTarget);

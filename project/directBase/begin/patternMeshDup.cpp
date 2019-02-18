@@ -5,6 +5,10 @@ patternMeshDup::patternMeshDup(patternMesh * duplicateTarget)
 	:_bindPatternMesh(duplicateTarget)
 {
 	ZeroMemory(&_controlInfo, sizeof(_controlInfo));
+
+	// 충돌범위 복사
+	_bBox = _bindPatternMesh->getBoundingBox();
+	_bSphere = _bindPatternMesh->getBoundingSphere();
 }
 
 patternMeshDup::~patternMeshDup(void)
@@ -14,7 +18,6 @@ patternMeshDup::~patternMeshDup(void)
 void patternMeshDup::update(void)
 {
 	renderObject::update();
-
 }
 
 void patternMeshDup::drawPre(void)
@@ -39,6 +42,7 @@ void patternMeshDup::drawPost(void)
 
 void patternMeshDup::calcurateHandMatrix(void)
 {
-	_finalHandMatrix[0] = getMatrixFinal() * _bindPatternMesh->getHandMatrix(0);
-	_finalHandMatrix[1] = getMatrixFinal() * _bindPatternMesh->getHandMatrix(1);
+	_finalHandMatrix[0] = _bindPatternMesh->getHandMatrix(0);
+	_finalHandMatrix[1] = _bindPatternMesh->getHandMatrix(1);
+	_finalNeckMatrix = _bindPatternMesh->getNeckMatrix();
 }

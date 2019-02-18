@@ -6,7 +6,7 @@
 
 class weaponHealkit :public weaponBase
 {
-public:
+protected:
 	virtual void firePre(void) override;
 	virtual void fireDo(void) override;
 	virtual void firePost(void) override;
@@ -16,6 +16,6 @@ public:
 	virtual void reloadPost(void) override;
 
 public:
-	weaponHealkit(patternMeshDup* linkPatternDup);
+	weaponHealkit(staticMesh::mParam param, characterBase* linkPatternDup);
 	virtual ~weaponHealkit();
 };

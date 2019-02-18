@@ -23,6 +23,7 @@ void maptool_brush_prop::putObject(void)
 
 	// 카탈로그 내 아이템정보 복사
 	if (item->_baseType & CATALOG::baseType::CHAR)			CATALOG::duplicate((skinnedMesh**)&duplication, (CATA_OBJ::CHAR*)item);
+	else if (item->_baseType & CATALOG::baseType::BUMP)		CATALOG::duplicate((staticMesh**)&duplication, (CATA_OBJ::BUMP*)item);
 	else if (item->_baseType & CATALOG::baseType::PROP)		CATALOG::duplicate((staticMesh**)&duplication, (CATA_OBJ::PROP*)item);
 
 	if (duplication)
@@ -32,6 +33,7 @@ void maptool_brush_prop::putObject(void)
 		DATA_IO::OBJ::BASE* ioBase = nullptr;
 
 		if (item->_baseType & CATALOG::baseType::CHAR)			DATA_IO::create((DATA_IO::OBJ::CHAR**)&ioBase, (skinnedMesh*)duplication);
+		else if (item->_baseType & CATALOG::baseType::BUMP)		DATA_IO::create((DATA_IO::OBJ::BUMP**)&ioBase, (staticMesh*)duplication);
 		else if (item->_baseType & CATALOG::baseType::PROP)		DATA_IO::create((DATA_IO::OBJ::PROP**)&ioBase, (staticMesh*)duplication);
 
 		// 복사한 정보 field내 리스트에 추가

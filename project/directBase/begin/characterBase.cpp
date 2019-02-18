@@ -55,6 +55,19 @@ void characterBase::update(void)
 
 	updateLanding();
 	updateMove();
+	if (_weapon != nullptr)
+	{
+		_weapon->updateWeapon(_finalHandMatrix, _isCull);
+	}
+}
+
+void characterBase::drawDo(void)
+{
+	patternMeshDup::drawDo();
+	if (_weapon != nullptr)
+	{
+		_weapon->draw();
+	}
 }
 
 void characterBase::updateLanding(void)
@@ -76,8 +89,8 @@ void characterBase::updateMove(void)
 {
 	updateGravity();
 	updateFriction();
-	updateVelocity();
 	updateCollision();
+	updateVelocity();
 }
 
 void characterBase::updateGravity(void)
@@ -126,7 +139,7 @@ void characterBase::updateCollision(void)
 		{
 			if (!gMng::find(wall, closeList))
 			{
-				moveByCollistion(wall);
+				moveByCollision(wall);
 				closeList.push_back(wall);
 			}
 		}
@@ -143,7 +156,7 @@ void characterBase::updateVelocity(void)
 void characterBase::createCollisionNode(std::vector<aStar_node*>* out_list)
 {
 	D3DXVECTOR2 charPos(_position.x, _position.z);
-	float charRange = _infoCharacter.colRadian;
+	float charRange = _infoCharacter.colRadius;
 
 	auto & vBindList = *SGT_GAME->getSet().field->getMember().grape;
 
@@ -178,90 +191,90 @@ void characterBase::createCollisionNode(std::vector<aStar_node*>* out_list)
 	}
 }
 
-void characterBase::moveByCollistion(staticMesh * wall)
+void characterBase::moveByCollision(staticMesh * wall)
 {
-	// box
-	boundingBox & bBox = wall->getBoundingBox();
-	D3DXVECTOR2 bMin(bBox.min.x, bBox.min.z);
-	D3DXVECTOR2 bMax(bBox.max.x, bBox.max.z);
-	D3DXVECTOR2 bCenter = (bMin + bMax) / 2.0f;
-	float bRadius = gFunc::Vec2Distance(bCenter, bMax);
-
 	// player
 	D3DXVECTOR2 & velocity = _infoMove.velHorizon;
 	D3DXVECTOR2 planePos(_position.x, _position.z);
 	D3DXVECTOR2 deltaPos(planePos.x + velocity.x, planePos.y + velocity.y);
-	float radius = _infoCharacter.colRadian;
+	float radius = _infoCharacter.colRadius;
 
-	// compare
-	float distance = gFunc::Vec2Distance(bCenter, deltaPos) - bRadius - radius;
+	// box
+	boundingBox bBox = wall->getBoundingBoxList()[0];
+	wall->getBoundingBoxFinal(&bBox);
+	D3DXVECTOR2 bMin(bBox.min.x, bBox.min.z);
+	D3DXVECTOR2 bMax(bBox.max.x, bBox.max.z);
+	D3DXVECTOR2 bCenter = (bMin + bMax) / 2.0f;
+	float bRadius = std::fminf(gFunc::Vec2Distance(bCenter, bMin), gFunc::Vec2Distance(bCenter, bMax));
 
-	// 충돌범위 내
-	if (0.0f < distance)
-		return;
+	bMin.x -= radius;	bMax.x += radius;
+	bMin.y -= radius;	bMax.y += radius;
+
+	bool isCollision = false;
 
 	//상하
-	if (bMin.x <= deltaPos.x && deltaPos.x <= bMax.x)
+	float interval[2];
+	if (bMin.x < deltaPos.x && deltaPos.x < bMax.x)
 	{
-		//상
-		if (bCenter.y < deltaPos.y)
-			deltaPos.y -= bMax.y - (deltaPos.y + radius);
+		interval[0] = (deltaPos.y - radius) - bMax.y;	// 상
+		interval[1] = (deltaPos.y + radius) - bMin.y;	// 하
 
-		//하
-		else
-			deltaPos.y += bMin.y - (deltaPos.y - radius);
+		if (bCenter.y < deltaPos.y && interval[0] < 0.0f)
+		{
+			deltaPos.y -= interval[0];
+			isCollision = true;
+		}
+
+		else if (deltaPos.y < bCenter.y && 0.0f < interval[1])
+		{
+			deltaPos.y -= interval[1];
+			isCollision = true;
+		}
 	}
 	//좌우
-	else if (bMin.y <= deltaPos.y && deltaPos.y <= bMax.y)
+	else if (bMin.y < deltaPos.y && deltaPos.y < bMax.y)
 	{
-		//좌
-		if (bCenter.x < deltaPos.x)
-			deltaPos.x -= bMax.x - (deltaPos.x + radius);
+		interval[0] = (deltaPos.x - radius) - bMax.x;	// 우
+		interval[1] = (deltaPos.x + radius) - bMin.x;	// 좌
 
-		//우
-		else
-			deltaPos.x += bMin.x - (deltaPos.x - radius);
+		if (bCenter.x < deltaPos.x && interval[0] < 0.0f)
+		{
+			deltaPos.x -= interval[0];
+			isCollision = true;
+		}
+
+		else if (deltaPos.x < bCenter.x && 0.0f < interval[1])
+		{
+			deltaPos.x -= interval[1];
+			isCollision = true;
+		}
 	}
 	//꼭지점
 	else
 	{
 		D3DXVECTOR2 edgePos;
 
-		// 좌
-		if (deltaPos.x < bCenter.x)
+		if (bCenter.y < deltaPos.y)		edgePos.y = bMax.y;		// 상
+		else							edgePos.y = bMin.y;		// 하
+		if (deltaPos.x < bCenter.x)		edgePos.x = bMin.x;		// 좌
+		else							edgePos.x = bMax.x;		// 우
+	
+		interval[0] = gFunc::Vec2Distance(edgePos, deltaPos) - radius;
+		if (interval[0] < 0.0f)
 		{
-			edgePos.x = bMin.x;
-
-			// 상
-			if (bCenter.y < deltaPos.y)
-				edgePos.y = bMax.y;
-
-			// 하
-			else
-				edgePos.y = bMin.y;
+			deltaPos -= gFunc::Vec2Dir(edgePos, deltaPos) * interval[0];
+			isCollision = true;
 		}
-		// 우
-		else
-		{
-			edgePos.x = bMax.x;
-
-			// 상
-			if (bCenter.y < deltaPos.y)
-				edgePos.y = bMax.y;
-
-			// 하
-			else
-				edgePos.y = bMin.y;
-		}
-
-		deltaPos = gFunc::Vec2Dir(edgePos, deltaPos) * radius;
 	}
 
 	// 속도 재지정
-	D3DXVECTOR2 direction(gFunc::Vec2Dir(planePos, deltaPos));
-	_infoMove.currentSpeed = gFunc::Vec2Distance(direction, deltaPos);
+	if (isCollision)
+	{
+		D3DXVECTOR2 direction(gFunc::Vec2Dir(planePos, deltaPos));
+		_infoMove.currentSpeed = gFunc::Vec2Distance(planePos, deltaPos);
 
-	velocity = direction * _infoMove.currentSpeed;
+		velocity = direction * _infoMove.currentSpeed;
+	}
 }
 
 void characterBase::moveDo(D3DXVECTOR3 & direction)
@@ -301,13 +314,13 @@ void characterBase::moveDo(D3DXVECTOR3 & direction)
 			if (angle < 0.0f)
 				compareValue = -compareValue;
 
-			moveDirection = currentVelocity + compareValue * interval;
+			moveDirection = currentVelocity + compareValue * interval * MN_TIME->getDeltaTime();
 		}
 		// 감속
 		else if (VALUE::P2I <= std::fabsf(angle))
 		{
 			moveDirection += currentVelocity;
-			_infoMove.currentSpeed = D3DXVec2Length(&D3DXVECTOR2(moveDirection.x, moveDirection.z));
+			_infoMove.currentSpeed = D3DXVec2Length(&D3DXVECTOR2(moveDirection.x, moveDirection.z)) * MN_TIME->getDeltaTime();
 		}
 	}
 	// 일반
@@ -318,9 +331,9 @@ void characterBase::moveDo(D3DXVECTOR3 & direction)
 	}
 
 	// 속력 적용
-	_infoMove.velHorizon.x	= moveDirection.x * MN_TIME->getDeltaTime();
-	_infoMove.velVertical	= moveDirection.y * MN_TIME->getDeltaTime();
-	_infoMove.velHorizon.y	= moveDirection.z * MN_TIME->getDeltaTime();
+	_infoMove.velHorizon.x	= moveDirection.x;
+	_infoMove.velVertical	= moveDirection.y;
+	_infoMove.velHorizon.y	= moveDirection.z;
 }
 
 void characterBase::moveBe(D3DXVECTOR3 & direction)

@@ -18,6 +18,7 @@ public :
 	virtual void update(void);
 
 private :
+	void updatePlace(void);
 	void updatePath(void);
 	void updateFootPrint(void);
 

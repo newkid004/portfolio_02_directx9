@@ -1,10 +1,8 @@
 #pragma once
-#include "kGlobalDefine.h"
 
-#include "inGame_struct.h"
 #include "weaponBase.h"
 
-class weaponShotgun :public weaponBase
+class weaponNormal :public weaponBase
 {
 protected:
 	virtual void firePre(void) override;
@@ -15,8 +13,7 @@ protected:
 	virtual void reloadDo(void) override;
 	virtual void reloadPost(void) override;
 
-	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]) override;
 public:
-	weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage);
-	virtual ~weaponShotgun();
+	weaponNormal(characterBase* linkPatternDup, int damage);
+	virtual ~weaponNormal(void);
 };

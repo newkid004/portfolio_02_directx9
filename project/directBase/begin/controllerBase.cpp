@@ -30,8 +30,40 @@ controllerBase::~controllerBase()
 
 void controllerBase::update(void)
 {
+	updatePlace();
 	updatePath();
 	updateFootPrint();
+}
+
+void controllerBase::updatePlace(void)
+{
+	auto & grape = SGT_GAME->getSet().field->getMember().grape;
+	auto & pNode = _bindCharacter->getPlacedNode();
+	auto & iNode = grape->getBindList()[pNode->getIndex()];
+	
+	D3DXVECTOR2 placedPos = D3DXVECTOR2(_bindCharacter->getPosition().x, _bindCharacter->getPosition().z);
+	float placedRadius = _bindCharacter->getInfoCharacter().colRadius;
+
+	D3DXVECTOR2 nodePos = D3DXVECTOR2(iNode->getPosition().x, iNode->getPosition().z);
+	float nodeRadius = iNode->getRadius();
+
+	// 노드 범위 벗어남
+	if (gFunc::Vec2Distance(placedPos, nodePos) < placedRadius + nodeRadius)
+	{
+		for (auto & i : pNode->getLinkedNodeList())
+		{
+			auto linkInfo = grape->getBindList()[i.connector->getIndex()];
+
+			D3DXVECTOR2 linkPos = D3DXVECTOR2(linkInfo->getPosition().x, linkInfo->getPosition().z);
+			float linkRadius = linkInfo->getRadius();
+
+			if (placedRadius + linkRadius < gFunc::Vec2Distance(placedPos, linkPos))
+			{
+				_bindCharacter->getPlacedNode() = i.connector;
+				break;
+			}
+		}
+	}
 }
 
 void controllerBase::updatePath(void)
@@ -70,7 +102,7 @@ void controllerBase::updateFootPrint(void)
 	float placedDistance = gFunc::Vec3Distance(position, placedData->getPosition());
 
 	// 현재 노드의 범위 벗어남
-	if (placedDistance < placedData->getRadius())
+	if (placedDistance < placedData->getRadius() + _bindCharacter->getInfoCharacter().colRadius)
 	{
 		auto nextNode = pathNodeList.front()->getMember().nextNode;
 		auto nextData = inGame_node::getData(nextNode);

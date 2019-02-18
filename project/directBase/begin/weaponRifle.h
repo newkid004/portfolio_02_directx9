@@ -6,7 +6,7 @@
 
 class weaponRifle :public weaponBase
 {
-public:
+protected:
 	virtual void firePre(void) override;
 	virtual void fireDo(void) override;
 	virtual void firePost(void) override;
@@ -15,7 +15,8 @@ public:
 	virtual void reloadDo(void) override;
 	virtual void reloadPost(void) override;
 
+	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]) override;
 public:
-	weaponRifle(patternMeshDup* linkPatternDup);
+	weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage = 3);
 	virtual ~weaponRifle();
 };

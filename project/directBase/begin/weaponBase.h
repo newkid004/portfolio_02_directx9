@@ -3,8 +3,12 @@
 #include "staticMesh.h"
 #include "inGame_struct.h"
 
+//
+#include "bulletManager.h"
+//
+
 class viewDefBullet;
-class patternMeshDup;
+class characterBase;
 
 class weaponBase:public staticMesh
 {
@@ -12,15 +16,19 @@ public :
 	using bulletBase = viewDefBullet;
 
 protected :
-	bulletBase*					_bindBullet = nullptr;	// delete : disable (bulletManager)
-	patternMeshDup*				_bindPMesh = nullptr;
+	characterBase*				_bindPMesh = nullptr;
 
 	D3DXMATRIXA16	_baseMatrix[2];
+	D3DXMATRIXA16   _localMatrix;
 
 	
 	weapon_set		_infoWeapon;
 
 	bool _isLeft = true;
+
+	//
+	bulletManager _bulletManager;
+	//
 public :
 	void updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull);
 
@@ -37,6 +45,10 @@ protected :
 	virtual void reloadDo(void);
 	virtual void reloadPost(void);
 
+	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]);
+	//
+	virtual void drawDo() override;
+	//
 public :
 	bool isShotPossible(void);
 	bool isReloadPossible(void);
@@ -44,11 +56,11 @@ public :
 	bool needReload(void);
 
 public :
-	bulletBase* &	getBindBullet(void) { return _bindBullet; }
 	weapon_set &	getInfoWeapon(void) { return _infoWeapon; }
 
 public:
-	weaponBase(patternMeshDup* linkPatternDup);
+	weaponBase(staticMesh::mParam param , characterBase* linkPatternDup);
+	weaponBase(characterBase* linkPatternDup);
 	virtual ~weaponBase();
 };
 
