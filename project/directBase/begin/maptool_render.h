@@ -36,10 +36,10 @@ private :
 	void createScreen(LPD3DXMESH* out);
 
 public :
-	void drawOutLine(staticMesh* obj);
+	void drawOutLine(staticMesh* obj, D3DXVECTOR4* color = nullptr);
 	void drawOutLine(skinnedMesh* obj);
 
-	void drawOutList(std::vector<baseObject*> & objList);
+	void drawOutList(std::vector<baseObject*> & objList, D3DXVECTOR4* color = nullptr);
 
 public :
 	maptool_render();

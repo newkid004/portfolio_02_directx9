@@ -44,6 +44,14 @@ void maptool_data_catalog::create(OBJ::NODE ** out, void * param)
 	*out = result;
 }
 
+void maptool_data_catalog::create(OBJ::TRIGGER ** out, void * param)
+{
+	OBJ::TRIGGER* result = new OBJ::TRIGGER();
+	result->_object = new staticMesh(*(staticMesh::mParam*)param);
+
+	*out = result;
+}
+
 // ----- duplicate ----- //
 void maptool_data_catalog::duplicate(staticMesh ** outObject, OBJ::PROP * targetObject)
 {
@@ -76,6 +84,15 @@ void maptool_data_catalog::duplicate(nodeMesh ** outObject, OBJ::NODE * targetOb
 {
 	nodeMesh* obj = (nodeMesh*)targetObject->_object;
 	nodeMesh* result = new nodeMesh(obj->getMakeParam());
+
+	applyObject(result, obj);
+	*outObject = result;
+}
+
+void maptool_data_catalog::duplicate(staticMesh ** outObject, OBJ::TRIGGER * targetObject)
+{
+	staticMesh* obj = (staticMesh*)targetObject->_object;
+	staticMesh* result = new staticMesh(obj->getMakeParam());
 
 	applyObject(result, obj);
 	*outObject = result;

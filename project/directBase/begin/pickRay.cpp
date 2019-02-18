@@ -75,7 +75,7 @@ bool pick::chkPick(info* out_info, ray* in_ray, LPD3DXMESH mesh)
 		NULL,
 		NULL);
 
-return out_info->isHit == TRUE;
+	return out_info->isHit == TRUE;
 }
 
 bool pick::chkPick(D3DXVECTOR3 * out_info, ray * in_ray, const D3DXPLANE * plane)

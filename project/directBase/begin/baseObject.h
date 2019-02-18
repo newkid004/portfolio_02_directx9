@@ -54,6 +54,7 @@ public :
 	void rotateBillboard(bool isFixAxisX = false, bool isFront = false);
 
 	void normalizeAxis(void);
+	void calMatrixFinal(void);
 
 public :	// 접근, 지정자
 	D3DXMATRIXA16* getMatrixWorldPoint(void) { return &_mWorld; }

@@ -13,6 +13,7 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
+		TRIGGER	= 1 << 6,
 		BUMP	= 1 << 5,
 		FILE	= 1 << 4,
 		NODE	= 1 << 3,
@@ -64,6 +65,11 @@ public :
 			BUMP() { _baseType |= baseType::BUMP; }
 		};
 
+		struct TRIGGER : public PROP
+		{
+			TRIGGER() { _baseType |= baseType::BUMP; }
+		};
+
 		OBJ() {};
 		~OBJ() {};
 	};
@@ -73,12 +79,14 @@ public :
 	static void create(OBJ::BUMP** out, void * param);
 	static void create(OBJ::CHAR** out, void * param);
 	static void create(OBJ::NODE** out, void * param);
+	static void create(OBJ::TRIGGER** out, void * param);
 
 public :
 	static void duplicate(staticMesh**	outObject, OBJ::PROP* targetObject);
 	static void duplicate(staticMesh**	outObject, OBJ::BUMP* targetObject);
 	static void duplicate(skinnedMesh**	outObject, OBJ::CHAR* targetObject);
 	static void duplicate(nodeMesh**	outObject, OBJ::NODE* targetObject);
+	static void duplicate(staticMesh**	outObject, OBJ::TRIGGER* targetObject);
 
 private :
 	static void applyObject(renderObject* target, renderObject* own);

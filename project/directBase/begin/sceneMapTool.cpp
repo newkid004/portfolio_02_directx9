@@ -105,7 +105,7 @@ void sceneMapTool::updateControl_brush(void)
 		if (viewData->_baseType & TYPE::NODE)
 			_currentBrush = _mBrush.find("trigger")->second;
 
-		else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
+		else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP | TYPE::TRIGGER)
 			_currentBrush = _mBrush.find("prop")->second;
 	}
 	// window
@@ -118,7 +118,7 @@ void sceneMapTool::updateControl_brush(void)
 			if (viewData->_baseType & TYPE::NODE)
 				_currentBrush = _mBrush.find("trigger")->second;
 
-			else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
+			else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP | TYPE::TRIGGER)
 				_currentBrush = _mBrush.find("prop")->second;
 		}
 	}

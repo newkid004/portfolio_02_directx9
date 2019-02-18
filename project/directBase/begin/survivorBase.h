@@ -5,7 +5,7 @@
 class survivorBase : public characterBase
 {
 public:
-	survivorBase(const characterBase::mParam & param);
+	survivorBase(patternMesh* duplicateTarget);
 	~survivorBase();
 };
 

@@ -12,6 +12,9 @@ class nodeMesh;
 template<typename T>
 class aStar_grape_bind;
 
+class inGame_node;
+class inGame_grape;
+
 class maptool_data_io
 {
 public :
@@ -28,6 +31,7 @@ public :
 		FIELD	= 1 << 4,
 		NODE	= 1 << 5,
 		PATH	= 1 << 6,
+		TRIGGER	= 1 << 7,
 
 		BASE	= 0 << 0
 	};
@@ -85,6 +89,15 @@ public :
 			BUMP() { _baseType |= baseType::BUMP; }
 		};
 
+		struct TRIGGER : public PROP
+		{
+			virtual void write(json & in_Json) override;
+
+			TRIGGER() { _baseType |= baseType::TRIGGER; }
+		};
+
+
+		// grape
 		struct FIELD : public BASE
 		{
 			std::unordered_map<std::string, BUMP> _wall;
@@ -138,7 +151,9 @@ public :	// ----- apply ----- //
 	static void apply(OBJ::BUMP* in,		staticMesh* obj);
 	static void apply(OBJ::FIELD* in,		mapObject* obj);
 	static void apply(OBJ::NODE* in,		nodeMesh* obj);
+	static void apply(OBJ::NODE* in,		inGame_node* obj);
 	static void apply(OBJ::PATH* in,		grape* obj);
+	static void apply(OBJ::PATH* in,		inGame_grape* obj);
 
 	static void apply(baseObject* in,		OBJ::BASE* data);
 	static void apply(staticMesh* in,		OBJ::PROP* data);
@@ -146,7 +161,9 @@ public :	// ----- apply ----- //
 	static void apply(staticMesh* in,		OBJ::BUMP* data);
 	static void apply(mapObject* in,		OBJ::FIELD* data);
 	static void apply(nodeMesh* in,			OBJ::NODE* data);
+	static void apply(inGame_node* in,		OBJ::NODE* data);
 	static void apply(grape* in,			OBJ::PATH* data);
+	static void apply(inGame_grape* in,		OBJ::PATH* data);
 
 public :	// ----- creater ----- //
 	static void create(OBJ::BASE** out,		baseObject* obj);
@@ -155,13 +172,17 @@ public :	// ----- creater ----- //
 	static void create(OBJ::BUMP** out,		staticMesh* obj);
 	static void create(OBJ::FIELD** out,	mapObject* obj);
 	static void create(OBJ::NODE** out,		nodeMesh* obj);
-	static void create(OBJ::PATH** out,	grape* obj);
+	static void create(OBJ::NODE** out,		inGame_node* obj);
+	static void create(OBJ::PATH** out,		grape* obj);
+	static void create(OBJ::PATH** out,		inGame_grape* obj);
 
 	static void create(staticMesh** out,	OBJ::PROP* data);
 	static void create(staticMesh** out,	OBJ::BUMP* data);
 	static void create(mapObject** out,		OBJ::FIELD* data);
 	static void create(nodeMesh** out,		OBJ::NODE* data);
+	static void create(inGame_node** out,	OBJ::NODE* data);
 	static void create(grape** out,			OBJ::PATH* data);
+	static void create(inGame_grape** out,	OBJ::PATH* data);
 
 private:
 	maptool_data_io() {};
