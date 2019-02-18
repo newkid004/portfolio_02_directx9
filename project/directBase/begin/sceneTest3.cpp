@@ -55,9 +55,6 @@ void sceneTest3::draw(void)
 {
 	sceneBase::draw();
 
-	queue<int> a;
-	a.back
-
 	_char->draw();
 	SGT_GAME->draw();
 }

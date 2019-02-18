@@ -1,17 +1,36 @@
 #pragma once
 
 #include "bulletBase.h"
-
-class gunBullet : public bulletBase
+#include "renderObject.h"
+class gunBullet : public bulletBase, public renderObject
 {
 
 public:
 
 	virtual void update(void) override;
 
+protected:			// protected 함수
+
+	//! 물체를 그리기 전
+	virtual void drawPre(void) override;
+
+	//! 물체를 그린다
+	virtual void drawDo(void) override;
+
+	//! 물체를 그린 후
+	virtual void drawPost(void) override;
+
 public:
 
 	gunBullet(float speed, EBulletType type = EBulletType::B_RIFLE);
 	virtual ~gunBullet(void);
+
+private:
+
+	LPD3DXMESH createBulletMesh(void);
+
+private:
+
+	LPD3DXMESH m_pBulletMesh;
 
 };

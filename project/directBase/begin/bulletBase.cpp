@@ -23,4 +23,5 @@ void bulletBase::setRay(const D3DXVECTOR3 & origin, const D3DXVECTOR3 & directio
 {
 	_ray.origin = origin;
 	_ray.direction = direction;
+	_shootOrigin = origin;
 }

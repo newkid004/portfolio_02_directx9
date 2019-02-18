@@ -77,6 +77,7 @@ return &_instance;						\
 #define GET_SCENE_MANAGER()				(sceneManager::getInstance())
 #define GET_UI_MANAGER()				(uiManager::getInstance())
 #define GET_EVENT_MANAGER()				(eventManager::getInstance())
+#define GET_BULLET_MANAGER()			(bulletManager::getInstance())
 
 // D3D
 #define WORLD_DIRECTION_RIGHT			(D3DXVECTOR3(1.0f, 0.0f, 0.0f))

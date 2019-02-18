@@ -1,65 +1,95 @@
 #include "bulletManager.h"
 #include "gFunc.h"
-#include "camera.h"
-#include "managerList.h"
 
-bulletManager::bulletManager()
+bulletManager::bulletManager(void)
 {
 }
 
-bulletManager::~bulletManager()
+bulletManager::~bulletManager(void)
 {
-	deleteBullet();
+	for (int i = 0; i < _vGunBulletList.size(); ++i)
+	{
+		SAFE_DELETE(_vGunBulletList[i]);
+	}
+
+	for (int i = 0; i < _vFistBulletList.size(); ++i)
+	{
+		SAFE_DELETE(_vFistBulletList[i]);
+	}
 }
 
 void bulletManager::update(void)
 {
-	for (int i = 0; i < m_vBulletList.size(); ++i)
+	for (int i = 0; i < _vGunBulletList.size(); ++i)
 	{
-		m_vBulletList[i]->update();
+		_vGunBulletList[i]->update();
 
-		if (gFunc::Vec3Distance(D3DXVECTOR3(0,0,0), m_vBulletList[i]->getPosition()) > 100)
+		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), _vGunBulletList[i]->getPosition()) > 100)
 		{
-			deleteBullet(i);
+			eraseGunBullet(i);
 		}
 	}
+
+	for (int i = 0; i < _vFistBulletList.size(); ++i)
+	{
+		_vFistBulletList[i]->update();
+	}
+
+
 }
 
 void bulletManager::draw(void)
 {
-	for (int i = 0; i < m_vBulletList.size(); ++i)
+	for (int i = 0; i < _vGunBulletList.size(); ++i)
 	{
-		m_vBulletList[i]->draw();
+		_vGunBulletList[i]->draw();
 	}
 }
 
-void bulletManager::addBullet(const D3DXVECTOR3 & origin, const D3DXVECTOR3 & direction, float speed)
+void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed,
+	bulletBase::EBulletType type)
 {
-	bullet* mBullet = new bullet(origin, direction, speed);
-
-	m_vBulletList.push_back(mBullet);
-}
-
-void bulletManager::setPosition(int index, const D3DXVECTOR3 & position, bool onOff)
-{
-	m_vBulletList[index]->setIntersect(position);
-	m_vBulletList[index]->setOnOff(onOff);
-}
-
-void bulletManager::deleteBullet(void)
-{
-	for (int i = 0; i < m_vBulletList.size(); ++i)
+	switch (type)
 	{
-		SAFE_DELETE(m_vBulletList[i]);
+	case bulletBase::EBulletType::B_RIFLE: 
+	{
+		gunBullet* bullet = new gunBullet(speed, type);
+		bullet->setRay(position, forwardDir);
+		_vGunBulletList.push_back(bullet);
+		break;
+	}
+	case bulletBase::EBulletType::B_SHOTGUN:
+	{
+		for (int i = 0; i < BULLET_MAX; ++i)
+		{
+			gunBullet* bullet = new gunBullet(speed, type);
+			D3DXVECTOR3 dir = D3DXVECTOR3(forwardDir.x + gFunc::rndFloat(-0.13f, 0.13f),
+				forwardDir.y + gFunc::rndFloat(-0.08f, 0.08f),
+				forwardDir.z);
+			bullet->setRay(position, dir);
+			_vGunBulletList.push_back(bullet);
+		}
+		break;
+	}
+	case bulletBase::EBulletType::B_FIST:
+	{
+		fistBullet* bullet = new fistBullet(speed, type);
+		bullet->setRay(position, forwardDir);
+		bullet->setRange();
+		_vFistBulletList.push_back(bullet);
+		break;
+	}
 	}
 }
 
-void bulletManager::deleteBullet(int index)
+void bulletManager::eraseGunBullet(int index)
 {
-	SAFE_DELETE(m_vBulletList[index]);
-	m_vBulletList.erase(m_vBulletList.begin() + index);
+	SAFE_DELETE(_vGunBulletList[index]);
+	_vGunBulletList.erase(_vGunBulletList.begin() + index);
 }
 
-void bulletManager::collisionCheck(void)
+void bulletManager::eraseFistBullet(int index)
 {
+	SAFE_DELETE(_vFistBulletList[index]);
+	_vFistBulletList.erase(_vFistBulletList.begin() + index);
 }
