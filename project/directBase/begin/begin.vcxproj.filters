@@ -979,6 +979,9 @@
       <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
     </ClInclude>
     <ClInclude Include="triggerShotGun.h" />
+    <ClInclude Include="weaponHealkit.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1321,6 +1324,9 @@
       <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
     </ClCompile>
     <ClCompile Include="triggerShotGun.cpp" />
+    <ClCompile Include="weaponHealkit.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

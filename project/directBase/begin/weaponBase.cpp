@@ -7,7 +7,8 @@
 
 using DIGIT = inGame_digit;
 
-weaponBase::weaponBase()
+weaponBase::weaponBase(patternMeshDup* linkPatternDup)
+	:_bindPMesh(linkPatternDup)
 {
 }
 
@@ -31,6 +32,11 @@ void weaponBase::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
 	(*getMatrixWorldPoint()) = (*getMatrixWorldPoint()) * stLocalMatrix;
 	updateFire();
 	updateReload();
+
+	/*
+
+	왼손 오른손 적용 문제 해결 필요
+	*/
 }
 
 void weaponBase::updateFire(void)

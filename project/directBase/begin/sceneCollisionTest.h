@@ -29,7 +29,7 @@ private:
 	int m_nAnimationIndex = 0;
 
 	std::vector<int> stopBulletList;
-	std::vector<boundingSphere> m_vCollisionSphereList;
+	std::vector<int> m_vCollisionList;
 public:
 	virtual void init(void) override;
 	virtual void update(void) override;
@@ -39,6 +39,7 @@ private:
 
 	void initEvent(void);
 	void updateControl(void);
+	//void collisionListSort(void);
 	bool collisionCheck(void);
 	bool collisionCheck2(void);
 

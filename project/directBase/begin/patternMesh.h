@@ -27,7 +27,6 @@ public:
 	};
 
 private:
-	staticMesh * _weapon = nullptr;
 	LPD3DXMESH _mesh = nullptr;
 	LPD3DXMESH _cloneMesh = nullptr;
 	LPD3DXEFFECT _effect = nullptr;
@@ -41,7 +40,7 @@ private:
 	animationControllerDigit* _aniControllerDigit = nullptr;
 
 	std::vector<D3DXVECTOR4> _vVertexList;
-	D3DXMATRIXA16 _vHandMatrix[2];
+	D3DXMATRIXA16 _handMatrix[2];
 
 	int num = 0;
 	int _leftFingerNumber = -1;
@@ -57,8 +56,6 @@ protected:
 
 public:
 	void drawpreMesh(ACInfo& acInfo);
-
-	void setWeapon(staticMesh* weapon);
 
 private:
 	// 본 행렬 갱신
@@ -84,6 +81,7 @@ public:
 	std::string & getBasePath(void) { return _basePath; }
 	LPD3DXMESH getMesh(void) { return _mesh; }
 	LPD3DXEFFECT getEffect(void) { return _effect; }
+	D3DXMATRIXA16 &getHandMatrix(int index) { return _handMatrix[index]; }
 public:
 	patternMesh(const mParam & param);
 	virtual ~patternMesh();

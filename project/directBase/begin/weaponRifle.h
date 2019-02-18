@@ -16,6 +16,6 @@ public:
 	virtual void reloadPost(void) override;
 
 public:
-	weaponRifle();
+	weaponRifle(patternMeshDup* linkPatternDup);
 	virtual ~weaponRifle();
 };

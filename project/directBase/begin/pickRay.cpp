@@ -130,50 +130,86 @@ bool pick::chkPick(ray * in_ray, renderObject * sMesh, EDebugDrawType type)
 	return false;
 }
 
-bool pick::isPickRay2Sphere(ray * in_ray, D3DXVECTOR3 * outIntersection, float speed, const boundingSphere & bSphere)
+bool pick::isLine2Box(ray * in_ray, float speed, boundingBox bBox)
 {
 	if (in_ray == NULL)
 		in_ray = &MN_KEY->getPickRay();
-	
+
 	D3DXVECTOR3 & rayOrigin = in_ray->origin;
 	D3DXVECTOR3 & rayDir = in_ray->direction;
 	D3DXVECTOR3 nextOrigin = rayOrigin + rayDir * speed;
 	D3DXVECTOR3 p = nextOrigin - rayOrigin;
-	
-	float lineLength = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
-	
-	// 선분 방향 벡터
-	D3DXVECTOR3 d = (nextOrigin - rayOrigin) / lineLength;
-	
-	// 구에서 선분 시작점 까지 벡터
-	D3DXVECTOR3 m = rayOrigin - bSphere.center;
-	
-	// 방향 벡터 각도 (90도 넘으면 false)
-	float b = D3DXVec3Dot(&m, &d);
-	if (b > 0.0f) return false;
-	
-	// 구안에 선분 시작점이 있는지
-	float c = D3DXVec3Dot(&m, &m) - bSphere.radius * bSphere.radius;
-	if (c < 0.0f) return true;
-	
-	float disc = b * b - c;
-	if (disc < 0.0f) return false;
-	
-	float t1 = -b - sqrt(disc);
-	float t2 = -b + sqrt(disc);
-	
-	if ((t1 >= 0.0f) && (t1 < lineLength))
+
+	boundingBox rayBox;
+	rayBox.min = rayOrigin;
+	rayBox.max = nextOrigin;
+
+	if (gFunc::isIntersect(rayBox, bBox))
 	{
 		return true;
 	}
-	if ((t2 >= 0.0f) && (t2 < lineLength)) 
-	{	
+
+	return false;
+}
+
+
+bool pick::isLine2Sphere(ray * in_ray, D3DXVECTOR3 * outIntersection, float speed, const boundingSphere & bSphere)
+{
+	if (in_ray == NULL)
+		in_ray = &MN_KEY->getPickRay();
+
+	D3DXVECTOR3 & rayOrigin = in_ray->origin;
+	D3DXVECTOR3 & rayDir = in_ray->direction;
+	D3DXVECTOR3 nextOrigin = rayOrigin + rayDir * speed;
+	D3DXVECTOR3 p = nextOrigin - rayOrigin;
+
+	float lineLength = sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
+
+	// 구에서 선분 시작점 까지 벡터
+	D3DXVECTOR3 l = bSphere.center - rayOrigin;
+	float l2 = D3DXVec3Dot(&l, &l);
+	float r2 = bSphere.radius * bSphere.radius;
+
+	// 방향 벡터 각도 (90도 넘으면 false)
+	float s = D3DXVec3Dot(&l, &rayDir);
+	if (s < 0.0f)
+		return false;
+
+	float m2 = l2 - s * s;
+	if (m2 > r2)
+	{
+		return false;
+	}
+
+	// 구안에 선분 시작점이 있는지
+	float c = l2 - r2;
+	if (c < 0.0f) return true;
+
+	float disc = s * s - c;
+	if (disc < 0.0f) return false;
+
+	float distance;
+	float t1 = s - sqrt(disc); // 교차 지점 1
+	float t2 = s + sqrt(disc); // 교차 지점 2
+	float q = sqrt(r2 - m2);
+
+	// 선분이 구와 교차할 조건
+	if (((t1 >= 0.0f) && (t1 < lineLength)) || ((t2 >= 0.0f) && (t2 < lineLength)))
+	{
+		if (l2 < r2)
+		{
+			distance = s + q;
+		}
+		else
+		{
+			distance = s - q;
+		}
+
+		*outIntersection = rayOrigin + distance * rayDir;
 		return true;
 	}
-	
+
 	return false;
-
-
 
 	//D3DXVECTOR3 l = bSphere.center - rayOrigin;
 	//float s = D3DXVec3Dot(&l, &rayDir);

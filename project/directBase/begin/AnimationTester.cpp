@@ -17,7 +17,7 @@ void AnimationTester::init(void)
 	_healKit = this->createHealKit();
 	_healKit->setScale(0.03f);
 	_skinnedMesh = this->createSkinnedMesh();
-	_skinnedMesh->setWeapon(_shotgun);
+	//_skinnedMesh->setWeapon(_shotgun);
 #if		CURRENT_MESH ==	SURVIVOR
 	_skinnedMesh->setScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
 #elif	CURRENT_MESH == ZOMBIE_MALE
@@ -236,19 +236,6 @@ void AnimationTester::drawUI(void)
 void AnimationTester::updateControl(void)
 {
 #if		CURRENT_MESH ==	SURVIVOR
-	if (MN_KEY->keyPress(DIK_NUMPAD1))
-	{
-		_skinnedMesh->setWeapon(_rifle);
-	}
-	else if (MN_KEY->keyPress(DIK_NUMPAD2))
-	{
-		_skinnedMesh->setWeapon(_shotgun);
-	}
-	else if (MN_KEY->keyPress(DIK_NUMPAD3))
-	{
-		_skinnedMesh->setWeapon(_healKit);
-	}
-
 	if (MN_KEY->keyPress(DIK_1))
 	{
 		for (int i = 0; i < MAX_NUM; ++i)
