@@ -17,6 +17,7 @@ resourceManager::~resourceManager()
 	for (auto iter : _mEffect)		{ SAFE_RELEASE(iter.second); }
 	for (auto iter : _mTexture)		{ SAFE_RELEASE(iter.second); }
 	for (auto iter : _mSound)		{ SAFE_DELETE(iter.second); }
+	for (auto iter : _mTextureCube)	{ SAFE_DELETE(iter.second); }
 }
 
 meshSet* resourceManager::createStaticMesh(const string & filePath)
@@ -206,6 +207,17 @@ sound * resourceManager::createSound(const string & key, bool isBGM)
 	return result;
 }
 
+LPDIRECT3DCUBETEXTURE9 resourceManager::createTextureCube(const string & key)
+{
+	LPDIRECT3DCUBETEXTURE9 result = nullptr;
+
+	D3DXCreateCubeTextureFromFileA(MN_DEV,
+		key.c_str(),
+		&result);
+
+	return result;
+}
+
 // ----- add ----- //
 template<typename T> 
 T resourceManager::addSomthing(const string & key, T value, unordered_map<string, T> & table)
@@ -261,6 +273,11 @@ sound * resourceManager::getSoundBGM(const string & key, bool isAutoCreate)
 sound * resourceManager::getSoundSE(const string & key, bool isAutoCreate)
 {
 	return getSomthing(key, _mSound, isAutoCreate, (function<sound*(void)>)[&]()->auto { sound* c = createSound(key, false); return c; });
+}
+
+LPDIRECT3DCUBETEXTURE9 resourceManager::getTextureCube(const string & key, bool isAutoCreate)
+{
+	return getSomthing(key, _mTextureCube, isAutoCreate, (function<LPDIRECT3DCUBETEXTURE9(void)>)[&]()->auto { return createTextureCube(key); });
 }
 
 template<typename T> 

@@ -72,6 +72,7 @@ public:
 	BOUNDSPHEREMATRIXSET & getBoundingSphereSetList(void) { return _mbSphereSet; }
 
 	constexpr boundingBox & getBoundingBox(void) { return _bBox; }
+	constexpr boundingSphere & refBoundingSphere(void) { return _bSphere; }
 	boundingSphere getBoundingSphere(void) 
 	{
 		boundingSphere mSphere;
