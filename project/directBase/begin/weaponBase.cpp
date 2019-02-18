@@ -5,9 +5,16 @@
 
 #include "inGame_digit.h"
 
+#include "bulletManager.h"
+
 using DIGIT = inGame_digit;
 
-weaponBase::weaponBase(patternMeshDup* linkPatternDup)
+weaponBase::weaponBase(staticMesh::mParam param , characterBase* linkPatternDup)
+	:staticMesh::staticMesh(param),_bindPMesh(linkPatternDup)
+{
+}
+
+weaponBase::weaponBase(characterBase * linkPatternDup)
 	:_bindPMesh(linkPatternDup)
 {
 }
@@ -18,25 +25,18 @@ weaponBase::~weaponBase()
 
 void weaponBase::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
 {
-	D3DXMATRIXA16 stLocalMatrix;
-	if (_isLeft)
-	{
-		stLocalMatrix = _baseMatrix[0] * combineMatrix[0];
-	}
-	else
-	{
-		stLocalMatrix = _baseMatrix[1] * combineMatrix[1];
-	}
-	staticMesh::update();
-	_isCull = isCull;
-	(*getMatrixWorldPoint()) = (*getMatrixWorldPoint()) * stLocalMatrix;
+	_isLeft = (gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::RELOAD) ? false : true);
 	updateFire();
 	updateReload();
+	
+	updateHandMatrix(combineMatrix);
+	staticMesh::update();
+	_isCull = isCull;
+	(*getMatrixWorldPoint()) = (*getMatrixWorldPoint()) * _localMatrix;
 
-	/*
-
-	왼손 오른손 적용 문제 해결 필요
-	*/
+	//
+	_bulletManager.update();
+	//
 }
 
 void weaponBase::updateFire(void)
@@ -103,6 +103,17 @@ void weaponBase::reloadDo(void)
 void weaponBase::reloadPost(void)
 {
 	_infoWeapon.nextReloadTime = _infoWeapon.reloadDelay + MN_TIME->getRunningTime();
+}
+
+void weaponBase::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])
+{
+	_localMatrix = _baseMatrix[0] * combineMatrix[0];
+}
+
+void weaponBase::drawDo()
+{
+	staticMesh::drawDo();
+	_bulletManager.draw();
 }
 
 bool weaponBase::isShotPossible(void)

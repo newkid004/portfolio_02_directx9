@@ -72,7 +72,7 @@ LPD3DXMESH bullet::createBulletMesh(void)
 {
 	LPD3DXMESH pMesh = nullptr;
 
-	D3DXCreateSphere(MN_DEV, 0.1, 20, 20, &pMesh, NULL);
+	D3DXCreateSphere(MN_DEV, 1 , 20, 20, &pMesh, NULL);
 
 	return pMesh;
 }
