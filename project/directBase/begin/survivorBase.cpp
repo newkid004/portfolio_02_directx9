@@ -2,8 +2,8 @@
 
 
 
-survivorBase::survivorBase(const characterBase::mParam & param) :
-	characterBase(param)
+survivorBase::survivorBase(patternMesh* duplicateTarget) :
+	characterBase(duplicateTarget)
 {
 }
 

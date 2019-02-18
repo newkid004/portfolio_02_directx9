@@ -37,8 +37,8 @@ bool characterBase::heapCompare::operator()(aStar_node * n1, aStar_node * n2)
 	return distanceA < distanceB;
 }
 
-characterBase::characterBase(const patternMesh::mParam & param) :
-	patternMesh(param)
+characterBase::characterBase(patternMesh* duplicateTarget) :
+	patternMeshDup(duplicateTarget)
 {
 }
 
@@ -49,9 +49,9 @@ characterBase::~characterBase()
 
 void characterBase::update(void)
 {
-	patternMesh::update();
+	patternMeshDup::update();
 
-	_controller->update();
+	// _controller->update();
 
 	updateLanding();
 	updateMove();
@@ -61,7 +61,7 @@ void characterBase::updateLanding(void)
 {
 	float postPos = _position.y + _infoMove.velVertical;
 
-	if (0.0f <= postPos)
+	if (FLT_EPSILON < postPos)
 	{
 		gDigit::put(_infoMove.status, DIGIT::MOVE::FLOAT);
 		gDigit::pick(_infoMove.status, DIGIT::MOVE::LAND);
@@ -77,7 +77,7 @@ void characterBase::updateMove(void)
 	updateGravity();
 	updateFriction();
 	updateVelocity();
-	updateCollision();
+	// updateCollision();
 }
 
 void characterBase::updateGravity(void)
@@ -262,10 +262,6 @@ void characterBase::moveByCollistion(staticMesh * wall)
 	_infoMove.currentSpeed = gFunc::Vec2Distance(direction, deltaPos);
 
 	velocity = direction * _infoMove.currentSpeed;
-}
-
-void characterBase::put2Node(void)
-{
 }
 
 void characterBase::moveDo(D3DXVECTOR3 & direction)

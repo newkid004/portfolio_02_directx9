@@ -2,15 +2,27 @@
 
 #include "managerList.h"
 
+#include "patternMesh.h"
 #include "characterBase.h"
 #include "controllerBase.h"
+
 
 void sceneTest3::init(void)
 {
 	sceneBase::init();
 
-	_char = createCharacter();
+	_origin = createCharacter();
+	_origin->setScale(0.02f);
+	_origin->rotateX(180.0f);
+
+	_char = new characterBase(_origin);
 	_char->setController(new controllerBase(_char));
+	_char->getNextBit() = ATYPE_SURVIVOR |
+		AWEAPON_RIFLE |
+		ACONDITION_NORMAL |
+		AMAIN_IDLE |
+		AMIX_NONE |
+		AIDLE_STANDING;
 }
 
 void sceneTest3::update(void)
@@ -27,11 +39,11 @@ void sceneTest3::draw(void)
 	_char->draw();
 }
 
-characterBase * sceneTest3::createCharacter(void)
+patternMesh * sceneTest3::createCharacter(void)
 {
-	characterBase::mParam param;
+	patternMesh::mParam param;
 	param.effectFilePath = "resource/effect/Survivor.fx";
 	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";
 
-	return new characterBase(param);
+	return new patternMesh(param);
 }

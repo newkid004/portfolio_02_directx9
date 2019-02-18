@@ -6,8 +6,12 @@
 #include "mapObject.h"
 #include "mapObjectBase.h"
 #include "nodeMesh.h"
+
 #include "aStar_node.h"
 #include "aStar_grape_bind.h"
+
+#include "inGame_grape.h"
+#include "inGame_node.h"
 
 using namespace std;
 
@@ -248,10 +252,27 @@ void maptool_data_io::apply(OBJ::NODE * in, nodeMesh * obj)
 	in->_radius = obj->getPlaneRadius();
 }
 
+void maptool_data_io::apply(OBJ::NODE * in, inGame_node * obj)
+{
+	apply((OBJ::BASE*)in, (baseObject*)obj);
+
+	in->_radius = obj->getRadius();
+}
+
 void maptool_data_io::apply(OBJ::PATH * in, grape * obj)
 {
 	in->_node.resize(obj->getBindList().size());
 	for (int i = 0 ; i < in->_node.size(); ++i)
+		apply(&in->_node[i], obj->getBindList()[i]);
+
+	for (auto i : obj->getNodeConnection())
+		in->_connection[i.first] = i.second;
+}
+
+void maptool_data_io::apply(OBJ::PATH * in, inGame_grape * obj)
+{
+	in->_node.resize(obj->getBindList().size());
+	for (int i = 0; i < in->_node.size(); ++i)
 		apply(&in->_node[i], obj->getBindList()[i]);
 
 	for (auto i : obj->getNodeConnection())
@@ -275,6 +296,8 @@ void maptool_data_io::apply(staticMesh * in, OBJ::PROP * data)
 	CopyMemory(&in->getDirectForward(),	&data->_rotateZ.front(), sizeof(D3DXVECTOR3));
 	CopyMemory(&in->getDirectUp(),		&data->_rotateY.front(), sizeof(D3DXVECTOR3));
 	CopyMemory(&in->getDirectRight(),	&data->_rotateX.front(), sizeof(D3DXVECTOR3));
+
+	in->calMatrixFinal();
 }
 
 void maptool_data_io::apply(skinnedMesh * in, OBJ::CHAR * data)
@@ -289,6 +312,8 @@ void maptool_data_io::apply(skinnedMesh * in, OBJ::CHAR * data)
 	CopyMemory(&in->getDirectForward(), &data->_rotateZ.front(), sizeof(D3DXVECTOR3));
 	CopyMemory(&in->getDirectUp(), &data->_rotateY.front(), sizeof(D3DXVECTOR3));
 	CopyMemory(&in->getDirectRight(), &data->_rotateX.front(), sizeof(D3DXVECTOR3));
+
+	in->calMatrixFinal();
 }
 
 void maptool_data_io::apply(staticMesh * in, OBJ::BUMP * data)
@@ -320,6 +345,11 @@ void maptool_data_io::apply(nodeMesh * in, OBJ::NODE * data)
 	in->setPlaneRadius(data->_radius);
 }
 
+void maptool_data_io::apply(inGame_node * in, OBJ::NODE * data)
+{
+	apply((baseObject*)in, (OBJ::BASE*)data);
+}
+
 void maptool_data_io::apply(grape * in, OBJ::PATH * data)
 {
 	for (int i = 0; i < data->_node.size(); ++i)
@@ -329,6 +359,29 @@ void maptool_data_io::apply(grape * in, OBJ::PATH * data)
 
 		aStar_node* node = new aStar_node(item->getPosition());
 		grape::BIND_OUT binder = nullptr;
+		in->addNode(node, binder);
+		*binder = item;
+		item->setBindNode(node);
+	}
+
+	for (auto & pConnection : data->_connection)
+	{
+		int own = pConnection.first;
+
+		for (auto & linkingNode : pConnection.second)
+			in->connectNode(own, linkingNode);
+	}
+}
+
+void maptool_data_io::apply(inGame_grape * in, OBJ::PATH * data)
+{
+	for (int i = 0; i < data->_node.size(); ++i)
+	{
+		inGame_node* item = nullptr;
+		create(&item, &data->_node[i]);
+
+		aStar_node* node = new aStar_node(item->getPosition());
+		inGame_grape::BIND_OUT binder = nullptr;
 		in->addNode(node, binder);
 		*binder = item;
 		item->setBindNode(node);
@@ -386,7 +439,21 @@ void maptool_data_io::create(OBJ::NODE ** out, nodeMesh * obj)
 	*out = result;
 }
 
+void maptool_data_io::create(OBJ::NODE ** out, inGame_node * obj)
+{
+	OBJ::NODE* result = new OBJ::NODE();
+	apply(result, obj);
+	*out = result;
+}
+
 void maptool_data_io::create(OBJ::PATH ** out, grape * obj)
+{
+	OBJ::PATH* result = new OBJ::PATH();
+	apply(result, obj);
+	*out = result;
+}
+
+void maptool_data_io::create(OBJ::PATH ** out, inGame_grape * obj)
 {
 	OBJ::PATH* result = new OBJ::PATH();
 	apply(result, obj);
@@ -450,6 +517,20 @@ void maptool_data_io::create(nodeMesh ** out, OBJ::NODE * data)
 	*out = result;
 }
 
+void maptool_data_io::create(inGame_node ** out, OBJ::NODE * data)
+{
+	inGame_node* result = nullptr;
+
+	result = new inGame_node(
+		D3DXVECTOR3(
+			data->_position[0], 
+			data->_position[1],
+			data->_position[2]), 
+		data->_radius);
+
+	*out = result;
+}
+
 void maptool_data_io::create(grape ** out, OBJ::PATH * data)
 {
 	grape* result = new grape();
@@ -457,4 +538,17 @@ void maptool_data_io::create(grape ** out, OBJ::PATH * data)
 	apply(result, data);
 
 	*out = result;
+}
+
+void maptool_data_io::create(inGame_grape ** out, OBJ::PATH * data)
+{
+	inGame_grape* result = new inGame_grape();
+
+	apply(result, data);
+
+	*out = result;
+}
+
+void maptool_data_io::OBJ::TRIGGER::write(json & in_Json)
+{
 }

@@ -277,6 +277,8 @@
     <ClInclude Include="terrain.h" />
     <ClInclude Include="textManager.h" />
     <ClInclude Include="timeManager.h" />
+    <ClInclude Include="triggerBase.h" />
+    <ClInclude Include="triggerShotGun.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
     <ClInclude Include="wallCollision.h" />
@@ -401,6 +403,8 @@
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="textManager.cpp" />
     <ClCompile Include="timeManager.cpp" />
+    <ClCompile Include="triggerBase.cpp" />
+    <ClCompile Include="triggerShotGun.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
     <ClCompile Include="wallCollision.cpp" />

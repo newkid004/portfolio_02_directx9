@@ -559,6 +559,15 @@
     <Filter Include="main\classes\scene\02_inGame\classes\data\io">
       <UniqueIdentifier>{43b9a9af-2cb6-4955-943a-1c0ba97bc1da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger">
+      <UniqueIdentifier>{5d1440fb-debf-4ecd-bb99-835949c24eba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\_base">
+      <UniqueIdentifier>{89af1362-29d7-4602-8abf-34174f4c1c23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\shotGun">
+      <UniqueIdentifier>{60fb1e84-68e7-4b16-bf62-a78853fd1f89}</UniqueIdentifier>
+    </Filter>
     <Filter Include="main\classes\collision\bullet">
       <UniqueIdentifier>{ca39e95e-3c2e-4620-bd47-c91e35fc581a}</UniqueIdentifier>
     </Filter>
@@ -975,6 +984,10 @@
     <ClInclude Include="patternMeshDup.h">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClInclude>
+    <ClInclude Include="triggerBase.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="triggerShotGun.h" />
     <ClInclude Include="weaponHealkit.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
     </ClInclude>
@@ -1328,6 +1341,10 @@
     <ClCompile Include="patternMeshDup.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
     </ClCompile>
+    <ClCompile Include="triggerBase.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="triggerShotGun.cpp" />
     <ClCompile Include="weaponHealkit.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
     </ClCompile>

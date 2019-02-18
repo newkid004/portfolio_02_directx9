@@ -15,7 +15,10 @@ private :
 	// read 후, field에 json내용 작성
 	void spreadObject(inGame_field* field);
 	void spreadField(inGame_field* field);
+	void spreadTrigger(inGame_field* field);
 	void spreadGrape(inGame_field* field);
+
+	void putObject2grape(inGame_field* field);
 
 public:
 	inGame_io();

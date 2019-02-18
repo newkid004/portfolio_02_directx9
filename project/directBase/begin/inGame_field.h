@@ -7,11 +7,13 @@ class staticMesh;
 class enemyBase;
 class playerableBase;
 class weaponBase;
-class mapObject;
 
 class triggerBase;
 
 class inGame_grape;
+
+class mapObject;
+class quadTree_Frustum;
 
 class inGame_field
 {
@@ -24,7 +26,7 @@ public :
 	{
 		vList<renderObject*>	vTotalObject;
 
-		vList<baseObject*>		vUpdateable;
+		vList<renderObject*>	vUpdateable;
 		vList<renderObject*>	vRenderable;
 
 		vList<staticMesh*>		vProp;

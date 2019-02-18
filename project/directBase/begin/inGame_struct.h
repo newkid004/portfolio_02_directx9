@@ -51,7 +51,7 @@ struct attack_set
 
 struct weapon_set
 {
-	static struct type
+	struct type
 	{
 		static constexpr int none = 0;
 		static constexpr int rifle = 1;

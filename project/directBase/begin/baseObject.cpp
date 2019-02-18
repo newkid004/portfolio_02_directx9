@@ -35,30 +35,7 @@ baseObject::~baseObject()
 
 void baseObject::update(void)
 {
-	// 이동
-	D3DXMATRIXA16 mTranslation;
-	D3DXMatrixTranslation(&mTranslation, 
-		_position.x, 
-		_position.y, 
-		_position.z);
-
-	// 척도
-	D3DXMATRIXA16 mScalse;
-	D3DXMatrixScaling(&mScalse,
-		_scale.x,
-		_scale.y,
-		_scale.z);
-
-	// 회전
-	D3DXMATRIXA16 mRotation;
-	D3DXMatrixIdentity(&mRotation);
-
-	CopyMemory(&mRotation(0, 0), &_directionRight,		sizeof(D3DXVECTOR3));
-	CopyMemory(&mRotation(1, 0), &_directionUp,			sizeof(D3DXVECTOR3));
-	CopyMemory(&mRotation(2, 0), &_directionForward,	sizeof(D3DXVECTOR3));
-
-	// world
-	_mWorld = _mOffset * mScalse * mRotation * mTranslation;
+	calMatrixFinal();
 
 	// 자식 갱신
 	for (auto childObject : _vChildren)
@@ -293,6 +270,34 @@ void baseObject::normalizeAxis(void)
 	D3DXVec3Normalize(&_directionRight,		&_directionRight);
 	D3DXVec3Normalize(&_directionUp,		&_directionUp);
 	D3DXVec3Normalize(&_directionForward,	&_directionForward);
+}
+
+void baseObject::calMatrixFinal(void)
+{
+	// 이동
+	D3DXMATRIXA16 mTranslation;
+	D3DXMatrixTranslation(&mTranslation,
+		_position.x,
+		_position.y,
+		_position.z);
+
+	// 척도
+	D3DXMATRIXA16 mScalse;
+	D3DXMatrixScaling(&mScalse,
+		_scale.x,
+		_scale.y,
+		_scale.z);
+
+	// 회전
+	D3DXMATRIXA16 mRotation;
+	D3DXMatrixIdentity(&mRotation);
+
+	CopyMemory(&mRotation(0, 0), &_directionRight, sizeof(D3DXVECTOR3));
+	CopyMemory(&mRotation(1, 0), &_directionUp, sizeof(D3DXVECTOR3));
+	CopyMemory(&mRotation(2, 0), &_directionForward, sizeof(D3DXVECTOR3));
+
+	// world
+	_mWorld = _mOffset * mScalse * mRotation * mTranslation;
 }
 
 D3DXMATRIXA16 baseObject::getMatrixFinal(void)

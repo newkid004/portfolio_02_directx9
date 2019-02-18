@@ -2,11 +2,13 @@
 #include "kGlobalDefine.h"
 #include "sceneBase.h"
 
+class patternMesh;
 class characterBase;
 
 class sceneTest3 : public sceneBase
 {
 private :
+	patternMesh* _origin = nullptr;
 	characterBase* _char = nullptr;
 
 public:
@@ -15,7 +17,7 @@ public:
 	virtual void draw(void) override;
 
 private :
-	characterBase* createCharacter(void);
+	patternMesh* createCharacter(void);
 
 public:
 	sceneTest3() {};

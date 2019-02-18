@@ -8,6 +8,8 @@ float4 _viewPosition;
 float4 _lightPosition;
 float4 _lightDirection;
 
+float4 _outLineColor;
+
 float _winSizeX;
 float _winSizeY;
 
@@ -165,7 +167,7 @@ float4 psBlur(output iput) : COLOR0
 		color += tex2D(_samplerRenderOutline, iput.uv + offset) * filter[i].w;
 	}
 
-	return color * float4(0.5f, 0.5f, 1.0f, 1.0f);
+	return color * _outLineColor;
 }
 
 technique techOrigin
@@ -192,6 +194,8 @@ technique techBlur
 {
 	pass p0
 	{
+		ZWRITEENABLE = false;
+
 		VertexShader = compile vs_3_0 vsPanel();
 		PixelShader = compile ps_3_0 psBlur();
 	}
