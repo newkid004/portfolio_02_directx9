@@ -1,7 +1,7 @@
 #include "weaponHealkit.h"
 
-weaponHealkit::weaponHealkit(patternMeshDup* linkPatternDup)
-: weaponBase::weaponBase(linkPatternDup)
+weaponHealkit::weaponHealkit(staticMesh::mParam param, characterBase* linkPatternDup)
+: weaponBase::weaponBase(param, linkPatternDup)
 {
 	_infoWeapon.type = weapon_set::type::healkit;
 	_infoWeapon.current = 1;

@@ -559,6 +559,9 @@
     <Filter Include="main\classes\scene\02_inGame\classes\data\io">
       <UniqueIdentifier>{43b9a9af-2cb6-4955-943a-1c0ba97bc1da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\weapon\test">
+      <UniqueIdentifier>{18542d1e-c790-494b-b178-18e11dbb5c66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -822,9 +825,6 @@
     <ClInclude Include="skinnedMesh.h">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\_base</Filter>
     </ClInclude>
-    <ClInclude Include="skinnedMeshDup.h">
-      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
-    </ClInclude>
     <ClInclude Include="pathfind_grape.h">
       <Filter>main\classes\pathfind\_base\grape</Filter>
     </ClInclude>
@@ -968,6 +968,12 @@
     </ClInclude>
     <ClInclude Include="weaponHealkit.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="weaponNormal.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="weaponTest.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon\test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1190,9 +1196,6 @@
     <ClCompile Include="skinnedMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\_base</Filter>
     </ClCompile>
-    <ClCompile Include="skinnedMeshDup.cpp">
-      <Filter>classes\global\utility\object\renderObject\mesh\skinnedMesh\duplicate</Filter>
-    </ClCompile>
     <ClCompile Include="pathfind_grape.cpp">
       <Filter>main\classes\pathfind\_base\grape</Filter>
     </ClCompile>
@@ -1309,6 +1312,12 @@
     </ClCompile>
     <ClCompile Include="weaponHealkit.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponNormal.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponTest.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\weapon\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

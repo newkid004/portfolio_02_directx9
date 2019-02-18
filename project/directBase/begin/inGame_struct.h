@@ -51,7 +51,7 @@ struct attack_set
 
 struct weapon_set
 {
-	static struct type
+	struct type
 	{
 		static constexpr int none = 0;
 		static constexpr int rifle = 1;
@@ -68,6 +68,8 @@ struct weapon_set
 	int current				= 0;		// 현재 탄환 수
 	int reload				= 0;		// 교체 탄환 수
 	int maximum				= 0;		// 최대 탄환 수
+
+	int damage				= 0;
 
 	float shotDelay			= 1.0f;		// 연사 속도
 	float reloadDelay		= 1.0f;		// 장전 속도

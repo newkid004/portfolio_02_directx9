@@ -1,14 +1,17 @@
 #include "weaponShotgun.h"
+#include "gDigit.h"
+#include "inGame_digit.h"
 
-weaponShotgun::weaponShotgun(patternMeshDup* linkPatternDup)
-	:weaponBase::weaponBase(linkPatternDup)
+weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
+	:weaponBase::weaponBase(param, linkPatternDup)
 {
 	_infoWeapon.type = weapon_set::type::shotgun;
 	_infoWeapon.current = 5;
 	_infoWeapon.reload = 5;
 	_infoWeapon.maximum = 30;
-	_infoWeapon.nextFireTime = 0.5f;
-	_infoWeapon.nextReloadTime = 2.0f;
+	_infoWeapon.damage = damage;
+	_infoWeapon.shotDelay = 0.5f;
+	_infoWeapon.reloadDelay = 2.0f;
 
 	D3DXMATRIXA16 stRotation;
 	D3DXMatrixRotationYawPitchRoll(&stRotation,
@@ -39,7 +42,6 @@ void weaponShotgun::fireDo(void)
 	weaponBase::fireDo();
 	//ÃÑ¾Ë ¹ß»ç
 	// 12¹ß
-
 }
 
 void weaponShotgun::firePost(void)
@@ -57,10 +59,21 @@ void weaponShotgun::reloadDo(void)
 {
 	weaponBase::reloadDo();
 	++_infoWeapon.current;
-	_isLeft = false;
 }
 
 void weaponShotgun::reloadPost(void)
 {
 	weaponBase::reloadPost();
+}
+
+void weaponShotgun::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])
+{
+	if (_isLeft)
+	{
+		_localMatrix = _baseMatrix[0] * combineMatrix[0];
+	}
+	else
+	{
+		_localMatrix = _baseMatrix[1] * combineMatrix[1];
+	}
 }

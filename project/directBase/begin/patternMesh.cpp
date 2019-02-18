@@ -45,7 +45,7 @@ void patternMesh::update(void)
 		}
 		else
 		{
-			_leftFingerNumber = findFinger(true);
+			findPart("Finger0", _leftFingerNumber);
 			_handMatrix[0] = _vMeshContainerList[0]->vBoneList[_leftFingerNumber]->combineMatrix;
 		}
 		if (_rightFingerNumber != -1)
@@ -54,34 +54,36 @@ void patternMesh::update(void)
 		}
 		else
 		{
-			_rightFingerNumber = findFinger(false);
+			findPart("R_Hand", _rightFingerNumber);
 			_handMatrix[1] = _vMeshContainerList[0]->vBoneList[_rightFingerNumber]->combineMatrix;
+		}
+		
+	}
+	if (_neckNumber != 0)
+	{
+		if (_neckNumber != -1)
+		{
+			_neckMatrix = _vMeshContainerList[0]->vBoneList[_neckNumber]->combineMatrix;
+		}
+		else
+		{
+			findPart("Neck", _neckNumber);
+			_neckMatrix = _vMeshContainerList[0]->vBoneList[_neckNumber]->combineMatrix;
 		}
 	}
 }
 
-int patternMesh::findFinger(bool isLeft)
+void patternMesh::findPart(const char * partName, int & partNumber)
 {
-	
 	for (int i = 0; i < _vMeshContainerList[0]->vBoneList.size(); ++i)
 	{
 		std::string name = _vMeshContainerList[0]->vBoneList[i]->Name;
-		if (isLeft)
+		if (name.find(partName) != string::npos)
 		{
-			if (name.find("Finger0") != string::npos)
-			{
-				return i;
-			}
-		}
-		else
-		{
-			if (name.find("R_Hand") != string::npos)
-			{
-				return i;
-			}
+			partNumber = i;
+			break;
 		}
 	}
-	return 0;
 }
 
 void patternMesh::drawPre(void)

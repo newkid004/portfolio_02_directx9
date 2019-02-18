@@ -4,7 +4,7 @@
 #include "sound.h"
 
 #include "skinnedMesh.h"
-#include "skinnedMeshDup.h"
+#include "patternMeshDup.h"
 #include "animationController.h"
 
 resourceManager::resourceManager()

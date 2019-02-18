@@ -1,10 +1,13 @@
 #include "patternMeshDup.h"
 #include "patternMesh.h"
+#include "weaponRifle.h"
+#include "weaponShotgun.h"
+#include "staticMesh.h"
+#include "weaponHealkit.h"
 
 patternMeshDup::patternMeshDup(patternMesh * duplicateTarget)
 	:_bindPatternMesh(duplicateTarget)
 {
-	ZeroMemory(&_controlInfo, sizeof(_controlInfo));
 }
 
 patternMeshDup::~patternMeshDup(void)
@@ -14,7 +17,6 @@ patternMeshDup::~patternMeshDup(void)
 void patternMeshDup::update(void)
 {
 	renderObject::update();
-
 }
 
 void patternMeshDup::drawPre(void)
@@ -39,6 +41,7 @@ void patternMeshDup::drawPost(void)
 
 void patternMeshDup::calcurateHandMatrix(void)
 {
-	_finalHandMatrix[0] = getMatrixFinal() * _bindPatternMesh->getHandMatrix(0);
-	_finalHandMatrix[1] = getMatrixFinal() * _bindPatternMesh->getHandMatrix(1);
+	_finalHandMatrix[0] = _bindPatternMesh->getHandMatrix(0);
+	_finalHandMatrix[1] = _bindPatternMesh->getHandMatrix(1);
+	_finalNeckMatrix = _bindPatternMesh->getNeckMatrix();
 }

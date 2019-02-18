@@ -41,13 +41,15 @@ private:
 
 	std::vector<D3DXVECTOR4> _vVertexList;
 	D3DXMATRIXA16 _handMatrix[2];
+	D3DXMATRIXA16 _neckMatrix;
 
 	int num = 0;
 	int _leftFingerNumber = -1;
 	int _rightFingerNumber = -1;
+	int _neckNumber = -1;
 public:
 	void update(void) override;
-	int findFinger(bool isLeft);
+	void findPart(const char* partName, int& partNumber);
 
 protected:
 	void drawPre(void) override;
@@ -82,6 +84,7 @@ public:
 	LPD3DXMESH getMesh(void) { return _mesh; }
 	LPD3DXEFFECT getEffect(void) { return _effect; }
 	D3DXMATRIXA16 &getHandMatrix(int index) { return _handMatrix[index]; }
+	D3DXMATRIXA16 &getNeckMatrix(void) { return _neckMatrix; }
 public:
 	patternMesh(const mParam & param);
 	virtual ~patternMesh();

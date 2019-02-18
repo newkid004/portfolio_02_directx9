@@ -11,6 +11,7 @@
 #include "sceneCollisionTest.h"
 #include "AnimationTester.h"
 #include "wallCollision.h"
+#include "weaponTest.h"
 
 void mainGame::init(void)
 {
@@ -28,8 +29,9 @@ void mainGame::init(void)
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
 	MN_SCENE->add("wallC", new wallCollision);
+	MN_SCENE->add("weaponT", new weaponTest);
 
-	MN_SCENE->change("wallC");
+	MN_SCENE->change("weaponT");
 	//MN_SCENE->change("scene3");
 	//MN_SCENE->change("sceneCollisionTest");
 }

@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -264,7 +264,6 @@
     <ClInclude Include="sceneTest3.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
-    <ClInclude Include="skinnedMeshDup.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="spriteBase.h" />
@@ -279,8 +278,10 @@
     <ClInclude Include="wallCollision.h" />
     <ClInclude Include="weaponBase.h" />
     <ClInclude Include="weaponHealkit.h" />
+    <ClInclude Include="weaponNormal.h" />
     <ClInclude Include="weaponRifle.h" />
     <ClInclude Include="weaponShotgun.h" />
+    <ClInclude Include="weaponTest.h" />
     <ClInclude Include="windowBase.h" />
     <ClInclude Include="windowCtlogMaptool.h" />
     <ClInclude Include="windowManager.h" />
@@ -383,7 +384,6 @@
     <ClCompile Include="sceneTest2.cpp" />
     <ClCompile Include="sceneTest3.cpp" />
     <ClCompile Include="skinnedMesh.cpp" />
-    <ClCompile Include="skinnedMeshDup.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="spriteBase.cpp" />
@@ -398,8 +398,10 @@
     <ClCompile Include="wallCollision.cpp" />
     <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="weaponHealkit.cpp" />
+    <ClCompile Include="weaponNormal.cpp" />
     <ClCompile Include="weaponRifle.cpp" />
     <ClCompile Include="weaponShotgun.cpp" />
+    <ClCompile Include="weaponTest.cpp" />
     <ClCompile Include="windowBase.cpp" />
     <ClCompile Include="windowCtlogMaptool.cpp" />
     <ClCompile Include="windowManager.cpp" />
