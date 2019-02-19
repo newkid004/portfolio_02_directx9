@@ -11,6 +11,8 @@ protected :
 
 	POINT _posCenter;
 
+	bool _isFixMouse = true;
+
 public :
 	void update(void) override;
 

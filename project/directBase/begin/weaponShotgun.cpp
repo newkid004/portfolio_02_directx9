@@ -6,7 +6,7 @@
 weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::shotgun);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::Type::shotgun);
 	_infoWeapon.damage = damage;
 
 	D3DXMATRIXA16 stRotation;

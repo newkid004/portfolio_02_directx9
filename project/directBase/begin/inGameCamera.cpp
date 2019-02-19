@@ -8,7 +8,7 @@ inGameCamera::inGameCamera(characterBase * bindCharacter) :
 	camera(MN_WIN->getAspect()),
 	_bindCharacter(bindCharacter)
 {
-	_posCenter = POINT{ WINSIZEX / 2.0f , WINSIZEY / 2.0f };
+	_posCenter = POINT{ WINSIZEX / 2L , WINSIZEY / 2L };
 
 	MN_KEY->setMousePos(_posCenter);
 }
@@ -30,6 +30,7 @@ void inGameCamera::updateBind(void)
 	if (_bindCharacter == nullptr) return;
 
 	_position = _bindCharacter->getPosition();
+	_position.y += _bindCharacter->getInfoCharacter().height;
 
 	D3DXVECTOR3 lookForward(_directionForward.x, 0.0f, _directionForward.z);
 	D3DXVECTOR3 lookRight(_directionRight.x, 0.0f, _directionRight.z);
@@ -41,6 +42,19 @@ void inGameCamera::updateBind(void)
 
 void inGameCamera::updateControl(void)
 {
+	if (MN_KEY->keyPress(DIK_ESCAPE))
+	{
+		_isFixMouse = !_isFixMouse;
+
+		if (_isFixMouse)
+			ShowCursor(FALSE);
+		else
+			ShowCursor(TRUE);
+	}
+
+	if (!_isFixMouse)
+		return;
+
 	POINT mousePos = MN_KEY->getMousePos();
 
 	POINT mouseMove = {

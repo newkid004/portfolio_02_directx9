@@ -14,6 +14,9 @@
 #include "staticMesh.h"
 #include "skinnedMesh.h"
 #include "nodeMesh.h"
+#include "triggerBase.h"
+
+#include "triggerFactory.h"
 
 typedef maptool_data_catalog CATALOG;
 
@@ -223,8 +226,8 @@ windowCtlogMaptool * maptool_window::create_mvTrigger(void)
 
 	auto result = new windowCtlogMaptool(winInfo);
 
-	vector<CATALOG::OBJ::NODE*> content;
-	createContent_node(content);
+	vector<CATALOG::OBJ::TRIGGER*> content;
+	createContent_trigger(content);
 
 	for (auto i : content)
 		result->addItem(i);
@@ -417,15 +420,27 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 {
 	CATALOG::OBJ::TRIGGER* item = nullptr;
 	staticMesh::mParam param;
-
-	// weapon
-	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
 	param.effectFilePath = "resource/effect/example_15.fx";
 
-	CATALOG::create(&item, &param);
-	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
+	string xPath = "resource/mesh/L4D1/items/";
+	string tPath = "resource/texture/maptool/catalog/00_test.PNG";
 
-	vContent.push_back(item);
+	function<void(char*)> inputContent = [&](char* fName)->void {
+		param.meshFilePath = xPath + fName + ".X";
+		CATALOG::create(&item, &param);
+		item->_standImage = MN_SRC->getSpriteTexture(tPath);
+		
+		item->_triggerType = vContent.size();
+		item->_object->refBind() = triggerFactory::createTrigger2type(
+			item->_triggerType,
+			(staticMesh*)item->_object);
+
+		vContent.push_back(item);
+	};
+
+	inputContent("shotgun");
+	inputContent("rifle");
+	inputContent("medikit");
 }
 
 void maptool_window::createContent_file(std::vector<CATALOG::OBJ::FILE*>& vContent)

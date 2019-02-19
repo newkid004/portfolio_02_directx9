@@ -6,6 +6,7 @@ class renderObject;
 class staticMesh;
 class skinnedMesh;
 class nodeMesh;
+class triggerMesh;
 
 class maptool_data_catalog
 {
@@ -67,6 +68,7 @@ public :
 
 		struct TRIGGER : public PROP
 		{
+			int _triggerType = 0;
 			TRIGGER() { _baseType |= baseType::BUMP; }
 		};
 
@@ -86,11 +88,12 @@ public :
 	static void duplicate(staticMesh**	outObject, OBJ::BUMP* targetObject);
 	static void duplicate(skinnedMesh**	outObject, OBJ::CHAR* targetObject);
 	static void duplicate(nodeMesh**	outObject, OBJ::NODE* targetObject);
-	static void duplicate(staticMesh**	outObject, OBJ::TRIGGER* targetObject);
+	static void duplicate(triggerMesh**	outObject, OBJ::TRIGGER* targetObject);
 
 private :
 	static void applyObject(renderObject* target, renderObject* own);
 	static void applyObject(nodeMesh* target, nodeMesh* own);
+	static void applyObject(triggerMesh* target, triggerMesh* own);
 
 private :
 	maptool_data_catalog() {};

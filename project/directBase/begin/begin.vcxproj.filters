@@ -469,9 +469,6 @@
     <Filter Include="main\classes\scene\01_mapTool\classes\brush\trigger">
       <UniqueIdentifier>{2a08e740-7a59-4b22-8cb6-fd73a6a31158}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\global\utility\object\renderObject\mesh\nodeMesh">
-      <UniqueIdentifier>{8fc2f507-4855-4fd6-a23c-73003c19cfa0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource\mesh\L4D1\items">
       <UniqueIdentifier>{e9c2cbf5-ce30-47be-9c1d-6064ce4d43a6}</UniqueIdentifier>
     </Filter>
@@ -565,9 +562,6 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\_base">
       <UniqueIdentifier>{89af1362-29d7-4602-8abf-34174f4c1c23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\shotGun">
-      <UniqueIdentifier>{60fb1e84-68e7-4b16-bf62-a78853fd1f89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\classes\scene\02_inGame\classes\data\grape">
       <UniqueIdentifier>{7bf7e596-8e72-4d83-a428-5c36535d35a3}</UniqueIdentifier>
     </Filter>
@@ -594,6 +588,27 @@
     </Filter>
     <Filter Include="main\classes\scene\02_inGame\classes\object\camera">
       <UniqueIdentifier>{7b323458-0760-4fb3-b90d-59aa2a8a007d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\staticMesh\_base">
+      <UniqueIdentifier>{ea79d61f-0fd2-477a-bd0d-6ded5db2c62d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\staticMesh\nodeMesh">
+      <UniqueIdentifier>{8fc2f507-4855-4fd6-a23c-73003c19cfa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\factory">
+      <UniqueIdentifier>{ed48f0dc-7611-4964-b46d-b2b5906b88ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\event\00_eventAirPlane">
+      <UniqueIdentifier>{ca8feb4f-960f-4768-9b04-3d3674d2bdf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\event\01_moveFar2building">
+      <UniqueIdentifier>{4b96c66c-5ef4-4f1f-a0f6-78a5f8ae8a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\classes\brush\node">
+      <UniqueIdentifier>{0800f082-9565-45ff-ae35-68d8b640cd1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\staticMesh\triggerMesh">
+      <UniqueIdentifier>{054bc4be-386c-4663-b6d2-f386a1fd83e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -653,9 +668,6 @@
     </ClInclude>
     <ClInclude Include="defaulteCube.h">
       <Filter>classes\global\utility\object\renderObject\defaulteCube</Filter>
-    </ClInclude>
-    <ClInclude Include="staticMesh.h">
-      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh</Filter>
     </ClInclude>
     <ClInclude Include="allocateHierarchy.h">
       <Filter>classes\global\utility\animation\allocateHierarchy</Filter>
@@ -904,7 +916,7 @@
       <Filter>main\classes\scene\01_mapTool\classes\brush\prop</Filter>
     </ClInclude>
     <ClInclude Include="nodeMesh.h">
-      <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
+      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\nodeMesh</Filter>
     </ClInclude>
     <ClInclude Include="aStar_grape.h">
       <Filter>main\classes\pathfind\aStar\grape\_base</Filter>
@@ -1005,9 +1017,6 @@
     <ClInclude Include="fistBullet.h">
       <Filter>main\classes\collision\bullet\object</Filter>
     </ClInclude>
-    <ClInclude Include="triggerShotGun.h">
-      <Filter>main\classes\scene\02_inGame\classes\object\trigger\shotGun</Filter>
-    </ClInclude>
     <ClInclude Include="inGame_grape.h">
       <Filter>main\classes\scene\02_inGame\classes\data\grape</Filter>
     </ClInclude>
@@ -1031,6 +1040,24 @@
     </ClInclude>
     <ClInclude Include="inGameCamera.h">
       <Filter>main\classes\scene\02_inGame\classes\object\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="staticMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\_base</Filter>
+    </ClInclude>
+    <ClInclude Include="triggerFactory.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\factory</Filter>
+    </ClInclude>
+    <ClInclude Include="eventAirPlane.h">
+      <Filter>main\classes\event\00_eventAirPlane</Filter>
+    </ClInclude>
+    <ClInclude Include="eventMoveFar2building.h">
+      <Filter>main\classes\event\01_moveFar2building</Filter>
+    </ClInclude>
+    <ClInclude Include="maptool_brush_node.h">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\node</Filter>
+    </ClInclude>
+    <ClInclude Include="triggerMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\triggerMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1075,9 +1102,6 @@
     </ClCompile>
     <ClCompile Include="defaulteCube.cpp">
       <Filter>classes\global\utility\object\renderObject\defaulteCube</Filter>
-    </ClCompile>
-    <ClCompile Include="staticMesh.cpp">
-      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh</Filter>
     </ClCompile>
     <ClCompile Include="allocateHierarchy.cpp">
       <Filter>classes\global\utility\animation\allocateHierarchy</Filter>
@@ -1293,7 +1317,7 @@
       <Filter>main\classes\scene\01_mapTool\classes\brush\prop</Filter>
     </ClCompile>
     <ClCompile Include="nodeMesh.cpp">
-      <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
+      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\nodeMesh</Filter>
     </ClCompile>
     <ClCompile Include="sceneInGame.cpp">
       <Filter>main\classes\scene\02_inGame</Filter>
@@ -1379,9 +1403,6 @@
     <ClCompile Include="gunBullet.cpp">
       <Filter>main\classes\collision\bullet\object</Filter>
     </ClCompile>
-    <ClCompile Include="triggerShotGun.cpp">
-      <Filter>main\classes\scene\02_inGame\classes\object\trigger\shotGun</Filter>
-    </ClCompile>
     <ClCompile Include="skyBox.cpp">
       <Filter>classes\global\utility\object\renderObject\skyBox</Filter>
     </ClCompile>
@@ -1396,6 +1417,24 @@
     </ClCompile>
     <ClCompile Include="inGameCamera.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="staticMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="triggerFactory.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\trigger\factory</Filter>
+    </ClCompile>
+    <ClCompile Include="eventAirPlane.cpp">
+      <Filter>main\classes\event\00_eventAirPlane</Filter>
+    </ClCompile>
+    <ClCompile Include="eventMoveFar2building.cpp">
+      <Filter>main\classes\event\01_moveFar2building</Filter>
+    </ClCompile>
+    <ClCompile Include="maptool_brush_node.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\node</Filter>
+    </ClCompile>
+    <ClCompile Include="triggerMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\triggerMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

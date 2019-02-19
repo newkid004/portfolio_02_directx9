@@ -17,7 +17,7 @@ public :
 
 protected :
 	aStar_node*		_placedNode		= nullptr;	// delete : disable (aStar_grape)
-	weaponBase*		_weapon			= nullptr;	// delete : disable (weaponManager)
+	weaponBase*		_weapon			= nullptr;	// delete : enable
 	controllerBase*	_controller		= nullptr;	// delete : enable
 
 	character_set	_infoCharacter;

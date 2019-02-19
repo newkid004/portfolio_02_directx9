@@ -1,13 +1,13 @@
 #pragma once
 #include "kGlobalDefine.h"
 
-class sceneMapTool;
-
 class windowCtlogMaptool;
 
 class maptool_window;
 class maptool_field;
 class maptool_io;
+
+class sceneMapTool;
 
 class maptool_brush
 {

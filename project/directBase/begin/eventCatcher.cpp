@@ -6,7 +6,7 @@ m_stParam(0)
 {
 }
 
-eventCatcher::eventCatcher(unsigned long param, eventCatcherActive & beforeActive, eventCatcherActive & afterActive) :
+eventCatcher::eventCatcher(unsigned long param, const eventCatcherActive & beforeActive, const eventCatcherActive & afterActive) :
 	m_stParam(param),
 	m_stBeforeActive(beforeActive),
 	m_stAfterActive(afterActive)

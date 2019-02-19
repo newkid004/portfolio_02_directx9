@@ -4,7 +4,7 @@
 weaponHealkit::weaponHealkit(staticMesh::mParam param, characterBase* linkPatternDup)
 : weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::healkit);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::Type::healkit);
 
 	D3DXMATRIXA16 stRotation;
 	D3DXMatrixRotationYawPitchRoll(&stRotation,

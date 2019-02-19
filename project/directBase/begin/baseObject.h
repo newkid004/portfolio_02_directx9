@@ -8,6 +8,8 @@ protected :
 	baseObject* _parent;
 	std::vector<baseObject*> _vChildren;
 
+	void* _bindData = nullptr;
+
 	D3DXVECTOR3 _position;
 	D3DXVECTOR3 _scale;
 	D3DXVECTOR3 _directionRight;
@@ -86,6 +88,12 @@ public :	// 접근, 지정자
 	void setDirectionForward		(const D3DXVECTOR3 & input) { _directionForward = input; }
 
 	void setMatrixOffset			(const D3DXMATRIXA16 & input) { _mOffset = input; }
+
+public :	// bind
+	void* & refBind(void) { return _bindData; }
+
+	template<typename T>
+	T getBind(void) { return static_cast<T>(_bindData); }
 
 private:
 	void putOffsetPosition(void);

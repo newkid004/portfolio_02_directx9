@@ -5,7 +5,7 @@
 weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 	:weaponBase::weaponBase(linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::normal);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::Type::normal);
 	_infoWeapon.damage = damage;
 
 	D3DXMatrixIdentity(&_baseMatrix[0]);

@@ -44,6 +44,7 @@ characterBase::characterBase(patternMesh* duplicateTarget) :
 
 characterBase::~characterBase()
 {
+	SAFE_DELETE(_weapon);
 	SAFE_DELETE(_controller);
 }
 

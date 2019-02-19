@@ -9,6 +9,7 @@
 #include "inGame_field.h"
 #include "inGame_grape.h"
 
+#include "eventDef.h"
 #include "eventCatcher.h"
 #include "eventBase.h"
 
@@ -55,14 +56,19 @@ void sceneInGame::initResource(void)
 
 void sceneInGame::initSystem(void)
 {
+	// player
 	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
 
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_grid);
 
+	SGT_GAME->getSet().field->getMember().grape->putData(pCharacter, 3, pCharacter->getPosition(), pCharacter->getInfoCharacter().colRadius);
+
+	// camera
 	_camera = new inGameCamera(pCharacter);
 
-	SGT_GAME->getSet().field->getMember().grape->putData(pCharacter, 3, pCharacter->getPosition(), pCharacter->getInfoCharacter().colRadius);
+	// cursur
+	ShowCursor(NULL);
 }
 
 void sceneInGame::initEvent(void)
@@ -87,5 +93,18 @@ void sceneInGame::initEvent(void)
 		EK_CHARACTER_PLAYER |
 		EA_CHARACTER_WALK |
 		EC_PLAYER_STATE_CHANGE_DECREASE);
+
+	// < trigger >
+	// 비행기 시간 완료
+	MN_EVENT->add(
+		EVENT::TYPE::TRIGGER |
+		EVENT::KIND::TRIGGER::AIR_PLANE |
+		EVENT::ACT::TRIGGER::COMPLETE,
+		[](eventBase*)->void {},
+		[](eventBase*)->void {
+
+		// do shomthing
+	} );
+
 
 }

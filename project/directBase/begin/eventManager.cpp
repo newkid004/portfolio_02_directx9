@@ -98,7 +98,12 @@ void eventManager::add(eventBase * a_rstEvent)
 	m_stEventList.push_back(a_rstEvent);
 }
 
-void eventManager::add(unsigned long a_rstParam, std::function<void(eventBase*)> a_rBeforeActive, std::function<void(eventBase*)> a_rAfterActive)
+void eventManager::add(eventCatcher * a_rstEventCatcher)
+{
+	getEventCatcherArray(a_rstEventCatcher->getParam()).push_back(a_rstEventCatcher);
+}
+
+void eventManager::add(unsigned long a_rstParam, const std::function<void(eventBase*)>& a_rBeforeActive, const std::function<void(eventBase*)>& a_rAfterActive)
 {
 	getEventCatcherArray(a_rstParam).push_back(new eventCatcher(a_rstParam, a_rBeforeActive, a_rAfterActive));
 }

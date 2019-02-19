@@ -6,6 +6,7 @@
 #include "staticMesh.h"
 #include "skinnedMesh.h"
 #include "nodeMesh.h"
+#include "triggerMesh.h"
 
 maptool_data_catalog::OBJ::PROP::~PROP()
 {
@@ -47,7 +48,7 @@ void maptool_data_catalog::create(OBJ::NODE ** out, void * param)
 void maptool_data_catalog::create(OBJ::TRIGGER ** out, void * param)
 {
 	OBJ::TRIGGER* result = new OBJ::TRIGGER();
-	result->_object = new staticMesh(*(staticMesh::mParam*)param);
+	result->_object = new triggerMesh(*(triggerMesh::mParam*)param);
 
 	*out = result;
 }
@@ -89,12 +90,13 @@ void maptool_data_catalog::duplicate(nodeMesh ** outObject, OBJ::NODE * targetOb
 	*outObject = result;
 }
 
-void maptool_data_catalog::duplicate(staticMesh ** outObject, OBJ::TRIGGER * targetObject)
+void maptool_data_catalog::duplicate(triggerMesh ** outObject, OBJ::TRIGGER * targetObject)
 {
-	staticMesh* obj = (staticMesh*)targetObject->_object;
-	staticMesh* result = new staticMesh(obj->getMakeParam());
+	triggerMesh* obj = (triggerMesh*)targetObject->_object;
+	triggerMesh* result = new triggerMesh(obj->getMakeParam());
 
 	applyObject(result, obj);
+
 	*outObject = result;
 }
 
@@ -115,4 +117,11 @@ void maptool_data_catalog::applyObject(nodeMesh * target, nodeMesh * own)
 
 	target->setNodeColor(own->getNodeColor());
 	target->setPlaneRadius(own->getPlaneRadius());
+}
+
+void maptool_data_catalog::applyObject(triggerMesh * target, triggerMesh * own)
+{
+	applyObject((renderObject*)target, (renderObject*)own);
+
+	target->refTriggerType() = own->refTriggerType();
 }

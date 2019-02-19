@@ -91,6 +91,8 @@ public :
 
 		struct TRIGGER : public PROP
 		{
+			int _triggerType = 0;
+
 			virtual void write(json & in_Json) override;
 
 			TRIGGER() { _baseType |= baseType::TRIGGER; }

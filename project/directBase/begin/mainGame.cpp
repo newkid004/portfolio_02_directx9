@@ -40,7 +40,7 @@ void mainGame::init(void)
 
 	//*/
 
-	MN_SCENE->change("sceneInGame");
+	MN_SCENE->change("sceneMapTool");
 }
 
 void mainGame::update(void)
