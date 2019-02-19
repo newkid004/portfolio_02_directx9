@@ -47,7 +47,7 @@ void weaponRifle::fireDo(void)
 	weaponBase::fireDo();
 	D3DXVECTOR3 stPosition = _position;
 	D3DXVec3TransformCoord(&stPosition, &stPosition, &_bindPMesh->getFinalNeckMatrix());
-	//_bulletManager.addBullet(stPosition, _bindPMesh->getDirectForward(), 0.5f);
+	//_bulletManager.addBullet(stPosition, GET_CAMERA->,_bindPMesh->getDirectForward(), 0.5f);
 }
 
 void weaponRifle::firePost(void)
@@ -64,6 +64,16 @@ void weaponRifle::reloadPre(void)
 void weaponRifle::reloadDo(void)
 {
 	weaponBase::reloadDo();
+	
+}
+
+void weaponRifle::reloadPost(void)
+{
+	weaponBase::reloadPost();
+}
+
+void weaponRifle::reloadBullet()
+{
 	if (_infoWeapon.maximum >= _infoWeapon.reload)
 	{
 		int need = _infoWeapon.reload - _infoWeapon.current;
@@ -75,11 +85,6 @@ void weaponRifle::reloadDo(void)
 		_infoWeapon.current += _infoWeapon.maximum;
 		_infoWeapon.maximum = 0;
 	}
-}
-
-void weaponRifle::reloadPost(void)
-{
-	weaponBase::reloadPost();
 }
 
 void weaponRifle::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])

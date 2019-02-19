@@ -55,12 +55,16 @@ void weaponShotgun::reloadPre(void)
 void weaponShotgun::reloadDo(void)
 {
 	weaponBase::reloadDo();
-	++_infoWeapon.current;
 }
 
 void weaponShotgun::reloadPost(void)
 {
 	weaponBase::reloadPost();
+}
+
+void weaponShotgun::reloadBullet()
+{
+	++_infoWeapon.current;
 }
 
 void weaponShotgun::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])

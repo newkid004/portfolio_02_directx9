@@ -45,10 +45,9 @@ protected :
 	virtual void reloadDo(void);
 	virtual void reloadPost(void);
 
+	virtual void reloadBullet() PURE;
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]);
-	//
-	virtual void drawDo() override;
-	//
+
 public :
 	bool isShotPossible(void);
 	bool isReloadPossible(void);

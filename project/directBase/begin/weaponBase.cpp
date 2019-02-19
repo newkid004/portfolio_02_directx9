@@ -6,6 +6,8 @@
 #include "inGame_digit.h"
 
 #include "bulletManager.h"
+#include "characterBase.h"
+#include "AnimationDef.h"
 
 using DIGIT = inGame_digit;
 
@@ -34,9 +36,6 @@ void weaponBase::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
 	_isCull = isCull;
 	(*getMatrixWorldPoint()) = (*getMatrixWorldPoint()) * _localMatrix;
 
-	//
-	_bulletManager.update();
-	//
 }
 
 void weaponBase::updateFire(void)
@@ -93,11 +92,25 @@ void weaponBase::firePost(void)
 
 void weaponBase::reloadPre(void)
 {
+	int &nextBit = _bindPMesh->getNextBit();
+	if ((nextBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX)) == AMIX_RELOAD)
+	{
+		if (_bindPMesh->getAControllInfo().persent >= 0.8f)
+		{
+			reloadBullet();
+			if (_infoWeapon.current >= _infoWeapon.reload || _infoWeapon.maximum == 0)
+			{
+				CHANGE_BIT(nextBit, aniDefine::ANIBIT::MIX, AMIX_NONE);
+			}
+		}
+	}
+
 }
 
 void weaponBase::reloadDo(void)
 {
 	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::RELOAD);
+	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_RELOAD);
 }
 
 void weaponBase::reloadPost(void)
@@ -108,12 +121,6 @@ void weaponBase::reloadPost(void)
 void weaponBase::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])
 {
 	_localMatrix = _baseMatrix[0] * combineMatrix[0];
-}
-
-void weaponBase::drawDo()
-{
-	staticMesh::drawDo();
-	_bulletManager.draw();
 }
 
 bool weaponBase::isShotPossible(void)
