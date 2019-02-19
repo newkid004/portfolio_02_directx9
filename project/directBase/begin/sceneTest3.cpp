@@ -1,15 +1,20 @@
 #include "sceneTest3.h"
 
 #include "managerList.h"
+#include "gDigit.h"
 
 #include "inGame_grape.h"
 #include "inGame_field.h"
+#include "inGame_digit.h"
 
 #include "patternMesh.h"
 #include "characterBase.h"
 #include "controllerBase.h"
 
 #include "player.h"
+
+
+using DIGIT = inGame_digit;
 
 void sceneTest3::init(void)
 {
@@ -43,6 +48,7 @@ void sceneTest3::update(void)
 	if (MN_KEY->keyDown(DIK_DOWN))		dirMove.z -= 1.0f;
 	if (MN_KEY->keyDown(DIK_LEFT))		dirMove.x -= 1.0f;
 	if (MN_KEY->keyDown(DIK_RIGHT))		dirMove.x += 1.0f;
+	if (MN_KEY->keyPress(DIK_SPACE))	_char->jump();
 
 	if (dirMove.x || dirMove.z)
 		_char->moveDo(dirMove);

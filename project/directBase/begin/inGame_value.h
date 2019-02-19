@@ -7,7 +7,7 @@ private :
 	#define defType constexpr static float
 
 public :
-	defType gravity		= 0.75f;
+	defType gravity		= 3.0f;
 	defType friction	= 2.25f;	// 초당 마찰력
 	
 	defType PI			= D3DX_PI;

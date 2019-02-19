@@ -59,17 +59,24 @@ void characterBase::update(void)
 
 void characterBase::updateLanding(void)
 {
-	float postPos = _position.y + _infoMove.velVertical;
-
-	if (FLT_EPSILON < postPos)
+	if (0.0f < _infoMove.velVertical)
 	{
-		gDigit::put(_infoMove.status, DIGIT::MOVE::FLOAT);
 		gDigit::pick(_infoMove.status, DIGIT::MOVE::LAND);
-		return;
+		gDigit::put(_infoMove.status, DIGIT::MOVE::FLOAT);
 	}
+	else if (_infoMove.velVertical < 0.0f)
+	{
+		float deltaHeight = _position.y + _infoMove.velVertical;
 
-	_infoMove.velVertical = -_position.y;
-	gDigit::put(_infoMove.status, DIGIT::MOVE::LAND);
+		if (deltaHeight < 0.0f)
+		{
+			gDigit::put(_infoMove.status, DIGIT::MOVE::LAND);
+			gDigit::pick(_infoMove.status, DIGIT::MOVE::FLOAT);
+
+			_position.y = 0.0f;
+			_infoMove.velVertical = 0.0f;
+		}
+	}
 }
 
 void characterBase::updateMove(void)
@@ -83,7 +90,7 @@ void characterBase::updateMove(void)
 void characterBase::updateGravity(void)
 {
 	if (!gDigit::chk(_infoMove.status, DIGIT::MOVE::LAND))
-		_infoMove.velVertical += VALUE::gravity * MN_TIME->getDeltaTime();
+		_infoMove.velVertical -= VALUE::gravity * MN_TIME->getDeltaTime();
 }
 
 void characterBase::updateFriction(void)
@@ -114,6 +121,7 @@ void characterBase::updateFriction(void)
 
 void characterBase::updateCollision(void)
 {
+	// horizon
 	vector<aStar_node*> vColNodeList;
 	createCollisionNode(&vColNodeList);
 
@@ -267,17 +275,11 @@ void characterBase::moveByCollision(staticMesh * wall)
 void characterBase::moveDo(D3DXVECTOR3 & direction)
 {
 	gDigit::put(_infoMove.status, DIGIT::MOVE::MOVEING);
-	if (direction.y < 0.0f)
-	{
-		gDigit::put(_infoMove.status, DIGIT::MOVE::FLOAT);
-		gDigit::pick(_infoMove.status, DIGIT::MOVE::LAND);
-	}
 
 	float nowSpeed = _infoMove.getSpeedXZ();
 
 	D3DXVECTOR3 moveDirection(0.0f, 0.0f, 0.0f);
 	moveDirection += _directionRight	* direction.x;
-	moveDirection += _directionUp		* direction.y;
 	moveDirection += _directionForward	* direction.z;
 	D3DXVec3Normalize(&moveDirection, &moveDirection);
 
@@ -319,7 +321,6 @@ void characterBase::moveDo(D3DXVECTOR3 & direction)
 
 	// 속력 적용
 	_infoMove.velHorizon.x	= moveDirection.x;
-	_infoMove.velVertical	= moveDirection.y;
 	_infoMove.velHorizon.y	= moveDirection.z;
 }
 
@@ -336,6 +337,17 @@ void characterBase::moveBe(D3DXVECTOR3 & direction)
 	_infoMove.velHorizon.x	+= direction.x;
 	_infoMove.velVertical	+= direction.y;
 	_infoMove.velHorizon.y	+= direction.z;
+}
+
+void characterBase::jump(void)
+{
+	if (gDigit::chk(_infoMove.status, DIGIT::MOVE::FLOAT))
+		return;
+
+	gDigit::put(_infoMove.status, DIGIT::MOVE::FLOAT);
+	gDigit::pick(_infoMove.status, DIGIT::MOVE::LAND);
+
+	_infoMove.velVertical = 1.0f;
 }
 
 void characterBase::setController(controllerBase * input)

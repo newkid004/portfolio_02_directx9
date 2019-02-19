@@ -47,6 +47,8 @@ public :
 	// 외적 이동 : world always
 	void moveBe(D3DXVECTOR3 & direction);
 
+	void jump(void);
+
 public :
 	aStar_node* &		getPlacedNode(void)		{ return _placedNode; }
 	weaponBase* &		getWeapon(void)			{ return _weapon; }
