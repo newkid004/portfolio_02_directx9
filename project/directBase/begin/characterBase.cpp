@@ -285,15 +285,20 @@ void characterBase::moveByCollision(staticMesh * wall)
 	}
 }
 
-void characterBase::moveDo(D3DXVECTOR3 & direction)
+void characterBase::moveDo(int direction)
 {
+	if (direction == 0) return;
+
 	gDigit::put(_infoMove.status, DIGIT::MOVE::MOVEING);
 
 	float nowSpeed = _infoMove.getSpeedXZ();
 
 	D3DXVECTOR3 moveDirection(0.0f, 0.0f, 0.0f);
-	moveDirection += _directionRight	* direction.x;
-	moveDirection += _directionForward	* direction.z;
+	if (gDigit::chk(direction, DIGIT::KEY::W))	moveDirection += _directionForward;
+	if (gDigit::chk(direction, DIGIT::KEY::S))	moveDirection -= _directionForward;
+	if (gDigit::chk(direction, DIGIT::KEY::A))	moveDirection -= _directionRight;
+	if (gDigit::chk(direction, DIGIT::KEY::D))	moveDirection += _directionRight;
+
 	D3DXVec3Normalize(&moveDirection, &moveDirection);
 
 	// 최대속도 넘김

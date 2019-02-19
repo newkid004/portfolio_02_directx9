@@ -8,7 +8,7 @@
 class weaponManager : public singletonBase<weaponManager>
 {
 public:
-	static enum class weaponType
+	enum class weaponType
 	{
 		rifle = 0,
 		shotgun = 1,

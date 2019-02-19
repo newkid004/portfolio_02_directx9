@@ -16,7 +16,7 @@ class eventManager
 private:
 
 	M_EVENT_CATCHER			m_stEventCatcher;
-	std::list<eventBase*>	m_stEventList;
+	std::vector<eventBase*>	m_stEventList;
 
 public:
 

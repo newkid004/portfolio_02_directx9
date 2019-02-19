@@ -11,6 +11,7 @@ public:
 	virtual void drawUI(void)	override;
 
 private :
+	void initResource(void);
 	void initSystem(void);
 	void initEvent(void);
 	

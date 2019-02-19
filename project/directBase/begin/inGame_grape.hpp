@@ -4,6 +4,8 @@
 #include "managerList.h"
 #include "gFunc.h"
 
+#include "inGame_node.h"
+
 #include "characterBase.h"
 
 template<typename T>

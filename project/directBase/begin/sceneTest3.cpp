@@ -42,15 +42,15 @@ void sceneTest3::update(void)
 {
 	sceneBase::update();
 	
-	D3DXVECTOR3 dirMove(0, 0, 0);
+	int dirMove = 0;
 
-	if (MN_KEY->keyDown(DIK_UP))		dirMove.z += 1.0f;
-	if (MN_KEY->keyDown(DIK_DOWN))		dirMove.z -= 1.0f;
-	if (MN_KEY->keyDown(DIK_LEFT))		dirMove.x -= 1.0f;
-	if (MN_KEY->keyDown(DIK_RIGHT))		dirMove.x += 1.0f;
+	if (MN_KEY->keyDown(DIK_UP))		gDigit::put(dirMove, DIGIT::KEY::W);
+	if (MN_KEY->keyDown(DIK_DOWN))		gDigit::put(dirMove, DIGIT::KEY::S);
+	if (MN_KEY->keyDown(DIK_LEFT))		gDigit::put(dirMove, DIGIT::KEY::A);
+	if (MN_KEY->keyDown(DIK_RIGHT))		gDigit::put(dirMove, DIGIT::KEY::D);
 	if (MN_KEY->keyPress(DIK_SPACE))	_char->jump();
 
-	if (dirMove.x || dirMove.z)
+	if (dirMove)
 		_char->moveDo(dirMove);
 
 	_char->update();

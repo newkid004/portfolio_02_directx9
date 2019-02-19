@@ -43,7 +43,7 @@ private :
 
 public :
 	// 주체 이동 : local always
-	void moveDo(D3DXVECTOR3 & direction);
+	void moveDo(int direction);
 
 	// 외적 이동 : world always
 	void moveBe(D3DXVECTOR3 & direction);

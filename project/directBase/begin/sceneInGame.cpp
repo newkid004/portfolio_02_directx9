@@ -1,23 +1,42 @@
 #include "sceneInGame.h"
+
+#include "managerList.h"
+
+#include "sceneBase.h"
+#include "debugGrid.h"
+
+#include "inGameCamera.h"
+#include "inGame_field.h"
+#include "inGame_grape.h"
+
 #include "eventCatcher.h"
 #include "eventBase.h"
+
+#include "patternMesh.h"
 #include "characterBase.h"
-#include "managerList.h"
+#include "player.h"
 
 void sceneInGame::init(void)
 {
 	sceneBase::init();
+
+	initResource();
+	initSystem();
 	initEvent();
 }
 
 void sceneInGame::update(void)
 {
 	sceneBase::update();
+
+	SGT_GAME->update();
 }
 
 void sceneInGame::draw(void)
 {
 	sceneBase::draw();
+
+	SGT_GAME->draw();
 }
 
 void sceneInGame::drawUI(void)
@@ -25,8 +44,25 @@ void sceneInGame::drawUI(void)
 	sceneBase::drawUI();
 }
 
+void sceneInGame::initResource(void)
+{
+	patternMesh::mParam param;
+	param.effectFilePath = "resource/effect/Survivor.fx";
+	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";
+
+	MN_SRC->getPatternMesh("test", &param);
+}
+
 void sceneInGame::initSystem(void)
 {
+	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
+
+	SAFE_DELETE(_camera);
+	SAFE_DELETE(_grid);
+
+	_camera = new inGameCamera(pCharacter);
+
+	SGT_GAME->getSet().field->getMember().grape->putData(pCharacter, 3, pCharacter->getPosition(), pCharacter->getInfoCharacter().colRadius);
 }
 
 void sceneInGame::initEvent(void)
