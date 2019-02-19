@@ -13,6 +13,7 @@ public:
 private :
 	void initSystem(void);
 	void initEvent(void);
+	
 
 public:
 	sceneInGame() {};

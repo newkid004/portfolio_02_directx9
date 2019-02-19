@@ -17,6 +17,6 @@ protected:
 
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]) override;
 public:
-	weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage);
+	weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage = 3);
 	virtual ~weaponRifle();
 };

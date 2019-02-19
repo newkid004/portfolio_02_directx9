@@ -6,7 +6,8 @@ class skinnedMesh;
 class staticMesh;
 class mapObject;
 class boxObject;
-class bulletManager;
+class bulletBase;
+class skyBox;
 
 class sceneCollisionTest : public sceneBase
 {
@@ -20,11 +21,9 @@ public:
 private:
 
 	skinnedMesh* m_pSkinnedMesh[10];
-	staticMesh* m_pObjectMesh;
 	boxObject* m_pBoxObject = nullptr;
 	mapObject* m_pMapObject = nullptr;
-	bulletManager* m_pBulletManager = nullptr;
-	LPD3DXMESH m_pSphereMesh = nullptr;
+	skyBox* m_pSkybox = nullptr;
 
 	int m_nAnimationIndex = 0;
 
@@ -40,14 +39,13 @@ private:
 	void initEvent(void);
 	void updateControl(void);
 	//void collisionListSort(void);
+	bool collisionNew(void);
 	bool collisionCheck(void);
 	bool collisionCheck2(void);
 
 private:
 	skinnedMesh* createZombieMesh(ECharacterType characterType = ECharacterType::NONE);
-	staticMesh* createObjectMesh(void);
-	LPD3DXMESH createSphereMesh(void);
-
+	skyBox* createSkybox(void);
 public:
 	sceneCollisionTest() {};
 	~sceneCollisionTest();

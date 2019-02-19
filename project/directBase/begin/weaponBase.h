@@ -16,7 +16,6 @@ public :
 	using bulletBase = viewDefBullet;
 
 protected :
-	bulletBase*					_bindBullet = nullptr;	// delete : disable (bulletManager)
 	characterBase*				_bindPMesh = nullptr;
 
 	D3DXMATRIXA16	_baseMatrix[2];
@@ -57,7 +56,6 @@ public :
 	bool needReload(void);
 
 public :
-	bulletBase* &	getBindBullet(void) { return _bindBullet; }
 	weapon_set &	getInfoWeapon(void) { return _infoWeapon; }
 
 public:

@@ -11,6 +11,7 @@ public:
 		B_RIFLE,
 		B_SHOTGUN,
 		B_FIST,
+
 		NONE
 	};
 
@@ -18,6 +19,7 @@ protected:
 
 	float _speed;
 
+	D3DXVECTOR3 _shootOrigin;
 	D3DXVECTOR3 _intersect;
 	pick::ray _ray;
 	EBulletType _type;
@@ -33,7 +35,7 @@ public:
 	void setRay(const D3DXVECTOR3 & origin, const D3DXVECTOR3 & direction);
 
 	float & getSpeed(void) { return _speed; }
-	pick::ray getRay(void) { return _ray; }
+	pick::ray & getRay(void) { return _ray; }
 	D3DXVECTOR3 & getIntersect(void) { return _intersect; }
 
 

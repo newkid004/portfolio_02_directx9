@@ -586,6 +586,12 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\weapon\test">
       <UniqueIdentifier>{18542d1e-c790-494b-b178-18e11dbb5c66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\manager\common\weapon">
+      <UniqueIdentifier>{82bd1cf4-e68a-43a9-9c95-ee6e4697895e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="classes\global\utility\manager\common\bullet">
+      <UniqueIdentifier>{d70a696b-a6f7-4667-b96f-8cf628cf9f52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -939,12 +945,6 @@
     <ClInclude Include="enemyBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy</Filter>
     </ClInclude>
-    <ClInclude Include="bullet.h">
-      <Filter>main\classes\collision\test</Filter>
-    </ClInclude>
-    <ClInclude Include="bulletManager.h">
-      <Filter>main\classes\collision\test</Filter>
-    </ClInclude>
     <ClInclude Include="charaterArea.h">
       <Filter>classes\global\utility\debug\area</Filter>
     </ClInclude>
@@ -1002,9 +1002,6 @@
     <ClInclude Include="fistBullet.h">
       <Filter>main\classes\collision\bullet\object</Filter>
     </ClInclude>
-    <ClInclude Include="bulletManage.h">
-      <Filter>main\classes\collision\bullet</Filter>
-    </ClInclude>
     <ClInclude Include="triggerShotGun.h">
       <Filter>main\classes\scene\02_inGame\classes\object\trigger\shotGun</Filter>
     </ClInclude>
@@ -1022,6 +1019,12 @@
     </ClInclude>
     <ClInclude Include="weaponTest.h">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\test</Filter>
+    </ClInclude>
+    <ClInclude Include="weaponManager.h">
+      <Filter>classes\global\utility\manager\common\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>classes\global\utility\manager\common\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1292,12 +1295,6 @@
     <ClCompile Include="weaponBase.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\_base</Filter>
     </ClCompile>
-    <ClCompile Include="bullet.cpp">
-      <Filter>main\classes\collision\test</Filter>
-    </ClCompile>
-    <ClCompile Include="bulletManager.cpp">
-      <Filter>main\classes\collision\test</Filter>
-    </ClCompile>
     <ClCompile Include="charaterArea.cpp">
       <Filter>classes\global\utility\debug\area</Filter>
     </ClCompile>
@@ -1370,9 +1367,6 @@
     <ClCompile Include="bulletBase.cpp">
       <Filter>main\classes\collision\bullet\_base</Filter>
     </ClCompile>
-    <ClCompile Include="bulletManage.cpp">
-      <Filter>main\classes\collision\bullet</Filter>
-    </ClCompile>
     <ClCompile Include="fistBullet.cpp">
       <Filter>main\classes\collision\bullet\object</Filter>
     </ClCompile>
@@ -1387,6 +1381,12 @@
     </ClCompile>
     <ClCompile Include="weaponTest.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\test</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponManager.cpp">
+      <Filter>classes\global\utility\manager\common\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>classes\global\utility\manager\common\bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

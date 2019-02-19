@@ -5,7 +5,6 @@ using namespace std;
 
 class sound;
 class skinnedMesh;
-class skinnedMeshDup;
 
 class resourceManager
 {

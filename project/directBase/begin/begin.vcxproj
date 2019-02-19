@@ -172,8 +172,6 @@
     <ClInclude Include="AnimationTester.h" />
     <ClInclude Include="baseObject.h" />
     <ClInclude Include="boxObject.h" />
-    <ClInclude Include="bullet.h" />
-    <ClInclude Include="bulletManage.h" />
     <ClInclude Include="bulletManager.h" />
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="buttonItem.h" />
@@ -285,6 +283,7 @@
     <ClInclude Include="wallCollision.h" />
     <ClInclude Include="weaponBase.h" />
     <ClInclude Include="weaponHealkit.h" />
+    <ClInclude Include="weaponManager.h" />
     <ClInclude Include="weaponNormal.h" />
     <ClInclude Include="weaponRifle.h" />
     <ClInclude Include="weaponShotgun.h" />
@@ -315,9 +314,7 @@
     <ClCompile Include="aStar_runner.cpp" />
     <ClCompile Include="baseObject.cpp" />
     <ClCompile Include="boxObject.cpp" />
-    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="bulletBase.cpp" />
-    <ClCompile Include="bulletManage.cpp" />
     <ClCompile Include="bulletManager.cpp" />
     <ClCompile Include="buttonBase.cpp" />
     <ClCompile Include="buttonItem.cpp" />
@@ -413,6 +410,7 @@
     <ClCompile Include="wallCollision.cpp" />
     <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="weaponHealkit.cpp" />
+    <ClCompile Include="weaponManager.cpp" />
     <ClCompile Include="weaponNormal.cpp" />
     <ClCompile Include="weaponRifle.cpp" />
     <ClCompile Include="weaponShotgun.cpp" />

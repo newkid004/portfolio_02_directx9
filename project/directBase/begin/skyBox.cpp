@@ -34,20 +34,20 @@ void skyBox::drawDo(void)
 	renderObject::drawDo();
 
 	// 행렬
-	D3DXVECTOR3 cameraPos = GET_CAMERA()->getOffsetPosition() / 10.0f;
-	D3DXMATRIXA16 mScale, mTranslate, mWorld;
-	D3DXMatrixScaling(&mScale, 10.0f, 10.0f, 10.0f);
+	D3DXVECTOR3 cameraPos = GET_CAMERA()->getPosition();
+	D3DXMATRIXA16 mTranslate, mWorld;
 	D3DXMatrixTranslation(&mTranslate, cameraPos.x, cameraPos.y, cameraPos.z);
-	mWorld = mScale * mTranslate;
+	mWorld = mTranslate;
 
+	//mWorld = this->getMatrixFinal();
 	_effect->SetMatrix("_mWorld", &mWorld);
 	_effect->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
 	_effect->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());
 
 	// 텍스쳐
-	_effect->SetTexture("_textureCube", _textureCube);
+	_effect->SetTexture("g_pCubeTexture", _textureCube);
 
-	gFunc::runEffectLoop(_effect, "skyboxTechnique", [&](int numPass)->void {
+	gFunc::runEffectLoop(_effect, "SkyboxTechnique", [&](int numPass)->void {
 		_mesh->DrawSubset(0);
 	});
 }
@@ -68,7 +68,7 @@ LPD3DXMESH skyBox::createMesh(void)
 
 	D3DXCreateSphere(
 		MN_DEV,
-		0.5f,
+		250.0f,
 		50, 50,
 		&result,
 		&bufAdjacency);

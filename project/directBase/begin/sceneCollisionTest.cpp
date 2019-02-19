@@ -13,7 +13,8 @@
 #include "staticMesh.h"
 #include "boxObject.h"
 #include "mapObject.h"
-#include "bulletManager.h"
+#include "bulletBase.h"
+#include "skyBox.h"
 
 #define ZOMBIE_NUM 1
 #define FLAGPOSITION 0.16 / 1015.227
@@ -31,9 +32,7 @@ sceneCollisionTest::~sceneCollisionTest()
 	}
 
 	SAFE_DELETE(m_pMapObject);
-	SAFE_DELETE(m_pBulletManager);
-
-	SAFE_RELEASE(m_pSphereMesh);
+	SAFE_DELETE(m_pSkybox);
 }
 
 void sceneCollisionTest::init(void)
@@ -72,9 +71,8 @@ void sceneCollisionTest::init(void)
 		m_pSkinnedMesh[i]->rotateZ(180, true);
 
 	}
+	m_pSkybox = this->createSkybox();
 
-	m_pBulletManager = new bulletManager;
-	
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject = new mapObject;
 	m_pMapObject->init();
@@ -101,10 +99,10 @@ void sceneCollisionTest::update(void)
 		
 		//gFunc::obj2bound(m_pSkinnedMesh[i]->getObjectBox(),)
 	}
-	collisionCheck();
-	collisionCheck2();
-	m_pBulletManager->update();
-
+	//collisionCheck();
+	//collisionCheck2();
+	collisionNew();
+	m_pSkybox->update();
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->update();
 #else
@@ -123,8 +121,8 @@ void sceneCollisionTest::draw(void)
 	D3DXMATRIXA16 stWorld;
 	D3DXMatrixIdentity(&stWorld);
 
-	m_pBulletManager->draw();
-
+	MN_BULLET->draw();
+	//m_pSkybox->draw();
 #if DEBUG_TYPE == DEBUG_TYPE_MAP
 	m_pMapObject->draw();
 #else
@@ -200,87 +198,100 @@ void sceneCollisionTest::updateControl(void)
 	{
 		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 
-		m_pBulletManager->addBullet(stRay.origin, stRay.direction, 1);
+		MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_RIFLE);
+	}
+	if (MN_KEY->keyPress(DIK_SPACE))
+	{
+		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+
+		MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_SHOTGUN);
+	}
+	if (MN_KEY->keyPress(DIK_V))
+	{
+		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+
+		MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_FIST);
 	}
 }
 
-//void sceneCollisionTest::collisionListSort(void)
-//{
-//	auto vBullet = m_pBulletManager->getBulletList();
-//
-//
-//	for (int j = 0; j < vBullet.size(); j++)
-//	{
-//		D3DXVECTOR3 intersect;
-//		float distance1 = 0;
-//		float distance2 = 0;
-//
-//		for (int i = 0; i < ZOMBIE_NUM; i++)
-//		{
-//			auto mBoundBoxSet = m_pSkinnedMesh[i]->getBoundingBoxSetList();
-//			auto mBoundSphereSet = m_pSkinnedMesh[i]->getBoundingSphereSetList();
-//			auto mSphere = m_pSkinnedMesh[i]->getBoundingSphere();
-//			if (pick::chkPick(&vBullet[j]->getPickRay(), &mSphere))
-//			{
-//				if (pick::isLine2Sphere(&vBullet[j]->getPickRay(), &intersect, vBullet[j]->getSpeed(),
-//					mSphere))
-//				{
-//					distance1 = gFunc::Vec3Distance(vBullet[j]->getPickRay().origin, intersect);
-//					m_vCollisionList.push_back(1);
-//				}
-//			}
-//			
-//		}
-//
-//		auto sphere = m_pBoxObject->getBoundingSphere();
-//		m_pBoxObject->getBoundingSphereFinal(&sphere);
-//
-//		if (pick::chkPick(&vBullet[j]->getPickRay(), &sphere))
-//		{
-//			if (pick::isLine2Sphere(&vBullet[j]->getPickRay(), &vBullet[j]->getPosition(), vBullet[j]->getSpeed(), sphere))
-//			{
-//				pick::info info;
-//				pick::applyMatrix(&vBullet[j]->getPickRay(), &vBullet[j]->getPickRay(), &m_pBoxObject->getMatrixFinal());
-//				if (pick::chkPick(&info, &vBullet[j]->getPickRay(), m_pBoxObject->getMesh()))
-//				{
-//					distance2 = info.distance;
-//					m_vCollisionList.push_back(2);
-//				}
-//			}
-//		}
-//		if (m_vCollisionList.size() > 0)
-//		{
-//			if (m_vCollisionList.size() == 2)
-//			{
-//				if (distance1 < distance2)
-//				{
-//					collisionCheck(j);
-//				}
-//				else
-//				{
-//					collisionCheck2(j);
-//				}
-//			}
-//			else
-//			{
-//				if (m_vCollisionList[0] == 1)
-//				{
-//					collisionCheck(j);
-//				}
-//				else
-//				{
-//					collisionCheck2(j);
-//				}
-//			}
-//			
-//		}
-//		m_vCollisionList.clear();
-//	}
-//}
+bool sceneCollisionTest::collisionNew(void)
+{
+	auto vGunBullet = MN_BULLET->getGunBulletList();
+	auto vFistBullet = MN_BULLET->getFistBulletList();
+	//auto sphere = m_pBoxObject->getBoundingSphere();
+	//m_pBoxObject->getBoundingSphereFinal(&sphere);
+	auto box = m_pBoxObject->getBoundingBoxList();
+	m_pBoxObject->getBoundingBoxFinal(&box[0]);
+
+	//for (int index = 0; index < vGunBullet.size(); index++)
+	//{
+	//	if (pick::isLine2Box(&vGunBullet[index]->getRay(), vGunBullet[index]->getSpeed(), box[0]))
+	//	{
+	//		pick::info info;
+	//		pick::applyMatrix(&vGunBullet[index]->getRay(), &vGunBullet[index]->getRay(), &m_pBoxObject->getMatrixFinal());
+	//		if (pick::chkPick(&info, &vGunBullet[index]->getRay(), m_pBoxObject->getMesh()))
+	//		{
+	//			//printf("충돌!! %d\n", rand() % 100);
+	//
+	//			D3DXMATRIXA16 matrix = m_pBoxObject->getMatrixFinal();
+	//			D3DXMatrixInverse(&matrix, NULL, &matrix);
+	//			pick::applyMatrix(&vGunBullet[index]->getRay(), &vGunBullet[index]->getRay(), &matrix);
+	//			D3DXVECTOR3 intersect = vGunBullet[index]->getRay().origin + info.distance * vGunBullet[index]->getRay().direction;
+	//			//m_pBulletManager->setPosition(index,
+	//			//	intersect,
+	//			//	false);
+	//			printf("충돌!! %d, intersect point : %f, %f, %f\n", rand() % 100,
+	//				intersect.x, intersect.y, intersect.z);
+	//			//stopBulletList.push_back(index);
+	//			MN_BULLET->eraseGunBullet(index);
+	//
+	//			return true;
+	//		}
+	//	}
+	//}
+
+	for (int i = 0; i < vFistBullet.size(); i++)
+	{
+		//if (pick::isLine2Box(&vFistBullet[i]->getRay(), vFistBullet[i]->getSpeed(), box[0]))
+		//{
+			for (int j = 0; j < ZOMBIE_NUM; j++)
+			{
+				auto mBoundBoxSet = m_pSkinnedMesh[j]->getBoundingBoxSetList();
+				auto mBoundSphereSet = m_pSkinnedMesh[j]->getBoundingSphereSetList();
+				auto mSphere = m_pSkinnedMesh[j]->getBoundingSphere();
+				D3DXVECTOR3 intersect;
+				D3DXVECTOR3 intersect2;
+				if (pick::isLine2Sphere(&vFistBullet[i]->getRay(), &intersect,
+					vFistBullet[i]->getSpeed(), mSphere))
+				{
+					for (auto rValue : mBoundSphereSet)
+					{
+						auto sphere = rValue.second.sphere;
+						sphere.center = rValue.second.drawPosition;
+						sphere.radius *= m_pSkinnedMesh[j]->getScale().x;
+
+						if (pick::isLine2Sphere(&vFistBullet[i]->getRay(), &intersect2,
+							vFistBullet[i]->getSpeed(), sphere))
+						{
+							printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
+							//printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
+							
+							//printf("충돌!! %d\n", rand() % 100);
+							MN_BULLET->eraseFistBullet(i);
+							//return true;
+						}
+					}
+				}
+
+			}
+		//}
+	}
+	return false;
+}
 
 bool sceneCollisionTest::collisionCheck(void)
 {
-	auto vBullet = m_pBulletManager->getBulletList();
+	auto vBullet = MN_BULLET->getGunBulletList();
 
 	for (int i = 0; i < vBullet.size(); i++)
 	{
@@ -291,7 +302,7 @@ bool sceneCollisionTest::collisionCheck(void)
 			auto mSphere = m_pSkinnedMesh[j]->getBoundingSphere();
 			D3DXVECTOR3 intersect;
 			D3DXVECTOR3 intersect2;
-			if (pick::isLine2Sphere(&vBullet[i]->getPickRay(), &intersect,
+			if (pick::isLine2Sphere(&vBullet[i]->getRay(), &intersect,
 				vBullet[i]->getSpeed(), mSphere))
 			{
 				for (auto rValue : mBoundSphereSet)
@@ -300,20 +311,16 @@ bool sceneCollisionTest::collisionCheck(void)
 					sphere.center = rValue.second.drawPosition;
 					sphere.radius *= m_pSkinnedMesh[j]->getScale().x;
 
-					if (pick::isLine2Sphere(&vBullet[i]->getPickRay(), &intersect2,
+					if (pick::isLine2Sphere(&vBullet[i]->getRay(), &intersect2,
 						vBullet[i]->getSpeed(), sphere))
 					{
-						if (!vBullet[i]->getOnOff())
-						{
-							continue;
-						}
 						printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
 						//printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
-						m_pBulletManager->setPosition(i,
-							intersect2,
-							false);
-						stopBulletList.push_back(i);
-						m_pBulletManager->setPosition(i, intersect2, false);
+						//m_pBulletManager->setPosition(i,
+						//	intersect2,
+						//	false);
+						//stopBulletList.push_back(i);
+						//m_pBulletManager->setPosition(i, intersect2, false);
 						//m_pBulletManager->deleteBullet(i);
 						//return true;
 					}
@@ -328,7 +335,7 @@ bool sceneCollisionTest::collisionCheck(void)
 
 bool sceneCollisionTest::collisionCheck2(void)
 {
-	auto vBullet = m_pBulletManager->getBulletList();
+	auto vBullet = MN_BULLET->getGunBulletList();
 	//auto sphere = m_pBoxObject->getBoundingSphere();
 	//m_pBoxObject->getBoundingSphereFinal(&sphere);
 	auto box = m_pBoxObject->getBoundingBoxList();
@@ -336,37 +343,35 @@ bool sceneCollisionTest::collisionCheck2(void)
 	
 	for (int index = 0; index < vBullet.size(); index++)
 	{
-		//if (pick::isLine2Sphere(&vBullet[index]->getPickRay(), &vBullet[index]->getPosition(), vBullet[index]->getSpeed(), sphere))
+		//if (pick::isLine2Sphere(&vBullet[index]->getRay(), &vBullet[index]->getPosition(), vBullet[index]->getSpeed(), sphere))
 		//{
 
-		if (pick::isLine2Box(&vBullet[index]->getPickRay(), vBullet[index]->getSpeed(), box[0]))
+		if (pick::isLine2Box(&vBullet[index]->getRay(), vBullet[index]->getSpeed(), box[0]))
 		{
 			pick::info info;
-			pick::applyMatrix(&vBullet[index]->getPickRay(), &vBullet[index]->getPickRay(), &m_pBoxObject->getMatrixFinal());
-			if (pick::chkPick(&info, &vBullet[index]->getPickRay(), m_pBoxObject->getMesh()))
+			pick::applyMatrix(&vBullet[index]->getRay(), &vBullet[index]->getRay(), &m_pBoxObject->getMatrixFinal());
+			if (pick::chkPick(&info, &vBullet[index]->getRay(), m_pBoxObject->getMesh()))
 			{
-				if (!vBullet[index]->getOnOff())
-				{
-					continue;
-				}
-				//printf("충돌!! %d\n", rand() % 100);
-
+				//if (!vBullet[index]->getOnOff())
+				//{
+				//	continue;
+				//}
+				////printf("충돌!! %d\n", rand() % 100);
+		
 				D3DXMATRIXA16 matrix = m_pBoxObject->getMatrixFinal();
 				D3DXMatrixInverse(&matrix, NULL, &matrix);
-				pick::applyMatrix(&vBullet[index]->getPickRay(), &vBullet[index]->getPickRay(), &matrix);
-				D3DXVECTOR3 intersect = vBullet[index]->getPickRay().origin + info.distance * vBullet[index]->getPickRay().direction;
-				m_pBulletManager->setPosition(index,
-					intersect,
-					false);
+				pick::applyMatrix(&vBullet[index]->getRay(), &vBullet[index]->getRay(), &matrix);
+				D3DXVECTOR3 intersect = vBullet[index]->getRay().origin + info.distance * vBullet[index]->getRay().direction;
+			
 				printf("충돌!! %d, intersect point : %f, %f, %f\n", rand() % 100,
 					intersect.x, intersect.y, intersect.z);
-				stopBulletList.push_back(index);
+
 				//m_pBulletManager->deleteBullet(index);
 				//return true;
 			}
 		}
 		
-		//}
+	//	}
 	}
 	
 	return false;
@@ -381,21 +386,15 @@ skinnedMesh * sceneCollisionTest::createZombieMesh(ECharacterType characterType)
 	return new skinnedMesh(stParameters, characterType);
 }
 
-staticMesh * sceneCollisionTest::createObjectMesh(void)
+skyBox * sceneCollisionTest::createSkybox(void)
 {
-	staticMesh::mParam stParameters = {
-	"resource/mesh/L4D1/items/uzi.x",
-	"resource/effect/example_16.fx"
+	skyBox::mParam stParameters = {
+		"resource/effect/skybox.fx",
+		"resource/texture/skybox/sky.dds"
 	};
-	return new staticMesh(stParameters);
-}
 
-LPD3DXMESH sceneCollisionTest::createSphereMesh(void)
-{
-	LPD3DXMESH pMesh = nullptr;
+	auto pSkybox = new skyBox(stParameters);
+	pSkybox->setScale(D3DXVECTOR3(500.0f, 500.0f, 500.0f));
 
-	D3DXCreateSphere(MN_DEV,
-		0.1, 10, 10, &pMesh, NULL);
-
-	return pMesh;
+	return pSkybox;
 }
