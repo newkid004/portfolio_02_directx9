@@ -4,6 +4,7 @@
 #include "sound.h"
 
 #include "skinnedMesh.h"
+#include "patternMesh.h"
 #include "patternMeshDup.h"
 #include "animationController.h"
 
@@ -87,7 +88,6 @@ meshSet* resourceManager::createStaticMesh(const string & filePath)
 skinnedMesh* resourceManager::createSkinnedMesh(const string & filePath, void * makeParam)
 {
 	auto mParam = (skinnedMesh::mParam*)makeParam;
-
 	return new skinnedMesh(*mParam);
 }
 
@@ -218,6 +218,12 @@ LPDIRECT3DCUBETEXTURE9 resourceManager::createTextureCube(const string & key)
 	return result;
 }
 
+patternMesh * resourceManager::createPatternMesh(const string & key, void * makeParam)
+{
+	auto mParam = (patternMesh::mParam*)makeParam;
+	return new patternMesh(*mParam);
+}
+
 // ----- add ----- //
 template<typename T> 
 T resourceManager::addSomthing(const string & key, T value, unordered_map<string, T> & table)
@@ -237,51 +243,61 @@ T resourceManager::addSomthing(const string & key, T value, unordered_map<string
 // ----- get ----- //
 meshSet * resourceManager::getStaticMesh(const string & key, bool isAutoCreate)
 {
-	return getSomthing(key, _mStaticMesh, isAutoCreate, (function<meshSet*(void)>)[&]()->auto { return createStaticMesh(key); });
+	return getSomething(key, _mStaticMesh, isAutoCreate, (function<meshSet*(void)>)[&]()->auto { return createStaticMesh(key); });
 }
 
 skinnedMesh * resourceManager::getSkinnedMesh(const string & key, void * makeParam, bool isAutoCreate)
 {
-	return getSomthing(key, _mSkinnedMesh, isAutoCreate, (function<skinnedMesh*(void)>)[&]()->auto { return createSkinnedMesh(key, makeParam); });
+	return getSomething(key, _mSkinnedMesh, isAutoCreate, (function<skinnedMesh*(void)>)[&]()->auto { return createSkinnedMesh(key, makeParam); });
 }
 
 skinnedMesh * resourceManager::getSkinnedMesh(const string & key)
 {
-	return getSomthing(key, _mSkinnedMesh, false, (function<skinnedMesh*(void)>)nullptr);
+	return getSomething(key, _mSkinnedMesh, false, (function<skinnedMesh*(void)>)nullptr);
 }
 
 LPD3DXEFFECT resourceManager::getEffect(const string & key, bool isAutoCreate)
 {
-	return getSomthing(key, _mEffect, isAutoCreate, (function<LPD3DXEFFECT(void)>)[&]()->auto { return createEffect(key); });
+	return getSomething(key, _mEffect, isAutoCreate, (function<LPD3DXEFFECT(void)>)[&]()->auto { return createEffect(key); });
 }
 
 LPDIRECT3DTEXTURE9 resourceManager::getTexture(const string & key, bool isAutoCreate)
 {
-	return getSomthing(key, _mTexture, isAutoCreate, (function<LPDIRECT3DTEXTURE9(void)>)[&]()->auto { return createTexture(key); });
+	return getSomething(key, _mTexture, isAutoCreate, (function<LPDIRECT3DTEXTURE9(void)>)[&]()->auto { return createTexture(key); });
 }
 
 LPDIRECT3DTEXTURE9 resourceManager::getSpriteTexture(const string & key, bool isAutoCreate)
 {
-	return getSomthing(key, _mTexture, isAutoCreate, (function<LPDIRECT3DTEXTURE9(void)>)[&]()->auto { return createSpriteTexture(key); });
+	return getSomething(key, _mTexture, isAutoCreate, (function<LPDIRECT3DTEXTURE9(void)>)[&]()->auto { return createSpriteTexture(key); });
 }
 
 sound * resourceManager::getSoundBGM(const string & key, bool isAutoCreate)
 {
-	return getSomthing(key, _mSound, isAutoCreate, (function<sound*(void)>)[&]()->auto { sound* c = createSound(key, true); return c; });
+	return getSomething(key, _mSound, isAutoCreate, (function<sound*(void)>)[&]()->auto { sound* c = createSound(key, true); return c; });
 }
 
 sound * resourceManager::getSoundSE(const string & key, bool isAutoCreate)
 {
-	return getSomthing(key, _mSound, isAutoCreate, (function<sound*(void)>)[&]()->auto { sound* c = createSound(key, false); return c; });
+	return getSomething(key, _mSound, isAutoCreate, (function<sound*(void)>)[&]()->auto { sound* c = createSound(key, false); return c; });
 }
 
 LPDIRECT3DCUBETEXTURE9 resourceManager::getTextureCube(const string & key, bool isAutoCreate)
 {
-	return getSomthing(key, _mTextureCube, isAutoCreate, (function<LPDIRECT3DCUBETEXTURE9(void)>)[&]()->auto { return createTextureCube(key); });
+	return getSomething(key, _mTextureCube, isAutoCreate, (function<LPDIRECT3DCUBETEXTURE9(void)>)[&]()->auto { return createTextureCube(key); });
+}
+
+patternMesh * resourceManager::getPatternMesh(const string & key, void * makeParam, bool isAutoCreate)
+{
+	return getSomething(key, _mPatternMesh, isAutoCreate, (function<patternMesh*(void)>)[&]()->auto { return createPatternMesh(key, makeParam); });
+}
+
+patternMesh * resourceManager::getPatternMesh(const string & key)
+{
+	return getSomething(key, _mPatternMesh, false, (function<patternMesh*(void)>)nullptr);
 }
 
 template<typename T> 
-T resourceManager::getSomthing(const string & key, unordered_map<string, T> & table, bool isAutoCreate, function<T(void)> creater)
+T resourceManager::getSomething(const string & key, unordered_map<string, T> & table, bool isAutoCreate, function<T(void)> creater)
 {
 	auto iter = table.find(key);
 

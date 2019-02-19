@@ -39,9 +39,10 @@ void direct3dApplication::init(void)
 
 void direct3dApplication::update(void)
 {
-	_camera->update();
-	_frustum->update();
-	_grid->update();
+	if (_camera)	_camera->update();
+	if (_frustum)	_frustum->update();
+	if (_grid)		_grid->update();
+
 	_light->update();
 	_label->update();
 
@@ -50,8 +51,8 @@ void direct3dApplication::update(void)
 }
 void direct3dApplication::draw(void)
 {
-	_camera->draw();
-	_grid->draw();
+	if(_camera)	_camera->draw();
+	if (_grid)	_grid->draw();
 }
 
 void direct3dApplication::drawUI(void)

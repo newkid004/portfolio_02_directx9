@@ -188,6 +188,7 @@
     <ClInclude Include="gameSystem.h" />
     <ClInclude Include="gDigit.h" />
     <ClInclude Include="gunBullet.h" />
+    <ClInclude Include="inGameCamera.h" />
     <ClInclude Include="inGame_field.h" />
     <ClInclude Include="inGame_grape.h" />
     <ClInclude Include="inGame_grape.hpp" />
@@ -331,6 +332,7 @@
     <ClCompile Include="gDigit.cpp" />
     <ClCompile Include="charaterArea.cpp" />
     <ClCompile Include="gunBullet.cpp" />
+    <ClCompile Include="inGameCamera.cpp" />
     <ClCompile Include="inGame_field.cpp" />
     <ClCompile Include="inGame_io.cpp" />
     <ClCompile Include="inGame_node.cpp" />

@@ -20,16 +20,16 @@ void mainGame::init(void)
 
 	/*/	// current save
 	MN_SCENE->add("sceneMapTool", new sceneMapTool());
-	MN_SCENE->add("sceneInGame", new sceneInGame());
 
 	/*/	// current
+	MN_SCENE->add("sceneInGame", new sceneInGame());
 
 	/*/ // test complete
 	MN_SCENE->add("scene1", new sceneTest1);			// json
 	MN_SCENE->add("scene2", new sceneTest2);			// a* node
+	MN_SCENE->add("scene3", new sceneTest3);			// character
 
 	/*/ // test current
-	MN_SCENE->add("scene3", new sceneTest3);			// character
 
 	/*/ // test save
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
@@ -40,7 +40,7 @@ void mainGame::init(void)
 
 	//*/
 
-	MN_SCENE->change("scene3");
+	MN_SCENE->change("sceneInGame");
 }
 
 void mainGame::update(void)

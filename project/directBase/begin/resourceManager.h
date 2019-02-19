@@ -5,16 +5,22 @@ using namespace std;
 
 class sound;
 class skinnedMesh;
+class patternMesh;
 
 class resourceManager
 {
 private :
-	unordered_map<string, LPD3DXEFFECT> _mEffect;
-	unordered_map<string, LPDIRECT3DTEXTURE9> _mTexture;
-	unordered_map<string, meshSet*> _mStaticMesh;
-	unordered_map<string, skinnedMesh*> _mSkinnedMesh;
-	unordered_map<string, sound*> _mSound;
-	unordered_map<string, LPDIRECT3DCUBETEXTURE9> _mTextureCube;
+	template<typename T>
+	using strMap = std::unordered_map<std::string, T>;
+
+private :
+	strMap<LPD3DXEFFECT>			_mEffect;
+	strMap<LPDIRECT3DTEXTURE9>		_mTexture;
+	strMap<meshSet*>				_mStaticMesh;
+	strMap<skinnedMesh*>			_mSkinnedMesh;
+	strMap<sound*>					_mSound;
+	strMap<LPDIRECT3DCUBETEXTURE9>	_mTextureCube;
+	strMap<patternMesh*>			_mPatternMesh;
 
 public :
 	// ----- create ----- //
@@ -25,6 +31,7 @@ public :
 	LPDIRECT3DTEXTURE9		createSpriteTexture(const string & key);
 	sound*					createSound(const string & key, bool isBGM = true);
 	LPDIRECT3DCUBETEXTURE9	createTextureCube(const string & key);
+	patternMesh*			createPatternMesh(const string & key, void* makeParam);
 
 public :
 	// ----- add ----- //
@@ -35,7 +42,9 @@ public :
 	LPDIRECT3DTEXTURE9		addSpriteTexture(const string & key, LPDIRECT3DTEXTURE9 value)		{ return addSomthing(key, value, _mTexture); }
 	sound*					addSound(const string & key, sound* value)							{ return addSomthing(key, value, _mSound); }
 	LPDIRECT3DCUBETEXTURE9	addTextureCube(const string & key, LPDIRECT3DCUBETEXTURE9 value)	{ return addSomthing(key, value, _mTextureCube); }
+	patternMesh*			addPatternMesh(const string & key, patternMesh* value)				{ return addSomthing(key, value, _mPatternMesh); }
 
+private :
 	template<typename T> T	addSomthing(const string & key, T value, unordered_map<string, T> & table);
 
 public :
@@ -49,8 +58,11 @@ public :
 	sound*					getSoundBGM(const string & key, bool isAutoCreate = true);
 	sound*					getSoundSE(const string & key, bool isAutoCreate = true);
 	LPDIRECT3DCUBETEXTURE9	getTextureCube(const string & key, bool isAutoCreate = true);
+	patternMesh*			getPatternMesh(const string & key, void* makeParam, bool isAutoCreate = true);
+	patternMesh*			getPatternMesh(const string & key);
 
-	template<typename T> T	getSomthing(const string & key, unordered_map<string, T> & table, bool isAutoCreate, function<T(void)> creater);
+private :
+	template<typename T> T	getSomething(const string & key, unordered_map<string, T> & table, bool isAutoCreate, function<T(void)> creater);
 
 public :	// ----- ΩÃ±€≈Ê ----- //
 	DECLARE_SINGLETON(resourceManager);

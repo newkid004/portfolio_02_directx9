@@ -592,6 +592,9 @@
     <Filter Include="classes\global\utility\manager\common\bullet">
       <UniqueIdentifier>{d70a696b-a6f7-4667-b96f-8cf628cf9f52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\camera">
+      <UniqueIdentifier>{7b323458-0760-4fb3-b90d-59aa2a8a007d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1026,6 +1029,9 @@
     <ClInclude Include="bulletManager.h">
       <Filter>classes\global\utility\manager\common\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="inGameCamera.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1387,6 +1393,9 @@
     </ClCompile>
     <ClCompile Include="bulletManager.cpp">
       <Filter>classes\global\utility\manager\common\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="inGameCamera.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
