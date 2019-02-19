@@ -17,7 +17,7 @@ protected :
 public :
 	virtual void update(void);
 
-private :
+protected :
 	void updatePlace(void);
 	void updatePath(void);
 	void updateFootPrint(void);

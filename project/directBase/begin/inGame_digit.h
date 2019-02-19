@@ -2,6 +2,14 @@
 
 struct inGame_digit
 {
+	struct KEY
+	{
+		const static int W			= 1 << 0x0;
+		const static int S			= 1 << 0x1;
+		const static int A			= 1 << 0x2;
+		const static int D			= 1 << 0x3;
+	};
+
 	// 적용 : 캐릭터
 	struct MOVE
 	{

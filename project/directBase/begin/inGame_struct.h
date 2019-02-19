@@ -6,6 +6,7 @@ struct character_set
 {
 	int status				= 0;
 
+	float height			= 20.0f;
 	float colRadius			= 1.0f;
 
 	int maxHp				= 1;

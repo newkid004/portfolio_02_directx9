@@ -4,6 +4,9 @@
 #include "weaponShotgun.h"
 #include "weaponNormal.h"
 
+#include "managerList.h"
+#include "player.h"
+
 weaponManager::weaponManager(void)
 {
 	this->CreateParam();
@@ -67,4 +70,11 @@ void weaponManager::CreateWeaponInfo(void)
 	_vWeaponInfo.push_back(shotgunSet);
 	_vWeaponInfo.push_back(healkitSet);
 	_vWeaponInfo.push_back(normalSet);
+}
+
+weaponBase * weaponManager::createWeapon(int weaponType)
+{
+	weaponBase* result = new weaponBase(_vWeaponParam[weaponType], SGT_GAME->getSet().player);
+	result->getInfoWeapon() = _vWeaponInfo[weaponType];
+	return result;
 }

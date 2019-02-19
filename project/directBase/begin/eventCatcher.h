@@ -29,7 +29,7 @@ public:
 
 public:
 	eventCatcher(void);
-	eventCatcher(unsigned long param, eventCatcherActive & beforeActive, eventCatcherActive & afterActive);
+	eventCatcher(unsigned long param, const eventCatcherActive & beforeActive, const eventCatcherActive & afterActive);
 	~eventCatcher(void) {};
 };
 

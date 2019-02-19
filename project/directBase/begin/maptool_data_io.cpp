@@ -7,6 +7,8 @@
 #include "mapObjectBase.h"
 #include "nodeMesh.h"
 
+#include "triggerBase.h"
+
 #include "aStar_node.h"
 #include "aStar_grape_bind.h"
 
@@ -53,6 +55,7 @@ void maptool_data_io::OBJ::BUMP::write(json & in_Json)
 void maptool_data_io::OBJ::TRIGGER::write(json & in_Json)
 {
 	OBJ::PROP::write(in_Json);
+	in_Json["triggerType"] = _triggerType;
 }
 
 void maptool_data_io::OBJ::FIELD::write(json & in_Json)
@@ -122,7 +125,10 @@ bool maptool_data_io::parse(OBJ::BUMP * own, json & j_in)
 
 bool maptool_data_io::parse(OBJ::TRIGGER * own, json & j_in)
 {
-	return parse((OBJ::PROP*)own, j_in);
+	parse((OBJ::PROP*)own, j_in);
+	j_in["source"].get_to<int>(own->_triggerType);
+
+	return true;
 }
 
 bool maptool_data_io::parse(OBJ::FIELD * own, json & j_in)
@@ -240,6 +246,7 @@ void maptool_data_io::apply(OBJ::BUMP * in, staticMesh * obj)
 void maptool_data_io::apply(OBJ::TRIGGER * in, staticMesh * obj)
 {
 	apply((OBJ::PROP*)in, obj);
+	in->_triggerType = obj->getBind<triggerBase*>()->refTriggerType();
 }
 
 void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
@@ -339,6 +346,7 @@ void maptool_data_io::apply(staticMesh * in, OBJ::BUMP * data)
 void maptool_data_io::apply(staticMesh * in, OBJ::TRIGGER * data)
 {
 	apply((staticMesh*)in, (OBJ::PROP*)data);
+	in->getBind<triggerBase*>()->refTriggerType() = data->_triggerType;
 }
 
 void maptool_data_io::apply(mapObject * in, OBJ::FIELD * data)

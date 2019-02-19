@@ -3,6 +3,7 @@
 struct EVENT
 {
 #define DEF_TYPE constexpr static int
+#define MAKE_EV(index, identity) DEF_TYPE identity = index << shiftCount
 
 	DEF_TYPE shift_TYPE	= 0;
 	DEF_TYPE shift_KIND	= 4;
@@ -19,15 +20,16 @@ struct EVENT
 	{
 		DEF_TYPE shiftCount = shift_TYPE;
 
-		DEF_TYPE EVENT			= 0x1 << shiftCount;
-		DEF_TYPE OBJECT			= 0x2 << shiftCount;
-		DEF_TYPE TERRAIN		= 0x3 << shiftCount;
-		DEF_TYPE EFFECT			= 0x4 << shiftCount;
-		DEF_TYPE ITEM			= 0x5 << shiftCount;
-		DEF_TYPE WINDOW			= 0x6 << shiftCount;
-		DEF_TYPE SYSTEM			= 0x7 << shiftCount;
-		DEF_TYPE CHARACTER		= 0x8 << shiftCount;
-		DEF_TYPE ENEMY			= 0x9 << shiftCount;
+		MAKE_EV(0x1, EVENT);
+		MAKE_EV(0x2, OBJECT);
+		MAKE_EV(0x3, TERRAIN);
+		MAKE_EV(0x4, EFFECT);
+		MAKE_EV(0x5, ITEM);
+		MAKE_EV(0x6, WINDOW);
+		MAKE_EV(0x7, SYSTEM);
+		MAKE_EV(0x8, CHARACTER);
+		MAKE_EV(0x9, EVEMY);
+		MAKE_EV(0xA, TRIGGER);
 	};
 
 	// ----- kind : 0x00f0 ----- //
@@ -40,9 +42,9 @@ struct EVENT
 
 		struct OBJECT
 		{
-			DEF_TYPE BASE		= 0x1 << shiftCount;
-			DEF_TYPE BULLET		= 0x2 << shiftCount;
-			DEF_TYPE VEHICLE	= 0x3 << shiftCount;
+			MAKE_EV(0x1, BASE);
+			MAKE_EV(0x2, BULLET);
+			MAKE_EV(0x3, VEHICLE);
 		};
 
 		struct TERRAIN
@@ -98,6 +100,13 @@ struct EVENT
 			DEF_TYPE TANKER		= 0x2 << shiftCount;
 			DEF_TYPE SMOKER		= 0x3 << shiftCount;
 		};
+
+		struct TRIGGER
+		{
+			MAKE_EV(0x1, AIR_PLANE);
+			MAKE_EV(0x2, MOVE_FAR);
+			MAKE_EV(0x3, ZOMBIE_WAVE);
+		};
 	};
 
 	// ----- act : 0x0f00 ----- //
@@ -136,6 +145,13 @@ struct EVENT
 			DEF_TYPE GET		= 0x1 << shiftCount;
 			DEF_TYPE USE		= 0x2 << shiftCount;
 			DEF_TYPE EQUIPMENT	= 0x3 << shiftCount;
+		};
+
+		struct TRIGGER
+		{
+			MAKE_EV(0x1, ACTIVE);
+			MAKE_EV(0x2, CONTINUE);
+			MAKE_EV(0x3, COMPLETE);
 		};
 	};
 

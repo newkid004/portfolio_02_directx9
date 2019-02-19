@@ -1,5 +1,6 @@
 #pragma once
 #include "KGlobalDefine.h"
+#include "singletonBase.h"
 #include "eventDef.h"
 
 class eventBase;
@@ -11,17 +12,14 @@ typedef std::unordered_map<int, M_EVENT_ACT>	M_EVENT_KIND;
 typedef std::unordered_map<int, M_EVENT_KIND>	M_EVENT_TYPE;
 typedef std::unordered_map<int, M_EVENT_TYPE>	M_EVENT_CATCHER;
 
-class eventManager
+class eventManager : public singletonBase<eventManager>
 {
 private:
 
 	M_EVENT_CATCHER			m_stEventCatcher;
-	std::list<eventBase*>	m_stEventList;
+	std::vector<eventBase*>	m_stEventList;
 
 public:
-
-	//! 싱글턴
-	DECLARE_SINGLETON(eventManager);
 
 	//! 초기화
 	void init(void);
@@ -40,9 +38,11 @@ public:
 	// 이벤트를 추가한다
 	void add(eventBase* a_rstEvent);
 
-	// 이벤트 를 추가한다
-	void add(unsigned long a_rstParam, std::function<void(eventBase*)> a_rBeforeActive,
-		std::function<void(eventBase*)> a_rAfterActive);
+	// 이벤트 캐쳐를 추가한다
+	void add(eventCatcher* a_rstEventCatcher);
+	void add(unsigned long a_rstParam,
+		const std::function<void(eventBase*)> & a_rBeforeActive,
+		const std::function<void(eventBase*)> & a_rAfterActive);
 
 	// 모든 이벤트를 지운다
 	void deleteAll(void);
@@ -60,3 +60,5 @@ public:
 	eventManager() {};
 	virtual ~eventManager();
 };
+
+#define MN_EVENT (eventManager::getInstance())

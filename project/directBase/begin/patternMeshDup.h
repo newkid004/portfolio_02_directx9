@@ -33,6 +33,8 @@ private:
 public:
 	int &getNextBit() { return _controlInfo.NextMotionBit; }
 	D3DXMATRIXA16 &getFinalNeckMatrix() { return _finalNeckMatrix; }
+	D3DXMATRIXA16 &getLeftHandMatrix() { return _finalHandMatrix[0]; }
+	ACInfo &getAControllInfo(void) { return _controlInfo; }
 
 public:
 	patternMeshDup(patternMesh* duplicateTarget);

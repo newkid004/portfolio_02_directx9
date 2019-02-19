@@ -27,7 +27,6 @@ void triggerBase::draw(void)
 
 bool triggerBase::pickCheck(void)
 {
-
 	pick::ray pRay;
 	pick::createPickRay(&pRay, &_bindMesh->getMatrixFinal());
 
@@ -43,4 +42,10 @@ bool triggerBase::pickCheck(void)
 	}
 
 	return false;
+}
+
+triggerBase::triggerBase(staticMesh * bindMesh) :
+	_bindMesh(bindMesh)
+{
+	if (bindMesh) bindMesh->refBind() = this;
 }
