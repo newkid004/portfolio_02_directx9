@@ -2,26 +2,24 @@
 #include "kGlobalDefine.h"
 #include "staticMesh.h"
 #include "inGame_struct.h"
-
-//
 #include "bulletManager.h"
-//
 
-class viewDefBullet;
+
 class characterBase;
 
 class weaponBase:public staticMesh
 {
 public :
-	using bulletBase = viewDefBullet;
 
 protected :
 	characterBase*				_bindPMesh = nullptr;
 
 	D3DXMATRIXA16	_baseMatrix[2];
 	D3DXMATRIXA16   _localMatrix;
+	D3DXVECTOR3 _handPosition;
+	D3DXVECTOR3 _pickPosition = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	D3DXVECTOR3 _targetDirection;
 
-	
 	weapon_set		_infoWeapon;
 
 	bool _isLeft = true;
@@ -45,10 +43,9 @@ protected :
 	virtual void reloadDo(void);
 	virtual void reloadPost(void);
 
+	virtual void reloadBullet() PURE;
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]);
-	//
-	virtual void drawDo() override;
-	//
+
 public :
 	bool isShotPossible(void);
 	bool isReloadPossible(void);
@@ -57,6 +54,7 @@ public :
 
 public :
 	weapon_set &	getInfoWeapon(void) { return _infoWeapon; }
+	void chanegePickPosition(D3DXVECTOR3 picking) { _pickPosition = picking; }
 
 public:
 	weaponBase(staticMesh::mParam param , characterBase* linkPatternDup);

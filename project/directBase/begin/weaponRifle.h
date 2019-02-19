@@ -15,6 +15,7 @@ protected:
 	virtual void reloadDo(void) override;
 	virtual void reloadPost(void) override;
 
+	virtual void reloadBullet();
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]) override;
 public:
 	weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage = 3);
