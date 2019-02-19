@@ -37,8 +37,8 @@ void weaponShotgun::firePre(void)
 void weaponShotgun::fireDo(void)
 {
 	weaponBase::fireDo();
-	//ÃÑ¾Ë ¹ß»ç
-	// 12¹ß
+	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
+		1.0f, bulletBase::EBulletType::B_SHOTGUN);
 }
 
 void weaponShotgun::firePost(void)
@@ -65,6 +65,7 @@ void weaponShotgun::reloadPost(void)
 void weaponShotgun::reloadBullet()
 {
 	++_infoWeapon.current;
+	--_infoWeapon.maximum;
 }
 
 void weaponShotgun::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])

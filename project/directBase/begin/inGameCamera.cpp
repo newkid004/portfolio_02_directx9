@@ -8,7 +8,7 @@ inGameCamera::inGameCamera(characterBase * bindCharacter) :
 	camera(MN_WIN->getAspect()),
 	_bindCharacter(bindCharacter)
 {
-	_posCenter = POINT{ WINSIZEX / 2.0f , WINSIZEY / 2.0f };
+	_posCenter = POINT{ WINSIZEX / 2L , WINSIZEY / 2L };
 
 	MN_KEY->setMousePos(_posCenter);
 }

@@ -8,6 +8,8 @@
 #include "bulletManager.h"
 #include "characterBase.h"
 #include "AnimationDef.h"
+#include "sceneBase.h"
+#include "camera.h"
 
 using DIGIT = inGame_digit;
 
@@ -76,13 +78,41 @@ void weaponBase::updateReload(void)
 
 void weaponBase::firePre(void)
 {
-	if (MN_KEY->mouseUp())
-		gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::PRESS);
+	gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::PRESS);
+	if ((_bindPMesh->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX)) == AMIX_SHOOT)
+	{
+		if (MN_KEY->mouseUp())
+		{
+			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
+		}
+		else if ((_infoWeapon.current <= 0) && MN_KEY->mouseDown())
+		{
+			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
+		}
+	}
 }
 
 void weaponBase::fireDo(void)
 {
 	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::PRESS);
+	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_SHOOT);
+	_bindPMesh->getAControllInfo().trackPositionA = 0.0f;
+
+	_handPosition = _position;
+	D3DXVec3TransformCoord(&_handPosition, &_handPosition, &_bindPMesh->getLeftHandMatrix());
+	if (_pickPosition == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+	{
+		D3DXVECTOR3 neckPosition = _position;
+		D3DXVec3TransformCoord(&neckPosition, &neckPosition, &_bindPMesh->getFinalNeckMatrix());
+
+		//_pickPosition = neckPosition + GET_CAMERA()->getDirectForward() *100.0f;
+		_pickPosition = neckPosition + _bindPMesh->getDirectForward() *100.0f;
+	}
+
+	_targetDirection = _pickPosition - _handPosition;
+	D3DXVec3Normalize(&_targetDirection, &_targetDirection);
+
+	_pickPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
 
 void weaponBase::firePost(void)
@@ -92,19 +122,20 @@ void weaponBase::firePost(void)
 
 void weaponBase::reloadPre(void)
 {
-	int &nextBit = _bindPMesh->getNextBit();
-	if ((nextBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX)) == AMIX_RELOAD)
+	int Bit = _bindPMesh->getAControllInfo().CurrentMotionBit;
+	if ((Bit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX)) == AMIX_RELOAD)
 	{
-		if (_bindPMesh->getAControllInfo().persent >= 0.8f)
+		if (_bindPMesh->getAControllInfo().persent >= 0.9f)
 		{
 			reloadBullet();
-			if (_infoWeapon.current >= _infoWeapon.reload || _infoWeapon.maximum == 0)
+			_bindPMesh->getAControllInfo().trackPositionA = 0.0f;
+			_bindPMesh->getAControllInfo().persent = 0.0f;
+			if ((_infoWeapon.current >= _infoWeapon.reload) || _infoWeapon.maximum == 0)
 			{
-				CHANGE_BIT(nextBit, aniDefine::ANIBIT::MIX, AMIX_NONE);
+				CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
 			}
 		}
 	}
-
 }
 
 void weaponBase::reloadDo(void)
@@ -125,7 +156,7 @@ void weaponBase::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])
 
 bool weaponBase::isShotPossible(void)
 {
-	return 0 < _infoWeapon.current && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime());
+	return (0 < _infoWeapon.current) && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime());
 }
 
 bool weaponBase::isReloadPossible(void)

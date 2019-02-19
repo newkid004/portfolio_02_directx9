@@ -13,6 +13,13 @@
 
 #include "player.h"
 
+//
+#include "weaponRifle.h"
+#include "weaponShotgun.h"
+#include "weaponHealkit.h"
+#include "weaponManager.h"
+//
+
 
 using DIGIT = inGame_digit;
 
@@ -28,11 +35,29 @@ void sceneTest3::init(void)
 	_char = new characterBase(_origin);
 	_char->setController(new controllerBase(_char));
 	_char->getNextBit() = ATYPE_SURVIVOR |
-		AWEAPON_RIFLE |
+		//AWEAPON_RIFLE|
+		//AWEAPON_PUMPSHOTGUN |
+		AWEAPON_FIRSTAIDKIT|
 		ACONDITION_NORMAL |
 		AMAIN_IDLE |
 		AMIX_NONE |
 		AIDLE_STANDING;
+
+	//
+	//weaponRifle* rifle = new weaponRifle(MN_WEAPON->getParam(weaponManager::weaponType::rifle),
+	//	_char, 3);
+	//rifle->setScale(0.03f);
+	//weaponShotgun* shotgun = new weaponShotgun(MN_WEAPON->getParam(weaponManager::weaponType::shotgun),
+	//	_char, 1);
+	//shotgun->setScale(0.03f);
+	weaponHealkit* healkit = new weaponHealkit(MN_WEAPON->getParam(weaponManager::weaponType::healkit),
+		_char);
+	healkit->setScale(0.03f);
+
+	//_char->getWeapon() = rifle;
+	//_char->getWeapon() = shotgun;
+	_char->getWeapon() = healkit;
+	//
 
 	SGT_GAME->getSet().player = (player*)_char;
 	_char->getPlacedNode() = SGT_GAME->getSet().field->getMember().grape->getNodeList()[0];
@@ -55,14 +80,21 @@ void sceneTest3::update(void)
 
 	_char->update();
 	SGT_GAME->update();
+	GET_BULLET_MANAGER()->update();
 }
 
 void sceneTest3::draw(void)
 {
 	sceneBase::draw();
 
+
+	_char->getIsCull() = false;
 	_char->draw();
 	SGT_GAME->draw();
+	GET_BULLET_MANAGER()->draw();
+
+	printf("Current : %d\n", _char->getWeapon()->getInfoWeapon().current);
+	printf("Maximum : %d\n", _char->getWeapon()->getInfoWeapon().maximum);
 }
 
 patternMesh * sceneTest3::createCharacter(void)

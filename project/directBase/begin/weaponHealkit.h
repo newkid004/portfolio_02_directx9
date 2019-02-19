@@ -6,6 +6,11 @@
 
 class weaponHealkit :public weaponBase
 {
+private:
+	D3DXVECTOR3 _originR;
+	D3DXVECTOR3 _originU;
+	D3DXVECTOR3 _originF;
+
 protected:
 	virtual void firePre(void) override;
 	virtual void fireDo(void) override;
@@ -15,6 +20,7 @@ protected:
 	virtual void reloadDo(void) override;
 	virtual void reloadPost(void) override;
 
+	virtual void reloadBullet() {};
 public:
 	weaponHealkit(staticMesh::mParam param, characterBase* linkPatternDup);
 	virtual ~weaponHealkit();

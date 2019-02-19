@@ -57,7 +57,7 @@ void characterBase::update(void)
 	updateMove();
 	if (_weapon != nullptr)
 	{
-		_weapon->updateWeapon(_finalHandMatrix, _isCull);
+		_weapon->updateWeapon(_finalHandMatrix, false);
 	}
 }
 

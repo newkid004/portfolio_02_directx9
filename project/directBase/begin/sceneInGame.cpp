@@ -30,6 +30,7 @@ void sceneInGame::update(void)
 	sceneBase::update();
 
 	SGT_GAME->update();
+	GET_BULLET_MANAGER()->update();
 }
 
 void sceneInGame::draw(void)
@@ -37,6 +38,7 @@ void sceneInGame::draw(void)
 	sceneBase::draw();
 
 	SGT_GAME->draw();
+	GET_BULLET_MANAGER()->draw();
 }
 
 void sceneInGame::drawUI(void)

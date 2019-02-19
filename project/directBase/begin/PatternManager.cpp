@@ -462,7 +462,7 @@ void PatternManager::initMotionSurvivor(void)
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_PUMPSHOTGUN |
-		AMIX_SHOOT, arr, 1, 1.0f, false);
+		AMIX_SHOOT, arr, 1, 0.6f, false);
 
 
 	// ¶óÀÌÇÃ, --, --, ¹ß»ç, --
@@ -496,14 +496,14 @@ void PatternManager::initMotionSurvivor(void)
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_PUMPSHOTGUN |
-		AMIX_RELOAD, arr, 1, 1.0f, false);
+		AMIX_RELOAD, arr, 1, 0.6f, false);
 
 	//¶óÀÌÇÃ, --. --, ÀåÀü, --
 	arr[0] = 76;
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_RIFLE |
-		AMIX_RELOAD, arr, 1, 0.8f, false);
+		AMIX_RELOAD, arr, 1, 0.4f, false);
 
 	//¼¦°Ç, --, --, ÃÑ»Ì±â, --
 	arr[0] = 88;
