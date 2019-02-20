@@ -52,11 +52,30 @@ void enemyController::update(void)
 
 void enemyController::update2bit(void)
 {
-	/*
-	필요 성분
-	플레이어까지의 거리
-	다음 노드와의 방향 벡터
-	*/
+	// 넘어지는 상태(죽음)
+	if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
+	{
+		if (_isFemale)
+		{
+		}
+		else
+		{
+			//뒤로
+			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_LYING);
+			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_BACKWARD);
+
+			//왼쪽으로
+			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_LEFTWARD);
+
+			//앞으로
+			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_FRONTWARD);
+		}
+		return;
+	}
+	
+	// 피격 상태(총)
+	// 피격 상태(밀쳐진)
+
 
 	// 기본 상태
 	if (_path->getDistance() > VALUE::delayAlert)
@@ -156,9 +175,9 @@ void enemyController::update2bit(void)
 	}
 
 	// 낙하
-	// 넘어지는 상태(죽음)
-	// 피격 상태(총)
-	// 피격 상태(밀쳐진)
+	  /*
+	  nothing
+	  */
 }
 
 void enemyController::baseBit(void)
