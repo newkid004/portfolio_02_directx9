@@ -23,11 +23,18 @@ void enemyBase::update(void)
 	characterBase::update();
 
 	int status = _infoCharacter.status;
-	if (gDigit::chk(status, DIGIT::APPROACH))
+	if (gDigit::chk(status, DIGIT::ADJACENT))
+		updateAdjacent();
+
+	else if (gDigit::chk(status, DIGIT::APPROACH))
 		updateApproach();
+}
+
+void enemyBase::updateAdjacent(void)
+{
 }
 
 void enemyBase::updateApproach(void)
 {
-	// rotate2Pos();
+
 }

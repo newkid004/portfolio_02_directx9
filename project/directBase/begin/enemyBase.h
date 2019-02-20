@@ -5,12 +5,13 @@
 class enemyBase : public characterBase
 {
 protected :
-	D3DXVECTOR3 _nextPlacePos;			// 다음 목표지점
+	D3DXVECTOR3	_nextPlacePos;			// 다음 목표지점
 
 public :
 	void update(void) override;
 
 protected :
+	void updateAdjacent(void);
 	void updateApproach(void);
 
 public :

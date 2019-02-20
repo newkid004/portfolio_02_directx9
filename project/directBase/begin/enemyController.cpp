@@ -101,5 +101,12 @@ void enemyController::updateFootPrint(void)
 		float interval = nodeData->getRadius() * 0.875f;
 		nextPlacePos.x += gFunc::rndFloat(-interval, interval);
 		nextPlacePos.y += gFunc::rndFloat(-interval, interval);
+
+		_bindCharacter->rotate2Pos(
+			D3DXVECTOR3(
+				nextPlacePos.x,
+				0.0f,
+				nextPlacePos.y),
+			true, true);
 	}
 }
