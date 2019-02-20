@@ -152,7 +152,7 @@ void maptool_brush::updateObjectScale(void)
 
 			float ratio = 1.0f;
 			if (MN_KEY->keyDown(DIK_LCONTROL))
-				ratio *= 0.33f;
+				ratio *= 0.01f;
 			else if (MN_KEY->keyDown(DIK_LSHIFT))
 				ratio *= 3.0f;
 
@@ -161,6 +161,10 @@ void maptool_brush::updateObjectScale(void)
 			else if (MN_KEY->wheelDown())
 				scale *= std::powf(0.9f, ratio);
 
+			if (MN_KEY->keyPress(DIK_A))
+			{
+				scale *= 0.0508f;
+			}
 			selection->setScale(scale);
 		}
 	}

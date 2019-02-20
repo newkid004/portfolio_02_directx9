@@ -2,6 +2,7 @@
 
 #include "staticMesh.h"
 #include "skinnedMesh.h"
+#include "wallMesh.h"
 #include "terrain.h"
 #include "mapObject.h"
 #include "mapObjectBase.h"
@@ -36,8 +37,9 @@ void maptool_data_io::OBJ::PROP::write(json & in_Json)
 
 void maptool_data_io::OBJ::WALL::write(json & in_Json)
 {
-	OBJ::BASE::write(in_Json);
-	in_Json["normal"] = _normal;
+	OBJ::BUMP::write(in_Json);
+	in_Json["texture"] = _texture;
+	in_Json["normalTexture"] = _normalTexture;
 }
 
 void maptool_data_io::OBJ::CHAR::write(json & in_Json)
@@ -136,7 +138,7 @@ bool maptool_data_io::parse(OBJ::FIELD * own, json & j_in)
 	auto & jTarget = j_in["wall"];
 	for (json::iterator i = jTarget.begin(); i != jTarget.end(); ++i)
 	{ 
-		OBJ::BUMP viewWall; /* = */ parse(&viewWall, i.value());
+		OBJ::WALL viewWall; /* = */ parse(&viewWall, i.value());
 		own->_wall.insert(decltype(own->_wall)::value_type(i.key(), viewWall));
 	}
 
@@ -199,6 +201,15 @@ bool maptool_data_io::parse(OBJ::PATH * own, json & j_in)
 	return true;
 }
 
+bool maptool_data_io::parse(OBJ::WALL * own, json & j_in)
+{
+	parse((OBJ::BUMP*)own, j_in);
+	j_in["texture"].get_to<std::string>(own->_texture);
+	j_in["normalTexture"].get_to<std::string>(own->_normalTexture);
+
+	return true;
+}
+
 void maptool_data_io::apply(OBJ::BASE * in, baseObject * obj)
 {
 	CopyMemory(&in->_position.front(), &obj->getPosition(), sizeof(D3DXVECTOR3));
@@ -250,7 +261,7 @@ void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
 		auto & sName = subset.first;
 		auto & sObject = subset.second;
 
-		OBJ::BUMP viewWall;
+		OBJ::WALL viewWall;
 		apply(&viewWall, sObject);
 		
 		in->_wall.insert(decltype(in->_wall)::value_type(sName, viewWall));
@@ -292,6 +303,14 @@ void maptool_data_io::apply(OBJ::PATH * in, inGame_grape * obj)
 
 	for (auto i : obj->getNodeConnection())
 		in->_connection[i.first] = i.second;
+}
+
+void maptool_data_io::apply(OBJ::WALL * in, wallMesh * obj)
+{
+	apply((OBJ::BUMP*)in, (staticMesh *)obj);
+
+	in->_texture = obj->getTexturePath();
+	in->_normalTexture = obj->getNormalTexturePath();
 }
 
 void maptool_data_io::apply(baseObject * in, OBJ::BASE * data)
@@ -351,7 +370,7 @@ void maptool_data_io::apply(mapObject * in, OBJ::FIELD * data)
 	mObjectList.reserve(data->_wall.size());
 	for (auto & i : data->_wall)
 	{
-		staticMesh* wall = nullptr;
+		wallMesh* wall = nullptr;
 		create(&wall, &i.second);
 
 		mObjectList.insert(mapObject::MAPLIST::value_type(i.first, wall));
@@ -414,6 +433,11 @@ void maptool_data_io::apply(inGame_grape * in, OBJ::PATH * data)
 		for (auto & linkingNode : pConnection.second)
 			in->connectNode(own, linkingNode);
 	}
+}
+
+void maptool_data_io::apply(wallMesh * in, OBJ::WALL * data)
+{
+	apply((staticMesh*)in, (OBJ::BUMP*)data);
 }
 
 void maptool_data_io::create(OBJ::BASE ** out, baseObject * obj)
@@ -483,6 +507,13 @@ void maptool_data_io::create(OBJ::PATH ** out, grape * obj)
 void maptool_data_io::create(OBJ::PATH ** out, inGame_grape * obj)
 {
 	OBJ::PATH* result = new OBJ::PATH();
+	apply(result, obj);
+	*out = result;
+}
+
+void maptool_data_io::create(OBJ::WALL ** out, wallMesh * obj)
+{
+	OBJ::WALL* result = new OBJ::WALL();
 	apply(result, obj);
 	*out = result;
 }
@@ -575,6 +606,19 @@ void maptool_data_io::create(grape ** out, OBJ::PATH * data)
 void maptool_data_io::create(inGame_grape ** out, OBJ::PATH * data)
 {
 	inGame_grape* result = new inGame_grape();
+
+	apply(result, data);
+
+	*out = result;
+}
+
+void maptool_data_io::create(wallMesh ** out, OBJ::WALL * data)
+{
+	wallMesh::mParam param;
+	param.meshFilePath = data->_source;
+	param.effectFilePath = data->_effect;
+
+	wallMesh * result = new wallMesh(param, data->_texture, data->_normalTexture);
 
 	apply(result, data);
 

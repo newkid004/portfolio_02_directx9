@@ -1,6 +1,7 @@
 #include "mapObject.h"
 
 #include "staticMesh.h"
+#include "wallMesh.h"
 
 typedef mapObjectBase::MAPLIST MAPLIST;
 

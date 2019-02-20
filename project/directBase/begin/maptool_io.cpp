@@ -60,6 +60,9 @@ void maptool_io::buildObject()
 		if (vData->_baseType & IO_DATA::baseType::NODE)
 			continue;	// grape에서 따로 적용
 
+		else if (vData->_baseType & IO_DATA::baseType::WALL)
+			IO_DATA::apply((IO_DATA::OBJ::WALL*)vData, (wallMesh*)vObj);
+
 		else if (vData->_baseType & IO_DATA::baseType::BUMP)
 			IO_DATA::apply((IO_DATA::OBJ::BUMP*)vData, (staticMesh*)vObj);
 
@@ -152,6 +155,14 @@ void maptool_io::spreadObject(void)
 
 			additionObject = new skinnedMesh(param);
 			IO_DATA::apply((skinnedMesh*)additionObject, convert);
+
+			additionData = convert;
+		}
+		else if (baseType & IO_DATA::baseType::WALL)
+		{
+			IO_DATA::OBJ::WALL* convert = new IO_DATA::OBJ::WALL();
+			IO_DATA::parse(convert, js);
+			IO_DATA::create((wallMesh**)&additionObject, convert);
 
 			additionData = convert;
 		}

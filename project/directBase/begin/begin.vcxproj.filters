@@ -592,6 +592,9 @@
     <Filter Include="classes\global\utility\manager\common\bullet">
       <UniqueIdentifier>{d70a696b-a6f7-4667-b96f-8cf628cf9f52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\wallMesh">
+      <UniqueIdentifier>{cc428ae8-7a0d-46ca-87bf-90edce3805ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1026,6 +1029,9 @@
     <ClInclude Include="bulletManager.h">
       <Filter>classes\global\utility\manager\common\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="wallMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1289,9 +1295,6 @@
     <ClCompile Include="nodeMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\nodeMesh</Filter>
     </ClCompile>
-    <ClCompile Include="sceneInGame.cpp">
-      <Filter>main\classes\scene\02_inGame</Filter>
-    </ClCompile>
     <ClCompile Include="weaponBase.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\_base</Filter>
     </ClCompile>
@@ -1387,6 +1390,12 @@
     </ClCompile>
     <ClCompile Include="bulletManager.cpp">
       <Filter>classes\global\utility\manager\common\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneInGame.cpp">
+      <Filter>main\classes\scene\02_inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="wallMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -339,6 +339,10 @@ void maptool_window::createContent_prop(std::vector<CATALOG::OBJ::PROP*>& vConte
 	inputContent("coffeeammo");
 	inputContent("survival_manual1");
 	inputContent("survival_manual2");
+
+	tPath = "resource/texture/maptool/catalog/prop/";
+	inputContent("building");
+	inputContent("floor3Plane");
 }
 
 void maptool_window::createContent_bump(std::vector<CATALOG::OBJ::BUMP*>& vContent)

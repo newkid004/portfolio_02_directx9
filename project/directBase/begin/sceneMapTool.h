@@ -12,6 +12,7 @@ class maptool_brush;
 class mapObject;
 
 class staticMesh;
+class skyBox;
 
 class sceneMapTool : public sceneBase
 {
@@ -25,7 +26,7 @@ public :
 	maptool_brush* _currentBrush = nullptr;
 
 	mapObject* _mapObject = nullptr;
-
+	skyBox* _skybox = nullptr;
 private :
 	POINT _mousePrev;
 
@@ -41,6 +42,8 @@ private :
 	void updateControl_brush(void);
 
 	void drawSelection(void);
+
+	skyBox* createSkyBox(void);
 
 public:
 	sceneMapTool() {};

@@ -13,6 +13,8 @@ void sceneInGame::init(void)
 void sceneInGame::update(void)
 {
 	sceneBase::update();
+
+	GET_BULLET_MANAGER()->update();
 }
 
 void sceneInGame::draw(void)

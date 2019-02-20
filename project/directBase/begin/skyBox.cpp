@@ -34,7 +34,8 @@ void skyBox::drawDo(void)
 	renderObject::drawDo();
 
 	// За·Д
-	D3DXVECTOR3 cameraPos = GET_CAMERA()->getPosition();
+	GET_CAMERA()->putOffsetPosition();
+	D3DXVECTOR3 cameraPos = GET_CAMERA()->getOffsetPosition();
 	D3DXMATRIXA16 mTranslate, mWorld;
 	D3DXMatrixTranslation(&mTranslate, cameraPos.x, cameraPos.y, cameraPos.z);
 	mWorld = mTranslate;
@@ -68,7 +69,7 @@ LPD3DXMESH skyBox::createMesh(void)
 
 	D3DXCreateSphere(
 		MN_DEV,
-		250.0f,
+		900.0f,
 		50, 50,
 		&result,
 		&bufAdjacency);

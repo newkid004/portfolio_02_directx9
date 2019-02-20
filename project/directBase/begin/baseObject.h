@@ -87,7 +87,7 @@ public :	// 접근, 지정자
 
 	void setMatrixOffset			(const D3DXMATRIXA16 & input) { _mOffset = input; }
 
-private:
+public:
 	void putOffsetPosition(void);
 
 public:
