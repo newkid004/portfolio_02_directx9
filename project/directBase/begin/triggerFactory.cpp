@@ -21,15 +21,18 @@ triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 		result = new triggerBase(bindMesh);
 		result->refTriggerType() = type;
 
-		result->refActive() = [&](void)->void {
+		result->refActive() = [&](triggerBase* own)->void {
 			auto & player = SGT_GAME->getSet().player;
-			auto & weapon = type == triggerBase::TYPE::MEDKIT ?
+			auto & weapon = own->refTriggerType() == triggerBase::TYPE::MEDKIT ?
 				player->getWeaponSub() : player->getWeapon();
 
-			if (weapon == nullptr)
-				weapon = MN_WEAPON->createWeapon(type);
+			if (weapon == nullptr || weapon->getInfoWeapon().type != own->refTriggerType())
+			{
+				SAFE_DELETE(weapon);
+				weapon = MN_WEAPON->createWeapon(own->refTriggerType());
+			}
 			else
-				weapon->getInfoWeapon() = MN_WEAPON->getWeaponInfo(type);
+				weapon->getInfoWeapon() = MN_WEAPON->getWeaponInfo(own->refTriggerType());
 		};
 
 	} break;

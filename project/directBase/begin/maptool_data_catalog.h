@@ -14,15 +14,16 @@ public :
 // ----- enum ----- //
 	enum baseType
 	{
-		TRIGGER	= 1 << 6,
-		BUMP	= 1 << 5,
-		FILE	= 1 << 4,
-		NODE	= 1 << 3,
+		PROP	= 1 << 0,
+		WALL	= 1 << 1,
 		CHAR	= 1 << 2,
-		PROP	= 1 << 1,
-		BASE	= 1 << 0,
+		BUMP	= 1 << 3,
+		FIELD	= 1 << 4,
+		NODE	= 1 << 5,
+		PATH	= 1 << 6,
+		TRIGGER	= 1 << 7,
 		
-		NONE	= 0
+		BASE	= 0 << 0
 	};
 
 // ----- base ----- //
@@ -56,11 +57,6 @@ public :
 			NODE() { _baseType |= baseType::NODE; }
 		};
 
-		struct FILE : public BASE
-		{
-			FILE() { _baseType |= baseType::FILE; }
-		};
-
 		struct BUMP : public PROP
 		{
 			BUMP() { _baseType |= baseType::BUMP; }
@@ -69,7 +65,7 @@ public :
 		struct TRIGGER : public PROP
 		{
 			int _triggerType = 0;
-			TRIGGER() { _baseType |= baseType::BUMP; }
+			TRIGGER() { _baseType |= baseType::TRIGGER; }
 		};
 
 		OBJ() {};

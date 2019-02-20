@@ -6,8 +6,10 @@
 #include "mapObject.h"
 #include "mapObjectBase.h"
 #include "nodeMesh.h"
+#include "triggerMesh.h"
 
 #include "triggerBase.h"
+#include "triggerFactory.h"
 
 #include "aStar_node.h"
 #include "aStar_grape_bind.h"
@@ -126,7 +128,7 @@ bool maptool_data_io::parse(OBJ::BUMP * own, json & j_in)
 bool maptool_data_io::parse(OBJ::TRIGGER * own, json & j_in)
 {
 	parse((OBJ::PROP*)own, j_in);
-	j_in["source"].get_to<int>(own->_triggerType);
+	j_in["triggerType"].get_to<int>(own->_triggerType);
 
 	return true;
 }
@@ -243,7 +245,7 @@ void maptool_data_io::apply(OBJ::BUMP * in, staticMesh * obj)
 	apply((OBJ::PROP*)in, obj);
 }
 
-void maptool_data_io::apply(OBJ::TRIGGER * in, staticMesh * obj)
+void maptool_data_io::apply(OBJ::TRIGGER * in, triggerMesh * obj)
 {
 	apply((OBJ::PROP*)in, obj);
 	in->_triggerType = obj->getBind<triggerBase*>()->refTriggerType();
@@ -343,10 +345,9 @@ void maptool_data_io::apply(staticMesh * in, OBJ::BUMP * data)
 	apply((staticMesh*)in, (OBJ::PROP*)data);
 }
 
-void maptool_data_io::apply(staticMesh * in, OBJ::TRIGGER * data)
+void maptool_data_io::apply(triggerMesh * in, OBJ::TRIGGER * data)
 {
 	apply((staticMesh*)in, (OBJ::PROP*)data);
-	in->getBind<triggerBase*>()->refTriggerType() = data->_triggerType;
 }
 
 void maptool_data_io::apply(mapObject * in, OBJ::FIELD * data)
@@ -452,7 +453,7 @@ void maptool_data_io::create(OBJ::BUMP ** out, staticMesh * obj)
 	*out = result;
 }
 
-void maptool_data_io::create(OBJ::TRIGGER ** out, staticMesh * obj)
+void maptool_data_io::create(OBJ::TRIGGER ** out, triggerMesh * obj)
 {
 	OBJ::TRIGGER* result = new OBJ::TRIGGER();
 	apply(result, obj);
@@ -514,9 +515,19 @@ void maptool_data_io::create(staticMesh ** out, OBJ::BUMP * data)
 	create(out, (OBJ::PROP*)data);
 }
 
-void maptool_data_io::create(staticMesh ** out, OBJ::TRIGGER * data)
+void maptool_data_io::create(triggerMesh ** out, OBJ::TRIGGER * data)
 {
-	create(out, (OBJ::PROP*)data);
+	triggerMesh* result = nullptr;
+
+	staticMesh::mParam param;
+	param.meshFilePath = data->_source;
+	param.effectFilePath = data->_effect;
+
+	result = new triggerMesh(param);
+	result->refBind() = triggerFactory::createTrigger2type(data->_triggerType, result);
+	apply(result, data);
+
+	*out = result;
 }
 
 void maptool_data_io::create(mapObject ** out, OBJ::FIELD * data)

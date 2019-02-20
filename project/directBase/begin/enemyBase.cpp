@@ -5,6 +5,7 @@
 enemyBase::enemyBase(patternMesh* duplicateTarget) :
 	characterBase(duplicateTarget)
 {
+
 }
 
 

@@ -8,6 +8,9 @@
 #include "nodeMesh.h"
 #include "triggerMesh.h"
 
+#include "triggerBase.h"
+#include "triggerFactory.h"
+
 maptool_data_catalog::OBJ::PROP::~PROP()
 {
 	SAFE_DELETE(_object);
@@ -96,6 +99,7 @@ void maptool_data_catalog::duplicate(triggerMesh ** outObject, OBJ::TRIGGER * ta
 	triggerMesh* result = new triggerMesh(obj->getMakeParam());
 
 	applyObject(result, obj);
+	result->refBind() = triggerFactory::createTrigger2type(targetObject->_triggerType, result);
 
 	*outObject = result;
 }
@@ -122,6 +126,4 @@ void maptool_data_catalog::applyObject(nodeMesh * target, nodeMesh * own)
 void maptool_data_catalog::applyObject(triggerMesh * target, triggerMesh * own)
 {
 	applyObject((renderObject*)target, (renderObject*)own);
-
-	target->refTriggerType() = own->refTriggerType();
 }

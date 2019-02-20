@@ -4,40 +4,41 @@ struct inGame_digit
 {
 	struct KEY
 	{
-		const static int W			= 1 << 0x0;
-		const static int S			= 1 << 0x1;
-		const static int A			= 1 << 0x2;
-		const static int D			= 1 << 0x3;
+		constexpr static int W			= 1 << 0x0;
+		constexpr static int S			= 1 << 0x1;
+		constexpr static int A			= 1 << 0x2;
+		constexpr static int D			= 1 << 0x3;
 	};
 
 	// 적용 : 캐릭터
 	struct MOVE
 	{
-		const static int MOVEING	= 1 << 0x0;
-		const static int LAND		= 1 << 0x1;
-		const static int FLOAT		= 1 << 0x2;
+		constexpr static int MOVEING	= 1 << 0x0;
+		constexpr static int LAND		= 1 << 0x1;
+		constexpr static int FLOAT		= 1 << 0x2;
 
-		const static int NONE		= 0;
+		constexpr static int NONE		= 0;
 	};
 
 	// 적용 : 캐릭터, AI
 	struct CHAR
 	{
-		const static int ALERT		= 1 << 0x0;		// 인식 여부
-		const static int APPROACH	= 1 << 0x1;		// 접근 여부
-		const static int ATTACK		= 1 << 0x2;		// 공격 여부
+		constexpr static int ALERT		= 1 << 0x0;		// 인식 여부
+		constexpr static int APPROACH	= 1 << 0x1;		// 접근 여부
+		constexpr static int ADJACENT	= 1 << 0x2;		// 인접 여부
+		constexpr static int ATTACK		= 1 << 0x3;		// 공격 여부
 
-		const static int DEAD		= 1 << 0x1f;
+		constexpr static int DEAD		= 1 << 0x1f;
 
-		const static int NONE		= 0;
+		constexpr static int NONE		= 0;
 	};
 
 	// 적용 : 무기
 	struct WEAPON
 	{
-		const static int PRESS		= 1 << 0x0;
-		const static int RELOAD		= 1 << 0x1;
+		constexpr static int PRESS		= 1 << 0x0;
+		constexpr static int RELOAD		= 1 << 0x1;
 
-		const static int NONE		= 0;
+		constexpr static int NONE		= 0;
 	};
 };

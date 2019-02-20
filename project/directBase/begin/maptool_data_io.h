@@ -8,6 +8,7 @@ class staticMesh;
 class skinnedMesh;
 class mapObject;
 class nodeMesh;
+class triggerMesh;
 
 template<typename T>
 class aStar_grape_bind;
@@ -152,7 +153,7 @@ public :	// ----- apply ----- //
 	static void apply(OBJ::PROP* in,		staticMesh* obj);
 	static void apply(OBJ::CHAR* in,		skinnedMesh* obj);
 	static void apply(OBJ::BUMP* in,		staticMesh* obj);
-	static void apply(OBJ::TRIGGER* in,		staticMesh* obj);
+	static void apply(OBJ::TRIGGER* in,		triggerMesh* obj);
 	static void apply(OBJ::FIELD* in,		mapObject* obj);
 	static void apply(OBJ::NODE* in,		nodeMesh* obj);
 	static void apply(OBJ::NODE* in,		inGame_node* obj);
@@ -163,7 +164,7 @@ public :	// ----- apply ----- //
 	static void apply(staticMesh* in,		OBJ::PROP* data);
 	static void apply(skinnedMesh* in,		OBJ::CHAR* data);
 	static void apply(staticMesh* in,		OBJ::BUMP* data);
-	static void apply(staticMesh* in,		OBJ::TRIGGER* data);
+	static void apply(triggerMesh* in,		OBJ::TRIGGER* data);
 	static void apply(mapObject* in,		OBJ::FIELD* data);
 	static void apply(nodeMesh* in,			OBJ::NODE* data);
 	static void apply(inGame_node* in,		OBJ::NODE* data);
@@ -175,7 +176,7 @@ public :	// ----- creater ----- //
 	static void create(OBJ::PROP** out,		staticMesh* obj);
 	static void create(OBJ::CHAR** out,		skinnedMesh* obj);
 	static void create(OBJ::BUMP** out,		staticMesh* obj);
-	static void create(OBJ::TRIGGER** out,	staticMesh* obj);
+	static void create(OBJ::TRIGGER** out, triggerMesh* obj);
 	static void create(OBJ::FIELD** out,	mapObject* obj);
 	static void create(OBJ::NODE** out,		nodeMesh* obj);
 	static void create(OBJ::NODE** out,		inGame_node* obj);
@@ -184,7 +185,7 @@ public :	// ----- creater ----- //
 
 	static void create(staticMesh** out,	OBJ::PROP* data);
 	static void create(staticMesh** out,	OBJ::BUMP* data);
-	static void create(staticMesh** out,	OBJ::TRIGGER* data);
+	static void create(triggerMesh** out,	OBJ::TRIGGER* data);
 	static void create(mapObject** out,		OBJ::FIELD* data);
 	static void create(nodeMesh** out,		OBJ::NODE* data);
 	static void create(inGame_node** out,	OBJ::NODE* data);

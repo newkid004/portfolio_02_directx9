@@ -9,15 +9,6 @@ class weaponBase;
 
 class weaponManager : public singletonBase<weaponManager>
 {
-public:
-	struct Type
-	{
-		constexpr static int rifle = 0;
-		constexpr static int shotgun = 1;
-		constexpr static int healkit = 2;
-		constexpr static int normal = 3;
-	};
-
 private:
 
 	std::vector<staticMesh::mParam> _vWeaponParam;

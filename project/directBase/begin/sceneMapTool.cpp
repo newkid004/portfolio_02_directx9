@@ -108,7 +108,7 @@ void sceneMapTool::updateControl_brush(void)
 			_currentBrush = _mBrush.find("node")->second;
 
 		else if (viewData->_baseType & TYPE::TRIGGER)
-			_currentBrush = _mBrush.find("prop")->second;
+			_currentBrush = _mBrush.find("trigger")->second;
 
 		else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
 			_currentBrush = _mBrush.find("prop")->second;
@@ -124,7 +124,7 @@ void sceneMapTool::updateControl_brush(void)
 				_currentBrush = _mBrush.find("node")->second;
 
 			else if (viewData->_baseType & TYPE::TRIGGER)
-				_currentBrush = _mBrush.find("prop")->second;
+				_currentBrush = _mBrush.find("trigger")->second;
 
 			else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
 				_currentBrush = _mBrush.find("prop")->second;
