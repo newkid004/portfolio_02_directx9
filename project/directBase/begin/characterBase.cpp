@@ -104,7 +104,7 @@ void characterBase::updateMove(void)
 void characterBase::updateGravity(void)
 {
 	if (!gDigit::chk(_infoMove.status, DIGIT::MOVE::LAND))
-		_infoMove.velVertical -= VALUE::gravity * MN_TIME->getDeltaTime();
+		_infoMove.velVertical -= VALUE::global::gravity * MN_TIME->getDeltaTime();
 }
 
 void characterBase::updateFriction(void)
@@ -114,7 +114,7 @@ void characterBase::updateFriction(void)
 		return;
 
 	// 마찰 적용
-	float frictionValue = VALUE::friction * MN_TIME->getDeltaTime();
+	float frictionValue = VALUE::global::friction * MN_TIME->getDeltaTime();
 	_infoMove.currentSpeed = std::fmaxf(0.0f, _infoMove.currentSpeed - frictionValue);
 
 	// 정지 확인
@@ -311,7 +311,7 @@ void characterBase::moveDo(int direction)
 		float angle = gFunc::getAngle(currentVelocity, moveDirection);
 
 		// 무시되는 방향 제외
-		if (std::fabsf(angle) < VALUE::P2I)
+		if (std::fabsf(angle) < VALUE::global::P2I)
 		{
 			D3DXVECTOR3 compareValue;
 			D3DXVec3Cross(&compareValue, &WORLD_DIRECTION_UP, &currentVelocity);
@@ -325,7 +325,7 @@ void characterBase::moveDo(int direction)
 			moveDirection = currentVelocity + compareValue * interval * MN_TIME->getDeltaTime();
 		}
 		// 감속
-		else if (VALUE::P2I <= std::fabsf(angle))
+		else if (VALUE::global::P2I <= std::fabsf(angle))
 		{
 			moveDirection += currentVelocity;
 			_infoMove.currentSpeed = D3DXVec2Length(&D3DXVECTOR2(moveDirection.x, moveDirection.z)) * MN_TIME->getDeltaTime();
