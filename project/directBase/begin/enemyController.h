@@ -8,6 +8,9 @@
 
 class enemyController : public controllerBase
 {
+private:
+	bool _isFemale;
+
 protected :
 	timeEnemy_set	_infoTimeEnemy;
 	float _delay;
@@ -16,7 +19,6 @@ public :
 	void update(void) override;
 
 protected :
-	void update2bit(void);
 	void updateFootPrint(void) override;
 	virtual void update2bit(void);
 
