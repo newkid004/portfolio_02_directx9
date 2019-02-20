@@ -95,28 +95,20 @@ void controllerBase::updateFootPrint(void)
 	if (pathNodeList.size() <= 1 || pathNodeList.front()->getMember().placedNode == playerNode)
 		return;
 
-	auto & position = _bindCharacter->getPosition();
+	D3DXVECTOR3 position = _bindCharacter->getPosition();
+	position.y = 0.0f;
 
 	auto & placedNode = _bindCharacter->getPlacedNode();
-	auto placedData = inGame_node::getData(placedNode);
-	float placedDistance = gFunc::Vec3Distance(position, placedData->getPosition());
+	
+	auto nextData = inGame_node::getData(pathNodeList.front()->getMember().nextNode);
+	float nextDistance = gFunc::Vec3Distance(position, nextData->getPosition());
 
-	// 현재 노드의 범위 벗어남
-	if (placedDistance < placedData->getRadius() + _bindCharacter->getInfoCharacter().colRadius)
+	// 다음 노드의 범위 들어감
+	if (nextDistance < nextData->getRadius())
 	{
-		auto nextNode = pathNodeList.front()->getMember().nextNode;
-		auto nextData = inGame_node::getData(nextNode);
-		float nextDistance = gFunc::Vec3Distance(position, nextData->getPosition());
-
-		// 다음 노드의 범위 들어감
-		if (nextData->getRadius() < nextDistance)
-		{
-			// path 진행
-			_path->advance();
-			placedNode = pathNodeList.front()->getMember().placedNode;
-
-			return;
-		}
+		// path 진행
+		_path->advance();
+		placedNode = pathNodeList.front()->getMember().placedNode;
 	}
 }
 

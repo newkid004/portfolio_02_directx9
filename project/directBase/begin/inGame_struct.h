@@ -89,6 +89,4 @@ struct timeEnemy_set
 
 	float timeNextDisappear	= 0.0f;		// 사망 시, 없어질 시간
 	float timeNextAlive		= 0.0f;		// 사망 시, 다음 출현
-
-	D3DXVECTOR2 nextPlacePos;			// 다음 목표지점
 };

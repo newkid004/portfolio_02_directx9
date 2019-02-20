@@ -3,11 +3,11 @@
 class gDigit
 {
 public :
-	static int chk		(int L, int R)		{ return L & R; }
-	static int mask		(int & L, int R)	{ return L &= R;}
-	static int put		(int & L, int R)	{ return L |= R; }
-	static int pick		(int & L, int R)	{ return L &= (~R); }
-	static int toggle	(int & L, int R)	{ return L ^= R; }
+	static bool chk		(int L, int R)		{ return 0 < (L & R); }
+	static bool mask	(int & L, int R)	{ return 0 < (L &= R);}
+	static bool put		(int & L, int R)	{ return 0 < (L |= R); }
+	static bool pick	(int & L, int R)	{ return 0 < (L &= (~R)); }
+	static bool toggle	(int & L, int R)	{ return 0 < (L ^= R); }
 
 private :
 	gDigit() {};
