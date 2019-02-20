@@ -27,6 +27,9 @@ private :
 	void findPath2Player(void);
 
 public :
+
+
+public :
 	characterBase* & getBindCharacter(void) { return _bindCharacter; }
 	aStar_path* & getPath(void) { return _path; }
 

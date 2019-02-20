@@ -52,7 +52,9 @@ void characterBase::update(void)
 {
 	patternMeshDup::update();
 
-	_controller->update();
+	int charStatus = _infoCharacter.status;
+	if (!gDigit::chk(charStatus, DIGIT::CHAR::DEAD))
+		_controller->update();
 
 	updateLanding();
 	updateMove();
