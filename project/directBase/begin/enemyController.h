@@ -14,6 +14,7 @@ public :
 
 protected :
 	void update2bit(void);
+	void updateFootPrint(void) override;
 
 public :
 	timeEnemy_set & refInfoTimeEnemy(void) { return _infoTimeEnemy; }

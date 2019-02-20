@@ -18,9 +18,9 @@ public :
 	virtual void update(void);
 
 protected :
-	void updatePlace(void);
-	void updatePath(void);
-	void updateFootPrint(void);
+	virtual void updatePlace(void);
+	virtual void updatePath(void);
+	virtual void updateFootPrint(void);
 
 private :
 	void createPath2Player(void);
