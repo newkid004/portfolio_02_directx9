@@ -610,6 +610,9 @@
     <Filter Include="classes\global\utility\object\renderObject\mesh\staticMesh\triggerMesh">
       <UniqueIdentifier>{054bc4be-386c-4663-b6d2-f386a1fd83e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\object\renderObject\mesh\wallMesh">
+      <UniqueIdentifier>{cc428ae8-7a0d-46ca-87bf-90edce3805ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1059,6 +1062,9 @@
     <ClInclude Include="triggerMesh.h">
       <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\triggerMesh</Filter>
     </ClInclude>
+    <ClInclude Include="wallMesh.h">
+      <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1319,9 +1325,6 @@
     <ClCompile Include="nodeMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\nodeMesh</Filter>
     </ClCompile>
-    <ClCompile Include="sceneInGame.cpp">
-      <Filter>main\classes\scene\02_inGame</Filter>
-    </ClCompile>
     <ClCompile Include="weaponBase.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\weapon\_base</Filter>
     </ClCompile>
@@ -1435,6 +1438,12 @@
     </ClCompile>
     <ClCompile Include="triggerMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\staticMesh\triggerMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneInGame.cpp">
+      <Filter>main\classes\scene\02_inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="wallMesh.cpp">
+      <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

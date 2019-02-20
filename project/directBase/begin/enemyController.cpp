@@ -14,6 +14,7 @@
 #include "gFunc.h"
 
 using DIGIT = inGame_digit;
+using VALUE = inGame_value;
 
 #include "aStar_node.h"
 #include "inGame_node.h"
@@ -24,6 +25,9 @@ enemyController::enemyController(characterBase * bindCharacter) :
 	controllerBase(bindCharacter)
 {
 	gDigit::put(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::IDLE);
+	baseBit();
+	_infoTimeEnemy.timeNextActive = MN_TIME->getRunningTime();
+	_delay = VALUE::enemy::delayHangOut;
 }
 
 enemyController::~enemyController()
@@ -32,13 +36,25 @@ enemyController::~enemyController()
 
 void enemyController::update(void)
 {
-	controllerBase::update();
+	if (_infoTimeEnemy.timeNextActive <= MN_TIME->getRunningTime())
+	{
+		controllerBase::update();
+		_infoTimeEnemy.timeNextActive = MN_TIME->getRunningTime() + _delay;
+	}
+	update2bit();
 }
 
 void enemyController::update2bit(void)
 {
+	/*
+	필요 성분
+	플레이어까지의 거리
+	다음 노드와의 방향 벡터
+	*/
+
 	// 기본 상태
-	_path->getDistance();
+	if (_path->getDistance());
+
 	// 경계 상태
 		//둘러보고
 		//회전하고
@@ -51,12 +67,7 @@ void enemyController::update2bit(void)
 	// 피격 상태
 }
 
-void enemyController::changeBindBit(aniDefine::ANIBIT minusBit, int plusBit)
-{
-	CHANGE_BIT(_bindCharacter->getNextBit(),minusBit, plusBit);
-}
-
-void enemyController::basebit(void)
+void enemyController::baseBit(void)
 {
 	int random = gFunc::rndInt(0, 3);
 
@@ -64,6 +75,19 @@ void enemyController::basebit(void)
 	if (basePath.find("female") != std::string::npos)
 	{
 		changeBindBit(aniDefine::ANIBIT::TYPE, ATYPE_ZOMBIE_FEMALE);
+		changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_IDLE);
+		switch (random)
+		{
+		case 0:
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_IDLE_NEUTRAL1);
+			break;
+		case 1:
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_IDLE_NEUTRAL2);
+			break;
+		case 2:
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_IDLE_NEUTRAL3);
+			break;
+		}
 	}
 	else
 	{
@@ -109,4 +133,9 @@ void enemyController::updateFootPrint(void)
 				nextPlacePos.y),
 			true, true);
 	}
+}
+
+void enemyController::changeBindBit(aniDefine::ANIBIT minusBit, int plusBit)
+{
+	CHANGE_BIT(_bindCharacter->getNextBit(), minusBit, plusBit);
 }

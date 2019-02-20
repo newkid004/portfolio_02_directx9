@@ -89,7 +89,6 @@ int direct3dApplication::msgLoop(void)
 		GET_TIME_MANAGER()->update();
 		GET_INPUT_MANAGER()->update();
 		GET_EVENT_MANAGER()->update();
-		GET_BULLET_MANAGER()->update();
 
 		// 버퍼 클리어
 		GET_DEVICE_MANAGER()->getDevice()->Clear(
