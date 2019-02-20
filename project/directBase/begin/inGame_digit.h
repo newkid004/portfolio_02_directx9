@@ -23,10 +23,15 @@ struct inGame_digit
 	// 적용 : 캐릭터, AI
 	struct CHAR
 	{
-		constexpr static int ALERT		= 1 << 0x0;		// 인식 여부
-		constexpr static int APPROACH	= 1 << 0x1;		// 접근 여부
-		constexpr static int ADJACENT	= 1 << 0x2;		// 인접 여부
-		constexpr static int ATTACK		= 1 << 0x3;		// 공격 여부
+		constexpr static int IDLE		= 1 << 0x0;		// 기본 상태
+		constexpr static int ALERT		= 1 << 0x1;		// 경계 상태
+		constexpr static int APPROACH	= 1 << 0x2;		// 접근 여부
+		constexpr static int ADJACENT	= 1 << 0x3;		// 인접 여부
+		constexpr static int ATTACK		= 1 << 0x4;		// 공격 여부
+		constexpr static int LROTATE	= 1 << 0x5;		// l회전 여부
+		constexpr static int RROTATE	= 1 << 0x6;		// r회전 여부
+		constexpr static int BESHOT		= 1 << 0x7;		// 피격 상태
+		constexpr static int FALL		= 1 << 0x8;		// 떨어지는 상태
 
 		constexpr static int DEAD		= 1 << 0x1f;
 
