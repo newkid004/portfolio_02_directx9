@@ -19,7 +19,7 @@ struct move_set
 	int status				= 0;
 
 	float accelSpeed		= 4.0f;					// 초당 가속도
-	float maximumSpeed		= 0.5f;					// 최대 이동속력
+	float maximumSpeed		= 0.3f;					// 최대 이동속력
 	float currentSpeed		= 0.0f;					// 현재 이동속도
 
 	float velVertical		= 0.0f;					// 수직 속도
@@ -58,6 +58,7 @@ struct weapon_set
 		static constexpr int rifle = 1;
 		static constexpr int shotgun = 2;
 		static constexpr int healkit = 3;
+		static constexpr int normal = 4;
 	};
 
 	int type = 0;
@@ -79,4 +80,13 @@ struct weapon_set
 
 	float nextFireTime		= 0.0f;		// 다음 발사 가능시간
 	float nextReloadTime	= 0.0f;		// 다음 재장전 가능시간
+};
+
+// < time >
+struct timeEnemy_set
+{
+	float timeNextActive	= 0.0f;		// 다음 행동 대기 시간
+
+	float timeNextDisappear	= 0.0f;		// 사망 시, 없어질 시간
+	float timeNextAlive		= 0.0f;		// 사망 시, 다음 출현
 };

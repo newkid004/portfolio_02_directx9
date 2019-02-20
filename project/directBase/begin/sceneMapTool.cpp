@@ -24,6 +24,8 @@
 #include "staticMesh.h"
 #include "skinnedMesh.h"
 #include "pickRay.h"
+#include "lightBase.h"
+#include "skyBox.h"
 
 sceneMapTool::~sceneMapTool()
 {
@@ -33,6 +35,7 @@ sceneMapTool::~sceneMapTool()
 	SAFE_DELETE(_io);
 
 	SAFE_DELETE(_mapObject);
+	SAFE_DELETE(_skybox);
 }
 
 void sceneMapTool::init(void)
@@ -41,8 +44,8 @@ void sceneMapTool::init(void)
 
 	ZeroMemory(&_mousePrev, sizeof(POINT));
 
-	// _mapObject = new mapObject();
-	// _mapObject->init();
+	_mapObject = new mapObject();
+	_mapObject->init();
 
 	_window	= new maptool_window();
 	_field	= new maptool_field(_mapObject);
@@ -55,6 +58,7 @@ void sceneMapTool::init(void)
 
 	_currentBrush = _mBrush.find("prop")->second;
 
+	_skybox = createSkyBox();
 	// _grid->setVisible(false);
 	// ((cameraControlable*)_camera)->setVisible(false);
 }
@@ -71,6 +75,7 @@ void sceneMapTool::update(void)
 
 	_window->update();
 	_field->update();
+	_skybox->update();
 }
 
 void sceneMapTool::draw(void)
@@ -80,6 +85,8 @@ void sceneMapTool::draw(void)
 	drawSelection();
 
 	_field->draw();
+
+	//_skybox->draw();
 }
 
 void sceneMapTool::drawUI(void)
@@ -108,7 +115,7 @@ void sceneMapTool::updateControl_brush(void)
 			_currentBrush = _mBrush.find("node")->second;
 
 		else if (viewData->_baseType & TYPE::TRIGGER)
-			_currentBrush = _mBrush.find("prop")->second;
+			_currentBrush = _mBrush.find("trigger")->second;
 
 		else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
 			_currentBrush = _mBrush.find("prop")->second;
@@ -124,7 +131,7 @@ void sceneMapTool::updateControl_brush(void)
 				_currentBrush = _mBrush.find("node")->second;
 
 			else if (viewData->_baseType & TYPE::TRIGGER)
-				_currentBrush = _mBrush.find("prop")->second;
+				_currentBrush = _mBrush.find("trigger")->second;
 
 			else if (viewData->_baseType & TYPE::PROP | TYPE::BUMP)
 				_currentBrush = _mBrush.find("prop")->second;
@@ -139,4 +146,17 @@ void sceneMapTool::drawSelection(void)
 	auto & selectionList = _field->getSet().selectionObject;
 	if (!selectionList.empty())
 		_render->drawOutList(selectionList);
+}
+
+skyBox * sceneMapTool::createSkyBox(void)
+{
+	skyBox::mParam stParameters = {
+		"resource/effect/skybox.fx",
+		"resource/texture/skybox/sky.dds"
+	};
+
+	auto pSkybox = new skyBox(stParameters);
+	pSkybox->setScale(D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f));
+
+	return pSkybox;
 }

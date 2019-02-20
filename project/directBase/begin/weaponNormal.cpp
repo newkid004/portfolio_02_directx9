@@ -10,7 +10,7 @@ using DIGIT = inGame_digit;
 weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 	:weaponBase::weaponBase(linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::Type::normal);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::normal);
 	_infoWeapon.damage = damage;
 
 	D3DXMatrixIdentity(&_baseMatrix[0]);

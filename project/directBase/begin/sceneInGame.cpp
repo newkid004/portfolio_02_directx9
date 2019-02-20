@@ -32,6 +32,8 @@ void sceneInGame::update(void)
 
 	SGT_GAME->update();
 	GET_BULLET_MANAGER()->update();
+
+	MN_EVENT->update();
 }
 
 void sceneInGame::draw(void)
@@ -40,6 +42,8 @@ void sceneInGame::draw(void)
 
 	SGT_GAME->draw();
 	GET_BULLET_MANAGER()->draw();
+
+	MN_EVENT->draw();
 }
 
 void sceneInGame::drawUI(void)

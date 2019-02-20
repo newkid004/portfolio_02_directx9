@@ -11,7 +11,7 @@ using DIGIT = inGame_digit;
 weaponHealkit::weaponHealkit(staticMesh::mParam param, characterBase* linkPatternDup)
 : weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::Type::healkit);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::healkit);
 
 	D3DXMATRIXA16 stRotation;
 	D3DXMatrixRotationYawPitchRoll(&stRotation,

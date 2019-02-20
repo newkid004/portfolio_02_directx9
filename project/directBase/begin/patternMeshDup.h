@@ -32,6 +32,7 @@ private:
 
 public:
 	int &getNextBit() { return _controlInfo.NextMotionBit; }
+	patternMesh* &getOriginMesh() { return _bindPatternMesh; }
 	D3DXMATRIXA16 &getFinalNeckMatrix() { return _finalNeckMatrix; }
 	D3DXMATRIXA16 &getLeftHandMatrix() { return _finalHandMatrix[0]; }
 	ACInfo &getAControllInfo(void) { return _controlInfo; }

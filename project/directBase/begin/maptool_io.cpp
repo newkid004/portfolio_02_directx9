@@ -11,6 +11,7 @@
 #include "staticMesh.h"
 #include "mapObject.h"
 #include "nodeMesh.h"
+#include "triggerMesh.h"
 
 #include "aStar_grape_bind.h"
 #include "aStar_path.h"
@@ -60,8 +61,14 @@ void maptool_io::buildObject()
 		if (vData->_baseType & IO_DATA::baseType::NODE)
 			continue;	// grape에서 따로 적용
 
+		else if (vData->_baseType & IO_DATA::baseType::WALL)
+			IO_DATA::apply((IO_DATA::OBJ::WALL*)vData, (wallMesh*)vObj);
+
 		else if (vData->_baseType & IO_DATA::baseType::BUMP)
 			IO_DATA::apply((IO_DATA::OBJ::BUMP*)vData, (staticMesh*)vObj);
+
+		else if (vData->_baseType & IO_DATA::baseType::TRIGGER)
+			continue;	// trigger에서 따로 적용
 
 		else if (vData->_baseType & IO_DATA::baseType::CHAR)
 			IO_DATA::apply((IO_DATA::OBJ::CHAR*)vData, (skinnedMesh*)vObj);
@@ -97,7 +104,23 @@ void maptool_io::buildTrigger(void)
 	SAFE_DELETE(j);
 	j = new json;
 
+	auto & vDataList = _bindData->getSet().dataList;
+	auto & vObjList = _bindData->getSet().objList;
+	
+	int writeCount = -1;
+	for (int i = 0; i < vDataList.size(); ++i)
+	{
+		auto & vData = vDataList[i];
+		auto & vObj = vObjList[i];
 
+		if ((vData->_baseType & IO_DATA::baseType::TRIGGER) == 0)
+			continue;
+
+		if (vData->_baseType & IO_DATA::baseType::TRIGGER)
+			IO_DATA::apply((IO_DATA::OBJ::TRIGGER*)vData, (triggerMesh*)vObj);
+
+		vData->write((*j)[++writeCount]);
+	}
 }
 
 void maptool_io::buildGrape(void)
@@ -155,6 +178,17 @@ void maptool_io::spreadObject(void)
 
 			additionData = convert;
 		}
+		else if (baseType & IO_DATA::baseType::TRIGGER)
+			continue;	// trigger에서 처리
+
+		else if (baseType & IO_DATA::baseType::WALL)
+		{
+			IO_DATA::OBJ::WALL* convert = new IO_DATA::OBJ::WALL();
+			IO_DATA::parse(convert, js);
+			IO_DATA::create((wallMesh**)&additionObject, convert);
+
+			additionData = convert;
+		}
 		else if (baseType & IO_DATA::baseType::BUMP)
 		{
 			IO_DATA::OBJ::BUMP* convert = new IO_DATA::OBJ::BUMP();
@@ -178,24 +212,6 @@ void maptool_io::spreadObject(void)
 			vObjList.push_back(additionObject);
 		}
 	}
-
-	/*
-	for (int i = 0; i < vDataList.size(); ++i)
-	{
-		auto & vData = vDataList[i];
-		auto & vObj = vObjList[i];
-
-		if (vData->_baseType & IO_DATA::baseType::CHAR)
-		{
-			IO_DATA::apply((IO_DATA::OBJ::CHAR*)vData, (skinnedMesh*)vObj);
-		}
-		else if (vData->_baseType & IO_DATA::baseType::PROP)
-		{
-			IO_DATA::apply((IO_DATA::OBJ::PROP*)vData, (staticMesh*)vObj);
-		}
-		vData->write((*j)[i]);
-	}
-	*/
 }
 
 void maptool_io::spreadField(void)
@@ -219,6 +235,34 @@ void maptool_io::spreadField(void)
 
 void maptool_io::spreadTrigger(void)
 {
+	auto iter = _mJson.find("trigger");
+	json*& j = iter->second;
+
+	auto & vDataList = _bindData->getSet().dataList;
+	auto & vObjList = _bindData->getSet().objList;
+
+	for (auto js : *j)
+	{
+		baseObject* additionObject = nullptr;
+		IO_DATA::OBJ::BASE* additionData = nullptr;
+
+		int baseType = js["baseType"];
+
+		if (baseType & IO_DATA::baseType::TRIGGER)
+		{
+			IO_DATA::OBJ::TRIGGER* convert = new IO_DATA::OBJ::TRIGGER();
+			IO_DATA::parse(convert, js);
+			IO_DATA::create((triggerMesh**)&additionObject, convert);
+
+			additionData = convert;
+		}
+
+		if (additionObject && additionData)
+		{
+			vDataList.push_back(additionData);
+			vObjList.push_back(additionObject);
+		}
+	}
 }
 
 void maptool_io::spreadGrape(void)
@@ -252,6 +296,7 @@ void maptool_io::write(void)
 
 	buildObject();
 	buildField();
+	buildTrigger();
 	buildGrape();
 
 	for (auto & i : _mJson)
@@ -279,5 +324,6 @@ void maptool_io::read(void)
 
 	spreadObject();
 	spreadField();
+	spreadTrigger();
 	spreadGrape();
 }

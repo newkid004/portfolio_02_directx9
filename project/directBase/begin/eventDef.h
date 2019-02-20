@@ -28,7 +28,7 @@ struct EVENT
 		MAKE_EV(0x6, WINDOW);
 		MAKE_EV(0x7, SYSTEM);
 		MAKE_EV(0x8, CHARACTER);
-		MAKE_EV(0x9, EVEMY);
+		MAKE_EV(0x9, ENEMY);
 		MAKE_EV(0xA, TRIGGER);
 	};
 
@@ -132,12 +132,13 @@ struct EVENT
 
 		struct ENEMY
 		{
-			DEF_TYPE WALK		= 0x1 << shiftCount;
-			DEF_TYPE RUN		= 0x2 << shiftCount;
-			DEF_TYPE ATTACK		= 0x3 << shiftCount;
-			DEF_TYPE FALL		= 0x4 << shiftCount;
-			DEF_TYPE ONHIT		= 0x5 << shiftCount;
-			DEF_TYPE DEATH		= 0x6 << shiftCount;
+			MAKE_EV(0x1, WALK);
+			MAKE_EV(0x2, RUN);
+			MAKE_EV(0x3, ATTACK);
+			MAKE_EV(0x4, FALL);
+			MAKE_EV(0x5, ONHIT);
+			MAKE_EV(0x6, DEATH);
+			MAKE_EV(0x7, RESURRECTION);
 		};
 
 		struct ITEM

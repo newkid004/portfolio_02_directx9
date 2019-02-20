@@ -74,7 +74,19 @@ void weaponManager::CreateWeaponInfo(void)
 
 weaponBase * weaponManager::createWeapon(int weaponType)
 {
-	weaponBase* result = new weaponBase(_vWeaponParam[weaponType], SGT_GAME->getSet().player);
+	weaponBase* result = nullptr;
+
+	auto & weaponParam = _vWeaponParam[weaponType];
+	auto player = SGT_GAME->getSet().player;
+
+	switch (weaponType)
+	{
+	case weapon_set::type::rifle	: result = new weaponRifle(weaponParam, player); break;
+	case weapon_set::type::shotgun	: result = new weaponShotgun(weaponParam, player, 1); break;
+	case weapon_set::type::healkit	: result = new weaponHealkit(weaponParam, player); break;
+	case weapon_set::type::normal	: result = new weaponNormal(player, 1); break;
+	}
+
 	result->getInfoWeapon() = _vWeaponInfo[weaponType];
 	return result;
 }

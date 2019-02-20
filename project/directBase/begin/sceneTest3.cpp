@@ -50,7 +50,7 @@ void sceneTest3::init(void)
 	//weaponShotgun* shotgun = new weaponShotgun(MN_WEAPON->getParam(weaponManager::weaponType::shotgun),
 	//	_char, 1);
 	//shotgun->setScale(0.03f);
-	weaponHealkit* healkit = new weaponHealkit(MN_WEAPON->getParam(weaponManager::Type::healkit),
+	weaponHealkit* healkit = new weaponHealkit(MN_WEAPON->getParam(weapon_set::type::healkit),
 		_char);
 	healkit->setScale(0.03f);
 

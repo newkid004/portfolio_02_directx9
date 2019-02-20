@@ -14,8 +14,9 @@
 #include "staticMesh.h"
 #include "skinnedMesh.h"
 #include "nodeMesh.h"
-#include "triggerBase.h"
+#include "triggerMesh.h"
 
+#include "triggerBase.h"
 #include "triggerFactory.h"
 
 typedef maptool_data_catalog CATALOG;
@@ -250,16 +251,9 @@ windowCtlogMaptool * maptool_window::create_mvFile(void)
 
 	auto result = new windowCtlogMaptool(winInfo, D3DXVECTOR2(1, 3));
 
-	vector<CATALOG::OBJ::FILE*> content;
-	createContent_file(content);
-
-	for (auto i : content)
-		result->addItem(i);
-
-
 	for (int i = 0; i < 3; ++i)
 	{
-		auto b = new maptool_data_catalog::OBJ::FILE();
+		auto b = new maptool_data_catalog::OBJ::BASE();
 
 		string filename = "map_" + to_string(i) + ".png";
 		b->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/file/" + filename);
@@ -342,6 +336,10 @@ void maptool_window::createContent_prop(std::vector<CATALOG::OBJ::PROP*>& vConte
 	inputContent("coffeeammo");
 	inputContent("survival_manual1");
 	inputContent("survival_manual2");
+
+	tPath = "resource/texture/maptool/catalog/prop/";
+	inputContent("building");
+	inputContent("floor3Plane");
 }
 
 void maptool_window::createContent_bump(std::vector<CATALOG::OBJ::BUMP*>& vContent)
@@ -430,21 +428,17 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 		CATALOG::create(&item, &param);
 		item->_standImage = MN_SRC->getSpriteTexture(tPath);
 		
+		vContent.push_back(item);
+
 		item->_triggerType = vContent.size();
 		item->_object->refBind() = triggerFactory::createTrigger2type(
 			item->_triggerType,
 			(staticMesh*)item->_object);
-
-		vContent.push_back(item);
 	};
 
 	inputContent("shotgun");
 	inputContent("rifle");
 	inputContent("medikit");
-}
-
-void maptool_window::createContent_file(std::vector<CATALOG::OBJ::FILE*>& vContent)
-{
 }
 
 buttonStatic * maptool_window::createButtonUnderBar(windowBase * bindWindow, const std::string & texture, float offsetNumber)

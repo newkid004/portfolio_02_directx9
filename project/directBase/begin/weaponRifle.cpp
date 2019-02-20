@@ -10,7 +10,7 @@
 weaponRifle::weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::Type::rifle);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::rifle);
 	_infoWeapon.damage = damage;
 
 	/*¿Þ¼Õ

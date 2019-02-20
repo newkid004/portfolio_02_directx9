@@ -20,6 +20,7 @@ inline void inGame_grape::putData(T & data, int listInterval, D3DXVECTOR3 & posi
 		float distance = gFunc::Vec2Distance(
 			D3DXVECTOR2(contant->getPosition().x, contant->getPosition().z),
 			D3DXVECTOR2(position.x, position.z));
+
 		if (distance < contant->getRadius() + radius)
 		{
 			std::list<T>* viewList = ((std::list<T>*)&contant->getListSet()) + listInterval;
