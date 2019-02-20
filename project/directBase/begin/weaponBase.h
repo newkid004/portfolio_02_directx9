@@ -43,7 +43,7 @@ protected :
 	virtual void reloadDo(void);
 	virtual void reloadPost(void);
 
-	virtual void reloadBullet() PURE;
+	virtual void reloadBullet() {};
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]);
 
 public :
