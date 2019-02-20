@@ -30,9 +30,9 @@ controllerBase::~controllerBase()
 
 void controllerBase::update(void)
 {
-	updatePlace();
-	updatePath();
-	updateFootPrint();
+	updatePlace();			// 현재 노드를 업데이트
+	updatePath();			// 길찾기 계산(플레이어를 향한)
+	updateFootPrint();		// 지나온 노드를 지운다
 }
 
 void controllerBase::updatePlace(void)

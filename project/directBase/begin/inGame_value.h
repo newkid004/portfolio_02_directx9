@@ -21,6 +21,6 @@ struct inGame_value
 		defType delayAlert		= 0.5f;		// 경고 상태	( 탐색 활성화 )
 		defType delayMove		= 0.05f;	// 이동 상태	( 짧은 탐색주기 )
 		
-		defType delayAttack		= 1.25f;	// 공격 간격
+		//defType delayAttack		= 1.25f;	// 공격 간격
 	};
 };

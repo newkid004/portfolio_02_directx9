@@ -3,6 +3,8 @@
 #include "controllerBase.h"
 
 #include "inGame_struct.h"
+#include "AnimationDef.h"
+
 
 class enemyController : public controllerBase
 {
@@ -15,6 +17,9 @@ public :
 protected :
 	void update2bit(void);
 
+	void changeBindBit(aniDefine::ANIBIT minusBit, int plusBit);
+
+	virtual void basebit(void);
 public :
 	timeEnemy_set & refInfoTimeEnemy(void) { return _infoTimeEnemy; }
 
