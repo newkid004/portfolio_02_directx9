@@ -334,6 +334,19 @@ void gFunc::getNormal(D3DXVECTOR3 * out, D3DXVECTOR3 * v0, D3DXVECTOR3 * v1, D3D
 	D3DXVec3Normalize(out, out);
 }
 
+float gFunc::getAngle(D3DXVECTOR2 v1, D3DXVECTOR2 v2)
+{
+	D3DXVec2Normalize(&v1, &v1);
+	D3DXVec2Normalize(&v2, &v2);
+
+	float angle = std::acosf(D3DXVec2Dot(&v1, &v2));
+
+	if (v1.y < v2.y)
+		angle = -angle;
+
+	return angle;
+}
+
 float gFunc::getAngle(D3DXVECTOR3 v1, D3DXVECTOR3 v2)
 {
 	D3DXVec3Normalize(&v1, &v1);

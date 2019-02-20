@@ -6,7 +6,7 @@
 weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::shotgun);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::shotgun);
 	_infoWeapon.damage = damage;
 
 	D3DXMATRIXA16 stRotation;
@@ -37,8 +37,8 @@ void weaponShotgun::firePre(void)
 void weaponShotgun::fireDo(void)
 {
 	weaponBase::fireDo();
-	//ÃÑ¾Ë ¹ß»ç
-	// 12¹ß
+	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
+		1.0f, bulletBase::EBulletType::B_SHOTGUN);
 }
 
 void weaponShotgun::firePost(void)
@@ -55,12 +55,17 @@ void weaponShotgun::reloadPre(void)
 void weaponShotgun::reloadDo(void)
 {
 	weaponBase::reloadDo();
-	++_infoWeapon.current;
 }
 
 void weaponShotgun::reloadPost(void)
 {
 	weaponBase::reloadPost();
+}
+
+void weaponShotgun::reloadBullet()
+{
+	++_infoWeapon.current;
+	--_infoWeapon.maximum;
 }
 
 void weaponShotgun::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])

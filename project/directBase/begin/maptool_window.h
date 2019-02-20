@@ -53,7 +53,6 @@ private :
 	void createContent_bump(std::vector<maptool_data_catalog::OBJ::BUMP*> & vContent);
 	void createContent_node(std::vector<maptool_data_catalog::OBJ::NODE*> & vContent);
 	void createContent_trigger(std::vector<maptool_data_catalog::OBJ::TRIGGER*> & vContent);
-	void createContent_file(std::vector<maptool_data_catalog::OBJ::FILE*> & vContent);
 
 	buttonStatic* createButtonUnderBar(windowBase* bindWindow, const std::string & texture, float offsetNumber);
 

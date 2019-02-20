@@ -17,7 +17,7 @@ public :
 
 protected :
 	aStar_node*		_placedNode		= nullptr;	// delete : disable (aStar_grape)
-	weaponBase*		_weapon			= nullptr;	// delete : disable (weaponManager)
+	weaponBase*		_weapon			= nullptr;	// delete : enable
 	controllerBase*	_controller		= nullptr;	// delete : enable
 
 	character_set	_infoCharacter;
@@ -43,10 +43,12 @@ private :
 
 public :
 	// 주체 이동 : local always
-	void moveDo(D3DXVECTOR3 & direction);
+	void moveDo(int direction);
 
 	// 외적 이동 : world always
 	void moveBe(D3DXVECTOR3 & direction);
+
+	void jump(void);
 
 public :
 	aStar_node* &		getPlacedNode(void)		{ return _placedNode; }

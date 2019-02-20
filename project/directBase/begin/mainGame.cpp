@@ -18,8 +18,10 @@ void mainGame::init(void)
 	direct3dApplication::init();
 	_bindScene = &MN_SCENE->getCurrentScene();
 
-	//*/  // current
+	/*/	// current save
 	MN_SCENE->add("sceneMapTool", new sceneMapTool());
+
+	/*/	// current
 	MN_SCENE->add("sceneInGame", new sceneInGame());
 
 	/*/ // test complete
@@ -28,19 +30,17 @@ void mainGame::init(void)
 	MN_SCENE->add("scene3", new sceneTest3);			// character
 
 	/*/ // test current
-	MN_SCENE->add("weaponT", new weaponTest);
 
 	/*/ // test save
 	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
 	MN_SCENE->add("animation", new AnimationTester);
 	MN_SCENE->add("wallC", new wallCollision);
 
+	MN_SCENE->add("weaponT", new weaponTest);
+
 	//*/
 
-	MN_SCENE->change("wallC");
-	//MN_SCENE->change("scene3");
-	//MN_SCENE->change("scene3");
-	MN_SCENE->change("sceneCollisionTest");
+	MN_SCENE->change("sceneInGame");
 }
 
 void mainGame::update(void)

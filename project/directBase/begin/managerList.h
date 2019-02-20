@@ -11,6 +11,7 @@
 #include "eventManager.h"
 #include "textManager.h"
 #include "bulletManager.h"
+#include "weaponManager.h"
 
 #include "gameSystem.h"
 
@@ -21,5 +22,4 @@
 #define MN_TIME		GET_TIME_MANAGER()
 #define MN_SRC		GET_RESOURCE_MANAGER()
 #define MN_SND		GET_SOUND_MANAGER()
-#define MN_EVENT	GET_EVENT_MANAGER()
 #define MN_BULLET	GET_BULLET_MANAGER()

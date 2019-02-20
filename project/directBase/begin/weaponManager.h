@@ -5,17 +5,10 @@
 #include "inGame_struct.h"
 #include "staticMesh.h"
 
+class weaponBase;
+
 class weaponManager : public singletonBase<weaponManager>
 {
-public:
-	static enum class weaponType
-	{
-		rifle = 0,
-		shotgun = 1,
-		healkit = 2,
-		normal = 3
-	};
-
 private:
 
 	std::vector<staticMesh::mParam> _vWeaponParam;
@@ -26,8 +19,10 @@ private:
 	void CreateWeaponInfo(void);
 
 public:
-	staticMesh::mParam getParam(weaponManager::weaponType index) { return _vWeaponParam[(int)index]; }
-	weapon_set getWeaponInfo(weaponManager::weaponType index) { return _vWeaponInfo[(int)index]; }
+	staticMesh::mParam getParam(int index) { return _vWeaponParam[index]; }
+	weapon_set getWeaponInfo(int index) { return _vWeaponInfo[index]; }
+	
+	weaponBase* createWeapon(int weaponType);
 
 public:
 	weaponManager(void);

@@ -16,7 +16,7 @@ void triggerBase::update(void)
 	_isPick = pickCheck();
 
 	if (_isPick && MN_KEY->keyPress(DIK_E) && _active)
-		_active();
+		_active(this);
 }
 
 void triggerBase::draw(void)
@@ -27,20 +27,28 @@ void triggerBase::draw(void)
 
 bool triggerBase::pickCheck(void)
 {
-
 	pick::ray pRay;
-	pick::createPickRay(&pRay, &_bindMesh->getMatrixFinal());
+	pick::createPickRay(&pRay);
 
-	if (50.0f < gFunc::Vec3Distance(_bindMesh->getPosition(), pRay.origin))
+	if (100.0f < gFunc::Vec3Distance(_bindMesh->getPosition(), pRay.origin))
 		return false;
 
-	if (pick::chkPick(&pRay, &_bindMesh->getBoundingSphere()))
+	pick::ray postRay;
+	pick::applyMatrix(&postRay, &pRay, &_bindMesh->getMatrixFinal());
+
+	if (pick::chkPick(&postRay, &_bindMesh->getBoundingSphere()))
 	{
 		pick::info pInfo;
-		pick::chkPick(&pInfo, &pRay, _bindMesh->getMeshSet()->mesh);
+		pick::chkPick(&pInfo, &postRay, _bindMesh->getMeshSet()->mesh);
 
 		return pInfo.isHit == TRUE;
 	}
 
 	return false;
+}
+
+triggerBase::triggerBase(staticMesh * bindMesh) :
+	_bindMesh(bindMesh)
+{
+	if (bindMesh) bindMesh->refBind() = this;
 }

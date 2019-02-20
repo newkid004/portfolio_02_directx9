@@ -6,6 +6,7 @@ struct character_set
 {
 	int status				= 0;
 
+	float height			= 20.0f;
 	float colRadius			= 1.0f;
 
 	int maxHp				= 1;
@@ -57,6 +58,7 @@ struct weapon_set
 		static constexpr int rifle = 1;
 		static constexpr int shotgun = 2;
 		static constexpr int healkit = 3;
+		static constexpr int normal = 4;
 	};
 
 	int type = 0;
@@ -78,4 +80,13 @@ struct weapon_set
 
 	float nextFireTime		= 0.0f;		// 다음 발사 가능시간
 	float nextReloadTime	= 0.0f;		// 다음 재장전 가능시간
+};
+
+// < time >
+struct timeEnemy_set
+{
+	float timeNextActive	= 0.0f;		// 다음 행동 대기 시간
+
+	float timeNextDisappear	= 0.0f;		// 사망 시, 없어질 시간
+	float timeNextAlive		= 0.0f;		// 사망 시, 다음 출현
 };

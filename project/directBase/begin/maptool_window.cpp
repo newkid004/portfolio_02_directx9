@@ -14,6 +14,10 @@
 #include "staticMesh.h"
 #include "skinnedMesh.h"
 #include "nodeMesh.h"
+#include "triggerMesh.h"
+
+#include "triggerBase.h"
+#include "triggerFactory.h"
 
 typedef maptool_data_catalog CATALOG;
 
@@ -223,8 +227,8 @@ windowCtlogMaptool * maptool_window::create_mvTrigger(void)
 
 	auto result = new windowCtlogMaptool(winInfo);
 
-	vector<CATALOG::OBJ::NODE*> content;
-	createContent_node(content);
+	vector<CATALOG::OBJ::TRIGGER*> content;
+	createContent_trigger(content);
 
 	for (auto i : content)
 		result->addItem(i);
@@ -247,16 +251,9 @@ windowCtlogMaptool * maptool_window::create_mvFile(void)
 
 	auto result = new windowCtlogMaptool(winInfo, D3DXVECTOR2(1, 3));
 
-	vector<CATALOG::OBJ::FILE*> content;
-	createContent_file(content);
-
-	for (auto i : content)
-		result->addItem(i);
-
-
 	for (int i = 0; i < 3; ++i)
 	{
-		auto b = new maptool_data_catalog::OBJ::FILE();
+		auto b = new maptool_data_catalog::OBJ::BASE();
 
 		string filename = "map_" + to_string(i) + ".png";
 		b->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/file/" + filename);
@@ -421,19 +418,27 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 {
 	CATALOG::OBJ::TRIGGER* item = nullptr;
 	staticMesh::mParam param;
-
-	// weapon
-	param.meshFilePath = "resource/mesh/Elementalist/Elementalist.x";
 	param.effectFilePath = "resource/effect/example_15.fx";
 
-	CATALOG::create(&item, &param);
-	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/00_test.PNG");
+	string xPath = "resource/mesh/L4D1/items/";
+	string tPath = "resource/texture/maptool/catalog/00_test.PNG";
 
-	vContent.push_back(item);
-}
+	function<void(char*)> inputContent = [&](char* fName)->void {
+		param.meshFilePath = xPath + fName + ".X";
+		CATALOG::create(&item, &param);
+		item->_standImage = MN_SRC->getSpriteTexture(tPath);
+		
+		vContent.push_back(item);
 
-void maptool_window::createContent_file(std::vector<CATALOG::OBJ::FILE*>& vContent)
-{
+		item->_triggerType = vContent.size();
+		item->_object->refBind() = triggerFactory::createTrigger2type(
+			item->_triggerType,
+			(staticMesh*)item->_object);
+	};
+
+	inputContent("shotgun");
+	inputContent("rifle");
+	inputContent("medikit");
 }
 
 buttonStatic * maptool_window::createButtonUnderBar(windowBase * bindWindow, const std::string & texture, float offsetNumber)

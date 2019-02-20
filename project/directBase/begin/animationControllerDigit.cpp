@@ -39,7 +39,6 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 	if (acInfo.CurrentMotionBit != acInfo.NextMotionBit)
 	{
 		acInfo.CurrentMotionBit = acInfo.NextMotionBit;
-
 		if (acInfo.motionVector.size() != 0)
 		{
 			if (acInfo.leftMixTime > 0)
@@ -60,7 +59,7 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 			acInfo.nextMotionVector = check.motionArray;
 			acInfo.nextTimeScale = check.timeScale;
 			//acInfo.isNextCancel = check.cancel;
-			acInfo.maxMixTime = 0.2f / max(acInfo.timeScale, acInfo.nextTimeScale);
+			acInfo.maxMixTime = 0.4f / (acInfo.timeScale + acInfo.nextTimeScale);
 			acInfo.leftMixTime = acInfo.maxMixTime;
 			acInfo.trackPositionB = 0.0f;
 			acInfo.trackWeightB = 0.0f;
@@ -178,6 +177,7 @@ void animationControllerDigit::changeAnimationControll(ACInfo& acInfo)
 		m_pAnimationController->SetTrackWeight(0, acInfo.trackWeightA);
 		m_pAnimationController->SetTrackAnimationSet(0, m_pAnimationSet);
 		m_pAnimationController->SetTrackPosition(0, acInfo.trackPositionA);
+		acInfo.persent = acInfo.trackPositionA / m_pAnimationSet->GetPeriod();
 	}
 	else
 	{
@@ -186,6 +186,7 @@ void animationControllerDigit::changeAnimationControll(ACInfo& acInfo)
 		m_pAnimationController->SetTrackAnimationSet(0, m_pAnimationSet);
 		m_pAnimationController->SetTrackWeight(0, acInfo.trackWeightA);
 		m_pAnimationController->SetTrackPosition(0, acInfo.trackPositionA);
+		acInfo.persent = acInfo.trackPositionA / m_pAnimationSet->GetPeriod();
 		// 다음 모션이 있는 경우
 		if (acInfo.leftMixTime > 0.0f)
 		{

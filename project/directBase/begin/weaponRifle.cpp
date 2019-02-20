@@ -4,16 +4,13 @@
 #include "gFunc.h"
 #include "managerList.h"
 #include "weaponManager.h"
-
-//
 #include "bulletManager.h"
-//
-
+#include "bulletBase.h"
 
 weaponRifle::weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weaponManager::weaponType::rifle);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::rifle);
 	_infoWeapon.damage = damage;
 
 	/*¿Þ¼Õ
@@ -45,9 +42,8 @@ void weaponRifle::firePre(void)
 void weaponRifle::fireDo(void)
 {
 	weaponBase::fireDo();
-	D3DXVECTOR3 stPosition = _position;
-	D3DXVec3TransformCoord(&stPosition, &stPosition, &_bindPMesh->getFinalNeckMatrix());
-	//_bulletManager.addBullet(stPosition, _bindPMesh->getDirectForward(), 0.5f);
+	GET_BULLET_MANAGER()->addBullet(_handPosition,_targetDirection,
+		1.0f, bulletBase::EBulletType::B_RIFLE);
 }
 
 void weaponRifle::firePost(void)
@@ -64,7 +60,17 @@ void weaponRifle::reloadPre(void)
 void weaponRifle::reloadDo(void)
 {
 	weaponBase::reloadDo();
-	if (_infoWeapon.maximum >= _infoWeapon.reload)
+	
+}
+
+void weaponRifle::reloadPost(void)
+{
+	weaponBase::reloadPost();
+}
+
+void weaponRifle::reloadBullet()
+{
+	if (_infoWeapon.current + _infoWeapon.maximum >= _infoWeapon.reload)
 	{
 		int need = _infoWeapon.reload - _infoWeapon.current;
 		_infoWeapon.current += need;
@@ -75,11 +81,6 @@ void weaponRifle::reloadDo(void)
 		_infoWeapon.current += _infoWeapon.maximum;
 		_infoWeapon.maximum = 0;
 	}
-}
-
-void weaponRifle::reloadPost(void)
-{
-	weaponBase::reloadPost();
 }
 
 void weaponRifle::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])

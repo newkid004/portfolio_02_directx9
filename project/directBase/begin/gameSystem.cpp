@@ -4,6 +4,8 @@
 #include "inGame_io.h"
 #include "inGame_field.h"
 
+#include "player.h"
+
 gameSystem::gameSystem()
 {
 	_set.map_render = new maptool_render();
@@ -19,9 +21,11 @@ gameSystem::~gameSystem()
 void gameSystem::update(void)
 {
 	_set.field->update();
+	_set.player->update();
 }
 
 void gameSystem::draw(void)
 {
 	_set.field->draw();
+	_set.player->draw();
 }

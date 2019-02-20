@@ -65,7 +65,10 @@ void inGame_io::spreadObject(inGame_field* field, json & viewJson)
 
 		int baseType = js["baseType"];
 
-		if (baseType & IO_DATA::baseType::BUMP)
+		if (baseType & IO_DATA::baseType::TRIGGER)
+			continue;	// trigger에서 처리
+
+		else if (baseType & IO_DATA::baseType::BUMP)
 		{
 			IO_DATA::OBJ::BUMP* convert = new IO_DATA::OBJ::BUMP();
 			IO_DATA::parse(convert, js);
@@ -126,7 +129,7 @@ void inGame_io::spreadTrigger(inGame_field * field, json & viewJson)
 		baseObject* additionObject = nullptr;
 		IO_DATA::OBJ::BASE* additionData = nullptr;
 
-		triggerBase* trigeer = nullptr;
+		triggerBase* trigger = nullptr;
 
 		int baseType = js["baseType"];
 
@@ -134,15 +137,15 @@ void inGame_io::spreadTrigger(inGame_field * field, json & viewJson)
 		{
 			IO_DATA::OBJ::TRIGGER* convert = new IO_DATA::OBJ::TRIGGER();
 			IO_DATA::parse(convert, js);
-			IO_DATA::create((staticMesh**)&additionObject, convert);
+			IO_DATA::create((triggerMesh**)&additionObject, convert);
 
 			additionData = convert;
 
 			bindFieldList.vProp.push_back((staticMesh*)additionObject);
 
 			// 타입에 따른 분기 필요
-			trigeer = new triggerBase((staticMesh*)additionObject);
-			bindFieldList.vTrigger.push_back(trigeer);
+			trigger = additionObject->getBind<triggerBase*>();
+			bindFieldList.vTrigger.push_back(trigger);
 		}
 
 		if (additionObject && additionData)
@@ -150,8 +153,8 @@ void inGame_io::spreadTrigger(inGame_field * field, json & viewJson)
 			bindFieldList.vTotalObject.push_back((staticMesh*)additionObject);
 			bindFieldList.vRenderable.push_back((staticMesh*)additionObject);
 
-			bindFieldList.vUpdateable.push_back(trigeer);
-			bindFieldList.vRenderable.push_back(trigeer);
+			bindFieldList.vUpdateable.push_back(trigger);
+			bindFieldList.vRenderable.push_back(trigger);
 		}
 	}
 }

@@ -13,6 +13,7 @@ protected:
 	virtual void reloadDo(void) override;
 	virtual void reloadPost(void) override;
 
+	virtual void reloadBullet() {};
 public:
 	weaponNormal(characterBase* linkPatternDup, int damage);
 	virtual ~weaponNormal(void);
