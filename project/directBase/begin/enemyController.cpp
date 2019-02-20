@@ -47,7 +47,7 @@ void enemyController::update2bit(void)
 	*/
 
 	// 기본 상태
-	if(_path->getDistance() )
+	if (_path->getDistance());
 
 	// 경계 상태
 		//둘러보고
