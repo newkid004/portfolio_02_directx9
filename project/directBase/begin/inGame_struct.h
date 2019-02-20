@@ -19,7 +19,7 @@ struct move_set
 	int status				= 0;
 
 	float accelSpeed		= 4.0f;					// 초당 가속도
-	float maximumSpeed		= 0.5f;					// 최대 이동속력
+	float maximumSpeed		= 0.3f;					// 최대 이동속력
 	float currentSpeed		= 0.0f;					// 현재 이동속도
 
 	float velVertical		= 0.0f;					// 수직 속도

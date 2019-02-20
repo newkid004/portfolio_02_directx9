@@ -14,6 +14,8 @@ protected :
 	void updateAdjacent(void);
 	void updateApproach(void);
 
+	void doResurrection(void);
+
 public :
 	D3DXVECTOR3 & refNextPlacePos(void) { return _nextPlacePos; }
 

@@ -43,6 +43,8 @@ struct inGame_digit
 	{
 		constexpr static int PRESS		= 1 << 0x0;
 		constexpr static int RELOAD		= 1 << 0x1;
+		
+		constexpr static int DO_FIRE	= 1 << 0x2;
 
 		constexpr static int NONE		= 0;
 	};

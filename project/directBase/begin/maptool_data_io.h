@@ -9,6 +9,7 @@ class skinnedMesh;
 class mapObject;
 class nodeMesh;
 class triggerMesh;
+class wallMesh;
 
 template<typename T>
 class aStar_grape_bind;
@@ -66,15 +67,7 @@ public :
 			PROP() { _baseType |= baseType::PROP; }
 		};
 
-		struct WALL : public BASE
-		{
-			std::array<float, 3> _normal = { 0, };
-
-			virtual void write(json & in_Json) override;
-
-			WALL() { _baseType |= baseType::WALL; }
-		};
-
+		
 		// ----- prop ----- //
 		struct CHAR : public PROP
 		{
@@ -90,6 +83,16 @@ public :
 			BUMP() { _baseType |= baseType::BUMP; }
 		};
 
+		struct WALL : public BUMP
+		{
+			std::string _texture = "";
+			std::string _normalTexture = "";
+
+			virtual void write(json & in_Json) override;
+
+			WALL() { _baseType |= baseType::WALL; }
+		};
+
 		struct TRIGGER : public PROP
 		{
 			int _triggerType = 0;
@@ -103,7 +106,7 @@ public :
 		// grape
 		struct FIELD : public BASE
 		{
-			std::unordered_map<std::string, BUMP> _wall;
+			std::unordered_map<std::string, WALL> _wall;
 
 			PROP _ceil;
 
@@ -147,6 +150,7 @@ public :	// ----- parse ----- //
 	static bool parse(terrain::params* own,	json & j_in);
 	static bool parse(OBJ::NODE* own,		json & j_in);
 	static bool parse(OBJ::PATH* own,		json & j_in);
+	static bool parse(OBJ::WALL* own,		json & j_in);
 
 public :	// ----- apply ----- //
 	static void apply(OBJ::BASE* in,		baseObject* obj);
@@ -159,6 +163,7 @@ public :	// ----- apply ----- //
 	static void apply(OBJ::NODE* in,		inGame_node* obj);
 	static void apply(OBJ::PATH* in,		grape* obj);
 	static void apply(OBJ::PATH* in,		inGame_grape* obj);
+	static void apply(OBJ::WALL* in,		wallMesh* obj);
 
 	static void apply(baseObject* in,		OBJ::BASE* data);
 	static void apply(staticMesh* in,		OBJ::PROP* data);
@@ -170,6 +175,7 @@ public :	// ----- apply ----- //
 	static void apply(inGame_node* in,		OBJ::NODE* data);
 	static void apply(grape* in,			OBJ::PATH* data);
 	static void apply(inGame_grape* in,		OBJ::PATH* data);
+	static void apply(wallMesh* in,			OBJ::WALL* data);
 
 public :	// ----- creater ----- //
 	static void create(OBJ::BASE** out,		baseObject* obj);
@@ -182,6 +188,7 @@ public :	// ----- creater ----- //
 	static void create(OBJ::NODE** out,		inGame_node* obj);
 	static void create(OBJ::PATH** out,		grape* obj);
 	static void create(OBJ::PATH** out,		inGame_grape* obj);
+	static void create(OBJ::WALL** out,		wallMesh* obj);
 
 	static void create(staticMesh** out,	OBJ::PROP* data);
 	static void create(staticMesh** out,	OBJ::BUMP* data);
@@ -191,6 +198,7 @@ public :	// ----- creater ----- //
 	static void create(inGame_node** out,	OBJ::NODE* data);
 	static void create(grape** out,			OBJ::PATH* data);
 	static void create(inGame_grape** out,	OBJ::PATH* data);
+	static void create(wallMesh** out,		OBJ::WALL* data);
 
 private:
 	maptool_data_io() {};

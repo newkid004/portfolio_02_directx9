@@ -286,6 +286,7 @@
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
     <ClInclude Include="wallCollision.h" />
+    <ClInclude Include="wallMesh.h" />
     <ClInclude Include="weaponBase.h" />
     <ClInclude Include="weaponHealkit.h" />
     <ClInclude Include="weaponManager.h" />
@@ -418,6 +419,7 @@
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
     <ClCompile Include="wallCollision.cpp" />
+    <ClCompile Include="wallMesh.cpp" />
     <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="weaponHealkit.cpp" />
     <ClCompile Include="weaponManager.cpp" />

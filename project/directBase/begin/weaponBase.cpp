@@ -52,7 +52,7 @@ void weaponBase::updateFire(void)
 				return;
 		}
 
-		if (MN_KEY->mouseDown())
+		if (gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::DO_FIRE))
 		{
 			gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::RELOAD);
 
@@ -81,11 +81,11 @@ void weaponBase::firePre(void)
 	gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::PRESS);
 	if ((_bindPMesh->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX)) == AMIX_SHOOT)
 	{
-		if (MN_KEY->mouseUp())
+		if (!gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::DO_FIRE))
 		{
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
 		}
-		else if ((_infoWeapon.current <= 0) && MN_KEY->mouseDown())
+		else if ((_infoWeapon.current <= 0) && gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::DO_FIRE))
 		{
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
 		}
