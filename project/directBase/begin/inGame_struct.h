@@ -81,3 +81,14 @@ struct weapon_set
 	float nextFireTime		= 0.0f;		// 다음 발사 가능시간
 	float nextReloadTime	= 0.0f;		// 다음 재장전 가능시간
 };
+
+// < time >
+struct timeEnemy_set
+{
+	float timeNextActive	= 0.0f;		// 다음 행동 대기 시간
+
+	float timeNextDisappear	= 0.0f;		// 사망 시, 없어질 시간
+	float timeNextAlive		= 0.0f;		// 사망 시, 다음 출현
+
+	D3DXVECTOR2 nextPlacePos;			// 다음 목표지점
+};
