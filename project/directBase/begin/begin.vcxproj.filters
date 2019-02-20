@@ -1065,6 +1065,9 @@
     <ClInclude Include="wallMesh.h">
       <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
     </ClInclude>
+    <ClInclude Include="tankController.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\AI\enemy\tank</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1444,6 +1447,9 @@
     </ClCompile>
     <ClCompile Include="wallMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="tankController.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\AI\enemy\tank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

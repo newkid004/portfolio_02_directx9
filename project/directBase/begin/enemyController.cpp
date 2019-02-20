@@ -13,14 +13,15 @@
 #include "patternMesh.h"
 #include "gFunc.h"
 #include "enemyBase.h"
-
-using DIGIT = inGame_digit;
-using VALUE = inGame_value::enemy;
+#include "player.h"
 
 #include "aStar_node.h"
 #include "inGame_node.h"
 
 #include "enemyBase.h"
+using DIGIT = inGame_digit;
+using VALUE = inGame_value::enemy;
+
 
 enemyController::enemyController(characterBase * bindCharacter) :
 	controllerBase(bindCharacter)
@@ -57,6 +58,15 @@ void enemyController::update2bit(void)
 	{
 		if (_isFemale)
 		{
+			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_LYING);
+			//뒤로
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_BACKWARD);
+			//왼쪽
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_LEFTWARD);
+			//오른쪽
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_RIGHTWARD);
+			//앞으로
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_FRONTWARD);
 		}
 		else
 		{
@@ -70,15 +80,144 @@ void enemyController::update2bit(void)
 			//앞으로
 			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_FRONTWARD);
 		}
+		_delay = VALUE::delayHangOut;
+		// 3초뒤 사라짐
+		_infoTimeEnemy.timeNextDisappear = MN_TIME->getRunningTime() + 3.0f;
 		return;
 	}
 	
 	// 피격 상태(총)
+	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT))
+	{
+		//피격 모션이 끝났을 경우
+		if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
+			== MALE_DEAD)
+		{
+			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
+			{
+				gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT);
+			}
+		}
+		else
+		{
+			if (_isFemale)
+			{
+				//--, 달리는 중 피격, 머리
+				//--, 달리는 중 피격, 중간
+				//--, 달리는 중 피격, 다른부위
+			}
+			else
+			{
+				//샷건, 피격, 왼쪽/앞
+				//샷건, 피격, 오른쪽/앞
+				//샷건, 피격, 중간/앞
+				//샷건, 피격, 머리/앞
+				//샷건, 피격, 왼쪽/뒤
+				//샷건, 피격, 오른쪽/뒤
+				//샷건, 피격, 중간/뒤
+				//샷건, 피격, 머리/뒤
+				//라이플, 피격, 왼쪽/앞
+				//라이플, 피격, 오른쪽/앞
+				//라이플, 피격, 중간/앞
+				//라이플, 피격, 머리/앞
+				//라이플, 피격, 왼쪽/뒤
+				//라이플, 피격, 오른쪽/뒤
+				//라이플, 피격, 중간/뒤
+				//라이플, 피격, 머리/뒤
+
+				//
+				//샷건, 달리는 중 피격, 머리
+				//샷건, 달리는 중 피격, 몸통
+				//샷건, 달리는 중 피격, 나머지 부분
+				//라이플, 달리는 중 피격, 머리
+				//라이플, 달리는 중 피격, 몸통
+				//라이플, 달리는 중 피격, 나머지 부분
+			}
+
+		}
+
+		return;
+	}
+	
 	// 피격 상태(밀쳐진)
+	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED))
+	{
+		//밀쳐진 애니메이션이 끝났을 경우
+		if ((_bindCharacter->getAControllInfo().CurrentMotionBit& GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
+			== MALE_SHOVED)
+		{
+			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
+			{
+				gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
+			}
+		}
+		else
+		{
+			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_SHOVED);
+
+			/*
+			이것으로 움직이는  지를 체크 가능한가?
+			*/
+			D3DXVECTOR3 playerToEnemyDirection = _bindCharacter->getPosition() - SGT_GAME->getSet().player->getPosition();
+			float angle = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x,_bindCharacter->getDirectForward().z),
+				&D3DXVECTOR2(playerToEnemyDirection.x, playerToEnemyDirection.z));
+			if (gDigit::chk(_bindCharacter->getInfoMove().status, DIGIT::MOVE::MOVEING))
+			{
+				if (angle < 0)
+				{
+					//달리는 도중 뒤에서
+					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_BACK_RUN);
+				}
+				else
+				{
+					//달리는 도중 앞에서
+					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONT_RUN);
+				}
+			}
+			else
+			{
+				if (angle < 0)
+				{
+					//뒤에서
+					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_BACKWARD);
+				}
+				else
+				{
+					//앞에서
+					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONTWARD);
+				}
+
+			}
+		}
+		_delay = VALUE::findSomthingDistance;
+		return;
+	}
+
+	// 공격
+	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT))
+		//공격 딜레이추가?
+	{
+		if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
+			== MALE_ATTACK)
+		{
+			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
+			{
+				gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
+			}
+		}
+		else
+		{
+			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_ATTACK);
+			changeBindBit(aniDefine::ANIBIT::SUB, MALE_ATTACK_NONE);
+			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ATTACK;
+		}
+		_delay = VALUE::delayMove;
+		return;
+	}
 
 
 	// 기본 상태
-	if (_path->getDistance() > VALUE::delayAlert)
+	else if (_path->getDistance() > VALUE::delayAlert)
 	{
 		baseBit();
 		_delay = VALUE::delayHangOut;
@@ -109,32 +248,18 @@ void enemyController::update2bit(void)
 		}
 		else
 		{
+			//다음노드를 향해서 왼쪽으로 회전
 			if (angle > 0.0f)
 			{
-				if (_isFemale)
-				{
-					changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_TURN);
-					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_TURN_LEFT);
-				}
-				else
-				{
-					changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
-					changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_LEFT);
-				}
+				changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
+				changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_LEFT);
 				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::LROTATE;
 			}
+			//다음 노드를 향해서 오른쪽으로 회전
 			else
 			{
-				if (_isFemale)
-				{
-					changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_TURN);
-					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_TURN_RIGHT);
-				}
-				else
-				{
-					changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
-					changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_RIGHT);
-				}
+				changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
+				changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_RIGHT);
 				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::RROTATE;
 			}
 		}
@@ -143,35 +268,10 @@ void enemyController::update2bit(void)
 	// 달리기
 	else if (_path->getDistance() < VALUE::findSomthingDistance)
 	{
-		if (_isFemale)
-		{
-			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_RUN);
-			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_RUN_NONE);
-		}
-		else
-		{
-			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_RUN);
-			changeBindBit(aniDefine::ANIBIT::SUB, MALE_RUN_NONE);
-		}
+		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_RUN);
+		changeBindBit(aniDefine::ANIBIT::SUB, MALE_RUN_NONE);
 		_delay = VALUE::delayMove;
 		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::APPROACH;
-	}
-
-	// 공격
-	//if(공격)
-	{
-		if (_isFemale)
-		{
-			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_ATTACK);
-			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_ATTACK_NONE);
-		}
-		else
-		{
-			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_ATTACK);
-			changeBindBit(aniDefine::ANIBIT::SUB, MALE_ATTACK_NONE);
-		}
-		_delay = VALUE::delayMove;
-		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ATTACK;
 	}
 
 	// 낙하

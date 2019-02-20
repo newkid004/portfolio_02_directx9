@@ -32,6 +32,7 @@ struct inGame_digit
 		constexpr static int RROTATE	= 1 << 0x6;		// r회전 여부
 		constexpr static int FALL		= 1 << 0x7;		// 떨어지는 상태
 		constexpr static int BESHOT		= 1 << 0x8;		// 피격 상태
+		constexpr static int SHOVED		= 1 << 0x9;		// 밀쳐진 상태 
 
 		constexpr static int DEAD		= 1 << 0x1f;
 
