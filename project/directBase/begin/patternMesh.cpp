@@ -81,9 +81,11 @@ void patternMesh::findPart(const char * partName, int & partNumber)
 		if (name.find(partName) != string::npos)
 		{
 			partNumber = i;
-			break;
+			return;
 		}
 	}
+
+	partNumber = 0;
 }
 
 void patternMesh::drawPre(void)

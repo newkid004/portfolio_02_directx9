@@ -87,6 +87,9 @@ void sceneInGame::initSystem(void)
 
 	// cursur
 	// ShowCursor(NULL);
+
+	//
+	SGT_GAME->addEnemy();
 }
 
 void sceneInGame::initEvent(void)

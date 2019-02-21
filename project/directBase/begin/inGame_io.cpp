@@ -26,43 +26,30 @@ inGame_field * inGame_io::createField2File(int mapIndex)
 {
 	inGame_field* result = nullptr;
 
-	bool isCollect = false;
-	while (!isCollect)
+	SAFE_DELETE(result);
+	result = new inGame_field();
+
+	std::unordered_map<std::string, json> mJson;
+
+	mJson.insert(decltype(mJson)::value_type("object",	json()));
+	mJson.insert(decltype(mJson)::value_type("field",	json()));
+	mJson.insert(decltype(mJson)::value_type("trigger",	json()));
+	mJson.insert(decltype(mJson)::value_type("grape",	json()));
+
+	for (auto & js : mJson)
 	{
-		try
-		{
-			SAFE_DELETE(result);
-			result = new inGame_field();
-
-			std::unordered_map<std::string, json> mJson;
-
-			mJson.insert(decltype(mJson)::value_type("object",	json()));
-			mJson.insert(decltype(mJson)::value_type("field",	json()));
-			mJson.insert(decltype(mJson)::value_type("trigger",	json()));
-			mJson.insert(decltype(mJson)::value_type("grape",	json()));
-
-			for (auto & js : mJson)
-			{
-				string dirPath = "map" + to_string(mapIndex) + '/';
-				gJson::read(js.second, filepath + dirPath + js.first + ".json");
-			}
-
-			spreadObject(result,	mJson.find("object")->second);
-			spreadField(result,		mJson.find("field")->second);
-			spreadTrigger(result,	mJson.find("trigger")->second);
-			spreadGrape(result,		mJson.find("grape")->second);
-
-			putObject2grape(result);
-
-			isCollect = true;
-
-			return result;
-		}
-		catch (const std::exception&)
-		{
-
-		}
+		string dirPath = "map" + to_string(mapIndex) + '/';
+		gJson::read(js.second, filepath + dirPath + js.first + ".json");
 	}
+
+	spreadObject(result,	mJson.find("object")->second);
+	spreadField(result,		mJson.find("field")->second);
+	spreadTrigger(result,	mJson.find("trigger")->second);
+	spreadGrape(result,		mJson.find("grape")->second);
+
+	putObject2grape(result);
+
+	return result;
 
 }
 
