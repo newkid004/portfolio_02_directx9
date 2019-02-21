@@ -203,6 +203,7 @@
     <ClInclude Include="inGame_digit.h" />
     <ClInclude Include="inGame_value.h" />
     <ClInclude Include="maptool_brush_node.h" />
+    <ClInclude Include="menuScene.h" />
     <ClInclude Include="nodeMesh.h" />
     <ClInclude Include="dbList.h" />
     <ClInclude Include="dbList.hpp" />
@@ -350,6 +351,7 @@
     <ClCompile Include="inGame_io.cpp" />
     <ClCompile Include="inGame_node.cpp" />
     <ClCompile Include="maptool_brush_node.cpp" />
+    <ClCompile Include="menuScene.cpp" />
     <ClCompile Include="nodeMesh.cpp" />
     <ClCompile Include="debugDraw.cpp" />
     <ClCompile Include="debugGizmo.cpp" />

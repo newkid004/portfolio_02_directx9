@@ -15,6 +15,9 @@ public :
 	template<typename T>
 	void putData(T & data, int listInterval, D3DXVECTOR3 & position, float radius);
 
+	template<typename T>
+	void pickData(T & data, int listInterval, D3DXVECTOR3 & position, float radius);
+
 public:
 	inGame_grape() {};
 	~inGame_grape() {};

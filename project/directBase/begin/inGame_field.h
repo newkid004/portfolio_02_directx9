@@ -39,6 +39,8 @@ public :
 		vList<enemyBase*>		vEnemy;
 		vList<weaponBase*>		vWeapon;
 		vList<triggerBase*>		vTrigger;
+
+		vList<D3DXVECTOR3>		vSpawnPos;
 	};
 
 	struct member_set

@@ -15,7 +15,6 @@
 #include "enemyBase.h"
 #include "player.h"
 
-#include "aStar_node.h"
 #include "inGame_node.h"
 
 #include "enemyBase.h"
@@ -227,11 +226,10 @@ void enemyController::update2bit(void)
 	else if (_path->getDistance() <= VALUE::aletyDistance && 
 		_path->getDistance() >= VALUE::findSomthingDistance)
 	{
-		// 회전하고
 		D3DXVECTOR3 direction =  ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
-		float angle = gFunc::getAngle(D3DXVECTOR2(direction.x, direction.z),
-			D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z));
-		if (angle <= FLT_EPSILON)
+		float cosValue = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z),
+			&D3DXVECTOR2(direction.x, direction.z));
+		if (cosValue <= FLT_EPSILON)
 		{
 			// 둘러보고
 			if (_isFemale)
@@ -246,10 +244,11 @@ void enemyController::update2bit(void)
 			}
 			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ALERT;
 		}
+		// 회전하고
 		else
 		{
 			//다음노드를 향해서 왼쪽으로 회전
-			if (angle > 0.0f)
+			if (cosValue > 0.0f)
 			{
 				changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
 				changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_LEFT);
