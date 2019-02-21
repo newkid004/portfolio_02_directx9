@@ -562,9 +562,6 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\trigger\_base">
       <UniqueIdentifier>{89af1362-29d7-4602-8abf-34174f4c1c23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\scene\02_inGame\classes\data\grape">
-      <UniqueIdentifier>{7bf7e596-8e72-4d83-a428-5c36535d35a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="classes\global\utility\object\renderObject\skyBox">
       <UniqueIdentifier>{9287f810-f505-4649-86bc-e7b7f66dd029}</UniqueIdentifier>
     </Filter>
@@ -612,6 +609,9 @@
     </Filter>
     <Filter Include="classes\global\utility\object\renderObject\mesh\wallMesh">
       <UniqueIdentifier>{cc428ae8-7a0d-46ca-87bf-90edce3805ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\data\grape">
+      <UniqueIdentifier>{7bf7e596-8e72-4d83-a428-5c36535d35a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1065,6 +1065,9 @@
     <ClInclude Include="wallMesh.h">
       <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
     </ClInclude>
+    <ClInclude Include="sceneTest4.h">
+      <Filter>main\classes\scene\test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1444,6 +1447,9 @@
     </ClCompile>
     <ClCompile Include="wallMesh.cpp">
       <Filter>classes\global\utility\object\renderObject\mesh\wallMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneTest4.cpp">
+      <Filter>main\classes\scene\test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

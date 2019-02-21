@@ -16,7 +16,6 @@ public :
 	void update(void) override;
 
 protected :
-	void update2bit(void);
 	void updateFootPrint(void) override;
 	virtual void update2bit(void);
 

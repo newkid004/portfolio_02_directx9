@@ -57,13 +57,21 @@ void sceneInGame::initResource(void)
 	param.effectFilePath = "resource/effect/Survivor.fx";
 	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";
 
-	MN_SRC->getPatternMesh("test", &param);
+	MN_SRC->getPatternMesh("test", &param)->setScale(0.004f);
 }
 
 void sceneInGame::initSystem(void)
 {
 	// player
 	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
+	
+	pCharacter->getNextBit() =
+		ATYPE_SURVIVOR |
+		AWEAPON_FIRSTAIDKIT |
+		ACONDITION_NORMAL |
+		AMAIN_IDLE |
+		AMIX_NONE |
+		AIDLE_STANDING;
 
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_grid);

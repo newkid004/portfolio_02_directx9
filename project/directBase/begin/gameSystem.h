@@ -27,6 +27,9 @@ public :
 	void update(void);
 	void draw(void);
 
+protected :
+	void initField(void);
+
 public :
 	set & getSet(void) { return _set; }
 

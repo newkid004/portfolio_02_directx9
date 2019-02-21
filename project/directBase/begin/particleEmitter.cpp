@@ -57,6 +57,8 @@ void particleEmitter::updateParticle(void)
 		p.orbit += p.orbitInc * MN_TIME->getDeltaTime();
 		p.pos += p.posInc * MN_TIME->getDeltaTime();
 
+		p.posInc += p.posIncInc * MN_TIME->getDeltaTime();
+
 		D3DXMATRIXA16 mRotate;
 		D3DXMatrixRotationYawPitchRoll(
 			&mRotate,

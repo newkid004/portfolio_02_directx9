@@ -95,7 +95,7 @@ public :	// bind
 	template<typename T>
 	T getBind(void) { return static_cast<T>(_bindData); }
 
-private:
+public :
 	void putOffsetPosition(void);
 
 public:

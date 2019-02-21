@@ -10,7 +10,7 @@ gameSystem::gameSystem()
 {
 	_set.map_render = new maptool_render();
 
-	_set.field = inGame_io::createField2File(0);
+	initField();
 }
 
 gameSystem::~gameSystem()
@@ -27,5 +27,20 @@ void gameSystem::update(void)
 void gameSystem::draw(void)
 {
 	_set.field->draw();
+
+	_set.player->getIsCull() = false;
 	_set.player->draw();
+}
+
+void gameSystem::initField(void)
+{
+	auto & field = _set.field;
+	
+	field = inGame_io::createField2File(0);
+	
+	// enemy
+	auto & vEnemyList = field->getList().vEnemy;
+	vEnemyList.resize(20, nullptr);
+
+	
 }
