@@ -277,6 +277,7 @@
     <ClInclude Include="staticMesh.h" />
     <ClInclude Include="survivorBase.h" />
     <ClInclude Include="survivorController.h" />
+    <ClInclude Include="tankController.h" />
     <ClInclude Include="terrain.h" />
     <ClInclude Include="textManager.h" />
     <ClInclude Include="timeManager.h" />
@@ -410,6 +411,7 @@
     <ClCompile Include="staticMesh.cpp" />
     <ClCompile Include="survivorBase.cpp" />
     <ClCompile Include="survivorController.cpp" />
+    <ClCompile Include="tankController.cpp" />
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="textManager.cpp" />
     <ClCompile Include="timeManager.cpp" />
