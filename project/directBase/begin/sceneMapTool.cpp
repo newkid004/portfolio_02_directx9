@@ -44,8 +44,8 @@ void sceneMapTool::init(void)
 
 	ZeroMemory(&_mousePrev, sizeof(POINT));
 
-	_mapObject = new mapObject();
-	_mapObject->init();
+	//_mapObject = new mapObject();
+	//_mapObject->init();
 
 	_window	= new maptool_window();
 	_field	= new maptool_field(_mapObject);
@@ -59,6 +59,8 @@ void sceneMapTool::init(void)
 	_currentBrush = _mBrush.find("prop")->second;
 
 	_skybox = createSkyBox();
+	_skybox->setScale(D3DXVECTOR3(10.0f, 10.0f, 10.0f));
+	//_skybox->setScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	// _grid->setVisible(false);
 	// ((cameraControlable*)_camera)->setVisible(false);
 }
@@ -86,7 +88,7 @@ void sceneMapTool::draw(void)
 
 	_field->draw();
 
-	//_skybox->draw();
+	_skybox->draw();
 }
 
 void sceneMapTool::drawUI(void)
@@ -151,12 +153,14 @@ void sceneMapTool::drawSelection(void)
 skyBox * sceneMapTool::createSkyBox(void)
 {
 	skyBox::mParam stParameters = {
-		"resource/effect/skybox.fx",
-		"resource/texture/skybox/sky.dds"
+		"resource/effect/skySphere.fx",
+		"resource/texture/skybox/sky2.png"
 	};
 
 	auto pSkybox = new skyBox(stParameters);
-	pSkybox->setScale(D3DXVECTOR3(1000.0f, 1000.0f, 1000.0f));
+	//pSkybox->setScale(D3DXVECTOR3(3000.0f, 3000.0f, 3000.0f));
 
+
+	
 	return pSkybox;
 }
