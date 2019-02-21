@@ -12,6 +12,7 @@
 #include "AnimationTester.h"
 #include "wallCollision.h"
 #include "weaponTest.h"
+#include "menuScene.h"
 
 void mainGame::init(void)
 {
@@ -22,7 +23,8 @@ void mainGame::init(void)
 	MN_SCENE->add("sceneMapTool", new sceneMapTool());
 
 	/*/	// current
-	MN_SCENE->add("sceneInGame", new sceneInGame());
+	//MN_SCENE->add("sceneInGame", new sceneInGame());
+	MN_SCENE->add("menuScene", new menuScene());
 
 	/*/ // test complete
 	MN_SCENE->add("scene1", new sceneTest1);			// json
@@ -38,9 +40,12 @@ void mainGame::init(void)
 
 	MN_SCENE->add("weaponT", new weaponTest);
 
+	//
+	MN_SCENE->change("sceneMapTool");
+
 	//*/
 
-	MN_SCENE->change("sceneInGame");
+	MN_SCENE->change("menuScene");
 }
 
 void mainGame::update(void)
