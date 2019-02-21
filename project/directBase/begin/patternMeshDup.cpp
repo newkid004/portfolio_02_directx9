@@ -18,6 +18,7 @@ patternMeshDup::~patternMeshDup(void)
 void patternMeshDup::update(void)
 {
 	renderObject::update();
+	_isCull = false;
 }
 
 void patternMeshDup::drawPre(void)
@@ -42,7 +43,7 @@ void patternMeshDup::drawPost(void)
 
 void patternMeshDup::calcurateHandMatrix(void)
 {
-	_finalHandMatrix[0] = _bindPatternMesh->getHandMatrix(0);
+	_finalHandMatrix[0] =  _bindPatternMesh->getHandMatrix(0);
 	_finalHandMatrix[1] = _bindPatternMesh->getHandMatrix(1);
-	_finalNeckMatrix = _bindPatternMesh->getNeckMatrix();
+	_finalNeckMatrix =  _bindPatternMesh->getNeckMatrix();
 }

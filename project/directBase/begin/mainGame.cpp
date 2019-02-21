@@ -22,10 +22,10 @@ void mainGame::init(void)
 
 	/*/	// current save
 	MN_SCENE->add("sceneMapTool", new sceneMapTool());
+	MN_SCENE->add("menuScene", new menuScene());
 
 	/*/	// current
-	//MN_SCENE->add("sceneInGame", new sceneInGame());
-	MN_SCENE->add("menuScene", new menuScene());
+	MN_SCENE->add("sceneInGame", new sceneInGame());
 
 	/*/ // test complete
 	MN_SCENE->add("scene1", new sceneTest1);			// json
@@ -44,10 +44,11 @@ void mainGame::init(void)
 
 	//
 	MN_SCENE->change("sceneMapTool");
+	MN_SCENE->change("menuScene");
 
 	//*/
 
-	MN_SCENE->change("menuScene");
+	MN_SCENE->change("sceneInGame");
 }
 
 void mainGame::update(void)

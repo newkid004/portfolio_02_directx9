@@ -10,6 +10,7 @@
 weaponRifle::weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
+	this->setScale(0.006f);
 	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::rifle);
 	_infoWeapon.damage = damage;
 
@@ -44,6 +45,7 @@ void weaponRifle::fireDo(void)
 	weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition,_targetDirection,
 		1.0f, bulletBase::EBulletType::B_RIFLE);
+	int a = 0;
 }
 
 void weaponRifle::firePost(void)

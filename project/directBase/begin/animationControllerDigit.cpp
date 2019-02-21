@@ -254,8 +254,13 @@ PatternManager::AniInfo animationControllerDigit::checkAnimationOut(const int mo
 
 	if ((motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX)) != 0)
 	{
-		int mixMask = motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX) |
+		int mixMask =
+			motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE) |
+			motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX) |
 			motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::WEAPON);
+		//int type = motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE);
+		//int mix = motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX);
+		//int weapon = motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::WEAPON);
 		cOInfo = GET_PATTERN->getPattern(mixMask);
 	}
 	else

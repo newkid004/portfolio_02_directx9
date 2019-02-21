@@ -20,12 +20,12 @@ protected:
 	weaponBase* _weapon;
 
 public:
-	void update(void) override;
+	virtual void update(void) override;
 
 protected:
-	void drawPre(void) override;
-	void drawDo(void) override;
-	void drawPost(void) override;
+	virtual void drawPre(void) override;
+	virtual void drawDo(void) override;
+	virtual void drawPost(void) override;
 
 private:
 	void calcurateHandMatrix(void);

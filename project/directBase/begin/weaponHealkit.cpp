@@ -11,6 +11,7 @@ using DIGIT = inGame_digit;
 weaponHealkit::weaponHealkit(staticMesh::mParam param, characterBase* linkPatternDup)
 : weaponBase::weaponBase(param, linkPatternDup)
 {
+	this->setScale(0.006f);
 	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::healkit);
 
 	D3DXMATRIXA16 stRotation;

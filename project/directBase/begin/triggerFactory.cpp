@@ -7,6 +7,7 @@
 
 #include "player.h"
 #include "weaponBase.h"
+#include "AnimationDef.h"
 
 triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 {
@@ -30,6 +31,7 @@ triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 			{
 				SAFE_DELETE(weapon);
 				weapon = MN_WEAPON->createWeapon(own->refTriggerType());
+				//CHANGE_BIT(player->getNextBit(), aniDefine::ANIBIT::WEAPON, type*16);
 			}
 			else
 				weapon->getInfoWeapon() = MN_WEAPON->getWeaponInfo(own->refTriggerType());

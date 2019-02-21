@@ -71,7 +71,7 @@ void sceneInGame::initSystem(void)
 	
 	pCharacter->getNextBit() =
 		ATYPE_SURVIVOR |
-		AWEAPON_FIRSTAIDKIT |
+		AWEAPON_RIFLE |
 		ACONDITION_NORMAL |
 		AMAIN_IDLE |
 		AMIX_NONE |

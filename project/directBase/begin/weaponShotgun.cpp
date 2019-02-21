@@ -6,6 +6,7 @@
 weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
 {
+	this->setScale(0.006f);
 	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::shotgun);
 	_infoWeapon.damage = damage;
 
