@@ -421,12 +421,13 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 	param.effectFilePath = "resource/effect/example_15.fx";
 
 	string xPath = "resource/mesh/L4D1/items/";
-	string tPath = "resource/texture/maptool/catalog/00_test.PNG";
+	string tPath = "resource/texture/maptool/catalog/trigger/";
 
 	function<void(char*)> inputContent = [&](char* fName)->void {
 		param.meshFilePath = xPath + fName + ".X";
 		CATALOG::create(&item, &param);
-		item->_standImage = MN_SRC->getSpriteTexture(tPath);
+		string textureFilePath = tPath + fName + ".PNG";
+		item->_standImage = MN_SRC->getSpriteTexture(textureFilePath);
 		
 		vContent.push_back(item);
 
@@ -434,6 +435,7 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 		item->_object->refBind() = triggerFactory::createTrigger2type(
 			item->_triggerType,
 			(staticMesh*)item->_object);
+		item->_object->setScale(D3DXVECTOR3(0.006f, 0.006f, 0.006f));
 	};
 
 	inputContent("shotgun");

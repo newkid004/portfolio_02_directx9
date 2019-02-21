@@ -15,44 +15,41 @@
 //**************************************************************//
 
 //--------------------------------------------------------------//
+// Default_DirectX_Effect
+//--------------------------------------------------------------//
+//--------------------------------------------------------------//
 // Pass 0
 //--------------------------------------------------------------//
 
-float4x4 _mWorld : World;
-float4x4 _mView : View;
-float4x4 _mProjection : Projection;
+float4x4 g_stWorldMatrix : World;
+float4x4 g_stViewMatrix : View;
+float4x4 g_stProjectionMatrix : Projection;
 
-texture g_pCubeTexture;
+texture g_pTexture;
 
-sampler g_pCubeSampler = sampler_state
-{
-   Texture = (g_pCubeTexture);
-};
-
-struct STSkyboxInput
+struct STInput
 {
 	float4 m_stPosition : POSITION;
 	float3 m_stNormal : NORMAL;
-	float2 m_stUV : TEXCOORD0;
+	float2 m_stUV : TEXCOORD;
 };
 
-struct STSkyboxOutput
+struct STOutput
 {
 	float4 m_stPosition : POSITION;
 	float3 m_stNormal : TEXCOORD0;
 	float2 m_stUV : TEXCOORD1;
 };
 
-//! 스카이 박스 정점 쉐이더
-STSkyboxOutput SkyboxVSMain(STSkyboxInput a_stInput)
+STOutput VSMain(STInput a_stInput)
 {
-	STSkyboxOutput stOutput = (STSkyboxOutput)0;
-	float4 stWorldPosition = mul(a_stInput.m_stPosition, _mWorld);
+	STOutput stOutput = (STOutput)0;
+	float4 stWorldPosition = mul(a_stInput.m_stPosition, g_stWorldMatrix);
 
-	stOutput.m_stPosition = mul(stWorldPosition, _mView);
-	stOutput.m_stPosition = mul(stOutput.m_stPosition, _mProjection);
+	stOutput.m_stPosition = mul(stWorldPosition, g_stViewMatrix);
+	stOutput.m_stPosition = mul(stOutput.m_stPosition, g_stProjectionMatrix);
 
-	float3 stNormal = mul(a_stInput.m_stNormal, (float3x3)_mWorld);
+	float3 stNormal = mul(a_stInput.m_stNormal, (float3x3)g_stWorldMatrix);
 	stOutput.m_stNormal = normalize(stNormal);
 
 	stOutput.m_stUV = a_stInput.m_stUV;
@@ -60,27 +57,32 @@ STSkyboxOutput SkyboxVSMain(STSkyboxInput a_stInput)
 	return stOutput;
 }
 
-//! 스카이 박스 픽셀 쉐이더
-float4 SkyboxPSMain(STSkyboxOutput a_stInput) : COLOR0
+sampler g_pSampler = sampler_state
 {
-	float3 stNormal = normalize(a_stInput.m_stNormal);
+   Texture = g_pTexture;
 
-	return tex2D(g_pCubeSampler, stNormal);
+   MinFilter = LINEAR;
+   MagFilter = LINEAR;
+   MipFilter = LINEAR;
+};
+
+float4 PSMain(STOutput a_stInput) : COLOR0
+{   
+	return tex2D(g_pSampler, a_stInput.m_stUV); 
 }
 
-
 //--------------------------------------------------------------//
-// Technique Section for Example_21
+// Technique Section for Default_DirectX_Effect
 //--------------------------------------------------------------//
-
 technique SkyboxTechnique
 {
 	pass Pass_0
 	{
 		CullMode = CW;
 
-		VertexShader = compile vs_3_0 SkyboxVSMain();
-		PixelShader = compile ps_3_0 SkyboxPSMain();
+		VertexShader = compile vs_3_0 VSMain();
+		PixelShader = compile ps_3_0 PSMain();
 	}
+
 }
 

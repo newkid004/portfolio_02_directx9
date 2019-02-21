@@ -6,6 +6,10 @@
 #include "inGame_value.h"
 #include "AnimationDef.h"
 #include "managerList.h"
+#include "aStar_node.h"
+#include "aStar_path.h"
+#include "inGame_node.h"
+#include "enemyBase.h"
 
 using DIGIT = inGame_digit;
 using VALUE = inGame_value::enemy;
@@ -25,12 +29,20 @@ void tankController::update2bit(void)
 	if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
 	{
 		changeBindBit(aniDefine::ANIBIT::MAIN, HULK_DEAD);
-		//죽음, 노말
-		changeBindBit(aniDefine::ANIBIT::SUB, HULK_DEAD_NORMAL);
-		//죽음, 대기
-		changeBindBit(aniDefine::ANIBIT::SUB, HULK_DEAD_IDLE);
-		//죽음, 달리는 중
-		changeBindBit(aniDefine::ANIBIT::SUB, HULK_DEAD_RUNNING);
+		if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::APPROACH))
+		{
+			//죽음, 달리는 중
+			changeBindBit(aniDefine::ANIBIT::SUB, HULK_DEAD_RUNNING);
+		}
+		else
+		{
+
+			//죽음, 노말
+			changeBindBit(aniDefine::ANIBIT::SUB, HULK_DEAD_NORMAL);
+			//죽음, 대기
+			changeBindBit(aniDefine::ANIBIT::SUB, HULK_DEAD_IDLE);
+		}
+		
 		_delay = VALUE::delayHangOut;
 		_infoTimeEnemy.timeNextDisappear = MN_TIME->getRunningTime() + 3.0f;
 		return;
@@ -73,15 +85,33 @@ void tankController::update2bit(void)
 		}
 		else
 		{
-			changeBindBit(aniDefine::ANIBIT::MAIN, HULK_ATTACK);
-			//공격, 달리기
-			changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_RUN);
-			//공격, 날리기
-			changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_FLY);
-			//공격, 기본1
-			changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_NORMAL1);
-			//공격, 기본2
-			changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_NORMAL2);
+			if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
+				== HULK_RUN)
+			{
+				//공격, 달리기
+				changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_RUN);
+			}
+			else
+			{
+				changeBindBit(aniDefine::ANIBIT::MAIN, HULK_ATTACK);
+				switch (gFunc::rndInt(0, 3))
+				{
+				case 0:
+					//공격, 날리기
+					changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_FLY);
+					break;
+				case 1:
+					//공격, 기본1
+					changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_NORMAL1);
+					break;
+				case 2:
+					//공격, 기본2
+					changeBindBit(aniDefine::ANIBIT::SUB, HULK_ATTACK_NORMAL2);
+					break;
+				default:
+					break;
+				}
+			}
 
 			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ATTACK;
 		}
@@ -89,8 +119,56 @@ void tankController::update2bit(void)
 		return;
 	}
 	// 기본 상태
+	else if (_path->getDistance() > VALUE::delayAlert)
+	{
+		baseBit();
+		_delay = VALUE::delayHangOut;
+		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::IDLE;
+	}
 	// 경계 상태
+	else if (_path->getDistance() <= VALUE::aletyDistance &&
+		_path->getDistance() >= VALUE::findSomthingDistance)
+	{
+		D3DXVECTOR3 direction = ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
+		float cosValue = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z),
+			&D3DXVECTOR2(direction.x, direction.z));
+		if (cosValue <= FLT_EPSILON)
+		{
+			//소리치고
+			changeBindBit(aniDefine::ANIBIT::MAIN, HULK_IDLE);
+			changeBindBit(aniDefine::ANIBIT::SUB, HULK_IDLE_YELL);
+
+			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ALERT;
+		}
+		// 회전하고
+		else
+		{
+			//다음 노드를 향해서 왼쪽으로 회전
+			if (cosValue > 0.0f)
+			{
+				changeBindBit(aniDefine::ANIBIT::MAIN, HULK_TURN);
+				changeBindBit(aniDefine::ANIBIT::SUB, HULK_TURN_LEFT);
+				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::LROTATE;
+			}
+			//다음 노드를 향해서 오른쪽으로 회전
+			else
+			{
+				changeBindBit(aniDefine::ANIBIT::MAIN, HULK_TURN);
+				changeBindBit(aniDefine::ANIBIT::SUB, HULK_TURN_RIGHT);
+				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::RROTATE;
+			}
+
+			_delay = VALUE::delayAlert;
+		}
+	}
 	// 달리기
+	else if (_path->getDistance() < VALUE::findSomthingDistance)
+	{
+		changeBindBit(aniDefine::ANIBIT::MAIN, HULK_RUN);
+		changeBindBit(aniDefine::ANIBIT::SUB, HULK_RUN_NORMAL);
+		_delay = VALUE::delayMove;
+		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::APPROACH;
+	}
 }
 
 void tankController::baseBit(void)

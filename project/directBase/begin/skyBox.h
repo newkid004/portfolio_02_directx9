@@ -16,9 +16,10 @@ private:
 
 	LPD3DXMESH _mesh = nullptr;
 	LPD3DXEFFECT _effect = nullptr;
-	LPDIRECT3DCUBETEXTURE9 _textureCube = nullptr;
+	LPDIRECT3DTEXTURE9 _texture = nullptr;
 
 public:
+	virtual void update(void);
 	virtual void drawPre(void)	override;
 	virtual void drawDo(void)	override;
 	virtual void drawPost(void)	override;

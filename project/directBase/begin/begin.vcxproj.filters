@@ -259,32 +259,17 @@
     <Filter Include="main\classes\windowUI\window\static\_base">
       <UniqueIdentifier>{a700715c-5fa2-4777-841b-63befac2a1ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable">
-      <UniqueIdentifier>{098fcecc-5415-4728-bc2f-75e9e039e1d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\classes\windowUI\button\static\moveBar">
       <UniqueIdentifier>{380fc642-5ac1-45ad-8770-3c91fef9bed6}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\classes\windowUI\button\static\scrollVertical">
       <UniqueIdentifier>{6886d8d9-8670-4412-b0fd-2a085574834a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable\_base">
-      <UniqueIdentifier>{9a2f215e-5325-4c6b-bcba-c292303a584a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\classes\scene\01_mapTool\classes\data\catalog">
       <UniqueIdentifier>{cc4b4eac-5403-48d7-80cd-269b8eff6cc5}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\classes\scene\01_mapTool\classes\data\io">
       <UniqueIdentifier>{8bf6d9a6-a8f1-4ed7-bd03-e8eeab36d635}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable\catalog">
-      <UniqueIdentifier>{9bb931bc-0e47-4cf3-bf08-8ba8142d6380}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable\catalog\_base">
-      <UniqueIdentifier>{9236434e-a5c9-4ef2-aa39-90627684c447}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable\catalog\maptool">
-      <UniqueIdentifier>{feed4933-6d89-4362-a55e-d4d5b79b80d7}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\classes\windowUI\button\import">
       <UniqueIdentifier>{426fc39a-af26-42c4-9c22-9d85686f48bc}</UniqueIdentifier>
@@ -340,17 +325,8 @@
     <Filter Include="main\classes\scene\01_mapTool\collection\io">
       <UniqueIdentifier>{5c8da9d2-9b20-4281-b7af-f07b4ec69f67}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable\list">
-      <UniqueIdentifier>{5b154688-90ae-4bc2-aab8-6c16bccc5587}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable\list\_base">
-      <UniqueIdentifier>{6d8b67d0-ae01-4b06-bf4d-76188c9baf26}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\classes\windowUI\window\static\selection">
       <UniqueIdentifier>{e7a63efa-da03-4674-bdab-ffd95a516d7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\classes\windowUI\window\static\moveable\catalog\_selection">
-      <UniqueIdentifier>{ceb15adb-67e3-4964-abb3-462185d01b58}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\classes\windowUI\button\static\item">
       <UniqueIdentifier>{fc01b6dc-dea4-4f63-84b7-6ff2236b2a9e}</UniqueIdentifier>
@@ -610,6 +586,30 @@
     <Filter Include="classes\global\utility\object\renderObject\mesh\wallMesh">
       <UniqueIdentifier>{cc428ae8-7a0d-46ca-87bf-90edce3805ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable">
+      <UniqueIdentifier>{098fcecc-5415-4728-bc2f-75e9e039e1d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable\_base">
+      <UniqueIdentifier>{9a2f215e-5325-4c6b-bcba-c292303a584a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable\catalog">
+      <UniqueIdentifier>{9bb931bc-0e47-4cf3-bf08-8ba8142d6380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable\catalog\_base">
+      <UniqueIdentifier>{9236434e-a5c9-4ef2-aa39-90627684c447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable\catalog\maptool">
+      <UniqueIdentifier>{feed4933-6d89-4362-a55e-d4d5b79b80d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable\catalog\_selection">
+      <UniqueIdentifier>{ceb15adb-67e3-4964-abb3-462185d01b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable\list">
+      <UniqueIdentifier>{5b154688-90ae-4bc2-aab8-6c16bccc5587}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\windowUI\window\static\_base\moveable\list\_base">
+      <UniqueIdentifier>{6d8b67d0-ae01-4b06-bf4d-76188c9baf26}</UniqueIdentifier>
+    </Filter>
     <Filter Include="main\classes\scene\02_inGame\classes\data\grape">
       <UniqueIdentifier>{7bf7e596-8e72-4d83-a428-5c36535d35a3}</UniqueIdentifier>
     </Filter>
@@ -790,22 +790,22 @@
       <Filter>main\classes\windowUI\button\static\scrollVertical</Filter>
     </ClInclude>
     <ClInclude Include="windowMoveable.h">
-      <Filter>main\classes\windowUI\window\static\moveable\_base</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\_base</Filter>
     </ClInclude>
     <ClInclude Include="maptool_data_io.h">
       <Filter>main\classes\scene\01_mapTool\classes\data\io</Filter>
     </ClInclude>
     <ClInclude Include="windowMvCatalog.hpp">
-      <Filter>main\classes\windowUI\window\static\moveable\catalog\_base</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\catalog\_base</Filter>
     </ClInclude>
     <ClInclude Include="windowMvCatalog.h">
-      <Filter>main\classes\windowUI\window\static\moveable\catalog\_base</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\catalog\_base</Filter>
     </ClInclude>
     <ClInclude Include="maptool_data_catalog.h">
       <Filter>main\classes\scene\01_mapTool\classes\data\catalog</Filter>
     </ClInclude>
     <ClInclude Include="windowCtlogMaptool.h">
-      <Filter>main\classes\windowUI\window\static\moveable\catalog\maptool</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\catalog\maptool</Filter>
     </ClInclude>
     <ClInclude Include="IbuttonScroll.h">
       <Filter>main\classes\windowUI\button\import</Filter>
@@ -850,16 +850,16 @@
       <Filter>main\classes\scene\01_mapTool\collection\io</Filter>
     </ClInclude>
     <ClInclude Include="windowMvList.h">
-      <Filter>main\classes\windowUI\window\static\moveable\list\_base</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\list\_base</Filter>
     </ClInclude>
     <ClInclude Include="windowSelection.h">
       <Filter>main\classes\windowUI\window\static\selection</Filter>
     </ClInclude>
     <ClInclude Include="windowSelectionCatalog.h">
-      <Filter>main\classes\windowUI\window\static\moveable\catalog\_selection</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\catalog\_selection</Filter>
     </ClInclude>
     <ClInclude Include="windowSelectionCatalog.hpp">
-      <Filter>main\classes\windowUI\window\static\moveable\catalog\_selection</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\catalog\_selection</Filter>
     </ClInclude>
     <ClInclude Include="buttonItem.h">
       <Filter>main\classes\windowUI\button\static\item\_base</Filter>
@@ -1080,6 +1080,10 @@
     <ClInclude Include="enemyBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy\_base</Filter>
     </ClInclude>
+    <ClInclude Include="menuScene.h">
+      <Filter>main\classes\scene\02_inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1230,13 +1234,13 @@
       <Filter>main\classes\windowUI\button\static\scrollVertical</Filter>
     </ClCompile>
     <ClCompile Include="windowMoveable.cpp">
-      <Filter>main\classes\windowUI\window\static\moveable\_base</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\_base</Filter>
     </ClCompile>
     <ClCompile Include="maptool_data_io.cpp">
       <Filter>main\classes\scene\01_mapTool\classes\data\io</Filter>
     </ClCompile>
     <ClCompile Include="windowCtlogMaptool.cpp">
-      <Filter>main\classes\windowUI\window\static\moveable\catalog\maptool</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\catalog\maptool</Filter>
     </ClCompile>
     <ClCompile Include="IbuttonScroll.cpp">
       <Filter>main\classes\windowUI\button\import</Filter>
@@ -1275,7 +1279,7 @@
       <Filter>main\classes\scene\01_mapTool\collection\io</Filter>
     </ClCompile>
     <ClCompile Include="windowMvList.cpp">
-      <Filter>main\classes\windowUI\window\static\moveable\list\_base</Filter>
+      <Filter>main\classes\windowUI\window\static\_base\moveable\list\_base</Filter>
     </ClCompile>
     <ClCompile Include="windowSelection.cpp">
       <Filter>main\classes\windowUI\window\static\selection</Filter>
@@ -1468,6 +1472,10 @@
     </ClCompile>
     <ClCompile Include="enemyBase.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy\_base</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyFactory.cpp" />
+    <ClCompile Include="menuScene.cpp">
+      <Filter>main\classes\scene\02_inGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
