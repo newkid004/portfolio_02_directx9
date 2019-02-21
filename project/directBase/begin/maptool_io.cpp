@@ -226,11 +226,13 @@ void maptool_io::spreadField(void)
 	IO_DATA::parse(&data, *j);
 	IO_DATA::create(&field, &data);
 
-	quadTree_Frustum* & quad = _bindData->getSet().qTree;
-	SAFE_DELETE(quad);
+	/*
+		quadTree_Frustum* & quad = _bindData->getSet().qTree;
+		SAFE_DELETE(quad);
 
-	quad = new quadTree_Frustum(256, 256);
-	quad->build();
+		quad = new quadTree_Frustum(256, 256);
+		quad->build();
+	*/
 }
 
 void maptool_io::spreadTrigger(void)
@@ -313,17 +315,31 @@ void maptool_io::read(void)
 {
 	*_bindMapIndex = *_bindMapIndex < 0 ? 0 : *_bindMapIndex;
 
-	for (auto & js : _mJson)
+	bool isCollect = false;
+
+	while (!isCollect)
 	{
-		SAFE_DELETE(js.second);
-		js.second = new json;
+		try
+		{
+			for (auto & js : _mJson)
+			{
+				SAFE_DELETE(js.second);
+				js.second = new json;
 
-		string dirPath = "map" + to_string(*_bindMapIndex) + '/';
-		gJson::read(*js.second, filepath + dirPath + js.first + ".json");
+				string dirPath = "map" + to_string(*_bindMapIndex) + '/';
+				gJson::read(*js.second, filepath + dirPath + js.first + ".json");
+			}
+
+			spreadObject();
+			spreadField();
+			spreadTrigger();
+			spreadGrape();
+
+			isCollect = true;
+		}
+		catch (const std::exception&)
+		{
+
+		}
 	}
-
-	spreadObject();
-	spreadField();
-	spreadTrigger();
-	spreadGrape();
 }

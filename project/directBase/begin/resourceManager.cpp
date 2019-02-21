@@ -14,11 +14,13 @@ resourceManager::resourceManager()
 
 resourceManager::~resourceManager()
 {
-	for (auto iter : _mStaticMesh)	{ SAFE_DELETE(iter.second); }
 	for (auto iter : _mEffect)		{ SAFE_RELEASE(iter.second); }
 	for (auto iter : _mTexture)		{ SAFE_RELEASE(iter.second); }
+	for (auto iter : _mStaticMesh)	{ SAFE_DELETE(iter.second); }
+	for (auto iter : _mSkinnedMesh) { SAFE_DELETE(iter.second); }
 	for (auto iter : _mSound)		{ SAFE_DELETE(iter.second); }
-	for (auto iter : _mTextureCube)	{ SAFE_DELETE(iter.second); }
+	for (auto iter : _mTextureCube)	{ SAFE_RELEASE(iter.second); }
+	for (auto iter : _mPatternMesh) { SAFE_DELETE(iter.second); }
 }
 
 meshSet* resourceManager::createStaticMesh(const string & filePath)

@@ -5,6 +5,7 @@
 class enemyBase : public characterBase
 {
 protected :
+	int _enemyType;
 	D3DXVECTOR3	_nextPlacePos;			// 다음 목표지점
 
 public :
@@ -17,6 +18,7 @@ protected :
 	void doResurrection(void);
 
 public :
+	int & refEnemyType(void) { return _enemyType; }
 	D3DXVECTOR3 & refNextPlacePos(void) { return _nextPlacePos; }
 
 public:

@@ -613,6 +613,9 @@
     <Filter Include="main\classes\scene\02_inGame\classes\data\grape">
       <UniqueIdentifier>{7bf7e596-8e72-4d83-a428-5c36535d35a3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\character\enemy\factory">
+      <UniqueIdentifier>{a96dd5ed-96a2-46c0-86da-797e99de7c93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1068,6 +1071,10 @@
     <ClInclude Include="sceneTest4.h">
       <Filter>main\classes\scene\test</Filter>
     </ClInclude>
+    <ClInclude Include="tankController.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\AI\enemy\tank</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1451,6 +1458,10 @@
     <ClCompile Include="sceneTest4.cpp">
       <Filter>main\classes\scene\test</Filter>
     </ClCompile>
+    <ClCompile Include="tankController.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\AI\enemy\tank</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

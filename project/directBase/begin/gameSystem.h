@@ -7,6 +7,8 @@ class mapObject;
 class inGame_grape;
 class inGame_field;
 
+class enemyBase;
+
 class maptool_render;
 
 class gameSystem : public singletonBase<gameSystem>
@@ -29,6 +31,9 @@ public :
 
 protected :
 	void initField(void);
+
+public :
+	enemyBase* addEnemy(int enemyType = 1);
 
 public :
 	set & getSet(void) { return _set; }

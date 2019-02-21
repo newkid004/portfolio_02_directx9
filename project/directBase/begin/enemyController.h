@@ -8,6 +8,9 @@
 
 class enemyController : public controllerBase
 {
+private:
+	bool _isFemale;
+
 protected :
 	timeEnemy_set	_infoTimeEnemy;
 	float _delay;

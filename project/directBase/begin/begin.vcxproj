@@ -101,6 +101,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
+      <HeapReserveSize>1000000</HeapReserveSize>
     </Link>
     <FxCompile>
       <EntryPointName>psMain</EntryPointName>
@@ -184,6 +186,7 @@
     <ClInclude Include="controllerBase.h" />
     <ClInclude Include="enemyBase.h" />
     <ClInclude Include="enemyController.h" />
+    <ClInclude Include="enemyFactory.h" />
     <ClInclude Include="eventAirPlane.h" />
     <ClInclude Include="eventMoveFar2building.h" />
     <ClInclude Include="fistBullet.h" />
@@ -278,6 +281,7 @@
     <ClInclude Include="staticMesh.h" />
     <ClInclude Include="survivorBase.h" />
     <ClInclude Include="survivorController.h" />
+    <ClInclude Include="tankController.h" />
     <ClInclude Include="terrain.h" />
     <ClInclude Include="textManager.h" />
     <ClInclude Include="timeManager.h" />
@@ -333,6 +337,7 @@
     <ClCompile Include="controllerBase.cpp" />
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="enemyController.cpp" />
+    <ClCompile Include="enemyFactory.cpp" />
     <ClCompile Include="eventAirPlane.cpp" />
     <ClCompile Include="eventMoveFar2building.cpp" />
     <ClCompile Include="fistBullet.cpp" />
@@ -412,6 +417,7 @@
     <ClCompile Include="staticMesh.cpp" />
     <ClCompile Include="survivorBase.cpp" />
     <ClCompile Include="survivorController.cpp" />
+    <ClCompile Include="tankController.cpp" />
     <ClCompile Include="terrain.cpp" />
     <ClCompile Include="textManager.cpp" />
     <ClCompile Include="timeManager.cpp" />

@@ -6,6 +6,8 @@
 
 #include "player.h"
 
+#include "enemyBase.h"
+
 gameSystem::gameSystem()
 {
 	_set.map_render = new maptool_render();
@@ -27,8 +29,6 @@ void gameSystem::update(void)
 void gameSystem::draw(void)
 {
 	_set.field->draw();
-
-	_set.player->getIsCull() = false;
 	_set.player->draw();
 }
 
@@ -40,7 +40,17 @@ void gameSystem::initField(void)
 	
 	// enemy
 	auto & vEnemyList = field->getList().vEnemy;
-	vEnemyList.resize(20, nullptr);
+	vEnemyList.resize(1, nullptr);
 
 	
+}
+
+enemyBase * gameSystem::addEnemy(int enemyType)
+{
+	enemyBase* result = nullptr;
+
+	auto & vEnemyList = _set.field->getList().vEnemy;
+
+
+	return nullptr;
 }
