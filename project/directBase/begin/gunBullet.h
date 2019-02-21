@@ -25,6 +25,9 @@ public:
 	gunBullet(float speed, EBulletType type = EBulletType::B_RIFLE);
 	virtual ~gunBullet(void);
 
+public:
+
+	pick::ray & getRay(void) { return _ray; }
 private:
 
 	LPD3DXMESH createBulletMesh(void);

@@ -1,5 +1,7 @@
 #include "gameSystem.h"
 
+#include "gFunc.h"
+#include "pickRay.h"
 #include "maptool_render.h"
 #include "inGame_io.h"
 #include "inGame_field.h"
@@ -8,10 +10,11 @@
 
 #include "enemyBase.h"
 
+#include "bulletManager.h"
 gameSystem::gameSystem()
 {
 	_set.map_render = new maptool_render();
-
+	
 	initField();
 }
 
@@ -24,12 +27,16 @@ void gameSystem::update(void)
 {
 	_set.field->update();
 	_set.player->update();
+	_set.enemy->update();
+
+	collision();
 }
 
 void gameSystem::draw(void)
 {
 	_set.field->draw();
 	_set.player->draw();
+	_set.enemy->draw();
 }
 
 void gameSystem::initField(void)
@@ -42,7 +49,54 @@ void gameSystem::initField(void)
 	auto & vEnemyList = field->getList().vEnemy;
 	vEnemyList.resize(1, nullptr);
 
+}
+
+void gameSystem::collision(void)
+{
+	auto & vBulletList = GET_BULLET_MANAGER()->getGunBulletList();
 	
+	vector<gunBullet *>::iterator iter;
+
+	for (iter = vBulletList.begin(); iter != vBulletList.end();)
+	{
+		auto mapObj = _set.field->getList().vWall;
+		auto ray = (*iter)->getRay();
+
+		for (int i = 0; i < mapObj.size(); ++i)
+		{
+			auto wall = mapObj[i]->getMeshSet()->mesh;
+			auto box = mapObj[i]->getBoundingBoxList()[0];
+			mapObj[i]->getBoundingBoxFinal(&box);
+
+			if (pick::isLine2Box(&ray, (*iter)->getSpeed(), box))
+			{
+				pick::info info;
+				ZeroMemory(&info, sizeof(info));
+				pick::applyMatrix(&ray, &ray, &mapObj[i]->getMatrixFinal());
+
+				if (pick::chkPick(&info, &ray, wall))
+				{
+					D3DXMATRIXA16 matrix = mapObj[i]->getMatrixFinal();
+					D3DXMatrixInverse(&matrix, NULL, &matrix);
+					pick::applyMatrix(&ray, &ray, &matrix);
+					D3DXVECTOR3 intersect = ray.origin + info.distance * ray.direction;
+
+					printf("º® Ãæµ¹!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
+					SAFE_DELETE((*iter));
+					iter = vBulletList.erase(iter);
+					if (vBulletList.size() == 0)
+					{
+						return;
+					}
+					continue;
+				}
+			}
+		}
+		if(iter != vBulletList.end())
+			++iter;
+	}
+
+
 }
 
 enemyBase * gameSystem::addEnemy(int enemyType)
@@ -51,6 +105,5 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 
 	auto & vEnemyList = _set.field->getList().vEnemy;
 
-
-	return nullptr;
+	return result;
 }

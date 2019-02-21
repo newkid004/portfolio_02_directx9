@@ -12,6 +12,7 @@
 #include "player.h"
 
 #include "eventDef.h"
+#include "patternMesh.h"
 
 using DIGIT = inGame_digit;
 using DIGIT_WEAPON = DIGIT::WEAPON;
@@ -22,6 +23,8 @@ enemyBase::enemyBase(patternMesh* duplicateTarget) :
 {
 	_infoCharacter.maxHp = 10;
 	_infoCharacter.nowHp = 10;
+
+	duplicateTarget->init();
 }
 
 enemyBase::~enemyBase()

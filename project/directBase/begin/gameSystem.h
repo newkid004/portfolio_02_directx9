@@ -24,10 +24,10 @@ public :
 
 private :
 	set _set;
-
 public :
 	void update(void);
 	void draw(void);
+	void collision(void);
 
 protected :
 	void initField(void);

@@ -56,6 +56,7 @@ bool renderObject::cullFrustum(void)
 void renderObject::getBoundingBoxFinal(boundingBox * out)
 {
 	// calMatrixFinal();
+	_mWorld = getMatrixFinal();
 
 	D3DXVec3TransformCoord(
 		&out->min,

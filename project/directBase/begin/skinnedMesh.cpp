@@ -289,7 +289,7 @@ void skinnedMesh::setBoneBoundSphere(void)
 {
 	switch (_characterType)
 	{
-	case ECharacterType::NORMAL_ZOMBIE:
+	case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:
 	{
 		for (int i = 0; i < _vBoneNameList.size(); ++i)
 		{
@@ -344,7 +344,7 @@ void skinnedMesh::setupBoneInfo(string name, const D3DXVECTOR3 & position, BYTE 
 {
 	switch (_characterType)
 	{
-		case ECharacterType::NORMAL_ZOMBIE:
+		case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:
 		{
 			STBoneInfo boneInfo;
 			ZeroMemory(&boneInfo, sizeof(boneInfo));
