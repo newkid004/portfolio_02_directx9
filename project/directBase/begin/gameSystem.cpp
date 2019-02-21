@@ -107,11 +107,19 @@ void gameSystem::collision(void)
 
 enemyBase * gameSystem::addEnemy(int enemyType)
 {
-	auto & vEnemyList = _set.field->getList().vEnemy;
+	auto & listSet = _set.field->getList();
+
+	auto & vTotal = listSet.vTotalObject;
+	auto & vEnemyList = listSet.vEnemy;
+	auto & vUpdateList = listSet.vUpdateable;
+	auto & vRenderable = listSet.vRenderable;
 	enemyBase* result = enemyFactory::createEnemy(enemyType);
 
 	_set.field->getMember().grape->putData(result, 2, result->getPosition(), result->getInfoCharacter().colRadius);
+	vTotal.push_back(result);
 	vEnemyList.push_back(result);
+	vUpdateList.push_back(result);
+	vRenderable.push_back(result);
 
 	int evType = EVENT::TYPE::ENEMY | EVENT::ACT::ENEMY::ADDED;
 	if (gDigit::chk(inGame_digit::ENEMY::TANK, enemyType))			evType |= EVENT::KIND::ENEMY::TANKER;

@@ -24,6 +24,8 @@ enemyBase::enemyBase(patternMesh* duplicateTarget) :
 	_infoCharacter.maxHp = 10;
 	_infoCharacter.nowHp = 10;
 
+	_controller = new enemyController(this);
+
 	duplicateTarget->init();
 }
 
@@ -47,9 +49,12 @@ void enemyBase::update(void)
 	}
 
 	// 공격
-	gDigit::pick(weaponStatus, DIGIT_WEAPON::DO_FIRE);
-	if (gDigit::chk(charStatus, DIGIT_CHAR::ADJACENT))
-		updateAdjacent();
+	if (_weapon)
+	{
+		gDigit::pick(weaponStatus, DIGIT_WEAPON::DO_FIRE);
+		if (gDigit::chk(charStatus, DIGIT_CHAR::ADJACENT))
+			updateAdjacent();
+	}
 
 	// 접근
 	if (gDigit::chk(charStatus, DIGIT_CHAR::APPROACH))
