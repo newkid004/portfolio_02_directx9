@@ -139,6 +139,7 @@ struct EVENT
 			MAKE_EV(0x5, ONHIT);
 			MAKE_EV(0x6, DEATH);
 			MAKE_EV(0x7, RESURRECTION);
+			MAKE_EV(0x8, ADDED);
 		};
 
 		struct ITEM

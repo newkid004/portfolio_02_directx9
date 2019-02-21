@@ -34,3 +34,30 @@ inline void inGame_grape::putData(T & data, int listInterval, D3DXVECTOR3 & posi
 		}
 	}
 }
+
+template<typename T>
+inline void inGame_grape::pickData(T & data, int listInterval, D3DXVECTOR3 & position, float radius)
+{
+	for (int i = 0; i < _vNodeList.size(); ++i)
+	{
+		auto & viewNode = _vNodeList[i];
+		auto & contant = _vBindList[i];
+		float distance = gFunc::Vec2Distance(
+			D3DXVECTOR2(contant->getPosition().x, contant->getPosition().z),
+			D3DXVECTOR2(position.x, position.z));
+
+		if (distance < contant->getRadius() + radius)
+		{
+			std::list<T>* viewList = ((std::list<T>*)&contant->getListSet()) + listInterval;
+			auto iter = viewList->begin();
+			for (; iter != viewList->end();)
+			{
+				if (data == *iter)
+					viewList->erase(iter);
+
+				else
+					++iter;
+			}
+		}
+	}
+}

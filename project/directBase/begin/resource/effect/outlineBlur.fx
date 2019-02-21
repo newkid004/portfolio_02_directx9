@@ -194,6 +194,7 @@ technique techBlur
 {
 	pass p0
 	{
+		ZENABLE = false;
 		ZWRITEENABLE = false;
 
 		VertexShader = compile vs_3_0 vsPanel();

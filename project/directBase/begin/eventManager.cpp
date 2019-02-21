@@ -46,7 +46,7 @@ void eventManager::update(void)
 
 		if ((*iter)->getTimeAlive() <= 0.0f)
 		{
-			SAFE_DELETE(*iter);
+			delete *iter;
 			iter = m_stEventList.erase(iter);
 		}
 		else ++iter;

@@ -124,6 +124,10 @@ return &_instance;						\
 #define WINSIZEY			720
 #define BACK_COLOR			COLOR_GRAY
 
+// ----- 데이터 타입 ----- //
+#define globalDigit			static constexpr int
+#define globalReal			static constexpr float
+
 // ----- enum ----- //
 
 // 마우스 입력
