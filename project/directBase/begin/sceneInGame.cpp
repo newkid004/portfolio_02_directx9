@@ -53,17 +53,29 @@ void sceneInGame::drawUI(void)
 
 void sceneInGame::initResource(void)
 {
+	// player
 	patternMesh::mParam param;
 	param.effectFilePath = "resource/effect/Survivor.fx";
-	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";
+	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";	MN_SRC->getPatternMesh("test", &param)->setScale(0.004f);
 
-	MN_SRC->getPatternMesh("test", &param);
+	// enemy
+	param.filePath = "resource/mesh/L4D1/male/male.X";				MN_SRC->getPatternMesh("enemy_male_0", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/male/male1.X";				MN_SRC->getPatternMesh("enemy_male_1", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/female/female.X";			MN_SRC->getPatternMesh("enemy_female_0", &param)->setScale(0.004f);
 }
 
 void sceneInGame::initSystem(void)
 {
 	// player
 	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
+	
+	pCharacter->getNextBit() =
+		ATYPE_SURVIVOR |
+		AWEAPON_FIRSTAIDKIT |
+		ACONDITION_NORMAL |
+		AMAIN_IDLE |
+		AMIX_NONE |
+		AIDLE_STANDING;
 
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_grid);
@@ -74,7 +86,7 @@ void sceneInGame::initSystem(void)
 	_camera = new inGameCamera(pCharacter);
 
 	// cursur
-	ShowCursor(NULL);
+	// ShowCursor(NULL);
 }
 
 void sceneInGame::initEvent(void)

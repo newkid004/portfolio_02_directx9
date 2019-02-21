@@ -8,6 +8,7 @@
 #include "sceneTest1.h"
 #include "sceneTest2.h"
 #include "sceneTest3.h"
+#include "sceneTest4.h"
 #include "sceneCollisionTest.h"
 #include "AnimationTester.h"
 #include "wallCollision.h"
@@ -28,6 +29,7 @@ void mainGame::init(void)
 	MN_SCENE->add("scene1", new sceneTest1);			// json
 	MN_SCENE->add("scene2", new sceneTest2);			// a* node
 	MN_SCENE->add("scene3", new sceneTest3);			// character
+	MN_SCENE->add("scene4", new sceneTest4());			// particle
 
 	/*/ // test current
 

@@ -198,7 +198,11 @@ bool maptool_data_io::parse(OBJ::PATH * own, json & j_in)
 
 	own->_node.resize(j_in["node"].size());
 	for (int i = 0; i < own->_node.size(); ++i)
-		parse(&own->_node[i], j_in["node"][i]);
+	{
+		auto & viewPath = j_in["node"][i];
+		if (!viewPath.is_null())
+			parse(&own->_node[i], viewPath);
+	}
 
 	auto & jTarget = j_in["connection"];
 	for (int i = 0; i < jTarget.size(); ++i)

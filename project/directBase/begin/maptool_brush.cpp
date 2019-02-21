@@ -65,8 +65,7 @@ void maptool_brush::updateMouse(void)
 			updatePickObject();
 
 		// release selection
-		if (MN_KEY->mousePress(EMouseInput::RIGHT) &&
-			_set.data_window->getSet().focusedWindow != _set.data_window->getSet().mv_file)
+		if (MN_KEY->mousePress(EMouseInput::RIGHT))
 		{
 			SAFE_DELETE(_set.data_field->getSet().pathData);
 			updateReleaseSelection();
@@ -231,15 +230,19 @@ void maptool_brush::updateWindowClose(void)
 
 void maptool_brush::updateIO(void)
 {
-	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_S))
-		_set.data_io->write();
-	if (MN_KEY->keyDown(DIK_LCONTROL) && MN_KEY->keyPress(DIK_L))
+	if (MN_KEY->keyDown(DIK_LCONTROL))
 	{
-		int fileSelection = _set.data_window->getSet().mv_file->getIndex();
+		if (MN_KEY->keyPress(DIK_S))
+			_set.data_io->write();
 
-		_set.data_io->read();
+		if (MN_KEY->keyPress(DIK_L))
+		{
+			int fileSelection = _set.data_window->getSet().mv_file->getIndex();
 
-		_set.data_window->getSet().mv_file->getIndex() = fileSelection;
+			_set.data_io->read();
+
+			_set.data_window->getSet().mv_file->getIndex() = fileSelection;
+		}
 	}
 }
 

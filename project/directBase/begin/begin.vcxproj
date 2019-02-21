@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -101,6 +101,8 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <LargeAddressAware>true</LargeAddressAware>
+      <HeapReserveSize>1000000</HeapReserveSize>
     </Link>
     <FxCompile>
       <EntryPointName>psMain</EntryPointName>
@@ -184,6 +186,7 @@
     <ClInclude Include="controllerBase.h" />
     <ClInclude Include="enemyBase.h" />
     <ClInclude Include="enemyController.h" />
+    <ClInclude Include="enemyFactory.h" />
     <ClInclude Include="eventAirPlane.h" />
     <ClInclude Include="eventMoveFar2building.h" />
     <ClInclude Include="fistBullet.h" />
@@ -268,6 +271,7 @@
     <ClInclude Include="sceneTest1.h" />
     <ClInclude Include="sceneTest2.h" />
     <ClInclude Include="sceneTest3.h" />
+    <ClInclude Include="sceneTest4.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
     <ClInclude Include="skyBox.h" />
@@ -333,6 +337,7 @@
     <ClCompile Include="controllerBase.cpp" />
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="enemyController.cpp" />
+    <ClCompile Include="enemyFactory.cpp" />
     <ClCompile Include="eventAirPlane.cpp" />
     <ClCompile Include="eventMoveFar2building.cpp" />
     <ClCompile Include="fistBullet.cpp" />
@@ -403,6 +408,7 @@
     <ClCompile Include="sceneTest1.cpp" />
     <ClCompile Include="sceneTest2.cpp" />
     <ClCompile Include="sceneTest3.cpp" />
+    <ClCompile Include="sceneTest4.cpp" />
     <ClCompile Include="skinnedMesh.cpp" />
     <ClCompile Include="skyBox.cpp" />
     <ClCompile Include="sound.cpp" />

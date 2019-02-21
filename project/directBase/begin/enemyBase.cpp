@@ -20,7 +20,8 @@ using DIGIT_CHAR = DIGIT::CHAR;
 enemyBase::enemyBase(patternMesh* duplicateTarget) :
 	characterBase(duplicateTarget)
 {
-
+	_infoCharacter.maxHp = 10;
+	_infoCharacter.nowHp = 10;
 }
 
 enemyBase::~enemyBase()
@@ -61,13 +62,15 @@ void enemyBase::updateAdjacent(void)
 void enemyBase::updateApproach(void)
 {
 	int & charStatus = _infoCharacter.status;
+	auto refPlayer = SGT_GAME->getSet().player;
 
-	float distance = gFunc::Vec3Distance(SGT_GAME->getSet().player->getPosition(), _position);
+	float distance = gFunc::Vec3Distance(refPlayer->getPosition(), _position);
 	if (distance < 25.0f)
 		gDigit::put(charStatus, DIGIT_CHAR::ADJACENT);
 	else
 	{
 		gDigit::pick(charStatus, DIGIT_CHAR::ADJACENT);
+		rotate2Dir(refPlayer->getPosition(), true, true);
 		moveDo(DIGIT::KEY::W);
 	}
 }

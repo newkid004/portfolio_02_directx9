@@ -16,6 +16,8 @@ public:
 		D3DXCOLOR colorStart;
 		D3DXCOLOR colorEnd;
 
+		D3DXVECTOR3 normal;
+
 		D3DXVECTOR3 rotate;
 		D3DXVECTOR3 orbit;
 		D3DXVECTOR3 pos;
@@ -23,6 +25,8 @@ public:
 		D3DXVECTOR3 rotateInc;
 		D3DXVECTOR3 orbitInc;
 		D3DXVECTOR3 posInc;
+
+		D3DXVECTOR3 posIncInc;
 
 		float size;
 		float sizeStart;

@@ -24,34 +24,51 @@ typedef maptool_data_io IO_DATA;
 
 inGame_field * inGame_io::createField2File(int mapIndex)
 {
-	inGame_field* result = new inGame_field();
+	inGame_field* result = nullptr;
 
-	std::unordered_map<std::string, json*> mJson;
-
-	mJson.insert(decltype(mJson)::value_type("object", nullptr));
-	mJson.insert(decltype(mJson)::value_type("field", nullptr));
-	mJson.insert(decltype(mJson)::value_type("trigger", nullptr));
-	mJson.insert(decltype(mJson)::value_type("grape", nullptr));
-
-	for (auto & js : mJson)
+	bool isCollect = false;
+	while (!isCollect)
 	{
-		js.second = new json;
+		try
+		{
+			SAFE_DELETE(result);
+			result = new inGame_field();
 
-		string dirPath = "map" + to_string(mapIndex) + '/';
-		gJson::read(*js.second, filepath + dirPath + js.first + ".json");
+			std::unordered_map<std::string, json*> mJson;
+
+			mJson.insert(decltype(mJson)::value_type("object", nullptr));
+			mJson.insert(decltype(mJson)::value_type("field", nullptr));
+			mJson.insert(decltype(mJson)::value_type("trigger", nullptr));
+			mJson.insert(decltype(mJson)::value_type("grape", nullptr));
+
+			for (auto & js : mJson)
+			{
+				js.second = new json;
+
+				string dirPath = "map" + to_string(mapIndex) + '/';
+				gJson::read(*js.second, filepath + dirPath + js.first + ".json");
+			}
+
+			spreadObject(result,	*mJson.find("object")->second);
+			spreadField(result,		*mJson.find("field")->second);
+			spreadTrigger(result,	*mJson.find("trigger")->second);
+			spreadGrape(result,		*mJson.find("grape")->second);
+
+			putObject2grape(result);
+
+			for (auto & js : mJson)
+				SAFE_DELETE(js.second);
+
+			isCollect = true;
+
+			return result;
+		}
+		catch (const std::exception&)
+		{
+
+		}
 	}
 
-	spreadObject	(result, *mJson.find("object")->second);
-	spreadField		(result, *mJson.find("field")->second);
-	spreadTrigger	(result, *mJson.find("trigger")->second);
-	spreadGrape		(result, *mJson.find("grape")->second);
-
-	putObject2grape(result);
-
-	for (auto & js : mJson)
-		SAFE_DELETE(js.second);
-
-	return result;
 }
 
 void inGame_io::spreadObject(inGame_field* field, json & viewJson)
