@@ -66,10 +66,12 @@ void weaponManager::CreateWeaponInfo(void)
 	normalSet.damage = 5;
 	normalSet.shotDelay = 1.0f;
 
-	_vWeaponInfo.push_back(rifleSet);
-	_vWeaponInfo.push_back(shotgunSet);
-	_vWeaponInfo.push_back(healkitSet);
-	_vWeaponInfo.push_back(normalSet);
+	_vWeaponInfo.resize(4 + 1);
+
+	_vWeaponInfo[weapon_set::type::none] = normalSet;
+	_vWeaponInfo[weapon_set::type::rifle] = rifleSet;
+	_vWeaponInfo[weapon_set::type::shotgun] = shotgunSet;
+	_vWeaponInfo[weapon_set::type::healkit] = healkitSet;
 }
 
 weaponBase * weaponManager::createWeapon(int weaponType)

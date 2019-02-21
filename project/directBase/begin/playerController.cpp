@@ -35,11 +35,12 @@ void playerController::updateControl(void)
 	if (MN_KEY->keyDown(DIK_D))		gDigit::put(dirMove, DIGIT::KEY::D);
 	if (MN_KEY->keyPress(DIK_SPACE)) _bindCharacter->jump();
 
-	if (_bindCharacter->getWeapon() != nullptr)
+	if (_bindCharacter->getWeapon())
 	{
 		int & weaponStatus = _bindCharacter->getWeapon()->getInfoWeapon().status;
 		if (MN_KEY->mouseDown())		gDigit::put(weaponStatus, DIGIT::WEAPON::DO_FIRE);
 		else							gDigit::pick(weaponStatus, DIGIT::WEAPON::DO_FIRE);
 	}
+
 	_bindCharacter->moveDo(dirMove);
 }

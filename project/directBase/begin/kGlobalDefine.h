@@ -142,6 +142,7 @@ enum class EParticleType
 	EXPLOSION_OUTLINE,
 	SINK,
 	ORBIT,
+	FOUNTAIN,
 	NONE
 };
 

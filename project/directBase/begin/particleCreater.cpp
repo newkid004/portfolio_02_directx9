@@ -45,6 +45,14 @@ particleCreater::cParticle* particleCreater::makeParam(PC_ORBIT delimiter, const
 	return mParam;
 }
 
+particleCreater::cParticle * particleCreater::makeParam(PC_FOUNTAIN delimiter, const D3DXVECTOR3 & normal, const D3DXVECTOR3 & speed, float sizeStart, float sizeEnd, float timeLife)
+{
+	auto mParam = makeParam(PC_EXPLOSION::MAKE, speed, sizeStart, sizeEnd, timeLife);
+	mParam->normal = normal;
+
+	return mParam;
+}
+
 void particleCreater::toType(cParticle * input, EParticleType type, cParticle* param)
 {
 	ZeroMemory(input, sizeof(cParticle));
@@ -57,6 +65,7 @@ void particleCreater::toType(cParticle * input, EParticleType type, cParticle* p
 	case EParticleType::EXPLOSION_OUTLINE:	setExplosionOutline(input); break;
 	case EParticleType::SINK:				setSink(input); break;
 	case EParticleType::ORBIT:				setOrbit(input); break;
+	case EParticleType::FOUNTAIN:			setFountain(input); break;
 	}
 
 	input->isActive = true;
@@ -173,4 +182,34 @@ void particleCreater::setOrbit(cParticle * input)
 
 	// pos
 	input->pos.z = param == nullptr ? 10.0f : param->pos.z;
+}
+
+void particleCreater::setFountain(cParticle * input)
+{
+	auto param = getMakeParam();
+
+	// def
+	setTranspose(input);
+	setTimeLife(input);
+
+	// speed
+	if (param == nullptr)
+	{
+		input->posInc = D3DXVECTOR3(
+			gFunc::rndFloat(-3.0f, 3.0f), 
+			10.0f, 
+			gFunc::rndFloat(-3.0f, 3.0f));
+	}
+	else
+		input->posInc = D3DXVECTOR3(
+			param->normal.x + gFunc::rndFloat(-3.0f, 3.0f),
+			param->normal.y + 10.0f,
+			param->normal.z + gFunc::rndFloat(-3.0f, 3.0f));
+
+	// gravity
+	input->posIncInc = D3DXVECTOR3(0.0f, -30.0f, 0.0f);
+
+	// size
+	input->sizeStart = param == nullptr ? gFunc::rndFloat(2.0f, 4.0f) : param->sizeStart;
+	input->sizeEnd = param == nullptr ? gFunc::rndFloat(4.0f, 6.0f) : param->sizeEnd;
 }
