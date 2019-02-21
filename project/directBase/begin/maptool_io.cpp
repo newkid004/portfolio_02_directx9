@@ -317,29 +317,19 @@ void maptool_io::read(void)
 
 	bool isCollect = false;
 
-	while (!isCollect)
+	for (auto & js : _mJson)
 	{
-		try
-		{
-			for (auto & js : _mJson)
-			{
-				SAFE_DELETE(js.second);
-				js.second = new json;
+		SAFE_DELETE(js.second);
+		js.second = new json;
 
-				string dirPath = "map" + to_string(*_bindMapIndex) + '/';
-				gJson::read(*js.second, filepath + dirPath + js.first + ".json");
-			}
-
-			spreadObject();
-			spreadField();
-			spreadTrigger();
-			spreadGrape();
-
-			isCollect = true;
-		}
-		catch (const std::exception&)
-		{
-
-		}
+		string dirPath = "map" + to_string(*_bindMapIndex) + '/';
+		gJson::read(*js.second, filepath + dirPath + js.first + ".json");
 	}
+
+	spreadObject();
+	spreadField();
+	spreadTrigger();
+	spreadGrape();
+
+	isCollect = true;
 }

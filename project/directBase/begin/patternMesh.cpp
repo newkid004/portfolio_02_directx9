@@ -11,9 +11,10 @@
 #include "sceneBase.h"
 
 using namespace std;
-patternMesh::patternMesh(const mParam & a_rstParameters)
+patternMesh::patternMesh(const mParam & a_rstParameters, ECharacterType characterType)
 	:
-	_param(a_rstParameters)
+	_param(a_rstParameters),
+	_characterType(characterType)
 {
 	if (a_rstParameters.filePath.rfind("/") != std::string::npos) {
 		_basePath = a_rstParameters.filePath.substr(0,
@@ -27,6 +28,12 @@ patternMesh::patternMesh(const mParam & a_rstParameters)
 patternMesh::~patternMesh(void)
 {
 	SAFE_DELETE(_aniControllerDigit);
+}
+
+void patternMesh::init(void)
+{
+	this->setBoneBoundBox();
+	this->setBoneBoundSphere();
 }
 
 void patternMesh::update(void)
@@ -71,6 +78,27 @@ void patternMesh::update(void)
 			_neckMatrix = _vMeshContainerList[0]->vBoneList[_neckNumber]->combineMatrix;
 		}
 	}
+
+	// 바운딩 스피어 업데이트
+	// {
+	D3DXVec3TransformCoord(&_bSphere.center, &_bSphere.center, &getMatrixFinal());
+	setBoundingSphere(_bSphere, _offset);
+	// }
+
+	// 스피어 드로잉 위치 업데이트
+	for (int i = 0; i < _vBoneNameList.size(); ++i)
+	{
+		boundingSphere mSphere = _mbSphereSet.find(_vBoneNameList[i])->second.sphere;
+		D3DXMATRIXA16 stMat = _mbBoxSet.find(_vBoneNameList[i])->second.matrix;
+		D3DXMATRIXA16 stTrans;
+		D3DXMatrixTranslation(&stTrans, mSphere.center.x, mSphere.center.y, mSphere.center.z);
+		D3DXMATRIXA16 mWorld = stMat * stTrans;
+
+		D3DXVECTOR3 stPos(0, 0, 0);
+		D3DXVec3TransformCoord(&stPos, &stPos, &mWorld);
+		_mbSphereSet.find(_vBoneNameList[i])->second.drawPosition = stPos;
+	}
+
 }
 
 void patternMesh::findPart(const char * partName, int & partNumber)
@@ -81,9 +109,11 @@ void patternMesh::findPart(const char * partName, int & partNumber)
 		if (name.find(partName) != string::npos)
 		{
 			partNumber = i;
-			break;
+			return;
 		}
 	}
+
+	partNumber = 0;
 }
 
 void patternMesh::drawPre(void)
@@ -134,6 +164,17 @@ void patternMesh::updateBoneMatrix(LPD3DXFRAME a_pstFrame, const D3DXMATRIXA16 &
 	// 자식 본 정보가 있을 경우
 	if (pstBone->pFrameFirstChild != nullptr) {
 		this->updateBoneMatrix(pstBone->pFrameFirstChild, pstBone->combineMatrix);
+	}
+
+	// 컴바인 매트릭스 복사
+	if (pstBone->Name != NULL)
+	{
+		if (_mBoneInfoList.find(pstBone->Name) != _mBoneInfoList.end())
+		{
+			_mBoneInfoList.find(pstBone->Name)->second.combineMatrix = pstBone->combineMatrix;
+
+			setBoundingBoxMatrix(pstBone->Name, _mBoneInfoList.find(pstBone->Name)->second.combineMatrix);
+		}
 	}
 }
 
@@ -249,6 +290,114 @@ void patternMesh::setupBoneOnMeshContainer(LPD3DXFRAME a_pstFrame, LPD3DXMESHCON
 			auto pstBone = D3DXFrameFind(_rootBone, pszBoneName);
 			pstMeshContainer->vBoneList.push_back((allocateHierarchy::boneFrame *)pstBone);
 		}
+	}
+}
+
+void patternMesh::setupBoneInfo(std::string name, const D3DXVECTOR3 & position, BYTE width, BYTE height, BYTE depth)
+{
+	switch (_characterType)
+	{
+	case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:case ECharacterType::NONE:
+	{
+		STBoneInfo boneInfo;
+		ZeroMemory(&boneInfo, sizeof(boneInfo));
+
+		boneInfo.position = position;
+		for (int i = 0; i < _vMeshContainerList.size(); ++i)
+		{
+			for (int j = 0; j < _vMeshContainerList[i]->vBoneList.size(); ++j)
+			{
+				if (_vMeshContainerList[i]->vBoneList[j]->Name == string(name))
+				{
+					boneInfo.combineMatrix = _vMeshContainerList[i]->vBoneList[j]->combineMatrix;
+				}
+			}
+		}
+		_mBoneInfoList.insert(unordered_map<string, STBoneInfo>::value_type(name, boneInfo));
+		_vBoneNameList.push_back(name);
+
+		STBoxSize boxSize;
+		ZeroMemory(&boxSize, sizeof(boxSize));
+
+		boxSize.width = width;
+		boxSize.height = height;
+		boxSize.depth = depth;
+
+		_mBoxSizeList.insert(BOXSIZELIST::value_type(name, boxSize));
+	}
+	}
+}
+
+void patternMesh::setBoneBoundBox(void)
+{
+	switch (_characterType)
+	{
+	case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:case ECharacterType::NONE:
+	{
+		for (int i = 0; i < _vBoneNameList.size(); ++i)
+		{
+			if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
+			{
+				D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
+
+				STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
+
+				BOUNDBOXSET boundSet;
+				ZeroMemory(&boundSet, sizeof(boundSet));
+				boundSet.box = gFunc::createBoundingBox(
+					this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					stBoxSize.width, stBoxSize.height, stBoxSize.depth);
+
+				boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
+
+				setBoundingBox(_vBoneNameList[i], boundSet);
+			}
+		}
+		break;
+	}
+	}
+}
+
+void patternMesh::setBoneBoundSphere(void)
+{
+	switch (_characterType)
+	{
+	case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:case ECharacterType::NONE:
+	{
+		for (int i = 0; i < _vBoneNameList.size(); ++i)
+		{
+			if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
+			{
+				D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
+
+				STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
+				BOUNDSPHERESET boundSet;
+				ZeroMemory(&boundSet, sizeof(boundSet));
+				D3DXMATRIXA16 stTrans;
+				D3DXVECTOR3 stDrawPosition(0, 0, 0);
+				D3DXMatrixTranslation(&stTrans, boundSet.sphere.center.x, boundSet.sphere.center.y, boundSet.sphere.center.z);
+				D3DXVec3TransformCoord(&stDrawPosition, &stDrawPosition, &(boundSet.matrix * stTrans));
+
+				boundSet.sphere = gFunc::createBoundingSphere(
+					this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
+					stBoxSize.width / 1.3);
+
+				boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
+				boundSet.drawPosition = stDrawPosition;
+
+				setBoundingSphere(_vBoneNameList[i], boundSet);
+			}
+		}
+
+		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 1.4f, 0.0f), 60),
+			D3DXVECTOR3(0.0f, 1.4f, 0.0f));
+
+		break;
+	}
 	}
 }
 

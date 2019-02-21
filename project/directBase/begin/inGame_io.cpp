@@ -26,48 +26,30 @@ inGame_field * inGame_io::createField2File(int mapIndex)
 {
 	inGame_field* result = nullptr;
 
-	bool isCollect = false;
-	while (!isCollect)
+	SAFE_DELETE(result);
+	result = new inGame_field();
+
+	std::unordered_map<std::string, json> mJson;
+
+	mJson.insert(decltype(mJson)::value_type("object",	json()));
+	mJson.insert(decltype(mJson)::value_type("field",	json()));
+	mJson.insert(decltype(mJson)::value_type("trigger",	json()));
+	mJson.insert(decltype(mJson)::value_type("grape",	json()));
+
+	for (auto & js : mJson)
 	{
-		try
-		{
-			SAFE_DELETE(result);
-			result = new inGame_field();
-
-			std::unordered_map<std::string, json*> mJson;
-
-			mJson.insert(decltype(mJson)::value_type("object", nullptr));
-			mJson.insert(decltype(mJson)::value_type("field", nullptr));
-			mJson.insert(decltype(mJson)::value_type("trigger", nullptr));
-			mJson.insert(decltype(mJson)::value_type("grape", nullptr));
-
-			for (auto & js : mJson)
-			{
-				js.second = new json;
-
-				string dirPath = "map" + to_string(mapIndex) + '/';
-				gJson::read(*js.second, filepath + dirPath + js.first + ".json");
-			}
-
-			spreadObject(result,	*mJson.find("object")->second);
-			spreadField(result,		*mJson.find("field")->second);
-			spreadTrigger(result,	*mJson.find("trigger")->second);
-			spreadGrape(result,		*mJson.find("grape")->second);
-
-			putObject2grape(result);
-
-			for (auto & js : mJson)
-				SAFE_DELETE(js.second);
-
-			isCollect = true;
-
-			return result;
-		}
-		catch (const std::exception&)
-		{
-
-		}
+		string dirPath = "map" + to_string(mapIndex) + '/';
+		gJson::read(js.second, filepath + dirPath + js.first + ".json");
 	}
+
+	spreadObject(result,	mJson.find("object")->second);
+	spreadField(result,		mJson.find("field")->second);
+	spreadTrigger(result,	mJson.find("trigger")->second);
+	spreadGrape(result,		mJson.find("grape")->second);
+
+	putObject2grape(result);
+
+	return result;
 
 }
 
@@ -119,8 +101,6 @@ void inGame_io::spreadField(inGame_field* field, json & viewJson)
 {
 	auto & bindFieldList = field->getList();
 	auto & bindMemberSet = field->getMember();
-
-	SAFE_DELETE(bindMemberSet.mapObject);
 
 	IO_DATA::OBJ::FIELD data;
 	IO_DATA::parse(&data, viewJson);
@@ -179,7 +159,6 @@ void inGame_io::spreadTrigger(inGame_field * field, json & viewJson)
 void inGame_io::spreadGrape(inGame_field* field, json & viewJson)
 {
 	inGame_grape*& grape = field->getMember().grape;
-	SAFE_DELETE(grape);
 
 	IO_DATA::OBJ::PATH data;
 	IO_DATA::parse(&data, viewJson);

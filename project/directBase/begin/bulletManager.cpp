@@ -20,13 +20,19 @@ bulletManager::~bulletManager(void)
 
 void bulletManager::update(void)
 {
-	for (int i = 0; i < _vGunBulletList.size(); ++i)
+	std::vector<gunBullet*>::iterator iter = _vGunBulletList.begin();
+	for (;iter != _vGunBulletList.end();)
 	{
-		_vGunBulletList[i]->update();
+		(*iter)->update();
 
-		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), _vGunBulletList[i]->getPosition()) > 100)
+		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*iter)->getPosition()) > 200)
 		{
-			eraseGunBullet(i);
+			SAFE_DELETE((*iter));
+			iter = _vGunBulletList.erase(iter);
+		}
+		else
+		{
+			++iter;
 		}
 	}
 
