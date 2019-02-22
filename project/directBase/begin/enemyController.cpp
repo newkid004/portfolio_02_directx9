@@ -369,3 +369,33 @@ void enemyController::changeBindBit(aniDefine::ANIBIT minusBit, int plusBit)
 {
 	CHANGE_BIT(_bindCharacter->getNextBit(), minusBit, plusBit);
 }
+
+float enemyController::getDistance2player(void)
+{
+	auto viewPlayer = SGT_GAME->getSet().player;
+
+	auto placedNode = _bindCharacter->getPlacedNode();
+	auto playerNode = viewPlayer->getPlacedNode();
+
+	auto & path = _path->unpack();
+
+	if (placedNode == playerNode || path.size() < 2)
+		return gFunc::Vec3Distance(_bindCharacter->getPosition(), viewPlayer->getPosition());
+
+	else
+	{
+		auto & nextPathOwn = path.front()->getMember().nextRunner;
+		auto & prevPathPlayer = path.back()->getMember().prevRunner;
+		float intervalOwn = aStar_node::getInterval(placedNode, nextPathOwn->getMember().placedNode);
+		float intervalPlayer = aStar_node::getInterval(viewPlayer->getPlacedNode(), prevPathPlayer->getMember().prevNode);
+
+		aStar_node::info *infoOwn, *infoPlayer;
+		nextPathOwn->getMember().placedNode->getInfo(infoOwn);
+		prevPathPlayer->getMember().placedNode->getInfo(infoPlayer);
+
+		intervalOwn -= gFunc::Vec3Distance(infoOwn->pos, _bindCharacter->getPosition());
+		intervalPlayer -= gFunc::Vec3Distance(infoPlayer->pos, viewPlayer->getPosition());
+
+		return _path->getDistance() + intervalOwn + intervalPlayer;
+	}
+}
