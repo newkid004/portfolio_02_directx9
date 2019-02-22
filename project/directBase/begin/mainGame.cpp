@@ -42,10 +42,6 @@ void mainGame::init(void)
 
 	MN_SCENE->add("weaponT", new weaponTest);
 
-	//
-	MN_SCENE->change("sceneMapTool");
-	MN_SCENE->change("menuScene");
-
 	//*/
 
 	MN_SCENE->change("sceneInGame");

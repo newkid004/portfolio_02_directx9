@@ -112,7 +112,7 @@ struct EVENT
 		struct WEAPON
 		{
 			MAKE_EV(0x1, SHOTGUN);
-			MAKE_EV(0x1, RIFLE);
+			MAKE_EV(0x2, RIFLE);
 		};
 	};
 
