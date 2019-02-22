@@ -496,7 +496,7 @@ void PatternManager::initMotionSurvivor(void)
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_PUMPSHOTGUN |
-		AMIX_RELOAD, arr, 1, 0.6f, false);
+		AMIX_RELOAD, arr, 1, 0.8f, false);
 
 	//라이플, --. --, 장전, --
 	arr[0] = 76;

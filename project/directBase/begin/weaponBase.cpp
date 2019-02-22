@@ -115,9 +115,9 @@ void weaponBase::fireDo(void)
 	_pickPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// ----- event ----- //
-	MN_EVENT->add(new eShootWeapon(_bindPMesh,
-		EVENT::TYPE::WEAPON |
-		EVENT::ACT::WEAPON::SHOOT));
+	//MN_EVENT->add(new eShootWeapon(_bindPMesh,
+	//	EVENT::TYPE::WEAPON |
+	//	EVENT::ACT::WEAPON::SHOOT));
 }
 
 void weaponBase::firePost(void)

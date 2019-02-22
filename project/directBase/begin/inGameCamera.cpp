@@ -38,6 +38,8 @@ void inGameCamera::updateBind(void)
 	D3DXVec3Normalize(&_bindCharacter->getDirectForward(), &lookForward);
 	D3DXVec3Normalize(&_bindCharacter->getDirectRight(), &lookRight);
 	_bindCharacter->getDirectUp() = WORLD_DIRECTION_UP;
+	//_position += _directionForward * 2.0f;
+	_position += _directionRight * 2.0f;
 }
 
 void inGameCamera::updateControl(void)

@@ -15,6 +15,7 @@ public:
 
 		bool operator != (const AniInfo& compare)
 		{
+			if (timeScale != compare.timeScale) return true;
 			if (motionArray.size() != compare.motionArray.size()) return true;
 
 			for (int i=0; i< motionArray.size(); ++i)
