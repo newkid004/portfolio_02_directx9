@@ -209,7 +209,7 @@ void enemyController::update2bit(void)
 		{
 			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_ATTACK);
 			changeBindBit(aniDefine::ANIBIT::SUB, MALE_ATTACK_NONE);
-			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ATTACK;
+			gDigit::put(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 		}
 		_delay = VALUE::delayMove;
 		return;

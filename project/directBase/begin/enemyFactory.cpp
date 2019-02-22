@@ -37,6 +37,10 @@ enemyBase * enemyFactory::createEnemy(int type)
 
 	auto & vSpawnPos = SGT_GAME->getSet().field->getList().vSpawnPos;
 	result->setPosition(vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)]);
+	//test
+	result->getInfoMove().maximumSpeed = 0.1f;
+    //
+
 
 	return result;
 }

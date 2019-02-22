@@ -79,7 +79,7 @@ void enemyBase::updateApproach(void)
 	gDigit::put(charStatus, DIGIT_CHAR::APPROACH);
 
 	float distance = gFunc::Vec3Distance(refPlayer->getPosition(), _position);
-	if (distance < 25.0f)
+	if (distance < 5.0f)
 		gDigit::put(charStatus, DIGIT_CHAR::ADJACENT);
 	else
 	{
