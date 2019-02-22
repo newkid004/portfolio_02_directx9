@@ -202,12 +202,13 @@ void particleCreater::setFountain(cParticle * input)
 	}
 	else
 		input->posInc = D3DXVECTOR3(
-			param->normal.x + gFunc::rndFloat(-3.0f, 3.0f),
-			param->normal.y + 10.0f,
-			param->normal.z + gFunc::rndFloat(-3.0f, 3.0f));
+			param->normal.x + gFunc::rndFloat(-5.0f, 5.0f),
+			param->normal.y + gFunc::rndFloat(8.0f, 10.0f),
+			param->normal.z + gFunc::rndFloat(-5.0f, 5.0f));
 
 	// gravity
-	input->posIncInc = D3DXVECTOR3(0.0f, -30.0f, 0.0f);
+	if (param == nullptr)
+		input->posIncInc = D3DXVECTOR3(0.0f, -30.0f, 0.0f);
 
 	// size
 	input->sizeStart = param == nullptr ? gFunc::rndFloat(2.0f, 4.0f) : param->sizeStart;

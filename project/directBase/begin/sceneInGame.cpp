@@ -14,6 +14,7 @@
 #include "eventDef.h"
 #include "eventCatcher.h"
 #include "eventBase.h"
+#include "eShootWeapon.h"
 
 #include "patternMesh.h"
 #include "player.h"
@@ -137,6 +138,7 @@ void sceneInGame::initEventWeapon(void)
 	MN_EVENT->add(
 		EVENT::TYPE::WEAPON |
 		EVENT::ACT::WEAPON::SHOOT,
+		[](eventBase*)->void {},
 		[](eventBase* e)->void {
 
 		int eParam =
@@ -152,22 +154,9 @@ void sceneInGame::initEventWeapon(void)
 		case weapon_set::type::rifle:	eParam |= EVENT::KIND::WEAPON::RIFLE;	break;
 		}
 
-		MN_EVENT->add(new eventBase(e, nullptr, eParam));
-	},
-		[](eventBase*)->void {}
-	);
+		MN_EVENT->add(new eShootWeapon(e->getSour(), eParam));
 
-	// ¹«±â ÀÌÆåÆ®
-	MN_EVENT->add(
-		EVENT::TYPE::WEAPON |
-		EVENT::KIND::WEAPON::SHOTGUN |
-		EVENT::ACT::WEAPON::SHOOT,
-		[](eventBase* e)->void {
-
-
-	},
-		[](eventBase*)->void {}
-	);
+	});
 }
 
 void sceneInGame::initSound(void)

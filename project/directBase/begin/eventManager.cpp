@@ -20,41 +20,45 @@ void eventManager::init(void)
 
 void eventManager::update(void)
 {
-	for (auto iter = m_stEventList.begin(); iter != m_stEventList.end();)
+	for (int i = 0; i < m_stEventList.size();)
 	{
-		V_EVENT_CALL & vCatcher = getEventCatcherArray((*iter)->getParamType());
+		auto ev = m_stEventList[i];
+
+		V_EVENT_CALL & vCatcher = getEventCatcherArray(ev->getParamType());
 
 		// catcherBefore -> event -> catcherAfter
 		for (auto cIter : vCatcher)
 		{
 			if (cIter->getBeforeActive())
 			{
-				(cIter->getBeforeActive())(*iter);
+				(cIter->getBeforeActive())(ev);
 			}
 		}
 
 		// event time update
-		(*iter)->update();
+		ev->update();
 
 		for (auto cIter : vCatcher)
 		{
 			if (cIter->getAfterActive())
 			{
-				(cIter->getAfterActive())(*iter);
+				(cIter->getAfterActive())(ev);
 			}
 		}
 
-		if ((*iter)->getTimeAlive() <= 0.0f)
+		if (ev->getTimeAlive() <= 0.0f)
 		{
-			delete *iter;
-			iter = m_stEventList.erase(iter);
+			delete ev;
+			m_stEventList.erase(m_stEventList.begin() + i);
 		}
-		else ++iter;
+		else ++i;
 	}
 }
 
 void eventManager::draw(void)
 {
+	for (auto e : m_stEventList)
+		e->draw();
 }
 
 void eventManager::initCatcher(void)
