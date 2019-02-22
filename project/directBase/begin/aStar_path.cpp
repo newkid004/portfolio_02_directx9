@@ -27,10 +27,16 @@ bool aStar_path::connect(aStar_path * connection, bool isDelete, bool isConnecta
 			connection->_path.front()->getMember().prevRunner = _path.back();
 
 		for (auto & i : connection->_path)
-			_path.push_back(new aStar_runner(i->getMember()));
+		{
+			auto addition = new aStar_runner(i->getMember());
+			if(_path.size() != 0)	addition->setPrevRunner(_path.back());
+			_path.push_back(addition);
+		}
 
 		if (isDelete)
 			SAFE_DELETE(connection);
+
+		calDistance();
 
 		return true;
 	}
@@ -70,8 +76,17 @@ bool aStar_path::eraseFront(void)
 {
 	if (!_path.empty())
 	{
+		float interval =
+			_path.front()->getMember().nextRunner->getMember().distance.G -
+			_path.front()->getMember().distance.G;
+
 		delete _path.front();
 		_path.erase(_path.begin());
+
+		for (auto & i : _path)
+			i->getMember().distance.G -= interval;
+
+		calDistance();
 
 		return true;
 	}
@@ -84,6 +99,8 @@ bool aStar_path::eraseBack(void)
 	{
 		delete _path.back();
 		_path.erase(--_path.end());
+
+		calDistance();
 
 		return true;
 	}
@@ -132,16 +149,14 @@ aStar_runner * aStar_path::putTail(aStar_node * dest)
 {
 	aStar_runner* result = new aStar_runner(_path.back(), dest);
 	_path.push_back(result);
+	
+	calDistance();
 
 	return result;
 }
 
 float aStar_path::calDistance(void)
 {
-	float result = 0.0f;
-
-	for (auto i : _path)
-		result += i->getMember().distance.G;
-
-	return result;
+	if (_path.size() == 0) return 0;
+	return _distance = _path.back()->getMember().distance.G;
 }

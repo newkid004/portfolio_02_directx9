@@ -26,13 +26,12 @@ enemyBase * enemyFactory::createEnemy(int type)
 	}
 	else if (DIGIT_CHK(DIGIT::ENEMY::COMMON))
 	{
-		int look = gFunc::rndInt(0, 2);
+		int look = gFunc::rndInt(0, 1);
 
 		switch (look)
 		{
 		case 0: result = new enemyBase(MN_SRC->getPatternMesh("enemy_male_0"));		break;
-		case 1: result = new enemyBase(MN_SRC->getPatternMesh("enemy_male_1"));		break;
-		case 2: result = new enemyBase(MN_SRC->getPatternMesh("enemy_female_0"));	break;
+		case 1: result = new enemyBase(MN_SRC->getPatternMesh("enemy_female_0"));	break;
 		}
 	}
 
