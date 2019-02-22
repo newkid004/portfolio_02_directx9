@@ -10,6 +10,14 @@ class staticMesh;
 class patternMesh : public renderObject
 {
 public:
+	struct type
+	{
+		static constexpr int survivor = 0;
+		static constexpr int male_zombie = 1;
+		static constexpr int feMale_zombie = 2;
+		static constexpr int hulk_zombie = 3;
+	};
+
 	struct mParam
 	{
 		std::string filePath;
@@ -42,6 +50,7 @@ public:
 	typedef std::unordered_map<std::string, STBoneInfo> BONEINFOLIST;
 	typedef std::unordered_map<std::string, STBoxSize> BOXSIZELIST;
 private:
+	int _originType;
 	LPD3DXMESH _mesh = nullptr;
 	LPD3DXMESH _cloneMesh = nullptr;
 	LPD3DXEFFECT _effect = nullptr;
@@ -105,6 +114,7 @@ private:
 public:
 	animationControllerDigit * getAniController(void) { return _aniControllerDigit; }
 	mParam & getMakeParam(void) { return _param; }
+	constexpr int &getOriginType(void) { return _originType; }
 
 	std::string & getBasePath(void) { return _basePath; }
 	LPD3DXMESH getMesh(void) { return _mesh; }

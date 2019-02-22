@@ -23,6 +23,27 @@ patternMesh::patternMesh(const mParam & a_rstParameters, ECharacterType characte
 
 	_effect = MN_SRC->getEffect(a_rstParameters.effectFilePath);
 	_mesh = this->createSkinnedMeshFromX(a_rstParameters.filePath);
+
+	std::string basePath = _basePath;
+	if (basePath.find("Biker") != std::string::npos ||
+		basePath.find("Namvet") != std::string::npos ||
+		basePath.find("Teenangst") != std::string::npos ||
+		basePath.find("Manager") != std::string::npos)
+	{
+		_originType = type::survivor;
+	}
+	else if (basePath.find("female") != std::string::npos)
+	{
+		_originType = type::feMale_zombie;
+	}
+	else if (basePath.find("male") != std::string::npos)
+	{
+		_originType = type::male_zombie;
+	}
+	else if (basePath.find("hulk") != std::string::npos)
+	{
+		_originType = type::hulk_zombie;
+	}
 }
 
 patternMesh::~patternMesh(void)

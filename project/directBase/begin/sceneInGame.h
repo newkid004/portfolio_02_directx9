@@ -14,6 +14,7 @@ private :
 	void initResource(void);
 	void initSystem(void);
 	void initEvent(void);
+	void initSound(void);
 	
 
 public:

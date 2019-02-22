@@ -59,8 +59,8 @@ void sceneInGame::initResource(void)
 	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";	MN_SRC->getPatternMesh("test", &param)->setScale(0.004f);
 
 	// enemy
+	param.effectFilePath = "resource/effect/zombie.fx";
 	param.filePath = "resource/mesh/L4D1/male/male.X";				MN_SRC->getPatternMesh("enemy_male_0", &param)->setScale(0.004f);
-	param.filePath = "resource/mesh/L4D1/male/male1.X";				MN_SRC->getPatternMesh("enemy_male_1", &param)->setScale(0.004f);
 	param.filePath = "resource/mesh/L4D1/female/female.X";			MN_SRC->getPatternMesh("enemy_female_0", &param)->setScale(0.004f);
 }
 
@@ -127,5 +127,10 @@ void sceneInGame::initEvent(void)
 		// do shomthing
 	} );
 
+
+}
+
+void sceneInGame::initSound(void)
+{
 
 }

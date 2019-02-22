@@ -18,6 +18,9 @@
 #include "inGame_node.h"
 
 #include "enemyBase.h"
+
+#include "gameSystem.h"
+
 using DIGIT = inGame_digit;
 using VALUE = inGame_value::enemy;
 
@@ -26,14 +29,12 @@ enemyController::enemyController(characterBase * bindCharacter) :
 	controllerBase(bindCharacter)
 {
 	_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::IDLE;
-	baseBit();
 	_infoTimeEnemy.timeNextActive = MN_TIME->getRunningTime();
 	_delay = VALUE::delayHangOut;
 
 	std::string basePath = _bindCharacter->getOriginMesh()->getBasePath();
-
-
 	_isFemale = (basePath.find("female") != std::string::npos) ? true : false;
+	baseBit();
 }
 
 enemyController::~enemyController()
@@ -216,20 +217,29 @@ void enemyController::update2bit(void)
 
 
 	// 기본 상태
-	else if (_path->getDistance() > VALUE::delayAlert)
+	else if (getDistance2player() > VALUE::aletyDistance)
 	{
-		baseBit();
+		if (_isFemale)
+		{
+			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_IDLE);
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_IDLE_NEUTRAL1);
+		}
+		else
+		{
+			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_IDLE);
+			changeBindBit(aniDefine::ANIBIT::SUB, MALE_IDLE_NEUTRAL1);
+		}
 		_delay = VALUE::delayHangOut;
-		// _bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
+		_bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
 	}
 	// 경계 상태
-	else if (_path->getDistance() <= VALUE::aletyDistance && 
-		_path->getDistance() >= VALUE::findSomthingDistance)
+	else if (getDistance2player() <= VALUE::aletyDistance &&
+		getDistance2player() >= VALUE::findSomthingDistance)
 	{
-		D3DXVECTOR3 direction =  ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
-		float cosValue = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z),
-			&D3DXVECTOR2(direction.x, direction.z));
-		if (cosValue <= FLT_EPSILON)
+		//D3DXVECTOR3 direction =  ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
+		//float cosValue = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z),
+		//	&D3DXVECTOR2(direction.x, direction.z));
+		//if (cosValue <= FLT_EPSILON)
 		{
 			// 둘러보고
 			if (_isFemale)
@@ -244,28 +254,29 @@ void enemyController::update2bit(void)
 			}
 			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ALERT;
 		}
-		// 회전하고
-		else
-		{
-			//다음노드를 향해서 왼쪽으로 회전
-			if (cosValue > 0.0f)
-			{
-				changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
-				changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_LEFT);
-				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::LROTATE;
-			}
-			//다음 노드를 향해서 오른쪽으로 회전
-			else
-			{
-				changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
-				changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_RIGHT);
-				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::RROTATE;
-			}
-		}
+		//}
+		//// 회전하고
+		//else
+		//{
+		//	//다음노드를 향해서 왼쪽으로 회전
+		//	if (cosValue > 0.0f)
+		//	{
+		//		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
+		//		changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_LEFT);
+		//		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::LROTATE;
+		//	}
+		//	//다음 노드를 향해서 오른쪽으로 회전
+		//	else
+		//	{
+		//		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
+		//		changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_RIGHT);
+		//		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::RROTATE;
+		//	}
+		//}
 		_delay = VALUE::delayAlert;
 	}
 	// 달리기
-	else if (_path->getDistance() < VALUE::findSomthingDistance)
+	else if (getDistance2player() < VALUE::findSomthingDistance)
 	{
 		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_RUN);
 		changeBindBit(aniDefine::ANIBIT::SUB, MALE_RUN_NONE);
@@ -337,11 +348,18 @@ void enemyController::updateFootPrint(void)
 		nextPlacePos.x += gFunc::rndFloat(-interval, interval);
 		nextPlacePos.y += gFunc::rndFloat(-interval, interval);
 
+		//_bindCharacter->rotate2Pos(
+		//	D3DXVECTOR3(
+		//		nextPlacePos.x,
+		//		0.0f,
+		//		nextPlacePos.y),
+		//	true, true);
+
 		_bindCharacter->rotate2Pos(
 			D3DXVECTOR3(
-				nextPlacePos.x,
+				SGT_GAME->getSet().player->getPosition().x,
 				0.0f,
-				nextPlacePos.y),
+				SGT_GAME->getSet().player->getPosition().z),
 			true, true);
 	}
 }
