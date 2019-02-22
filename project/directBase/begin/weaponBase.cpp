@@ -102,6 +102,7 @@ void weaponBase::fireDo(void)
 	D3DXVec3TransformCoord(&_handPosition, &_handPosition, &_bindPMesh->getLeftHandMatrix());
 	if (_pickPosition == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 	{
+		GET_CAMERA()->putOffsetPosition();
 		_pickPosition = GET_CAMERA()->getOffsetPosition() + 
 			GET_CAMERA()->getDirectForward() *100.0f;
 	}
