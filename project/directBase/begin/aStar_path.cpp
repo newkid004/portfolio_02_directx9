@@ -7,6 +7,18 @@
 aStar_path::aStar_path(std::list<aStar_runner*> & p) :
 	_path(p)
 {
+	auto iterFront = _path.begin();
+	auto iterBack = iterFront;
+
+	++iterFront;
+	while (iterFront != _path.end())
+	{
+		(*iterFront)->setPrevRunner(*iterBack);
+
+		++iterFront;
+		++iterBack;
+	}
+
 	_distance = calDistance();
 }
 
@@ -29,7 +41,9 @@ bool aStar_path::connect(aStar_path * connection, bool isDelete, bool isConnecta
 		for (auto & i : connection->_path)
 		{
 			auto addition = new aStar_runner(i->getMember());
-			if(_path.size() != 0)	addition->setPrevRunner(_path.back());
+			if(_path.size() != 0)	
+				addition->setPrevRunner(_path.back());
+
 			_path.push_back(addition);
 		}
 
@@ -83,6 +97,12 @@ bool aStar_path::eraseFront(void)
 		delete _path.front();
 		_path.erase(_path.begin());
 
+		if (!_path.empty())
+		{
+			_path.front()->getMember().prevNode = nullptr;
+			_path.front()->getMember().prevRunner = nullptr;
+		}
+
 		for (auto & i : _path)
 			i->getMember().distance.G -= interval;
 
@@ -99,6 +119,12 @@ bool aStar_path::eraseBack(void)
 	{
 		delete _path.back();
 		_path.erase(--_path.end());
+
+		if (!_path.empty())
+		{
+			_path.back()->getMember().nextNode = nullptr;
+			_path.back()->getMember().nextRunner = nullptr;
+		}
 
 		calDistance();
 
