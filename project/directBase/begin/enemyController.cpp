@@ -348,19 +348,13 @@ void enemyController::updateFootPrint(void)
 		nextPlacePos.x += gFunc::rndFloat(-interval, interval);
 		nextPlacePos.y += gFunc::rndFloat(-interval, interval);
 
-		//_bindCharacter->rotate2Pos(
-		//	D3DXVECTOR3(
-		//		nextPlacePos.x,
-		//		0.0f,
-		//		nextPlacePos.y),
-		//	true, true);
-
 		_bindCharacter->rotate2Pos(
 			D3DXVECTOR3(
-				SGT_GAME->getSet().player->getPosition().x,
+				nextPlacePos.x,
 				0.0f,
-				SGT_GAME->getSet().player->getPosition().z),
+				nextPlacePos.y),
 			true, true);
+
 	}
 }
 

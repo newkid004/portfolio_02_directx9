@@ -44,3 +44,41 @@ void playerController::updateControl(void)
 
 	_bindCharacter->moveDo(dirMove);
 }
+
+void playerController::updateAnimation(void)
+{
+	int status = _bindCharacter->getInfoMove().status;
+	if (gDigit::chk(status, DIGIT::CHAR::DEAD))
+	{
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_TRIP);
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, ATRIP_BACKWARD);
+	}
+
+	if (gDigit::chk(status, DIGIT::MOVE::MOVEING))
+	{
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_RUN);
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, ARUN_STANDING);
+	}
+	else if (gDigit::chk(status, DIGIT::MOVE::FLOAT))
+	{
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_JUMP);
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, AJUMP_JUMP);
+	}
+	else if (gDigit::chk(status, DIGIT::MOVE::LAND))
+	{
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AJUMP_LAND);
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, AJUMP_LAND);
+	}
+	else if (gDigit::chk(status, DIGIT::MOVE::NONE))
+	{
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_IDLE);
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, AIDLE_STANDING);
+	}
+
+	if (_bindCharacter->getInfoCharacter().maxHp > _bindCharacter->getInfoCharacter().nowHp)
+	{
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::CONDITION, ACONDITION_INJURED);
+	}
+	else CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::CONDITION, ACONDITION_NONE);
+
+}
