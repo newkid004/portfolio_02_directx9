@@ -44,8 +44,8 @@ void sceneMapTool::init(void)
 
 	ZeroMemory(&_mousePrev, sizeof(POINT));
 
-	// _mapObject = new mapObject();
-	// _mapObject->init();
+	//_mapObject = new mapObject();
+	//_mapObject->init();
 
 	_window	= new maptool_window();
 	_field	= new maptool_field(_mapObject);
@@ -77,7 +77,7 @@ void sceneMapTool::update(void)
 
 	_window->update();
 	_field->update();
-	_skybox->update();
+	//_skybox->update();
 }
 
 void sceneMapTool::draw(void)
@@ -88,7 +88,7 @@ void sceneMapTool::draw(void)
 
 	_field->draw();
 
-	_skybox->draw();
+	//_skybox->draw();
 }
 
 void sceneMapTool::drawUI(void)
