@@ -12,6 +12,18 @@ public:
 		std::vector<int> motionArray;
 		float timeScale;
 		bool cancel;
+
+		bool operator != (const AniInfo& compare)
+		{
+			if (motionArray.size() != compare.motionArray.size()) return true;
+
+			for (int i=0; i< motionArray.size(); ++i)
+			{
+				if (motionArray[i] != compare.motionArray[i]) return true;
+			}
+			
+			return false;
+		}
 	};
 
 private:
