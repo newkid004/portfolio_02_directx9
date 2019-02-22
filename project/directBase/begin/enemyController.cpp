@@ -220,7 +220,7 @@ void enemyController::update2bit(void)
 	{
 		baseBit();
 		_delay = VALUE::delayHangOut;
-		_bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
+		// _bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
 	}
 	// 경계 상태
 	else if (_path->getDistance() <= VALUE::aletyDistance && 

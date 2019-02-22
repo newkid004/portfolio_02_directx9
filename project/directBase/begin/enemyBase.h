@@ -14,6 +14,7 @@ public :
 protected :
 	void updateAdjacent(void);
 	void updateApproach(void);
+	void updateAlert(void);
 
 	void doResurrection(void);
 

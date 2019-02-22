@@ -37,7 +37,7 @@ void enemyBase::update(void)
 {
 	characterBase::update();
 
-	int charStatus = _infoCharacter.status;
+	int & charStatus = _infoCharacter.status;
 	int & weaponStatus = _weapon->getInfoWeapon().status;
 
 	// 죽음
@@ -57,8 +57,12 @@ void enemyBase::update(void)
 	}
 
 	// 접근
-	if (gDigit::chk(charStatus, DIGIT_CHAR::APPROACH))
+	if (gDigit::chk(charStatus, DIGIT_CHAR::ALERT))
 		updateApproach();
+
+	// 거리 확인
+	else
+		updateAlert();
 }
 
 void enemyBase::updateAdjacent(void)
@@ -72,15 +76,27 @@ void enemyBase::updateApproach(void)
 	int & charStatus = _infoCharacter.status;
 	auto refPlayer = SGT_GAME->getSet().player;
 
+	gDigit::put(charStatus, DIGIT_CHAR::APPROACH);
+
 	float distance = gFunc::Vec3Distance(refPlayer->getPosition(), _position);
 	if (distance < 25.0f)
 		gDigit::put(charStatus, DIGIT_CHAR::ADJACENT);
 	else
 	{
 		gDigit::pick(charStatus, DIGIT_CHAR::ADJACENT);
-		rotate2Dir(refPlayer->getPosition(), true, true);
+		rotate2Pos(refPlayer->getPosition(), true, true);
 		moveDo(DIGIT::KEY::W);
 	}
+}
+
+void enemyBase::updateAlert(void)
+{
+	int & charStatus = _infoCharacter.status;
+	auto refPlayer = SGT_GAME->getSet().player;
+
+	float distance = gFunc::Vec3Distance(refPlayer->getPosition(), _position);
+	if (distance < inGame_value::enemy::aletyDistance)
+		gDigit::put(charStatus, DIGIT_CHAR::ALERT);
 }
 
 void enemyBase::doResurrection(void)

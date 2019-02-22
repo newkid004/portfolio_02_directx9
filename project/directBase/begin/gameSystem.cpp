@@ -16,7 +16,10 @@
 #include "enemyBase.h"
 #include "enemyFactory.h"
 
+#include "eventBase.h"
+
 #include "bulletManager.h"
+
 gameSystem::gameSystem()
 {
 	_set.map_render = new maptool_render();
@@ -33,7 +36,6 @@ void gameSystem::update(void)
 {
 	_set.field->update();
 	_set.player->update();
-	_set.enemy->update();
 
 	collision();
 }
@@ -42,7 +44,6 @@ void gameSystem::draw(void)
 {
 	_set.field->draw();
 	_set.player->draw();
-	_set.enemy->draw();
 }
 
 void gameSystem::initField(void)
