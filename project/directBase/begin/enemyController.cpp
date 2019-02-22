@@ -20,6 +20,8 @@
 #include "enemyBase.h"
 
 #include "gameSystem.h"
+#include "characterBase.h"
+#include "patternMesh.h"
 
 using DIGIT = inGame_digit;
 using VALUE = inGame_value::enemy;
@@ -32,8 +34,9 @@ enemyController::enemyController(characterBase * bindCharacter) :
 	_infoTimeEnemy.timeNextActive = MN_TIME->getRunningTime();
 	_delay = VALUE::delayHangOut;
 
-	std::string basePath = _bindCharacter->getOriginMesh()->getBasePath();
-	_isFemale = (basePath.find("female") != std::string::npos) ? true : false;
+	
+	_isFemale = (_bindCharacter->getOriginMesh()->getOriginType() 
+		== patternMesh::type::feMale_zombie ) ? true : false;
 	baseBit();
 }
 
