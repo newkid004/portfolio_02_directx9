@@ -29,7 +29,7 @@ bool aStar_path::connect(aStar_path * connection, bool isDelete, bool isConnecta
 		for (auto & i : connection->_path)
 		{
 			auto addition = new aStar_runner(i->getMember());
-			addition->setPrevRunner(_path.back());
+			if(_path.size() != 0)	addition->setPrevRunner(_path.back());
 			_path.push_back(addition);
 		}
 
@@ -157,5 +157,6 @@ aStar_runner * aStar_path::putTail(aStar_node * dest)
 
 float aStar_path::calDistance(void)
 {
-	return _distance = _path.back()->getMember().distance.G;;
+	if (_path.size() == 0) return 0;
+	return _distance = _path.back()->getMember().distance.G;
 }

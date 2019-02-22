@@ -57,7 +57,7 @@ void enemyBase::update(void)
 	}
 
 	// 접근
-	if (gDigit::chk(charStatus, DIGIT_CHAR::ALERT))
+	if (gDigit::chk(charStatus, DIGIT_CHAR::APPROACH))
 		updateApproach();
 
 	// 거리 확인
