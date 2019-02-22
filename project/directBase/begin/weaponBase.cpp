@@ -100,8 +100,8 @@ void weaponBase::fireDo(void)
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_SHOOT);
 	_bindPMesh->getAControllInfo().trackPositionA = 0.0f;
 
-	_handPosition = _position;
-	D3DXVec3TransformCoord(&_handPosition, &_handPosition, &_bindPMesh->getLeftHandMatrix());
+	// _handPosition = _position;
+	// D3DXVec3TransformCoord(&_handPosition, &_handPosition, &_bindPMesh->getLeftHandMatrix());
 	if (_pickPosition == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 	{
 		GET_CAMERA()->putOffsetPosition();

@@ -23,17 +23,19 @@ eShootWeapon::eShootWeapon(void* sour, unsigned long paramType) :
 	if (m_stParamType & EVENT::KIND::WEAPON::SHOTGUN)
 	{
 		_particle->setPosition(own->getPosition());
-		_particle->getPosition().y += 6;
-		_particle->getPosition() += own->getDirectRight() * 3;
-		_particle->getPosition() += own->getDirectForward() * 10;
+		_particle->getPosition().y += 3.3f;
+		_particle->getPosition() += own->getDirectForward() * 20.0f;
+		_particle->getPosition() += own->getDirectRight() * 0.2f;
 	}
 	else if (m_stParamType & EVENT::KIND::WEAPON::RIFLE)
 	{
 		_particle->setPosition(own->getPosition());
-		_particle->getPosition().y += 6;
-		_particle->getPosition() += own->getDirectRight() * 3;
-		_particle->getPosition() += own->getDirectForward() * 10;
+		_particle->getPosition().y += 5.3f;
+		_particle->getPosition() += own->getDirectForward() * 16.0f;
+		_particle->getPosition() += own->getDirectRight() * 1.1f;
 	}
+
+	own->getWeapon()->refHandPosition() = _particle->getPosition();
 }
 
 eShootWeapon::~eShootWeapon()

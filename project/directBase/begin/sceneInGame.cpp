@@ -19,12 +19,16 @@
 #include "patternMesh.h"
 #include "player.h"
 
+#include "mapObject.h"
+#include "wallMesh.h"
+
 void sceneInGame::init(void)
 {
 	sceneBase::init();
 
 	initResource();
 	initSystem();
+	initField();
 	initEvent();
 }
 
@@ -92,6 +96,19 @@ void sceneInGame::initSystem(void)
 
 	//
 	SGT_GAME->addEnemy();
+}
+
+void sceneInGame::initField(void)
+{
+	auto field = SGT_GAME->getSet().field;
+
+	// make obj
+	auto & mapObj = field->getMember().mapObject;
+	mapObj = new mapObject();
+	mapObj->init();
+
+	// put obj
+	
 }
 
 void sceneInGame::initEvent(void)

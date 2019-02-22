@@ -13,6 +13,7 @@ public:
 private :
 	void initResource(void);
 	void initSystem(void);
+	void initField(void);
 
 	void initEvent(void);
 	void initEventWeapon(void);

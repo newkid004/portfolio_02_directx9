@@ -25,6 +25,7 @@ void weaponManager::CreateParam(void)
 		"resource/effect/example_15.fx"
 	};
 	_vWeaponParam.push_back(stParam);
+	_vWeaponParam.push_back(stParam);
 
 	stParam.meshFilePath = "resource/mesh/L4D1/items/shotgun.x";
 	_vWeaponParam.push_back(stParam);
