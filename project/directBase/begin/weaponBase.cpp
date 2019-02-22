@@ -11,6 +11,8 @@
 #include "sceneBase.h"
 #include "camera.h"
 
+#include "eShootWeapon.h"
+
 using DIGIT = inGame_digit;
 
 weaponBase::weaponBase(staticMesh::mParam param , characterBase* linkPatternDup)
@@ -110,6 +112,11 @@ void weaponBase::fireDo(void)
 	D3DXVec3Normalize(&_targetDirection, &_targetDirection);
 
 	_pickPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	// ----- event ----- //
+	MN_EVENT->add(new eShootWeapon(_bindPMesh,
+		EVENT::TYPE::WEAPON |
+		EVENT::ACT::WEAPON::SHOOT));
 }
 
 void weaponBase::firePost(void)

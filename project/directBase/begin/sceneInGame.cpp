@@ -9,12 +9,13 @@
 #include "inGame_field.h"
 #include "inGame_grape.h"
 
+#include "weaponBase.h"
+
 #include "eventDef.h"
 #include "eventCatcher.h"
 #include "eventBase.h"
 
 #include "patternMesh.h"
-#include "characterBase.h"
 #include "player.h"
 
 void sceneInGame::init(void)
@@ -127,7 +128,46 @@ void sceneInGame::initEvent(void)
 		// do shomthing
 	} );
 
+	initEventWeapon();
+}
 
+void sceneInGame::initEventWeapon(void)
+{
+	// 무기 발사 시
+	MN_EVENT->add(
+		EVENT::TYPE::WEAPON |
+		EVENT::ACT::WEAPON::SHOOT,
+		[](eventBase* e)->void {
+
+		int eParam =
+			EVENT::TYPE::WEAPON |
+			EVENT::ACT::WEAPON::SHOOT;
+
+		auto own = static_cast<characterBase*>(e->getSour());
+		int weaponType = own->getWeapon()->getInfoWeapon().type;
+
+		switch (weaponType)
+		{
+		case weapon_set::type::shotgun:	eParam |= EVENT::KIND::WEAPON::SHOTGUN;	break;
+		case weapon_set::type::rifle:	eParam |= EVENT::KIND::WEAPON::RIFLE;	break;
+		}
+
+		MN_EVENT->add(new eventBase(e, nullptr, eParam));
+	},
+		[](eventBase*)->void {}
+	);
+
+	// 무기 이펙트
+	MN_EVENT->add(
+		EVENT::TYPE::WEAPON |
+		EVENT::KIND::WEAPON::SHOTGUN |
+		EVENT::ACT::WEAPON::SHOOT,
+		[](eventBase* e)->void {
+
+
+	},
+		[](eventBase*)->void {}
+	);
 }
 
 void sceneInGame::initSound(void)
