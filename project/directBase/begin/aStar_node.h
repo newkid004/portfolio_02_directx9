@@ -30,6 +30,8 @@ private :
 public :
 	aStar_node* getClosestNode(aStar_node* dest);
 
+	static float getInterval(aStar_node* n1, aStar_node* n2);
+
 public :
 	int & getIndex(void) { return _index; }
 	LIST & getLinkedNodeList(void) { return _linkedNodeList; }

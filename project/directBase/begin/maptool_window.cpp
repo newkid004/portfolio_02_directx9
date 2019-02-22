@@ -438,8 +438,8 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 		item->_object->setScale(D3DXVECTOR3(0.006f, 0.006f, 0.006f));
 	};
 
-	inputContent("shotgun");
 	inputContent("rifle");
+	inputContent("shotgun");
 	inputContent("medikit");
 }
 
