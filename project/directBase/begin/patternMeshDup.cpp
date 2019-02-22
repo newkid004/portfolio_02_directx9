@@ -23,10 +23,20 @@ void patternMeshDup::update(void)
 
 void patternMeshDup::drawPre(void)
 {
+	if (_bindPatternMesh->getOriginType() == patternMesh::type::survivor)
+	{
+		_bindPatternMesh->setDirectionForward(_directionForward);
+		_bindPatternMesh->setDirectionRight(-_directionRight);
+		_bindPatternMesh->setDirectionUp(-_directionUp);
+	}
+	else if (_bindPatternMesh->getOriginType() == patternMesh::type::male_zombie
+		||_bindPatternMesh->getOriginType() == patternMesh::type::feMale_zombie)
+	{
+		_bindPatternMesh->setDirectionForward(_directionUp);
+		_bindPatternMesh->setDirectionRight(_directionRight);
+		_bindPatternMesh->setDirectionUp(_directionForward);
+	}
 	_bindPatternMesh->setPosition(_position);
-	_bindPatternMesh->setDirectionForward(_directionForward);
-	_bindPatternMesh->setDirectionRight(-_directionRight);
-	_bindPatternMesh->setDirectionUp(-_directionUp);
 	_bindPatternMesh->update();
 	_bindPatternMesh->drawpreMesh(_controlInfo);
 }

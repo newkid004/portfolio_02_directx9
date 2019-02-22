@@ -150,7 +150,7 @@ technique MyTechnique
 {
 	pass P0
 	{
-		cullMode = ccw;
+		cullMode = cw;
 		VertexShader = compile vs_3_0 VSMain();
 		PixelShader = compile ps_3_0 PSMain();
 	}

@@ -61,8 +61,8 @@ void enemyBase::update(void)
 		updateApproach();
 
 	// 거리 확인
-	else
-		updateAlert();
+	//else
+	//	updateAlert();
 }
 
 void enemyBase::updateAdjacent(void)
