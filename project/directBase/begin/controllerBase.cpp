@@ -100,11 +100,16 @@ void controllerBase::updateFootPrint(void)
 
 	auto & placedNode = _bindCharacter->getPlacedNode();
 	
-	auto nextData = inGame_node::getData(pathNodeList.front()->getMember().nextNode);
+	auto & viewData = pathNodeList.front()->getMember();
+	auto ownData = inGame_node::getData(viewData.placedNode);
+	float ownDistance = gFunc::Vec3Distance(position, ownData->getPosition());
+
+	auto nextData = inGame_node::getData(viewData.nextNode);
 	float nextDistance = gFunc::Vec3Distance(position, nextData->getPosition());
 
-	// 다음 노드의 범위 들어감
-	if (nextDistance < nextData->getRadius())
+	// 위치중인 노드를 벗어나거나, 다음 노드의 범위 들어감
+	if (ownData->getRadius() < ownDistance ||
+		nextDistance < nextData->getRadius())
 	{
 		// path 진행
 		_path->advance();
