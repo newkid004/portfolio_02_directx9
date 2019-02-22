@@ -31,7 +31,8 @@ triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 			{
 				SAFE_DELETE(weapon);
 				weapon = MN_WEAPON->createWeapon(own->refTriggerType());
-				//CHANGE_BIT(player->getNextBit(), aniDefine::ANIBIT::WEAPON, type*16);
+				CHANGE_BIT(SGT_GAME->getSet().player->getNextBit(),
+					aniDefine::ANIBIT::WEAPON, own->refTriggerType() * 0x10);
 			}
 			else
 				weapon->getInfoWeapon() = MN_WEAPON->getWeaponInfo(own->refTriggerType());

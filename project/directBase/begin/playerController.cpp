@@ -56,15 +56,16 @@ void playerController::updateAnimation(void)
 		return;
 	}
 
-	if (gDigit::chk(status, DIGIT::MOVE::MOVEING))
-	{
-		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_RUN);
-		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, ARUN_STANDING);
-	}
-	else if (gDigit::chk(status, DIGIT::MOVE::FLOAT))
+	if (gDigit::chk(status, DIGIT::MOVE::FLOAT))
 	{
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_JUMP);
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, AJUMP_JUMP);
+		return;
+	}
+	else if (gDigit::chk(status, DIGIT::MOVE::MOVEING))
+	{
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_RUN);
+		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, ARUN_STANDING);
 	}
 	else
 	{
