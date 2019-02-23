@@ -22,6 +22,14 @@
 #include "mapObject.h"
 #include "wallMesh.h"
 
+sceneInGame::~sceneInGame()
+{
+	for (int i = 0; i < 2; ++i)
+	{
+		SAFE_DELETE(_crosshair[i]);
+	}
+}
+
 void sceneInGame::init(void)
 {
 	sceneBase::init();
@@ -30,6 +38,7 @@ void sceneInGame::init(void)
 	initSystem();
 	initField();
 	initEvent();
+	initUI();
 }
 
 void sceneInGame::update(void)
@@ -55,6 +64,15 @@ void sceneInGame::draw(void)
 void sceneInGame::drawUI(void)
 {
 	sceneBase::drawUI();
+
+	//crosshair
+	switch (SGT_GAME->getSet().player->getWeapon()->getInfoWeapon().type)
+	{
+	case weapon_set::type::rifle:
+	case weapon_set::type::shotgun:
+		_crosshair[SGT_GAME->getSet().player->getWeapon()->getInfoWeapon().type - 1]->drawUI();
+		break;
+	}
 }
 
 void sceneInGame::initResource(void)
@@ -68,6 +86,10 @@ void sceneInGame::initResource(void)
 	param.effectFilePath = "resource/effect/zombie.fx";
 	param.filePath = "resource/mesh/L4D1/male/male.X";				MN_SRC->getPatternMesh("enemy_male_0", &param)->setScale(0.004f);
 	param.filePath = "resource/mesh/L4D1/female/female.X";			MN_SRC->getPatternMesh("enemy_female_0", &param)->setScale(0.004f);
+
+	//UI
+	_crosshair[0] = new spriteBase("resource/texture/UI/crosshair.png");
+	_crosshair[1] = new spriteBase("resource/texture/UI/crosshairShotgun.png");
 }
 
 void sceneInGame::initSystem(void)
@@ -82,6 +104,9 @@ void sceneInGame::initSystem(void)
 		AMAIN_IDLE |
 		AMIX_NONE |
 		AIDLE_STANDING;
+
+
+	pCharacter->getWeapon() = MN_WEAPON->createWeapon(weapon_set::type::rifle);
 
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_grid);
@@ -174,6 +199,17 @@ void sceneInGame::initEventWeapon(void)
 		MN_EVENT->add(new eShootWeapon(e->getSour(), eParam));
 
 	});
+}
+
+void sceneInGame::initUI(void)
+{
+	for (int i = 0; i < 2; ++i)
+	{
+		_crosshair[i]->setPosition(D3DXVECTOR3(MN_WIN->getWindowSize().cx / 2.0f,
+			MN_WIN->getWindowSize().cy / 2.0f, 0.0f));
+	}
+	_crosshair[0]->setScale(0.5f);
+	_crosshair[1]->setScale(3.0f);
 }
 
 void sceneInGame::initSound(void)
