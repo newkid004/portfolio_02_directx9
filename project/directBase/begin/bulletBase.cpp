@@ -1,10 +1,12 @@
 #include "bulletBase.h"
 #include "gFunc.h"
 
-bulletBase::bulletBase(float speed, EBulletType type)
+#include "characterBase.h"
+
+bulletBase::bulletBase(float speed, characterBase* bind)
 :
 _speed(speed),
-_type(type),
+_bindCharacter(bind),
 _intersect(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {
 	

@@ -1,6 +1,9 @@
 #include "weaponShotgun.h"
 #include "gDigit.h"
+
 #include "inGame_digit.h"
+#include "inGame_value.h"
+
 #include "weaponManager.h"
 
 weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
@@ -39,7 +42,7 @@ void weaponShotgun::fireDo(void)
 {
 	weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
-		1.0f, bulletBase::EBulletType::B_SHOTGUN);
+		inGame_value::bullet::speed, _bindPMesh);
 }
 
 void weaponShotgun::firePost(void)

@@ -31,6 +31,7 @@ struct EVENT
 		MAKE_EV(0x9, ENEMY);
 		MAKE_EV(0xA, TRIGGER);
 		MAKE_EV(0xB, WEAPON);
+		MAKE_EV(0xC, BULLET);
 	};
 
 	// ----- kind : 0x00f0 ----- //
@@ -114,6 +115,12 @@ struct EVENT
 			MAKE_EV(0x1, SHOTGUN);
 			MAKE_EV(0x2, RIFLE);
 		};
+
+		struct BULLET
+		{
+			MAKE_EV(0x1, SHOOT);
+			MAKE_EV(0x2, COLLISION);
+		};
 	};
 
 	// ----- act : 0x0f00 ----- //
@@ -181,6 +188,12 @@ struct EVENT
 		{
 			DEF_TYPE INCREASE	= 0x1 << shiftCount;
 			DEF_TYPE DECREASE	= 0x2 << shiftCount;
+		};
+
+		struct BULLET_COLLISION_TO
+		{
+			MAKE_EV(0x1, WALL);
+			MAKE_EV(0x2, CHARACTER);
 		};
 	};
 };

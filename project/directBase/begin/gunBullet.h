@@ -2,6 +2,9 @@
 
 #include "bulletBase.h"
 #include "renderObject.h"
+
+class characterBase;
+
 class gunBullet : public bulletBase, public renderObject
 {
 
@@ -22,7 +25,7 @@ protected:			// protected ÇÔ¼ö
 
 public:
 
-	gunBullet(float speed, EBulletType type = EBulletType::B_RIFLE);
+	gunBullet(float speed, characterBase * bind);
 	virtual ~gunBullet(void);
 
 public:

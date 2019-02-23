@@ -1,10 +1,11 @@
 #include "weaponRifle.h"
-#include "weaponBase.h"
-#include "characterBase.h"
-#include "gFunc.h"
+
 #include "managerList.h"
-#include "weaponManager.h"
-#include "bulletManager.h"
+#include "gFunc.h"
+
+#include "inGame_value.h"
+
+#include "characterBase.h"
 #include "bulletBase.h"
 
 weaponRifle::weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
@@ -44,7 +45,7 @@ void weaponRifle::fireDo(void)
 {
 	weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition,_targetDirection,
-		1.0f, bulletBase::EBulletType::B_RIFLE);
+		inGame_value::bullet::speed, _bindPMesh);
 }
 
 void weaponRifle::firePost(void)

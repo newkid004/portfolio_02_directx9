@@ -198,19 +198,19 @@ void sceneCollisionTest::updateControl(void)
 	{
 		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 
-		MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_RIFLE);
+		// MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_RIFLE);
 	}
 	if (MN_KEY->keyPress(DIK_SPACE))
 	{
 		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 
-		MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_SHOTGUN);
+		// MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_SHOTGUN);
 	}
 	if (MN_KEY->keyPress(DIK_V))
 	{
 		auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 
-		MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_FIST);
+		// MN_BULLET->addBullet(stRay.origin, stRay.direction, 1, bulletBase::EBulletType::B_FIST);
 	}
 }
 

@@ -3,6 +3,7 @@
 #include "weaponManager.h"
 #include "gDigit.h"
 #include "inGame_digit.h"
+#include "inGame_value.h"
 #include "AnimationDef.h"
 #include "patternMesh.h"
 #include "bulletManager.h"

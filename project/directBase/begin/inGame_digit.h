@@ -71,6 +71,7 @@ struct inGame_digit
 
 		globalDigit BYRIFLE		= 1 << 0x5;
 		globalDigit BYSHOTGUN   = 1 << 0x6;
+		globalDigit BYNORMAL	= 1 << 0x7;
 
 		globalDigit NONE		= 0;
 	};

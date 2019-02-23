@@ -24,4 +24,9 @@ struct inGame_value
 		
 		//globalReal delayAttack		= 1.25f;	// 공격 간격
 	};
+
+	struct bullet
+	{
+		globalReal speed					= 1.0f;
+	};
 };

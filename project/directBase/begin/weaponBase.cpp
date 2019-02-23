@@ -4,6 +4,7 @@
 #include "gDigit.h"
 
 #include "inGame_digit.h"
+#include "inGame_value.h"
 
 #include "bulletManager.h"
 #include "characterBase.h"
@@ -182,7 +183,8 @@ void weaponBase::normalDo(void)
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_ATTACK);
 	D3DXVECTOR3 stNeckPosition = _position;
 	D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
-	MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(), 1.0f, bulletBase::EBulletType::B_FIST);
+	MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(),
+		inGame_value::bullet::speed, _bindPMesh);
 }
 
 void weaponBase::normalPost(void)

@@ -2,27 +2,37 @@
 #include "KGlobalDefine.h"
 #include "pickRay.h"
 
+class characterBase;
+
 class bulletBase
 {
 public:
 
-	enum EBulletType
-	{
-		B_RIFLE,
-		B_SHOTGUN,
-		B_FIST,
+	//enum EBulletType
+	//{
+	//	// ----- survivor ----- //
+	//	B_RIFLE,
+	//	B_SHOTGUN,
+	//	B_FIST,
 
-		NONE
-	};
+	//	// ----- enemy ---- //
+	//	B_ZOMBIE,
+	//	B_TANK,
+
+	//	NONE
+	//};
 
 protected:
+
+	characterBase* _bindCharacter = nullptr;
 
 	float _speed;
 
 	D3DXVECTOR3 _shootOrigin;
 	D3DXVECTOR3 _intersect;
 	pick::ray _ray;
-	EBulletType _type;
+
+	// EBulletType _type;
 
 public:
 
@@ -38,10 +48,11 @@ public:
 	pick::ray & getRay(void) { return _ray; }
 	D3DXVECTOR3 & getIntersect(void) { return _intersect; }
 
+	characterBase* & refBindCharacter(void) { return _bindCharacter; }
 
 public:
 
-	bulletBase(float speed, EBulletType type = EBulletType::B_RIFLE);
+	bulletBase(float speed, characterBase* bind);
 
 	virtual ~bulletBase(void);
 
