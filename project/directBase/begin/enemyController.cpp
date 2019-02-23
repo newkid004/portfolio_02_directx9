@@ -25,6 +25,7 @@
 
 using DIGIT = inGame_digit;
 using VALUE = inGame_value::enemy;
+using ANIBIT = aniDefine::ANIBIT;
 
 
 enemyController::enemyController(characterBase * bindCharacter) :
@@ -65,11 +66,11 @@ void enemyController::update2bit(void)
 			//뒤로
 			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_BACKWARD);
 			//왼쪽
-			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_LEFTWARD);
+			//changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_LEFTWARD);
 			//오른쪽
-			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_RIGHTWARD);
+			//changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_RIGHTWARD);
 			//앞으로
-			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_FRONTWARD);
+			//changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_FRONTWARD);
 		}
 		else
 		{
@@ -78,10 +79,9 @@ void enemyController::update2bit(void)
 			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_BACKWARD);
 
 			//왼쪽으로
-			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_LEFTWARD);
-
+			//changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_LEFTWARD);
 			//앞으로
-			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_FRONTWARD);
+			//changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_FRONTWARD);
 		}
 		_delay = VALUE::delayHangOut;
 		// 3초뒤 사라짐
@@ -92,53 +92,7 @@ void enemyController::update2bit(void)
 	// 피격 상태(총)
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT))
 	{
-		//피격 모션이 끝났을 경우
-		if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
-			== MALE_DEAD)
-		{
-			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
-			{
-				gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT);
-			}
-		}
-		else
-		{
-			if (_isFemale)
-			{
-				//--, 달리는 중 피격, 머리
-				//--, 달리는 중 피격, 중간
-				//--, 달리는 중 피격, 다른부위
-			}
-			else
-			{
-				//샷건, 피격, 왼쪽/앞
-				//샷건, 피격, 오른쪽/앞
-				//샷건, 피격, 중간/앞
-				//샷건, 피격, 머리/앞
-				//샷건, 피격, 왼쪽/뒤
-				//샷건, 피격, 오른쪽/뒤
-				//샷건, 피격, 중간/뒤
-				//샷건, 피격, 머리/뒤
-				//라이플, 피격, 왼쪽/앞
-				//라이플, 피격, 오른쪽/앞
-				//라이플, 피격, 중간/앞
-				//라이플, 피격, 머리/앞
-				//라이플, 피격, 왼쪽/뒤
-				//라이플, 피격, 오른쪽/뒤
-				//라이플, 피격, 중간/뒤
-				//라이플, 피격, 머리/뒤
-
-				//
-				//샷건, 달리는 중 피격, 머리
-				//샷건, 달리는 중 피격, 몸통
-				//샷건, 달리는 중 피격, 나머지 부분
-				//라이플, 달리는 중 피격, 머리
-				//라이플, 달리는 중 피격, 몸통
-				//라이플, 달리는 중 피격, 나머지 부분
-			}
-
-		}
-
+		updateBeShot();
 		return;
 	}
 	
@@ -393,5 +347,255 @@ float enemyController::getDistance2player(void)
 		intervalPlayer -= gFunc::Vec3Distance(infoPlayer->pos, viewPlayer->getPosition());
 
 		return _path->getDistance() + intervalOwn + intervalPlayer;
+	}
+}
+
+void enemyController::updateBeShot(void)
+{
+	//피격 모션이 끝났을 경우
+	if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
+		== MALE_DEAD)
+	{
+		if (_bindCharacter->getAControllInfo().persent >= 0.8f)
+		{
+			gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT);
+			changeBindBit(ANIBIT::WEAPON, AWEAPON_NONE);
+			_bindCharacter->getStatusBeShot() = 0;
+		}
+	}
+	else
+	{
+		if (!gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::APPROACH))
+		{
+			if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::BYSHOTGUN))
+			{
+				//샷건, 피격, 머리/앞
+				if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_HEAD_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD);
+				}
+				//샷건, 피격, 왼쪽/앞
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_LEFT_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT);
+				}
+				//샷건, 피격, 오른쪽/앞
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_RIGHT_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT);
+				}
+				//샷건, 피격, 중간/앞
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_MIDDLE_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE);
+				}
+
+
+				//샷건, 피격, 왼쪽/뒤
+				//샷건, 피격, 오른쪽/뒤
+				//샷건, 피격, 중간/뒤
+				//샷건, 피격, 머리/뒤
+			}
+			else
+			{
+				//라이플, 피격, 머리/앞
+				if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_HEAD_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD);
+				}
+				//라이플, 피격, 왼쪽/앞
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_LEFT_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT);
+				}
+				//라이플, 피격, 오른쪽/앞
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_RIGHT_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT);
+				}
+				//라이플, 피격, 중간/앞
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE))
+				{
+					if (_isFemale)
+					{
+
+					}
+					else
+					{
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, MALE_DEAD);
+						changeBindBit(ANIBIT::SUB, MALE_DEAD_MIDDLE_FRONT);
+					}
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE);
+				}
+
+				//라이플, 피격, 왼쪽/뒤
+				//라이플, 피격, 오른쪽/뒤
+				//라이플, 피격, 중간/뒤
+				//라이플, 피격, 머리/뒤
+			}
+		}
+		else if (_isFemale)
+		{
+			//--, 달리는 중 피격, 머리
+			if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD))
+			{
+
+				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD);
+			}
+			//--, 달리는 중 피격, 중간
+			else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE))
+			{
+
+				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE);
+			}
+			//--, 달리는 중 피격, 다른부위
+			else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::ORDER) ||
+				gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT) ||
+				gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT))
+			{
+
+				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::ORDER);
+				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT);
+				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT);
+			}
+		}
+		else
+		{
+			if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::BYSHOTGUN))
+			{
+				//샷건, 달리는 중 피격, 머리
+				if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD))
+				{
+					changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+					changeBindBit(ANIBIT::MAIN, MALE_RUNNING_DEAD);
+					changeBindBit(ANIBIT::SUB, MALE_RD_HEAD);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD);
+				}
+				//샷건, 달리는 중 피격, 몸통
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE))
+				{
+					changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+					changeBindBit(ANIBIT::MAIN, MALE_RUNNING_DEAD);
+					changeBindBit(ANIBIT::SUB, MALE_RD_MIDDLE);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE);
+				}
+				//샷건, 달리는 중 피격, 나머지 부분
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::ORDER) ||
+					gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT) ||
+					gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT))
+				{
+					changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+					changeBindBit(ANIBIT::MAIN, MALE_RUNNING_DEAD);
+					changeBindBit(ANIBIT::SUB, MALE_RD_ORDER);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::ORDER);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT);
+				}
+			}
+			else
+			{
+				//라이플, 달리는 중 피격, 머리
+				if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD))
+				{
+					changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+					changeBindBit(ANIBIT::MAIN, MALE_RUNNING_DEAD);
+					changeBindBit(ANIBIT::SUB, MALE_RD_HEAD);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD);
+				}
+				//라이플, 달리는 중 피격, 몸통
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE))
+				{
+					changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+					changeBindBit(ANIBIT::MAIN, MALE_RUNNING_DEAD);
+					changeBindBit(ANIBIT::SUB, MALE_RD_MIDDLE);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE);
+				}
+				//라이플, 달리는 중 피격, 나머지 부분
+				else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::ORDER) ||
+					gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT) ||
+					gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT))
+				{
+					changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+					changeBindBit(ANIBIT::MAIN, MALE_RUNNING_DEAD);
+					changeBindBit(ANIBIT::SUB, MALE_RD_ORDER);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::ORDER);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT);
+					gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT);
+				}
+			}
+		}
+		gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::BYSHOTGUN);
+		gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::BYRIFLE);
 	}
 }

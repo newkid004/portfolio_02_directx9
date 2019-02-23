@@ -616,6 +616,9 @@
     <Filter Include="main\classes\event\02_shootWeapon">
       <UniqueIdentifier>{b31c53d1-2e7c-442f-ab53-599c6dd9a9d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\event\03_hitBullet">
+      <UniqueIdentifier>{ee6078df-8843-4e90-b341-119b23a5e8c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1079,6 +1082,7 @@
       <Filter>main\classes\event\02_shootWeapon</Filter>
     </ClInclude>
     <ClInclude Include="soundManager.h" />
+    <ClInclude Include="eHitBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1470,6 +1474,7 @@
       <Filter>main\classes\event\02_shootWeapon</Filter>
     </ClCompile>
     <ClCompile Include="soundManager.cpp" />
+    <ClCompile Include="eHitBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

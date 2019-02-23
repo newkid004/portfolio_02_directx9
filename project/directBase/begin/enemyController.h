@@ -24,10 +24,12 @@ protected :
 
 	virtual void baseBit(void);
 
+
 	void changeBindBit(aniDefine::ANIBIT minusBit, int plusBit);
 
 	float getDistance2player(void);
 
+	virtual void updateBeShot(void);
 public :
 	timeEnemy_set & refInfoTimeEnemy(void) { return _infoTimeEnemy; }
 

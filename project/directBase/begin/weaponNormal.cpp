@@ -3,6 +3,7 @@
 #include "weaponManager.h"
 #include "gDigit.h"
 #include "inGame_digit.h"
+#include "inGame_value.h"
 #include "AnimationDef.h"
 
 using DIGIT = inGame_digit;
@@ -55,7 +56,7 @@ void weaponNormal::fireDo(void)
 	//동작에 걸어줄 조건이 필요 !
 	//weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
-		1.0f, bulletBase::EBulletType::B_FIST);
+		inGame_value::bullet::speed, _bindPMesh);
 }
 
 void weaponNormal::firePost(void)

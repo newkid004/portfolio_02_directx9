@@ -2,6 +2,8 @@
 
 #include "bulletBase.h"
 
+class characterBase;
+
 class fistBullet : public bulletBase
 {
 	
@@ -18,7 +20,7 @@ public:
 
 public:
 
-	fistBullet(float speed, EBulletType type = EBulletType::B_RIFLE);
+	fistBullet(float speed, characterBase* bind);
 	virtual ~fistBullet(void);
 	
 private:

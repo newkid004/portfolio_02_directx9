@@ -29,7 +29,7 @@ public:
 public:
 
 	void addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed, 
-		bulletBase::EBulletType type = bulletBase::EBulletType::B_RIFLE);
+		characterBase* bind);
 
 	bool gunCollision(gunBullet* bullet);
 	bool fistCollision(fistBullet* bullet);

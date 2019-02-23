@@ -1,9 +1,11 @@
 #include "fistBullet.h"
 #include "timeManager.h"
 
-fistBullet::fistBullet(float speed, EBulletType type)
+#include "characterBase.h"
+
+fistBullet::fistBullet(float speed, characterBase* bind)
 :
-bulletBase(speed, type)
+bulletBase(speed, bind)
 {
 }
 

@@ -1,9 +1,11 @@
 #include "gunBullet.h"
 #include "managerList.h"
 
-gunBullet::gunBullet(float speed, EBulletType type)
+#include "characterBase.h"
+
+gunBullet::gunBullet(float speed, characterBase* bind)
 :
-bulletBase(speed, type)
+bulletBase(speed, bind)
 {
 	m_pBulletMesh = this->createBulletMesh();
 }

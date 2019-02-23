@@ -54,11 +54,13 @@ struct weapon_set
 {
 	struct type
 	{
-		static constexpr int none = 0;
-		static constexpr int rifle = 1;
-		static constexpr int shotgun = 2;
-		static constexpr int healkit = 3;
-		static constexpr int normal = 4;
+		static constexpr int none		= 0;
+		static constexpr int rifle		= 1;
+		static constexpr int shotgun	= 2;
+		static constexpr int healkit	= 3;
+		static constexpr int normal		= 4;
+		static constexpr int zombie		= 5;
+		static constexpr int tank		= 6;
 	};
 
 	int type = 0;
