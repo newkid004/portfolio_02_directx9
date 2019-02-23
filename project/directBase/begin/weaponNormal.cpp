@@ -16,7 +16,7 @@ using DIGIT = inGame_digit;
 weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 	:weaponBase::weaponBase(linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::zombie);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::none);
 	_infoWeapon.damage = damage;
 	_infoWeapon.shotDelay = 0.0f;
 
