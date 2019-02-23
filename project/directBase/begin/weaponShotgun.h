@@ -11,10 +11,6 @@ protected:
 	virtual void fireDo(void) override;
 	virtual void firePost(void) override;
 
-	virtual void reloadPre(void) override;
-	virtual void reloadDo(void) override;
-	virtual void reloadPost(void) override;
-
 	virtual void reloadBullet();
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]) override;
 public:

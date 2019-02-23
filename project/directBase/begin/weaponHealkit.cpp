@@ -28,6 +28,16 @@ weaponHealkit::~weaponHealkit()
 {
 }
 
+void weaponHealkit::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
+{
+	updateFire();
+
+	updateHandMatrix(combineMatrix);
+	staticMesh::update();
+	_isCull = isCull;
+	(*getMatrixWorldPoint()) = (*getMatrixWorldPoint()) * _localMatrix;
+}
+
 void weaponHealkit::firePre(void)
 {
 	if (MN_KEY->mouseDown(LEFT)) _infoWeapon.autoFire = true;
@@ -72,20 +82,4 @@ void weaponHealkit::fireDo(void)
 	}
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_HEAL);
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::SUB, AHEAL_SELF_STANDING);
-}
-
-void weaponHealkit::firePost(void)
-{
-}
-
-void weaponHealkit::reloadPre(void)
-{
-}
-
-void weaponHealkit::reloadDo(void)
-{
-}
-
-void weaponHealkit::reloadPost(void)
-{
 }

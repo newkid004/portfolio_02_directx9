@@ -13,6 +13,7 @@
 
 #include "eventDef.h"
 #include "patternMesh.h"
+#include "weaponNormal.h"
 
 using DIGIT = inGame_digit;
 using DIGIT_WEAPON = DIGIT::WEAPON;
@@ -27,10 +28,13 @@ enemyBase::enemyBase(patternMesh* duplicateTarget) :
 	_controller = new enemyController(this);
 
 	duplicateTarget->init();
+
+	_weapon = new weaponNormal(this, 3);
 }
 
 enemyBase::~enemyBase()
 {
+	SAFE_DELETE(_weapon);
 }
 
 void enemyBase::update(void)
@@ -48,14 +52,6 @@ void enemyBase::update(void)
 		return;
 	}
 
-	// 공격
-	if (_weapon)
-	{
-		gDigit::pick(weaponStatus, DIGIT_WEAPON::DO_FIRE);
-		if (gDigit::chk(charStatus, DIGIT_CHAR::ADJACENT))
-			updateAdjacent();
-	}
-
 	// 접근
 	if (gDigit::chk(charStatus, DIGIT_CHAR::APPROACH))
 		updateApproach();
@@ -63,12 +59,6 @@ void enemyBase::update(void)
 	// 거리 확인
 	//else
 	//	updateAlert();
-}
-
-void enemyBase::updateAdjacent(void)
-{
-	int & weaponStatus = _weapon->getInfoWeapon().status;
-	gDigit::put(weaponStatus, DIGIT_WEAPON::DO_FIRE);
 }
 
 void enemyBase::updateApproach(void)

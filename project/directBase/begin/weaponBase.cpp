@@ -166,20 +166,28 @@ void weaponBase::reloadPost(void)
 void weaponBase::normalPre(void)
 {
 	gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::ATTACK);
-	// 상속한뒤 애니메이션 부분과 비트 부분 설정
+	if ((_bindPMesh->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX))
+		== AMIX_ATTACK)
+	{
+		if (_bindPMesh->getAControllInfo().persent >= 0.9f)
+		{
+			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
+		}
+	}
 }
 
 void weaponBase::normalDo(void)
 {
 	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::ATTACK);
+	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_ATTACK);
 	D3DXVECTOR3 stNeckPosition = _position;
 	D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
-	MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 1.0f, bulletBase::EBulletType::B_FIST);
+	MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(), 1.0f, bulletBase::EBulletType::B_FIST);
 }
 
 void weaponBase::normalPost(void)
 {
-	_infoWeapon.nextFireTime = MN_WEAPON->getWeaponInfo(weapon_set::type::none).shotDelay;
+	_infoWeapon.nextFireTime = MN_WEAPON->getWeaponInfo(weapon_set::type::none).shotDelay + MN_TIME->getRunningTime();
 }
 
 void weaponBase::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])
@@ -204,7 +212,7 @@ bool weaponBase::isStillFire(void)
 
 bool weaponBase::isNormalPossible(void)
 {
-	return gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::ATTACK) || (MN_TIME->getRunningTime() < _infoWeapon.nextFireTime);
+	return(MN_TIME->getRunningTime() > _infoWeapon.nextFireTime) &&	(MN_KEY->mousePress(EMouseInput::RIGHT));
 }
 
 bool weaponBase::needReload(void)

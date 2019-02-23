@@ -12,7 +12,6 @@ public :
 	void update(void) override;
 
 protected :
-	void updateAdjacent(void);
 	void updateApproach(void);
 	void updateAlert(void);
 

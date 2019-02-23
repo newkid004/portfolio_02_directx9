@@ -4,6 +4,9 @@
 #include "gDigit.h"
 #include "inGame_digit.h"
 #include "AnimationDef.h"
+#include "patternMesh.h"
+#include "bulletManager.h"
+#include "managerList.h"
 
 using DIGIT = inGame_digit;
 
@@ -12,6 +15,7 @@ weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 {
 	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::normal);
 	_infoWeapon.damage = damage;
+	_infoWeapon.shotDelay = 0.0f;
 
 	D3DXMatrixIdentity(&_baseMatrix[0]);
 	D3DXMatrixIdentity(&_baseMatrix[1]);
@@ -21,56 +25,62 @@ weaponNormal::~weaponNormal(void)
 {
 }
 
-void weaponNormal::firePre(void)
+void weaponNormal::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
 {
-	gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::PRESS);
-	if ((_bindPMesh->getAControllInfo().CurrentMotionBit &
-		GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_MALE)
+	_isCull = true;
+	updateNormal();
+}
+
+void weaponNormal::normalPre(void)
+{
+	gDigit::pick(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
+	int currentBit = _bindPMesh->getAControllInfo().CurrentMotionBit;
+
+	switch (_bindPMesh->getOriginMesh()->getOriginType())
 	{
-		if ((_bindPMesh->getAControllInfo().CurrentMotionBit &
-			GET_ANIBITMASK(aniDefine::ANIBIT::MAIN)) == MALE_ATTACK)
+	case patternMesh::type::male_zombie:
+	case patternMesh::type::feMale_zombie:
+	{
+		if ((currentBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN)) == MALE_ATTACK)
 		{
+			if (_bindPMesh->getAControllInfo().persent >= 0.9f)
+			{
+				D3DXVECTOR3 stNeckPosition = _bindPMesh->getPosition();
+				stNeckPosition.y += 9.0f;
+				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 1.0f, bulletBase::EBulletType::B_FIST);
+			}
 		}
 	}
-	else if ((_bindPMesh->getAControllInfo().CurrentMotionBit &
-		GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_FEMALE)
-	{
-		if ((_bindPMesh->getAControllInfo().CurrentMotionBit &
-			GET_ANIBITMASK(aniDefine::ANIBIT::MAIN)) == FEMALE_ATTACK)
-		{
-		}
-	}
-	else if ((_bindPMesh->getAControllInfo().CurrentMotionBit &
-		GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_HULK)
-	{
-		if ((_bindPMesh->getAControllInfo().CurrentMotionBit &
-			GET_ANIBITMASK(aniDefine::ANIBIT::MAIN)) == HULK_ATTACK)
-		{
-		}
+		break;
+	case patternMesh::type::hulk_zombie:
+		break;
 	}
 }
 
-void weaponNormal::fireDo(void)
+void weaponNormal::normalDo(void)
 {
-	//동작에 걸어줄 조건이 필요 !
-	//weaponBase::fireDo();
-	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
-		1.0f, bulletBase::EBulletType::B_FIST);
+	gDigit::put(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
+	switch (_bindPMesh->getOriginMesh()->getOriginType())
+	{
+	case patternMesh::type::male_zombie:
+	case patternMesh::type::feMale_zombie:
+	{
+		CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MAIN, MALE_ATTACK);
+		CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::SUB, MALE_ATTACK_NONE);
+	}
+	break;
+	case patternMesh::type::hulk_zombie:
+		break;
+	}
 }
 
-void weaponNormal::firePost(void)
+void weaponNormal::normalPost(void)
 {
-	weaponBase::firePost();
+	_infoWeapon.nextFireTime = _infoWeapon.shotDelay + MN_TIME->getRunningTime();
 }
 
-void weaponNormal::reloadPre(void)
+bool weaponNormal::isNormalPossible(void)
 {
-}
-
-void weaponNormal::reloadDo(void)
-{
-}
-
-void weaponNormal::reloadPost(void)
-{
+	return (MN_TIME->getRunningTime() > _infoWeapon.nextFireTime) &&
+		(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ADJACENT));
 }

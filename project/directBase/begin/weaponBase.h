@@ -25,12 +25,12 @@ protected :
 public :
 	virtual void updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull);
 
-private :
+protected :
 	void updateFire(void);
 	void updateReload(void);
 	void updateNormal(void);
 
-protected :
+
 	virtual void firePre(void);
 	virtual void fireDo(void);
 	virtual void firePost(void);
@@ -46,11 +46,12 @@ protected :
 	virtual void reloadBullet() {};
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]);
 
+	virtual bool isNormalPossible(void);
+
 public :
 	bool isShotPossible(void);
 	bool isReloadPossible(void);
 	bool isStillFire(void);
-	bool isNormalPossible(void);
 	bool needReload(void);
 
 public :
