@@ -287,9 +287,9 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 }
 
 void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed,
-	characterBase* bind)
+	weaponBase* bind)
 {
-	switch (bind->getWeapon()->getInfoWeapon().type)
+	switch (bind->getInfoWeapon().type)
 	{
 	case weapon_set::type::rifle: 
 	{

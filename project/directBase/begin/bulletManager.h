@@ -7,6 +7,8 @@
 #define BULLET_MAX 12
 class player;
 
+class weaponBase;
+
 class bulletManager
 {
 private:
@@ -33,7 +35,7 @@ public:
 public:
 
 	void addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed, 
-		characterBase* bind);
+		weaponBase* bind);
 
 	bool gunCollision(gunBullet* bullet);
 	bool fistCollision(fistBullet* bullet);

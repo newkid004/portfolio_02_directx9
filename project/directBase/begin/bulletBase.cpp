@@ -3,13 +3,13 @@
 
 #include "characterBase.h"
 
-bulletBase::bulletBase(float speed, characterBase* bind)
+bulletBase::bulletBase(float speed, weaponBase* bind)
 :
 _speed(speed),
-_bindCharacter(bind),
 _intersect(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {
-	
+	_damage = bind->getInfoWeapon().damage;
+	_weaponType = bind->getInfoWeapon().type;
 }
 
 bulletBase::~bulletBase(void)

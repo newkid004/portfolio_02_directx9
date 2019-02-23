@@ -42,28 +42,13 @@ void weaponShotgun::fireDo(void)
 {
 	weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
-		inGame_value::bullet::speed, _bindPMesh);
+		inGame_value::bullet::speed, this);
 }
 
 void weaponShotgun::firePost(void)
 {
 	weaponBase::firePost();
 	--_infoWeapon.current;
-}
-
-void weaponShotgun::reloadPre(void)
-{
-	weaponBase::reloadPre();
-}
-
-void weaponShotgun::reloadDo(void)
-{
-	weaponBase::reloadDo();
-}
-
-void weaponShotgun::reloadPost(void)
-{
-	weaponBase::reloadPost();
 }
 
 void weaponShotgun::reloadBullet()
