@@ -6,14 +6,29 @@
 #include "enemyBase.h"
 #include "patternMesh.h"
 #include "mapObject.h"
+#include "characterBase.h"
+#include "weaponBase.h"
+#include "eventBase.h"
 
 using namespace std;
 
-#include "characterBase.h"
-#include "weaponBase.h"
 
 bulletManager::bulletManager(void)
 {
+	_oPartList.insert(make_pair("ValveBiped_Bip01_Head1", inGame_digit::PART::HEAD));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_Spine1", inGame_digit::PART::MIDDLE));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Foot", inGame_digit::PART::NONE));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Foot", inGame_digit::PART::NONE));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Calf", inGame_digit::PART::NONE));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Calf", inGame_digit::PART::NONE));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Thigh", inGame_digit::PART::MIDDLE));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Thigh", inGame_digit::PART::MIDDLE));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Hand", inGame_digit::PART::RIGHT));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Hand", inGame_digit::PART::LEFT));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Forearm", inGame_digit::PART::RIGHT));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Forearm", inGame_digit::PART::LEFT));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_L_UpperArm", inGame_digit::PART::RIGHT));
+	_oPartList.insert(make_pair("ValveBiped_Bip01_R_UpperArm", inGame_digit::PART::LEFT));
 }
 
 bulletManager::~bulletManager(void)
@@ -33,20 +48,6 @@ bulletManager::~bulletManager(void)
 
 void bulletManager::init(void)
 {
-	_oPartList.insert(make_pair("ValveBiped_Bip01_Head1", inGame_digit::PART::HEAD));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_Spine1", inGame_digit::PART::MIDDLE));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Foot", inGame_digit::PART::NONE));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Foot", inGame_digit::PART::NONE));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Calf", inGame_digit::PART::NONE));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Calf", inGame_digit::PART::NONE));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Thigh", inGame_digit::PART::MIDDLE));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Thigh", inGame_digit::PART::MIDDLE));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Hand", inGame_digit::PART::RIGHT));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Hand", inGame_digit::PART::LEFT));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_L_Forearm", inGame_digit::PART::RIGHT));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_R_Forearm", inGame_digit::PART::LEFT));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_L_UpperArm", inGame_digit::PART::RIGHT));
-	_oPartList.insert(make_pair("ValveBiped_Bip01_R_UpperArm", inGame_digit::PART::LEFT));
 }
 
 void bulletManager::update(void)
@@ -171,6 +172,7 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 					// 충돌 부위 파트
 					int hitPart = _oPartList.find(rValue.first)->second;
 
+					
 
 
 					SAFE_DELETE((*_gunIter));
