@@ -28,6 +28,7 @@ gameSystem::gameSystem()
 	_set.map_render = new maptool_render();
 	_set.map = new mapObject();
 	initField();
+	initBone();
 }
 
 gameSystem::~gameSystem()
@@ -62,6 +63,24 @@ void gameSystem::initField(void)
 
 	// map
 	_set.map->init();
+}
+
+void gameSystem::initBone(void)
+{
+	_boneNameSet.push_back("ValveBiped_Bip01_Head1");
+	_boneNameSet.push_back("ValveBiped_Bip01_Spine1");
+	_boneNameSet.push_back("ValveBiped_Bip01_L_Foot");
+	_boneNameSet.push_back("ValveBiped_Bip01_R_Foot");
+	_boneNameSet.push_back("ValveBiped_Bip01_L_Calf");
+	_boneNameSet.push_back("ValveBiped_Bip01_R_Calf");
+	_boneNameSet.push_back("ValveBiped_Bip01_L_Thigh");
+	_boneNameSet.push_back("ValveBiped_Bip01_R_Thigh");
+	_boneNameSet.push_back("ValveBiped_Bip01_L_Hand");
+	_boneNameSet.push_back("ValveBiped_Bip01_R_Hand");
+	_boneNameSet.push_back("ValveBiped_Bip01_L_Forearm");
+	_boneNameSet.push_back("ValveBiped_Bip01_R_Forearm");
+	_boneNameSet.push_back("ValveBiped_Bip01_L_UpperArm");
+	_boneNameSet.push_back("ValveBiped_Bip01_R_UpperArm");
 }
 
 void gameSystem::collision(void)
@@ -142,7 +161,7 @@ void gameSystem::collision(void)
 					{
 						//printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
 						printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
-
+						
 						SAFE_DELETE((*bulletIter));
 						bulletIter = vBulletList.erase(bulletIter);
 
@@ -181,20 +200,20 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 	enemyBase* result = enemyFactory::createEnemy(enemyType);
 	auto & origin = result->getOriginMesh();
 
-	origin->setupBoneInfo("ValveBiped_Bip01_Head1",		 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_Spine1",	 14, 18, 10);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Foot",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Foot",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Calf",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Calf",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Thigh",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Thigh",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Hand",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Hand",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Forearm",  8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Forearm",  8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_UpperArm", 7, 7, 7);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_UpperArm", 7, 7, 7);
+	origin->setupBoneInfo(_boneNameSet[0], 9, 9, 9);
+	origin->setupBoneInfo(_boneNameSet[1], 14, 18, 10);
+	origin->setupBoneInfo(_boneNameSet[2], 8, 8, 8);
+	origin->setupBoneInfo(_boneNameSet[3], 8, 8, 8);
+	origin->setupBoneInfo(_boneNameSet[4], 9, 9, 9);
+	origin->setupBoneInfo(_boneNameSet[5], 9, 9, 9);
+	origin->setupBoneInfo(_boneNameSet[6], 9, 9, 9);
+	origin->setupBoneInfo(_boneNameSet[7], 9, 9, 9);
+	origin->setupBoneInfo(_boneNameSet[8], 8, 8, 8);
+	origin->setupBoneInfo(_boneNameSet[9], 8, 8, 8);
+	origin->setupBoneInfo(_boneNameSet[10], 8, 8, 8);
+	origin->setupBoneInfo(_boneNameSet[11], 8, 8, 8);
+	origin->setupBoneInfo(_boneNameSet[12], 7, 7, 7);
+	origin->setupBoneInfo(_boneNameSet[13], 7, 7, 7);
 
 	origin->init();
 	origin->setDebugEnable(true, EDebugDrawType::SPHERE);
