@@ -6,6 +6,7 @@
 bulletBase::bulletBase(float speed, weaponBase* bind)
 :
 _speed(speed),
+_bulletType(0),
 _intersect(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 {
 	_damage = bind->getInfoWeapon().damage;

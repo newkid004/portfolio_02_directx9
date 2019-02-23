@@ -399,7 +399,14 @@ void patternMesh::setBoneBoundSphere(void)
 
 	switch (_originType)
 	{
-	case type::male_zombie:case type::feMale_zombie:
+	case type::survivor:
+	{
+		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 5.4f, 0.0f), 1300),
+			D3DXVECTOR3(0.0f, 5.4f, 0.0f));
+
+		break;
+	}
+	case type::male_zombie: case type::feMale_zombie:
 	{
 		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 5.4f, 0.0f), 1500),
 			D3DXVECTOR3(0.0f, 5.4f, 0.0f));

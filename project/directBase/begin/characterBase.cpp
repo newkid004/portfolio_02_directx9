@@ -53,7 +53,7 @@ void characterBase::update(void)
 	patternMeshDup::update();
 
 	int charStatus = _infoCharacter.status;
-	if (!gDigit::chk(charStatus, DIGIT::CHAR::DEAD))
+	//if (!gDigit::chk(charStatus, DIGIT::CHAR::DEAD))
 		_controller->update();
 
 	updateLanding();

@@ -96,6 +96,7 @@ void sceneInGame::initSystem(void)
 {
 	// player
 	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
+	MN_BULLET->setBindPlayer(pCharacter);
 	pCharacter->getOriginMesh()->init();
 	pCharacter->getOriginMesh()->setDebugEnable(true, EDebugDrawType::SPHERE);
 

@@ -50,8 +50,9 @@ void weaponNormal::normalPre(void)
 			{
 				D3DXVECTOR3 stNeckPosition = _bindPMesh->getPosition();
 				stNeckPosition.y += 9.0f;
+				_bindPMesh->getWeapon()->getInfoWeapon().type = weapon_set::type::zombie;
 				MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(), 
-					inGame_value::bullet::speed, _bindPMesh);
+					inGame_value::bullet::speed, this);
 			}
 		}
 	}
