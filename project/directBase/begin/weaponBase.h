@@ -9,8 +9,6 @@ class characterBase;
 
 class weaponBase:public staticMesh
 {
-public :
-
 protected :
 	characterBase*				_bindPMesh = nullptr;
 
@@ -24,15 +22,13 @@ protected :
 
 	bool _isLeft = true;
 
-	//
-	bulletManager _bulletManager;
-	//
 public :
-	void updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull);
+	virtual void updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull);
 
 private :
 	void updateFire(void);
 	void updateReload(void);
+	void updateNormal(void);
 
 protected :
 	virtual void firePre(void);
@@ -43,6 +39,10 @@ protected :
 	virtual void reloadDo(void);
 	virtual void reloadPost(void);
 
+	virtual void normalPre(void);
+	virtual void normalDo(void);
+	virtual void normalPost(void);
+
 	virtual void reloadBullet() {};
 	virtual void updateHandMatrix(D3DXMATRIXA16 combineMatrix[]);
 
@@ -50,6 +50,7 @@ public :
 	bool isShotPossible(void);
 	bool isReloadPossible(void);
 	bool isStillFire(void);
+	bool isNormalPossible(void);
 	bool needReload(void);
 
 public :
