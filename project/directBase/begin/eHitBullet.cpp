@@ -26,9 +26,6 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 	putDigitStatus(viewBullet, viewTake);
 	putValue(viewBullet, viewTake);
 
-	putDigitStatus(viewBullet, viewWeapon, viewTake);
-	putValue(viewWeapon, viewTake);
-
 	_particle = createParticle(bullet->getIntersect(), -viewBullet->getRay().direction);
 	_particle->particleEmitStart(0.01f);
 }
