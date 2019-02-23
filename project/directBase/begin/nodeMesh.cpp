@@ -24,6 +24,40 @@ nodeMesh::~nodeMesh()
 
 void nodeMesh::update(void)
 {
+	calMatrixFinal();
+
+	// 자식 갱신
+	for (auto childObject : _vChildren)
+		childObject->update();
+}
+
+void nodeMesh::drawDo(void)
+{
+	renderObject::drawDo();
+
+	_effect->SetMatrix("_mWorld", &getMatrixFinal());
+	_effect->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
+	_effect->SetVector("_diffuse", &_nodeColor);
+
+	gFunc::runEffectLoop(_effect, "techSphere", [&](int passNum)->void {
+		_meshSet->mesh->DrawSubset(0);
+	});
+
+	_effect->SetTexture("_texture", _meshSet->vTextureList[0]);
+	_effect->SetMatrix("_mWorldPlane", &_mWorldPlane);
+	gFunc::runEffectLoop(_effect, "techPlane", [&](int passNum)->void {
+		_plane->DrawSubset(0);
+	});
+}
+
+void nodeMesh::setBindNode(aStar_node * input)
+{
+	_bindNode = input; 
+	input->getBindData() = this;
+}
+
+void nodeMesh::calMatrixFinal(void)
+{
 	// 이동
 	D3DXMATRIXA16 mTranslation;
 	D3DXMatrixTranslation(&mTranslation,
@@ -55,35 +89,6 @@ void nodeMesh::update(void)
 	// world
 	_mWorld = _mOffset * mScalse * mRotation * mTranslation;
 	_mWorldPlane = _mOffset * mScalsePlane * mRotation * mTranslation;
-
-	// 자식 갱신
-	for (auto childObject : _vChildren)
-		childObject->update();
-}
-
-void nodeMesh::drawDo(void)
-{
-	renderObject::drawDo();
-
-	_effect->SetMatrix("_mWorld", &getMatrixFinal());
-	_effect->SetMatrix("_mViewProjection", &GET_CAMERA()->getMatrixViewProjection());
-	_effect->SetVector("_diffuse", &_nodeColor);
-
-	gFunc::runEffectLoop(_effect, "techSphere", [&](int passNum)->void {
-		_meshSet->mesh->DrawSubset(0);
-	});
-
-	_effect->SetTexture("_texture", _meshSet->vTextureList[0]);
-	_effect->SetMatrix("_mWorldPlane", &_mWorldPlane);
-	gFunc::runEffectLoop(_effect, "techPlane", [&](int passNum)->void {
-		_plane->DrawSubset(0);
-	});
-}
-
-void nodeMesh::setBindNode(aStar_node * input)
-{
-	_bindNode = input; 
-	input->getBindData() = this;
 }
 
 LPD3DXMESH nodeMesh::createPlane(void)

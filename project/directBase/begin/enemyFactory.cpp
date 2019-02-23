@@ -12,6 +12,7 @@
 #include "inGame_grape.h"
 
 #include "enemyBase.h"
+#include "nodeMesh.h"
 
 using DIGIT = inGame_digit;
 #define DIGIT_CHK(d) (type & d)
@@ -36,10 +37,14 @@ enemyBase * enemyFactory::createEnemy(int type)
 	}
 
 	auto & vSpawnPos = SGT_GAME->getSet().field->getList().vSpawnPos;
-	result->setPosition(vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)]);
-	//test
+	auto & sp = vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)];
+	result->setPosition(sp->getPosition() +
+		D3DXVECTOR3(
+			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
+			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
+			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()))
+	);
 	result->getInfoMove().maximumSpeed = 0.1f;
-    //
 
 
 	return result;
@@ -68,8 +73,15 @@ enemyBase * enemyFactory::recycleEnemy(int type)
 
 		auto & grape = SGT_GAME->getSet().field->getMember().grape;
 		grape->pickData(recycleable, 2, recycleable->getPosition(), recycleable->getInfoCharacter().colRadius);
-
-		recycleable->setPosition(lists.vSpawnPos[gFunc::rndInt(0, lists.vSpawnPos.size() - 1)]);
+		
+		auto & viewSpawner = lists.vSpawnPos[gFunc::rndInt(0, lists.vSpawnPos.size() - 1)];
+		
+		recycleable->setPosition(viewSpawner->getPosition() +
+			D3DXVECTOR3(
+				gFunc::rndFloat(-viewSpawner->getPlaneRadius(), viewSpawner->getPlaneRadius()),
+				gFunc::rndFloat(-viewSpawner->getPlaneRadius(), viewSpawner->getPlaneRadius()),
+				gFunc::rndFloat(-viewSpawner->getPlaneRadius(), viewSpawner->getPlaneRadius()))
+		);
 		recycleable->getInfoCharacter().nowHp = recycleable->getInfoCharacter().maxHp;
 		recycleable->getInfoCharacter().status = 0;
 

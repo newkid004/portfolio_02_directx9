@@ -27,7 +27,6 @@ gameSystem::gameSystem()
 	_set.map_render = new maptool_render();
 	_set.map = new mapObject();
 	initField();
-	MN_BULLET->setBindPlayer(_set.player);
 }
 
 gameSystem::~gameSystem()

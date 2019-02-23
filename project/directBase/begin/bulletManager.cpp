@@ -62,21 +62,26 @@ void bulletManager::update(void)
 	{
 		(*_gunIter)->update();
 
-		if (gunCollision(*_gunIter))
+		if((*_gunIter)->getBulletType() == bulletBase::TYPE::UNVISIBLE)
 		{
-			SAFE_DELETE((*_gunIter));
-			_gunIter = _vGunBulletList.erase(_gunIter);
-			
-			if (_gunIter == _vGunBulletList.end()) continue;
-		}
-
-		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*_gunIter)->getPosition()) > 200)
-		{
-			SAFE_DELETE((*_gunIter));
-			_gunIter = _vGunBulletList.erase(_gunIter);
-		}
-		else ++_gunIter;
+			if (gunCollision(*_gunIter))
+			{
+				SAFE_DELETE((*_gunIter));
+				_gunIter = _vGunBulletList.erase(_gunIter);
+				SAFE_DELETE((*_gunIter));
+				_gunIter = _vGunBulletList.erase(_gunIter);
+				if (_gunIter == _vGunBulletList.end()) continue;
+			}
 		
+			if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*_gunIter)->getPosition()) > 200)
+			{
+				SAFE_DELETE((*_gunIter));
+				_gunIter = _vGunBulletList.erase(_gunIter);
+				SAFE_DELETE((*_gunIter));
+				_gunIter = _vGunBulletList.erase(_gunIter);
+			}
+			else ++_gunIter;
+		}
 	}
 
 	for (; _fistIter != _vFistBulletList.end();)
@@ -199,37 +204,37 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 {	
 	if (_bindPlayer == nullptr) return false;
 
+	auto player = _bindPlayer->getOriginMesh();
 	// 주체 : ENEMY, 대상 : PLAYER
 	if (bullet->getWeaponType() == weapon_set::type::zombie)
 	{
-		auto & mBoundSphereSet = _bindPlayer->getBoundingSphereSetList();
-		auto mSphere = _bindPlayer->getBoundingSphere();
+		auto & mBoundSphereSet = player->getBoundingSphereSetList();
+		auto mSphere = player->getBoundingSphere();
 
-		mSphere.center += _bindPlayer->getBoundingSphereOffset();
-		mSphere.radius *= _bindPlayer->getScale().x;
+		mSphere.center += player->getBoundingSphereOffset();
+		mSphere.radius *= player->getScale().x;
 
 		D3DXVECTOR3 intersect;
 
 		if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 			bullet->getSpeed(), mSphere))
 		{
-			for (auto rValue : mBoundSphereSet)
-			{
-				auto sphere = rValue.second.sphere;
-				sphere.center = rValue.second.drawPosition;
-				sphere.radius *= _bindPlayer->getScale().x * 40;
-			
-				if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
-					bullet->getSpeed(), sphere))
-				{
-					
-					D3DXVECTOR3 zom2Player = _bindPlayer->getPosition() - bullet->getRay().origin;
-					float cosAngle = D3DXVec3Dot(&bullet->getRay().direction, &zom2Player);
-					
-			if (cosAngle < 0.0f)
-			{
-				return false;
-			}
+			//for (auto rValue : mBoundSphereSet)
+			//{
+			//	auto sphere = rValue.second.sphere;
+			//	sphere.center = rValue.second.drawPosition;
+			//	sphere.radius *= _bindPlayer->getScale().x * 40;
+			//
+			//	if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
+			//		bullet->getSpeed(), sphere))
+			//	{
+			//		D3DXVECTOR3 zom2Player = _bindPlayer->getPosition() - bullet->getRay().origin;
+			//		float cosAngle = D3DXVec3Dot(&bullet->getRay().direction, &zom2Player);
+			//		
+			//if (cosAngle < 0.0f)
+			//{
+			//	return false;
+			//}
 
 			printf("피격!! 피격 대상 : %d     %d\n", 
 			bullet->getWeaponType(),
@@ -241,8 +246,8 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 			// }
 
 			return true;
-				}
-			}
+				//}
+			//}
 		}
 	}
 	else
@@ -260,7 +265,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 
 			mSphere.center += enemy->getBoundingSphereOffset();
 			mSphere.radius *= enemy->getScale().x;
-
+			gFunc::
 			D3DXVECTOR3 intersect;
 
 			if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
@@ -294,7 +299,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 }
 
 void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed,
-	weaponBase* bind)
+	weaponBase* bind, bulletBase::TYPE type)
 {
 	switch (bind->getInfoWeapon().type)
 	{
@@ -302,6 +307,7 @@ void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & 
 	{
 		gunBullet* bullet = new gunBullet(speed, bind);
 		bullet->setRay(position, forwardDir);
+		bullet->setBulletType(type);
 		_vGunBulletList.push_back(bullet);
 	} break;
 
@@ -314,15 +320,18 @@ void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & 
 				forwardDir.y + gFunc::rndFloat(-0.08f, 0.08f),
 				forwardDir.z);
 			bullet->setRay(position, dir);
+			bullet->setBulletType(type);
 			_vGunBulletList.push_back(bullet);
 		}
 	} break;
+	case weapon_set::type::none:
+	case weapon_set::type::normal:
 	case weapon_set::type::zombie:
 	case weapon_set::type::tank:
 	{
 		fistBullet* bullet = new fistBullet(speed, bind);
 		bullet->setRay(position, forwardDir);
-		bullet->setRange();
+		bullet->setBulletType(type);
 		_vFistBulletList.push_back(bullet);
 	} break;
 

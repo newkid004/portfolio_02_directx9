@@ -15,10 +15,12 @@
 #include "skinnedMesh.h"
 #include "nodeMesh.h"
 #include "triggerMesh.h"
+#include "spawner.h"
 
 #include "triggerBase.h"
 #include "triggerFactory.h"
 
+static constexpr float btnCount = 6.0f;
 typedef maptool_data_catalog CATALOG;
 
 maptool_window::maptool_window()
@@ -32,6 +34,7 @@ maptool_window::maptool_window()
 	vWindow.push_back(MN_UI->add("maptool_mnBump",		_windowSet.mv_bump		= create_mvBump()));
 	vWindow.push_back(MN_UI->add("maptool_mnEvent",		_windowSet.mv_node		= create_mvNode()));
 	vWindow.push_back(MN_UI->add("maptool_mnTrigger",	_windowSet.mv_trigger	= create_mvTrigger()));
+	vWindow.push_back(MN_UI->add("maptool_mnSpawner",	_windowSet.mv_spawner	= create_mvSpawner()));
 	vWindow.push_back(MN_UI->add("maptool_mnFile",		_windowSet.mv_file		= create_mvFile()));
 
 	for (auto i : vWindow)
@@ -71,8 +74,8 @@ windowStatic * maptool_window::createBottomBar(void)
 	gFunc::getTextureSize(&textureSize, winInfo.backImage);
 
 	winInfo.scale = D3DXVECTOR2(
-		(WINSIZEX / 5.0f) / textureSize.x,
-		(WINSIZEY / 16.0f) / textureSize.y);
+		(WINSIZEX / btnCount) / textureSize.x,
+		(WINSIZEY / 20.0f) / textureSize.y);
 
 	winInfo.size = gFunc::Vec2Mlt(textureSize, winInfo.scale);
 
@@ -89,6 +92,7 @@ windowStatic * maptool_window::createBottomBar(void)
 	result->addButton("bump",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/bump.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_bump->trans(); };
 	result->addButton("event",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/event.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_node->trans(); };
 	result->addButton("trigger",createButtonUnderBar(result, "resource/texture/maptool/bottomBar/trigger.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_trigger->trans(); };
+	result->addButton("spawner", createButtonUnderBar(result, "resource/texture/maptool/bottomBar/spawner.png", btnCount++))->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_spawner->trans(); };
 	result->addButton("file",	createButtonUnderBar(result, "resource/texture/maptool/bottomBar/file.png", btnCount++))	->getActiveSet().press = [this](void)->UI_LIST_NODE { return _windowSet.mv_file->trans(); };
 
 	return result;
@@ -98,8 +102,8 @@ windowRenderTarget * maptool_window::createMinimap(void)
 {
 	uiInfo winInfo;
 	winInfo.size = D3DXVECTOR2(
-		WINSIZEX * 0.21f,
-		WINSIZEY * 0.363);
+		WINSIZEX * 0.01f,
+		WINSIZEY * 0.01f);
 	winInfo.pos = D3DXVECTOR2(WINSIZEX - winInfo.size.x, 0);
 
 	return new windowRenderTarget(winInfo);
@@ -229,6 +233,30 @@ windowCtlogMaptool * maptool_window::create_mvTrigger(void)
 
 	vector<CATALOG::OBJ::TRIGGER*> content;
 	createContent_trigger(content);
+
+	for (auto i : content)
+		result->addItem(i);
+
+	return result;
+}
+
+windowCtlogMaptool * maptool_window::create_mvSpawner(void)
+{
+	auto transTexture = MN_SRC->getSpriteTexture("resource/texture/maptool/common/window.png");
+	D3DXVECTOR2 textureSize;
+	gFunc::getTextureSize(&textureSize, transTexture);
+
+	uiInfo winInfo;
+	winInfo.backImage = transTexture;
+	winInfo.size = textureSize;
+	winInfo.pos = D3DXVECTOR2(
+		(WINSIZEX - winInfo.size.x) / 2.0f,
+		(WINSIZEY - winInfo.size.y) / 2.0f);
+
+	auto result = new windowCtlogMaptool(winInfo);
+
+	vector<CATALOG::OBJ::SPAWNER*> content;
+	createContent_spawner(content);
 
 	for (auto i : content)
 		result->addItem(i);
@@ -443,9 +471,23 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 	inputContent("medikit");
 }
 
+void maptool_window::createContent_spawner(std::vector<maptool_data_catalog::OBJ::SPAWNER*>& vContent)
+{
+	CATALOG::OBJ::SPAWNER* item = nullptr;
+	spawner::mParam param;
+
+	// 00. range
+	param.meshFilePath = "resource/mesh/sphere.x";
+	param.effectFilePath = "resource/effect/field_node.fx";
+
+	CATALOG::create(&item, &param);
+	item->_standImage = MN_SRC->getSpriteTexture("resource/texture/maptool/catalog/node/node.png");
+
+	vContent.push_back(item);
+}
+
 buttonStatic * maptool_window::createButtonUnderBar(windowBase * bindWindow, const std::string & texture, float offsetNumber)
 {
-	constexpr float btnCount = 5.0f;
 	constexpr float numInterval = 0.8f;
 
 	buttonStatic* result = new buttonStatic(bindWindow);
