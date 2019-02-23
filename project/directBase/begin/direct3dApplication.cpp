@@ -32,6 +32,7 @@ void direct3dApplication::init(void)
 	GET_TIME_MANAGER()->init();
 	GET_INPUT_MANAGER()->init();
 	GET_EVENT_MANAGER()->init();
+	GET_BULLET_MANAGER()->init();
 
 	createMember();
 }
