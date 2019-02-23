@@ -5,6 +5,8 @@
 #include "inGame_value.h"
 
 #include "weaponManager.h"
+#include "soundManager.h"
+#include "gFunc.h"
 
 weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
@@ -43,6 +45,7 @@ void weaponShotgun::fireDo(void)
 	weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
 		inGame_value::bullet::speed, this);
+	MN_SND->find("shotgunShoot")->play(-1.0f,gFunc::rndFloat( 0.8f, 1.0f));
 }
 
 void weaponShotgun::firePost(void)

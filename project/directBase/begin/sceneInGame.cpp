@@ -218,5 +218,7 @@ void sceneInGame::initUI(void)
 
 void sceneInGame::initSound(void)
 {
+	//weapon
 	MN_SND->addSound("rifleShoot", "resource/sound/weapon/rifle_fire.wav",false,false);
+	MN_SND->addSound("shotgunShoot", "resource/sound/weapon/shotgun_fire.wav", false, false);
 }
