@@ -5,6 +5,9 @@
 #include "fistBullet.h"
 
 #define BULLET_MAX 12
+class player;
+
+class weaponBase;
 
 class bulletManager
 {
@@ -17,11 +20,14 @@ private:
 	std::list<gunBullet *>::iterator _gunIter;
 	std::list<fistBullet *>::iterator _fistIter;
 
+	player * _bindPlayer;
+
 public:
 	
 	std::list<gunBullet*> & getGunBulletList(void) { return _vGunBulletList; }
 	std::list<fistBullet*> & getFistBulletList(void) { return _vFistBulletList; }
 
+	void setBindPlayer(player * bind) { _bindPlayer = bind; }
 public:
 	void init(void);
 	void update(void);
@@ -29,7 +35,7 @@ public:
 public:
 
 	void addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed, 
-		characterBase* bind);
+		weaponBase* bind);
 
 	bool gunCollision(gunBullet* bullet);
 	bool fistCollision(fistBullet* bullet);

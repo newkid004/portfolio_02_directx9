@@ -2,6 +2,7 @@
 #include "KGlobalDefine.h"
 #include "pickRay.h"
 
+class weaponBase;
 class characterBase;
 
 class bulletBase
@@ -24,7 +25,8 @@ public:
 
 protected:
 
-	characterBase* _bindCharacter = nullptr;
+	int _damage;
+	int _weaponType;
 
 	float _speed;
 
@@ -44,15 +46,15 @@ public:
 	void setIntersect(const D3DXVECTOR3 & intersect) { _intersect = intersect; }
 	void setRay(const D3DXVECTOR3 & origin, const D3DXVECTOR3 & direction);
 
+	int getDamage(void) { return _damage; }
+	int getWeaponType(void) { return _weaponType; }
 	float & getSpeed(void) { return _speed; }
 	pick::ray & getRay(void) { return _ray; }
 	D3DXVECTOR3 & getIntersect(void) { return _intersect; }
 
-	characterBase* & refBindCharacter(void) { return _bindCharacter; }
-
 public:
 
-	bulletBase(float speed, characterBase* bind);
+	bulletBase(float speed, weaponBase* bind);
 
 	virtual ~bulletBase(void);
 

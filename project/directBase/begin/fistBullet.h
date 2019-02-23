@@ -2,7 +2,7 @@
 
 #include "bulletBase.h"
 
-class characterBase;
+class weaponBase;
 
 class fistBullet : public bulletBase
 {
@@ -20,7 +20,7 @@ public:
 
 public:
 
-	fistBullet(float speed, characterBase* bind);
+	fistBullet(float speed, weaponBase* bind);
 	virtual ~fistBullet(void);
 	
 private:

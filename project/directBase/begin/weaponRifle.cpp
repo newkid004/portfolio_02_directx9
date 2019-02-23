@@ -45,7 +45,7 @@ void weaponRifle::fireDo(void)
 {
 	weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition,_targetDirection,
-		inGame_value::bullet::speed, _bindPMesh);
+		inGame_value::bullet::speed, this);
 }
 
 void weaponRifle::firePost(void)

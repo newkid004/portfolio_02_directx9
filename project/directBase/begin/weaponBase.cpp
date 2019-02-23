@@ -184,7 +184,7 @@ void weaponBase::normalDo(void)
 	D3DXVECTOR3 stNeckPosition = _position;
 	D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
 	MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(),
-		inGame_value::bullet::speed, _bindPMesh);
+		inGame_value::bullet::speed, this);
 }
 
 void weaponBase::normalPost(void)
