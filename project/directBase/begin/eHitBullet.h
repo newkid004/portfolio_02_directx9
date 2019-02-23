@@ -18,13 +18,13 @@ public :
 	void draw(void) override;
 
 protected :
-	void putDigitStatus(weaponBase* weapon, characterBase* take);
+	void putDigitStatus(bulletBase* bullet, weaponBase* weapon, characterBase* take);
 	void putValue(weaponBase* weapon, characterBase* take);
 
 	particlePoint* createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & normal);
 
 public:
-	eHitCharacterBullet(bulletBase* bullet, characterBase* take);
+	eHitCharacterBullet(bulletBase* bullet, characterBase* take, int hitPart);
 	~eHitCharacterBullet();
 };
 

@@ -14,7 +14,7 @@
 #include "particleEmitter.h"
 #include "particleCreater.h"
 
-eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * take) :
+eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * take, int hitPart) :
 	eventBase(bullet, take, 
 		EVENT::TYPE::BULLET |
 		EVENT::KIND::BULLET::COLLISION |
@@ -26,7 +26,7 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 
 	auto & viewWeapon = viewBullet->refBindCharacter()->getWeapon();
 
-	putDigitStatus(viewWeapon, viewTake);
+	putDigitStatus(viewBullet, viewWeapon, viewTake);
 	putValue(viewWeapon, viewTake);
 
 	_particle = createParticle(viewBullet->getRay().origin, -viewBullet->getRay().direction);
@@ -50,7 +50,7 @@ void eHitCharacterBullet::draw(void)
 	_particle->draw();
 }
 
-void eHitCharacterBullet::putDigitStatus(weaponBase * weapon, characterBase * take)
+void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, weaponBase * weapon, characterBase * take)
 {
 	// flag on : 피격 상태
 	gDigit::put(take->getInfoCharacter().status, inGame_digit::CHAR::BESHOT);
@@ -68,6 +68,8 @@ void eHitCharacterBullet::putDigitStatus(weaponBase * weapon, characterBase * ta
 		weaponType == weapon_set::type::zombie ||
 		weaponType == weapon_set::type::tank)
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYNORMAL);
+
+	// 피격 부위 확인
 }
 
 void eHitCharacterBullet::putValue(weaponBase* weapon, characterBase * take)
