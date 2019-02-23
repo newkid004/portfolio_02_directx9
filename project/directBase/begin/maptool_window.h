@@ -25,6 +25,7 @@ public :
 		windowCtlogMaptool* mv_bump = nullptr;
 		windowCtlogMaptool* mv_node = nullptr;
 		windowCtlogMaptool* mv_trigger = nullptr;
+		windowCtlogMaptool* mv_spawner = nullptr;
 		windowCtlogMaptool* mv_file = nullptr;
 
 		windowCtlogMaptool* focusedWindow = nullptr;
@@ -47,12 +48,14 @@ private :
 	windowCtlogMaptool * create_mvBump(void);
 	windowCtlogMaptool* create_mvNode(void);
 	windowCtlogMaptool* create_mvTrigger(void);
+	windowCtlogMaptool* create_mvSpawner(void);
 	windowCtlogMaptool* create_mvFile(void);
 
 	void createContent_prop(std::vector<maptool_data_catalog::OBJ::PROP*> & vContent);
 	void createContent_bump(std::vector<maptool_data_catalog::OBJ::BUMP*> & vContent);
 	void createContent_node(std::vector<maptool_data_catalog::OBJ::NODE*> & vContent);
 	void createContent_trigger(std::vector<maptool_data_catalog::OBJ::TRIGGER*> & vContent);
+	void createContent_spawner(std::vector<maptool_data_catalog::OBJ::SPAWNER*> & vContent);
 
 	buttonStatic* createButtonUnderBar(windowBase* bindWindow, const std::string & texture, float offsetNumber);
 

@@ -67,6 +67,16 @@ void inGame_io::spreadObject(inGame_field* field, json & viewJson)
 		if (baseType & IO_DATA::baseType::TRIGGER)
 			continue;	// trigger에서 처리
 
+		else if (baseType & IO_DATA::baseType::SPAWNER)
+		{
+			IO_DATA::OBJ::SPAWNER* convert = new IO_DATA::OBJ::SPAWNER();
+			IO_DATA::parse(convert, js);
+			IO_DATA::create((nodeMesh**)&additionObject, convert);
+
+			additionData = convert;
+
+			bindFieldList.vSpawnPos.push_back((nodeMesh*)additionObject);
+		}
 		else if (baseType & IO_DATA::baseType::BUMP)
 		{
 			IO_DATA::OBJ::BUMP* convert = new IO_DATA::OBJ::BUMP();
@@ -76,6 +86,7 @@ void inGame_io::spreadObject(inGame_field* field, json & viewJson)
 			additionData = convert;
 
 			bindFieldList.vWall.push_back((staticMesh*)additionObject);
+			bindFieldList.vRenderable.push_back((staticMesh*)additionObject);
 		}
 		else if (baseType & IO_DATA::baseType::PROP)
 		{
@@ -86,13 +97,13 @@ void inGame_io::spreadObject(inGame_field* field, json & viewJson)
 			additionData = convert;
 
 			bindFieldList.vProp.push_back((staticMesh*)additionObject);
+			bindFieldList.vRenderable.push_back((staticMesh*)additionObject);
 		}
 
 		if (additionObject && additionData)
 		{
 			additionObject->calMatrixFinal();
 			bindFieldList.vTotalObject.push_back((staticMesh*)additionObject);
-			bindFieldList.vRenderable.push_back((staticMesh*)additionObject);
 		}
 	}
 }

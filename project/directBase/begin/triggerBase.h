@@ -16,6 +16,7 @@ public :
 		static constexpr int NORMAL			= 0x4;
 
 		static constexpr int AIR_PLANE		= 0x1 << 4;
+		static constexpr int SPAWNER		= 0x2 << 4;
 	};
 
 protected :

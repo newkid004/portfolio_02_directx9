@@ -183,8 +183,15 @@ void weaponBase::normalDo(void)
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_ATTACK);
 	D3DXVECTOR3 stNeckPosition = _position;
 	D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
+
+	// 공격 타입 보존
+	int preType = _infoWeapon.type;
+	_infoWeapon.type = weapon_set::type::none;
+
 	MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(),
 		inGame_value::bullet::speed, this);
+
+	_infoWeapon.type = preType;
 }
 
 void weaponBase::normalPost(void)

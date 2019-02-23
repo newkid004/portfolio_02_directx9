@@ -48,7 +48,7 @@ void weaponNormal::normalPre(void)
 			{
 				D3DXVECTOR3 stNeckPosition = _bindPMesh->getPosition();
 				stNeckPosition.y += 9.0f;
-				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 1.0f, bulletBase::EBulletType::B_FIST);
+				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 1.0f, this);
 			}
 		}
 	}

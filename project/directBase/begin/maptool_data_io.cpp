@@ -8,6 +8,7 @@
 #include "mapObjectBase.h"
 #include "nodeMesh.h"
 #include "triggerMesh.h"
+#include "spawner.h"
 
 #include "triggerBase.h"
 #include "triggerFactory.h"
@@ -88,6 +89,11 @@ void maptool_data_io::OBJ::PATH::write(json & in_Json)
 
 	for (auto i : _connection)
 		in_Json["connection"][i.first] = i.second;
+}
+
+void maptool_data_io::OBJ::SPAWNER::write(json & in_Json)
+{
+	OBJ::NODE::write(in_Json);
 }
 
 bool maptool_data_io::parse(OBJ::BASE * own, json & j_in)
@@ -222,6 +228,11 @@ bool maptool_data_io::parse(OBJ::WALL * own, json & j_in)
 	return true;
 }
 
+bool maptool_data_io::parse(OBJ::SPAWNER * own, json & j_in)
+{
+	return parse((OBJ::NODE*)own, j_in);
+}
+
 void maptool_data_io::apply(OBJ::BASE * in, baseObject * obj)
 {
 	CopyMemory(&in->_position.front(), &obj->getPosition(), sizeof(D3DXVECTOR3));
@@ -324,6 +335,11 @@ void maptool_data_io::apply(OBJ::WALL * in, wallMesh * obj)
 
 	in->_texture = obj->getTexturePath();
 	in->_normalTexture = obj->getNormalTexturePath();
+}
+
+void maptool_data_io::apply(OBJ::SPAWNER * in, spawner * obj)
+{
+	apply((OBJ::NODE*)in, (nodeMesh*)obj);
 }
 
 void maptool_data_io::apply(baseObject * in, OBJ::BASE * data)
@@ -453,6 +469,11 @@ void maptool_data_io::apply(wallMesh * in, OBJ::WALL * data)
 	apply((staticMesh*)in, (OBJ::BUMP*)data);
 }
 
+void maptool_data_io::apply(spawner * in, OBJ::SPAWNER * data)
+{
+	apply((nodeMesh*)in, (OBJ::SPAWNER*)data);
+}
+
 void maptool_data_io::create(OBJ::BASE ** out, baseObject * obj)
 {
 	OBJ::BASE* result = new OBJ::BASE();
@@ -527,6 +548,13 @@ void maptool_data_io::create(OBJ::PATH ** out, inGame_grape * obj)
 void maptool_data_io::create(OBJ::WALL ** out, wallMesh * obj)
 {
 	OBJ::WALL* result = new OBJ::WALL();
+	apply(result, obj);
+	*out = result;
+}
+
+void maptool_data_io::create(OBJ::SPAWNER ** out, spawner * obj)
+{
+	OBJ::SPAWNER* result = new OBJ::SPAWNER();
 	apply(result, obj);
 	*out = result;
 }
@@ -643,6 +671,20 @@ void maptool_data_io::create(wallMesh ** out, OBJ::WALL * data)
 
 	wallMesh * result = new wallMesh(param, data->_texture, data->_normalTexture);
 
+	apply(result, data);
+
+	*out = result;
+}
+
+void maptool_data_io::create(spawner ** out, OBJ::SPAWNER * data)
+{
+	spawner* result = nullptr;
+
+	spawner::mParam param;
+	param.meshFilePath = data->_source;
+	param.effectFilePath = data->_effect;
+
+	result = new spawner(param);
 	apply(result, data);
 
 	*out = result;

@@ -12,6 +12,7 @@ class playerableBase;
 class weaponBase;
 
 class triggerBase;
+class nodeMesh;
 
 class inGame_grape;
 
@@ -38,9 +39,9 @@ public :
 		vList<playerableBase*>	vSurvivor;
 		vList<enemyBase*>		vEnemy;
 		vList<weaponBase*>		vWeapon;
-		vList<triggerBase*>		vTrigger;
 
-		vList<D3DXVECTOR3>		vSpawnPos;
+		vList<triggerBase*>		vTrigger;
+		vList<nodeMesh*>		vSpawnPos;
 	};
 
 	struct member_set

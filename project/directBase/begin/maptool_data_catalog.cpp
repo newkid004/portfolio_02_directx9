@@ -7,6 +7,7 @@
 #include "skinnedMesh.h"
 #include "nodeMesh.h"
 #include "triggerMesh.h"
+#include "spawner.h"
 
 #include "triggerBase.h"
 #include "triggerFactory.h"
@@ -52,6 +53,14 @@ void maptool_data_catalog::create(OBJ::TRIGGER ** out, void * param)
 {
 	OBJ::TRIGGER* result = new OBJ::TRIGGER();
 	result->_object = new triggerMesh(*(triggerMesh::mParam*)param);
+
+	*out = result;
+}
+
+void maptool_data_catalog::create(OBJ::SPAWNER ** out, void * param)
+{
+	OBJ::SPAWNER* result = new OBJ::SPAWNER();
+	result->_object = new spawner(*(spawner::mParam*)param);
 
 	*out = result;
 }
@@ -104,6 +113,15 @@ void maptool_data_catalog::duplicate(triggerMesh ** outObject, OBJ::TRIGGER * ta
 	*outObject = result;
 }
 
+void maptool_data_catalog::duplicate(spawner ** outObject, OBJ::SPAWNER * targetObject)
+{
+	spawner* obj = (spawner*)targetObject->_object;
+	spawner* result = new spawner(obj->getMakeParam());
+
+	applyObject(result, obj);
+	*outObject = result;
+}
+
 void maptool_data_catalog::applyObject(renderObject * target, renderObject * own)
 {
 	target->setScale(own->getScale());
@@ -121,9 +139,15 @@ void maptool_data_catalog::applyObject(nodeMesh * target, nodeMesh * own)
 
 	target->setNodeColor(own->getNodeColor());
 	target->setPlaneRadius(own->getPlaneRadius());
+	target->getMeshSet()->vTextureList[0] = own->getMeshSet()->vTextureList[0];
 }
 
 void maptool_data_catalog::applyObject(triggerMesh * target, triggerMesh * own)
 {
 	applyObject((renderObject*)target, (renderObject*)own);
+}
+
+void maptool_data_catalog::applyObject(spawner * target, spawner * own)
+{
+	applyObject((nodeMesh*)target, (nodeMesh*)own);
 }
