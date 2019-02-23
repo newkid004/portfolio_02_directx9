@@ -87,7 +87,6 @@ weaponBase * weaponManager::createWeapon(int weaponType)
 	case weapon_set::type::rifle	: result = new weaponRifle(weaponParam, player); break;
 	case weapon_set::type::shotgun	: result = new weaponShotgun(weaponParam, player, 1); break;
 	case weapon_set::type::healkit	: result = new weaponHealkit(weaponParam, player); break;
-	case weapon_set::type::normal	: result = new weaponNormal(player, 1); break;
 	}
 
 	result->getInfoWeapon() = _vWeaponInfo[weaponType];
