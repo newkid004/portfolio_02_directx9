@@ -23,7 +23,7 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 	auto viewBullet = static_cast<bulletBase*>(bullet);
 	auto viewTake = static_cast<characterBase*>(take);
 
-	putDigitStatus(viewBullet, viewTake);
+	putDigitStatus(viewBullet, viewTake, hitPart);
 	putValue(viewBullet, viewTake);
 
 	_particle = createParticle(bullet->getIntersect(), -viewBullet->getRay().direction);
@@ -47,7 +47,7 @@ void eHitCharacterBullet::draw(void)
 	_particle->draw();
 }
 
-void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * take)
+void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * take, int hitPart)
 {
 	// flag on : 피격 상태
 	gDigit::put(take->getInfoCharacter().status, inGame_digit::CHAR::BESHOT);
@@ -67,6 +67,7 @@ void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * tak
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYNORMAL);
 
 	// 피격 부위 확인
+	gDigit::put(take->getStatusBeShot(), hitPart);
 }
 
 void eHitCharacterBullet::putValue(bulletBase* bullet, characterBase * take)
