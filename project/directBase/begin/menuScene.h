@@ -42,6 +42,7 @@ public:
 	virtual void drawUI(void) override;
 
 private:
+	void initInfomation(void);
 	void updateBlood(void);
 	bool intersectMouseToRect(RECT rc);
 

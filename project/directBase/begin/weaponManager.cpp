@@ -46,7 +46,7 @@ void weaponManager::CreateWeaponInfo(void)
 	normalSet.type = weapon_set::type::none;
 	normalSet.current = 1;
 	normalSet.damage = 5;
-	normalSet.shotDelay = 1.0f;
+	normalSet.shotDelay = 0.8f;
 
 	rifleSet.type = weapon_set::type::rifle;
 	rifleSet.current = 30;

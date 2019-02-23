@@ -18,6 +18,8 @@
 #include "staticMesh.h"
 
 #include "heap.h"
+#include "soundManager.h"
+#include "patternMesh.h"
 
 using DIGIT = inGame_digit;
 using VALUE = inGame_value;
@@ -292,6 +294,18 @@ void characterBase::moveDo(int direction)
 	if (direction == 0) return;
 
 	gDigit::put(_infoMove.status, DIGIT::MOVE::MOVEING);
+	if (_bindPatternMesh->getOriginType() == patternMesh::type::survivor &&
+		!MN_SND->find("survivorF")->isPlaySound())
+	{
+		MN_SND->find("survivorF")->play();
+	}
+	else if ((_bindPatternMesh->getOriginType() == patternMesh::type::male_zombie ||
+		_bindPatternMesh->getOriginType() == patternMesh::type::feMale_zombie) &&
+		!MN_SND->find("commonF")->isPlaySound())
+	{
+		//여러마리에게 적용되도록 수정
+		MN_SND->find("commonF")->play(gFunc::getSoundVolumeToPlayer(this->_position));
+	}
 
 	float nowSpeed = _infoMove.getSpeedXZ();
 

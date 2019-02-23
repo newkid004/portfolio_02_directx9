@@ -8,6 +8,7 @@
 #include "player.h"
 #include "weaponBase.h"
 #include "AnimationDef.h"
+#include "soundManager.h"
 
 triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 {
@@ -33,6 +34,20 @@ triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 				weapon = MN_WEAPON->createWeapon(own->refTriggerType());
 				CHANGE_BIT(SGT_GAME->getSet().player->getNextBit(),
 					aniDefine::ANIBIT::WEAPON, own->refTriggerType() * 0x10);
+				if (own->refTriggerType() == triggerBase::TYPE::MACHINE_GUN)
+				{
+					MN_SND->find("rDeploy")->play();
+					MN_SND->find("takeRifle")->play();
+				}
+				else if (own->refTriggerType() == triggerBase::TYPE::SHOT_GUN)
+				{
+					MN_SND->find("sDeploy")->play();
+					MN_SND->find("takeShotgun")->play();
+				}
+				else
+				{
+					MN_SND->find("takeHealkit")->play();
+				}
 			}
 			else
 				weapon->getInfoWeapon() = MN_WEAPON->getWeaponInfo(own->refTriggerType());

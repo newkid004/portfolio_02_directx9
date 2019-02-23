@@ -14,45 +14,9 @@ void menuScene::init(void)
 {
 	sceneBase::init();
 
-	backGround = new spriteBase("resource/texture/scene/menuT.png");
-	LPDIRECT3DTEXTURE9 texture = MN_SRC->getSpriteTexture("resource/texture/scene/menuT.png");
-	D3DXVECTOR2 backSize;
-	gFunc::getTextureSize(&backSize, texture);
-	backGround->setPosition(D3DXVECTOR3(MN_WIN->getWindowSize().cx / 2.0f,
-		MN_WIN->getWindowSize().cy / 2.0f-50.0f, 0.0f));
-	backGround->setScale(D3DXVECTOR3(MN_WIN->getWindowSize().cx / backSize.x, 
-		MN_WIN->getWindowSize().cy / backSize.y +0.1f, 0.0f));
-	for (int i = 0; i < 4; ++i)
-	{
-		blood[i].alpha = 0.0f;
-		if (i < 1)
-		{
-			blood[i].type = 0;
-			blood[i].texture = MN_SRC->getSpriteTexture("resource/texture/scene/hand.png");
-			blood[i].updateTime = MN_TIME->getRunningTime() + gFunc::rndFloat(2.0f, 4.0f);
-		}
-		else
-		{
-			blood[i].type = 1;
-			blood[i].texture = MN_SRC->getSpriteTexture("resource/texture/scene/blood.png");
-			blood[i].updateTime = MN_TIME->getRunningTime() + gFunc::rndFloat(3.0f, 6.0f);
-		}
-	}
-
-	int middleX = MN_WIN->getWindowSize().cx / 2;
-	int middleY = MN_WIN->getWindowSize().cy / 2;
-	// 버튼 초기화
-	mainGameButton.rc = { middleX - 200, middleY + 110, middleX + 200, middleY + 170 };
-	mainGameButton.texture[0] = MN_SRC->getSpriteTexture("resource/texture/scene/mainGameGreen.png");
-	mainGameButton.texture[1] = MN_SRC->getSpriteTexture("resource/texture/scene/mainGame.png");
-
-	mapToolButton.rc = { middleX - 200, middleY + 185, middleX + 200, middleY + 245 };
-	mapToolButton.texture[0] = MN_SRC->getSpriteTexture("resource/texture/scene/maptoolGreen.png");
-	mapToolButton.texture[1] = MN_SRC->getSpriteTexture("resource/texture/scene/maptool.png");
-
-	exitButton.rc = { middleX - 200, middleY + 260, middleX + 200, middleY + 320 };
-	exitButton.texture[0] = MN_SRC->getSpriteTexture("resource/texture/scene/exitGreen.png");
-	exitButton.texture[1] = MN_SRC->getSpriteTexture("resource/texture/scene/exit.png");
+	initInfomation();
+	
+	MN_SND->find("gamestartup1")->play();
 }
 
 void menuScene::update(void)
@@ -69,16 +33,19 @@ void menuScene::update(void)
 	{
 		// 메인게임으로 scene 전환
 		printf("mainGame\n");
+		MN_SND->find("menu_accept")->play();
 	}
 	else if (MN_KEY->mouseUp() && intersectMouseToRect(mapToolButton.rc))
 	{
 		// 맵툴로 scene 전환
 		printf("mapTool\n");
+		MN_SND->find("menu_accept")->play();
 	}
 	else if (MN_KEY->mouseUp() && intersectMouseToRect(exitButton.rc))
 	{
 		// 나가기
 		printf("exit\n");
+		MN_SND->find("menu_accept")->play();
 	}
 }
 
@@ -146,6 +113,56 @@ void menuScene::drawUI(void)
 	}
 }
 
+void menuScene::initInfomation(void)
+{
+	backGround = new spriteBase("resource/texture/scene/menuT.png");
+	LPDIRECT3DTEXTURE9 texture = MN_SRC->getSpriteTexture("resource/texture/scene/menuT.png");
+	D3DXVECTOR2 backSize;
+	gFunc::getTextureSize(&backSize, texture);
+	backGround->setPosition(D3DXVECTOR3(MN_WIN->getWindowSize().cx / 2.0f,
+		MN_WIN->getWindowSize().cy / 2.0f - 50.0f, 0.0f));
+	backGround->setScale(D3DXVECTOR3(MN_WIN->getWindowSize().cx / backSize.x,
+		MN_WIN->getWindowSize().cy / backSize.y + 0.1f, 0.0f));
+	for (int i = 0; i < 4; ++i)
+	{
+		blood[i].alpha = 0.0f;
+		if (i < 1)
+		{
+			blood[i].type = 0;
+			blood[i].texture = MN_SRC->getSpriteTexture("resource/texture/scene/hand.png");
+			blood[i].updateTime = MN_TIME->getRunningTime() + gFunc::rndFloat(2.0f, 4.0f);
+		}
+		else
+		{
+			blood[i].type = 1;
+			blood[i].texture = MN_SRC->getSpriteTexture("resource/texture/scene/blood.png");
+			blood[i].updateTime = MN_TIME->getRunningTime() + gFunc::rndFloat(3.0f, 6.0f);
+		}
+	}
+
+	int middleX = MN_WIN->getWindowSize().cx / 2;
+	int middleY = MN_WIN->getWindowSize().cy / 2;
+
+	// 버튼 초기화
+	mainGameButton.rc = { middleX - 200, middleY + 110, middleX + 200, middleY + 170 };
+	mainGameButton.texture[0] = MN_SRC->getSpriteTexture("resource/texture/scene/mainGameGreen.png");
+	mainGameButton.texture[1] = MN_SRC->getSpriteTexture("resource/texture/scene/mainGame.png");
+
+	mapToolButton.rc = { middleX - 200, middleY + 185, middleX + 200, middleY + 245 };
+	mapToolButton.texture[0] = MN_SRC->getSpriteTexture("resource/texture/scene/maptoolGreen.png");
+	mapToolButton.texture[1] = MN_SRC->getSpriteTexture("resource/texture/scene/maptool.png");
+
+	exitButton.rc = { middleX - 200, middleY + 260, middleX + 200, middleY + 320 };
+	exitButton.texture[0] = MN_SRC->getSpriteTexture("resource/texture/scene/exitGreen.png");
+	exitButton.texture[1] = MN_SRC->getSpriteTexture("resource/texture/scene/exit.png");
+
+	//사운드 추가
+	MN_SND->addSound("gamestartup1", "resource/sound/menu/gamestartup1.mp3", true, true);
+	MN_SND->addSound("menu_accept", "resource/sound/menu/menu_accept.wav", false, false);
+	MN_SND->addSound("menu_countdown", "resource/sound/menu/menu_countdown.wav", false, false);
+
+}
+
 void menuScene::updateBlood(void)
 {
 	for (int i = 0; i < 4; ++i)
@@ -185,7 +202,7 @@ void menuScene::updateBlood(void)
 			}
 			else 
 			{
-				blood[i].pos.y += 0.1f;
+				blood[i].pos.y += 1.0f* MN_TIME->getDeltaTime();
 				blood[i].size.y += 800.0f* MN_TIME->getDeltaTime();
 				blood[i].scale.y += 0.15f* MN_TIME->getDeltaTime();
 				blood[i].alpha = max(0.0f, blood[i].alpha - 0.3f * MN_TIME->getDeltaTime());
@@ -204,5 +221,11 @@ bool menuScene::intersectMouseToRect(RECT rc)
 	{
 		return true;
 	}
-	else return false;
+	else
+	{
+		if(!MN_SND->find("menu_countdown")->isPlaySound())
+		MN_SND->find("menu_countdown")->play();
+		
+		return false;
+	}
 }

@@ -64,6 +64,11 @@ void weaponBase::updateFire(void)
 			firePost();
 		}
 	}
+	else if(_infoWeapon.type != weapon_set::type::healkit &&
+		MN_KEY->mousePress())
+	{
+		MN_SND->find("emptyClip")->play();
+	}
 }
 
 void weaponBase::updateReload(void)
@@ -145,6 +150,10 @@ void weaponBase::reloadPre(void)
 			if ((_infoWeapon.current >= _infoWeapon.reload) || _infoWeapon.maximum == 0)
 			{
 				CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
+				if (_infoWeapon.type = weapon_set::type::rifle)
+				{
+					MN_SND->find("rReady")->play();
+				}
 			}
 		}
 	}
@@ -154,6 +163,10 @@ void weaponBase::reloadDo(void)
 {
 	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::RELOAD);
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_RELOAD);
+	if (_infoWeapon.type = weapon_set::type::rifle)
+	{
+		MN_SND->find("rClipOut")->play();
+	}
 }
 
 void weaponBase::reloadPost(void)
@@ -167,7 +180,7 @@ void weaponBase::normalPre(void)
 	if ((_bindPMesh->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX))
 		== AMIX_ATTACK)
 	{
-		if (_bindPMesh->getAControllInfo().persent >= 0.9f)
+		if (_bindPMesh->getAControllInfo().persent >= 0.8f)
 		{
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
 		}
@@ -187,6 +200,7 @@ void weaponBase::normalDo(void)
 
 	MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(),
 		inGame_value::bullet::speed, this);
+	MN_SND->find("swingWeapon")->play();
 
 	_infoWeapon.type = preType;
 }

@@ -6,6 +6,7 @@
 #include "labelBase.h"
 
 #include "sceneBase.h"
+#include "player.h"
 
 using namespace std;
 
@@ -358,6 +359,14 @@ float gFunc::getAngle(D3DXVECTOR3 v1, D3DXVECTOR3 v2)
 		angle = -angle;
 
 	return angle;
+}
+
+float gFunc::getSoundVolumeToPlayer(const D3DXVECTOR3 & position)
+{
+	D3DXVECTOR3 &playerPos = SGT_GAME->getSet().player->getPosition();
+
+	float distance = Vec2Distance(D3DXVECTOR2(playerPos.x, playerPos.z), D3DXVECTOR2(position.x, position.z));
+	return 15.0f / distance;
 }
 
 int gFunc::rndInt(int min, int max)
