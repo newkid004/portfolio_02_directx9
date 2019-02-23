@@ -3,7 +3,7 @@
 #include "bulletBase.h"
 #include "renderObject.h"
 
-class characterBase;
+class weaponBase;
 
 class gunBullet : public bulletBase, public renderObject
 {
@@ -25,7 +25,7 @@ protected:			// protected ÇÔ¼ö
 
 public:
 
-	gunBullet(float speed, characterBase * bind);
+	gunBullet(float speed, weaponBase * bind);
 	virtual ~gunBullet(void);
 
 public:

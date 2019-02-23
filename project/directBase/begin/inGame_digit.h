@@ -35,7 +35,7 @@ struct inGame_digit
 		globalDigit BESHOT		= 1 << 0x8;		// 피격 상태
 		globalDigit SHOVED		= 1 << 0x9;		// 밀쳐진 상태 
 
-		globalDigit DEAD		= 1 << 0x1f;
+		globalDigit DEAD		= 1 << 0x1e;
 
 		globalDigit NONE		= 0;
 	};

@@ -3,7 +3,7 @@
 
 #include "characterBase.h"
 
-gunBullet::gunBullet(float speed, characterBase* bind)
+gunBullet::gunBullet(float speed, weaponBase* bind)
 :
 bulletBase(speed, bind)
 {

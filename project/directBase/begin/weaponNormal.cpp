@@ -56,7 +56,7 @@ void weaponNormal::fireDo(void)
 	//동작에 걸어줄 조건이 필요 !
 	//weaponBase::fireDo();
 	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
-		inGame_value::bullet::speed, _bindPMesh);
+		inGame_value::bullet::speed, this);
 }
 
 void weaponNormal::firePost(void)

@@ -7,7 +7,6 @@
 #include "inGame_digit.h"
 
 #include "bulletBase.h"
-#include "weaponBase.h"
 #include "characterBase.h"
 
 #include "particlePoint.h"
@@ -24,10 +23,8 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 	auto viewBullet = static_cast<bulletBase*>(bullet);
 	auto viewTake = static_cast<characterBase*>(take);
 
-	auto & viewWeapon = viewBullet->refBindCharacter()->getWeapon();
-
-	putDigitStatus(viewBullet, viewWeapon, viewTake);
-	putValue(viewWeapon, viewTake);
+	putDigitStatus(viewBullet, viewTake);
+	putValue(viewBullet, viewTake);
 
 	_particle = createParticle(viewBullet->getRay().origin, -viewBullet->getRay().direction);
 	_particle->particleEmitStart(0.01f);
@@ -50,13 +47,13 @@ void eHitCharacterBullet::draw(void)
 	_particle->draw();
 }
 
-void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, weaponBase * weapon, characterBase * take)
+void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * take)
 {
 	// flag on : 피격 상태
 	gDigit::put(take->getInfoCharacter().status, inGame_digit::CHAR::BESHOT);
 
 	// 타격 무기 확인
-	int weaponType = weapon->getInfoWeapon().status;
+	int weaponType = bullet->getWeaponType();
 	if (weaponType == weapon_set::type::rifle)
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYRIFLE);
 
@@ -72,11 +69,11 @@ void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, weaponBase * weapon
 	// 피격 부위 확인
 }
 
-void eHitCharacterBullet::putValue(weaponBase* weapon, characterBase * take)
+void eHitCharacterBullet::putValue(bulletBase* bullet, characterBase * take)
 {
 	// 데미지 전달
 	int & nowHp = take->getInfoCharacter().nowHp;
-	nowHp -= weapon->getInfoWeapon().damage;
+	nowHp -= bullet->getDamage();
 	if (nowHp < 1)
 		gDigit::put(take->getInfoCharacter().status, inGame_digit::CHAR::DEAD);
 

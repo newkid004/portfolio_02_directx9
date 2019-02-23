@@ -1,9 +1,9 @@
 #include "fistBullet.h"
 #include "timeManager.h"
 
-#include "characterBase.h"
+#include "weaponBase.h"
 
-fistBullet::fistBullet(float speed, characterBase* bind)
+fistBullet::fistBullet(float speed, weaponBase* bind)
 :
 bulletBase(speed, bind)
 {

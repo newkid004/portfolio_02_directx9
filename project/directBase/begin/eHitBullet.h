@@ -3,7 +3,6 @@
 #include "eventBase.h"
 
 class bulletBase;
-class weaponBase;
 class characterBase;
 
 class particlePoint;
@@ -18,8 +17,8 @@ public :
 	void draw(void) override;
 
 protected :
-	void putDigitStatus(bulletBase* bullet, weaponBase* weapon, characterBase* take);
-	void putValue(weaponBase* weapon, characterBase* take);
+	void putDigitStatus(bulletBase* bullet, characterBase* take);
+	void putValue(bulletBase* bullet, characterBase* take);
 
 	particlePoint* createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & normal);
 
