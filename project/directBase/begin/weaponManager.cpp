@@ -52,7 +52,7 @@ void weaponManager::CreateWeaponInfo(void)
 	rifleSet.current = 30;
 	rifleSet.reload = 30;
 	rifleSet.maximum = 180;
-	rifleSet.damage = 3;
+	rifleSet.damage = 1;
 	rifleSet.shotDelay = 0.1f;
 	rifleSet.reloadDelay = 2.0f;
 

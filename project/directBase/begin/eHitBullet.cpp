@@ -52,6 +52,9 @@ void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * tak
 	// flag on : 피격 상태
 	gDigit::put(take->getInfoCharacter().status, inGame_digit::CHAR::BESHOT);
 
+	// 피격 부위 확인
+	gDigit::put(take->getStatusBeShot(), hitPart);
+
 	// 타격 무기 확인
 	int weaponType = bullet->getWeaponType();
 	if (weaponType == weapon_set::type::rifle)
@@ -65,8 +68,6 @@ void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * tak
 		weaponType == weapon_set::type::tank)
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYNORMAL);
 
-	// 피격 부위 확인
-	gDigit::put(take->getStatusBeShot(), hitPart);
 }
 
 void eHitCharacterBullet::putValue(bulletBase* bullet, characterBase * take)
