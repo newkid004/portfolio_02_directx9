@@ -29,7 +29,7 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 	putDigitStatus(viewBullet, viewWeapon, viewTake);
 	putValue(viewWeapon, viewTake);
 
-	_particle = createParticle(viewBullet->getRay().origin, -viewBullet->getRay().direction);
+	_particle = createParticle(bullet->getIntersect(), -viewBullet->getRay().direction);
 	_particle->particleEmitStart(0.01f);
 }
 
@@ -111,5 +111,7 @@ particlePoint * eHitCharacterBullet::createParticle(D3DXVECTOR3 & pos, D3DXVECTO
 		3.0f,
 		0.3f);
 
-	return new particlePoint(param);
+	auto result = new particlePoint(param);
+	result->setPosition(pos);
+	return result;
 }

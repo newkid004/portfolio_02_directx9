@@ -535,15 +535,6 @@
     <Filter Include="classes\global\utility\object\renderObject\skyBox">
       <UniqueIdentifier>{9287f810-f505-4649-86bc-e7b7f66dd029}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\classes\collision\bullet">
-      <UniqueIdentifier>{ca39e95e-3c2e-4620-bd47-c91e35fc581a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\classes\collision\bullet\_base">
-      <UniqueIdentifier>{0bd288cc-5cd8-47dd-9002-8784e5cfdbb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\classes\collision\bullet\object">
-      <UniqueIdentifier>{d079666c-7f10-43a9-8ca4-33253fa8debf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\classes\scene\02_inGame\classes\object\weapon\test">
       <UniqueIdentifier>{18542d1e-c790-494b-b178-18e11dbb5c66}</UniqueIdentifier>
     </Filter>
@@ -621,6 +612,15 @@
     </Filter>
     <Filter Include="classes\global\utility\manager\common\sound">
       <UniqueIdentifier>{fd665eeb-0f13-4f5f-88e4-4df911d67e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\bullet">
+      <UniqueIdentifier>{ca39e95e-3c2e-4620-bd47-c91e35fc581a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\bullet\_base">
+      <UniqueIdentifier>{0bd288cc-5cd8-47dd-9002-8784e5cfdbb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\bullet\object">
+      <UniqueIdentifier>{d079666c-7f10-43a9-8ca4-33253fa8debf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1012,13 +1012,13 @@
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
     </ClInclude>
     <ClInclude Include="bulletBase.h">
-      <Filter>main\classes\collision\bullet\_base</Filter>
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet\_base</Filter>
     </ClInclude>
     <ClInclude Include="gunBullet.h">
-      <Filter>main\classes\collision\bullet\object</Filter>
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet\object</Filter>
     </ClInclude>
     <ClInclude Include="fistBullet.h">
-      <Filter>main\classes\collision\bullet\object</Filter>
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet\object</Filter>
     </ClInclude>
     <ClInclude Include="inGame_grape.h">
       <Filter>main\classes\scene\02_inGame\classes\data\grape</Filter>
@@ -1037,9 +1037,6 @@
     </ClInclude>
     <ClInclude Include="weaponManager.h">
       <Filter>classes\global\utility\manager\common\weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="bulletManager.h">
-      <Filter>classes\global\utility\manager\common\bullet</Filter>
     </ClInclude>
     <ClInclude Include="inGameCamera.h">
       <Filter>main\classes\scene\02_inGame\classes\object\camera</Filter>
@@ -1089,6 +1086,9 @@
     </ClInclude>
     <ClInclude Include="soundManager.h">
       <Filter>classes\global\utility\manager\common\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="bulletManager.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1414,13 +1414,13 @@
       <Filter>main\classes\scene\02_inGame\classes\object\weapon</Filter>
     </ClCompile>
     <ClCompile Include="bulletBase.cpp">
-      <Filter>main\classes\collision\bullet\_base</Filter>
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet\_base</Filter>
     </ClCompile>
     <ClCompile Include="fistBullet.cpp">
-      <Filter>main\classes\collision\bullet\object</Filter>
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet\object</Filter>
     </ClCompile>
     <ClCompile Include="gunBullet.cpp">
-      <Filter>main\classes\collision\bullet\object</Filter>
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet\object</Filter>
     </ClCompile>
     <ClCompile Include="skyBox.cpp">
       <Filter>classes\global\utility\object\renderObject\skyBox</Filter>
@@ -1430,9 +1430,6 @@
     </ClCompile>
     <ClCompile Include="weaponManager.cpp">
       <Filter>classes\global\utility\manager\common\weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="bulletManager.cpp">
-      <Filter>classes\global\utility\manager\common\bullet</Filter>
     </ClCompile>
     <ClCompile Include="inGameCamera.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\camera</Filter>
@@ -1485,6 +1482,9 @@
     </ClCompile>
     <ClCompile Include="soundManager.cpp">
       <Filter>classes\global\utility\manager\common\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="bulletManager.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

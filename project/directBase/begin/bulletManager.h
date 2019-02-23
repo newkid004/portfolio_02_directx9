@@ -5,6 +5,7 @@
 #include "fistBullet.h"
 
 #define BULLET_MAX 12
+class player;
 
 class bulletManager
 {
@@ -17,11 +18,14 @@ private:
 	std::list<gunBullet *>::iterator _gunIter;
 	std::list<fistBullet *>::iterator _fistIter;
 
+	player * _bindPlayer;
+
 public:
 	
 	std::list<gunBullet*> & getGunBulletList(void) { return _vGunBulletList; }
 	std::list<fistBullet*> & getFistBulletList(void) { return _vFistBulletList; }
 
+	void setBindPlayer(player * bind) { _bindPlayer = bind; }
 public:
 	void init(void);
 	void update(void);
