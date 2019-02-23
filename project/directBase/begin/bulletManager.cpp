@@ -60,7 +60,15 @@ void bulletManager::update(void)
 	{
 		(*gunIter)->update();
 
-		gunCollision(*gunIter);
+		if (gunCollision(*gunIter))
+		{
+			//_gunIter = _vGunBulletList.erase(_gunIter);
+			//
+			//if (_gunIter == _vGunBulletList.end())
+			//{
+			//	continue;
+			//}
+		}
 
 		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*gunIter)->getPosition()) > 200)
 		{
@@ -131,12 +139,8 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 				D3DXVECTOR3 intersect = ray.origin + info.distance * ray.direction;
 
 				printf("벽 충돌!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
-				_gunIter = _vGunBulletList.erase(_gunIter);
-
-				if (_gunIter == _vGunBulletList.end())
-				{
-					return true;
-				}
+				
+				return true;
 			}
 		}
 	}
@@ -156,8 +160,8 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 
 		D3DXVECTOR3 intersect;
 
-		if (pick::isLine2Sphere(&(*_gunIter)->getRay(), &intersect,
-			(*_gunIter)->getSpeed(), mSphere))
+		if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
+			bullet->getSpeed(), mSphere))
 		{
 			for (auto rValue : mBoundSphereSet)
 			{
@@ -165,8 +169,8 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 				sphere.center = rValue.second.drawPosition;
 				sphere.radius *= enemy->getScale().x * 40;
 
-				if (pick::isLine2Sphere(&(*_gunIter)->getRay(), &intersect,
-					(*_gunIter)->getSpeed(), sphere))
+				if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
+					bullet->getSpeed(), sphere))
 				{
 					//printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
 					printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
@@ -174,33 +178,78 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 					// 충돌 부위 파트
 					int hitPart = _oPartList.find(rValue.first)->second;
 
+					
 					MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter));
 
-					SAFE_DELETE((*_gunIter));
-					_gunIter = _vGunBulletList.erase(_gunIter);
-
-					if (_gunIter == _vGunBulletList.end())
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 		}
 		++enemyIter;
-
-	}
-	if (_vGunBulletList.size() != 0)
-	{
-		++_gunIter;
-	}
-	else
-	{
-		return false;
 	}
 }
 
 bool bulletManager::fistCollision(fistBullet * bullet)
 {
+	
+	//// ENEMY
+	//std::vector<enemyBase *>::iterator enemyIter;
+	//auto & vEnemyList = SGT_GAME->getSet().field->getList().vEnemy;
+	//for (enemyIter = vEnemyList.begin(); enemyIter != vEnemyList.end();)
+	//{
+	//	auto & enemy = (*enemyIter)->getOriginMesh();
+	//	auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
+	//	auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
+	//	auto mSphere = enemy->getBoundingSphere();
+	//
+	//	mSphere.center += enemy->getBoundingSphereOffset();
+	//	mSphere.radius *= enemy->getScale().x;
+	//
+	//	D3DXVECTOR3 intersect;
+	//
+	//	if (pick::isLine2Sphere(&(*_gunIter)->getRay(), &intersect,
+	//		(*_gunIter)->getSpeed(), mSphere))
+	//	{
+	//		for (auto rValue : mBoundSphereSet)
+	//		{
+	//			auto sphere = rValue.second.sphere;
+	//			sphere.center = rValue.second.drawPosition;
+	//			sphere.radius *= enemy->getScale().x * 40;
+	//
+	//			if (pick::isLine2Sphere(&(*_gunIter)->getRay(), &intersect,
+	//				(*_gunIter)->getSpeed(), sphere))
+	//			{
+	//				//printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
+	//				printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
+	//
+	//				// 충돌 부위 파트
+	//				int hitPart = _oPartList.find(rValue.first)->second;
+	//
+	//				MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter));
+	//
+	//				SAFE_DELETE((*_gunIter));
+	//				_gunIter = _vGunBulletList.erase(_gunIter);
+	//
+	//				if (_gunIter == _vGunBulletList.end())
+	//				{
+	//					return true;
+	//				}
+	//			}
+	//		}
+	//	}
+	//	++enemyIter;
+	//
+	//}
+	//if (_vGunBulletList.size() != 0)
+	//{
+	//	++_gunIter;
+	//}
+	//else
+	//{
+	//	return false;
+	//}
+	//
+	return false;
 }
 
 void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed,
