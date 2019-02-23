@@ -72,7 +72,6 @@ return &_instance;						\
 #define GET_TIME_MANAGER()				(timeManager::getInstance())
 #define GET_INPUT_MANAGER()				(inputManager::getInstance())
 #define GET_RESOURCE_MANAGER()			(resourceManager::getInstance())
-#define GET_SOUND_MANAGER()				(soundManager::getInstance())
 
 #define GET_SCENE_MANAGER()				(sceneManager::getInstance())
 #define GET_UI_MANAGER()				(uiManager::getInstance())

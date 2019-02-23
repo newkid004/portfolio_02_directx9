@@ -277,7 +277,6 @@
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
     <ClInclude Include="skyBox.h" />
-    <ClInclude Include="sound.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="spriteBase.h" />
     <ClInclude Include="staticMesh.h" />
@@ -415,7 +414,6 @@
     <ClCompile Include="sceneTest4.cpp" />
     <ClCompile Include="skinnedMesh.cpp" />
     <ClCompile Include="skyBox.cpp" />
-    <ClCompile Include="sound.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="spriteBase.cpp" />
     <ClCompile Include="staticMesh.cpp" />
