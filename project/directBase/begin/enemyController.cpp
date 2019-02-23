@@ -49,7 +49,7 @@ void enemyController::update(void)
 {
 	if (_infoTimeEnemy.timeNextActive <= MN_TIME->getRunningTime())
 	{
-		controllerBase::update();
+		if(gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))	controllerBase::update();
 		_infoTimeEnemy.timeNextActive = MN_TIME->getRunningTime() + _delay;
 	}
 	update2bit();
@@ -60,6 +60,7 @@ void enemyController::update2bit(void)
 	// 넘어지는 상태(죽음)
 	if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
 	{
+		changeBindBit(ANIBIT::WEAPON, AWEAPON_NONE);
 		if (_isFemale)
 		{
 			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_LYING);

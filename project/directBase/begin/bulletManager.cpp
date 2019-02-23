@@ -308,8 +308,6 @@ void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & 
 			_vGunBulletList.push_back(bullet);
 		}
 	} break;
-
-	case weapon_set::type::normal:
 	case weapon_set::type::zombie:
 	case weapon_set::type::tank:
 	{
