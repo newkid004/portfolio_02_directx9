@@ -22,6 +22,7 @@ protected :
 
 	character_set	_infoCharacter;
 	move_set		_infoMove;
+	int				_beShotStatus   = 0;
 
 public :
 	virtual void update(void);
@@ -57,6 +58,7 @@ public :
 
 	character_set &		getInfoCharacter(void)	{ return _infoCharacter; }
 	move_set &			getInfoMove(void)		{ return _infoMove; }
+	int &				getStatusBeShot(void)	{ return _beShotStatus; }
 
 	void setController(controllerBase* input);
 

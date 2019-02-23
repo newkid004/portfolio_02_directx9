@@ -106,7 +106,7 @@ void inGame_io::spreadField(inGame_field* field, json & viewJson)
 	IO_DATA::parse(&data, viewJson);
 	IO_DATA::create(&bindMemberSet.mapObject, &data);
 
-	for (auto i : bindMemberSet.mapObject->getMapList())
+	for (auto i : bindMemberSet.mapObject->getMapSetList())
 	{
 		auto & wall = i.second;
 		wall->calMatrixFinal();

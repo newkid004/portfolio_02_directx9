@@ -314,108 +314,102 @@ void patternMesh::setupBoneOnMeshContainer(LPD3DXFRAME a_pstFrame, LPD3DXMESHCON
 	}
 }
 
-void patternMesh::setupBoneInfo(std::string name, const D3DXVECTOR3 & position, BYTE width, BYTE height, BYTE depth)
+void patternMesh::setupBoneInfo(std::string name, BYTE width, BYTE height, BYTE depth)
 {
-	switch (_characterType)
-	{
-	case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:case ECharacterType::NONE:
-	{
-		STBoneInfo boneInfo;
-		ZeroMemory(&boneInfo, sizeof(boneInfo));
+	STBoneInfo boneInfo;
+	ZeroMemory(&boneInfo, sizeof(boneInfo));
 
-		boneInfo.position = position;
-		for (int i = 0; i < _vMeshContainerList.size(); ++i)
+	for (int i = 0; i < _vMeshContainerList.size(); ++i)
+	{
+		for (int j = 0; j < _vMeshContainerList[i]->vBoneList.size(); ++j)
 		{
-			for (int j = 0; j < _vMeshContainerList[i]->vBoneList.size(); ++j)
+			if (_vMeshContainerList[i]->vBoneList[j]->Name == string(name))
 			{
-				if (_vMeshContainerList[i]->vBoneList[j]->Name == string(name))
-				{
-					boneInfo.combineMatrix = _vMeshContainerList[i]->vBoneList[j]->combineMatrix;
-				}
+				boneInfo.combineMatrix = _vMeshContainerList[i]->vBoneList[j]->combineMatrix;
 			}
 		}
-		_mBoneInfoList.insert(unordered_map<string, STBoneInfo>::value_type(name, boneInfo));
-		_vBoneNameList.push_back(name);
-
-		STBoxSize boxSize;
-		ZeroMemory(&boxSize, sizeof(boxSize));
-
-		boxSize.width = width;
-		boxSize.height = height;
-		boxSize.depth = depth;
-
-		_mBoxSizeList.insert(BOXSIZELIST::value_type(name, boxSize));
 	}
-	}
+	_mBoneInfoList.insert(unordered_map<string, STBoneInfo>::value_type(name, boneInfo));
+	_vBoneNameList.push_back(name);
+
+	STBoxSize boxSize;
+	ZeroMemory(&boxSize, sizeof(boxSize));
+
+	boxSize.width = width;
+	boxSize.height = height;
+	boxSize.depth = depth;
+
+	_mBoxSizeList.insert(BOXSIZELIST::value_type(name, boxSize));
+
 }
 
 void patternMesh::setBoneBoundBox(void)
 {
-	switch (_characterType)
+	for (int i = 0; i < _vBoneNameList.size(); ++i)
 	{
-	case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:case ECharacterType::NONE:
-	{
-		for (int i = 0; i < _vBoneNameList.size(); ++i)
+		if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
 		{
-			if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
-			{
-				D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
-					&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
-					&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
+			D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+				&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+				&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
 
-				STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
+			STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
 
-				BOUNDBOXSET boundSet;
-				ZeroMemory(&boundSet, sizeof(boundSet));
-				boundSet.box = gFunc::createBoundingBox(
-					this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
-					stBoxSize.width, stBoxSize.height, stBoxSize.depth);
+			BOUNDBOXSET boundSet;
+			ZeroMemory(&boundSet, sizeof(boundSet));
+			boundSet.box = gFunc::createBoundingBox(
+				this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
+				stBoxSize.width, stBoxSize.height, stBoxSize.depth);
 
-				boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
+			boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
 
-				setBoundingBox(_vBoneNameList[i], boundSet);
-			}
+			setBoundingBox(_vBoneNameList[i], boundSet);
 		}
-		break;
-	}
 	}
 }
 
 void patternMesh::setBoneBoundSphere(void)
 {
-	switch (_characterType)
+	for (int i = 0; i < _vBoneNameList.size(); ++i)
 	{
-	case ECharacterType::PLAYBLE:case ECharacterType::NORMAL_ZOMBIE:case ECharacterType::NONE:
-	{
-		for (int i = 0; i < _vBoneNameList.size(); ++i)
+		if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
 		{
-			if (_mBoneInfoList.find(_vBoneNameList[i]) != _mBoneInfoList.end())
-			{
-				D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
-					&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
-					&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
+			D3DXVec3TransformCoord(&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+				&_mBoneInfoList.find(_vBoneNameList[i])->second.position,
+				&_mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix);
 
-				STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
-				BOUNDSPHERESET boundSet;
-				ZeroMemory(&boundSet, sizeof(boundSet));
-				D3DXMATRIXA16 stTrans;
-				D3DXVECTOR3 stDrawPosition(0, 0, 0);
-				D3DXMatrixTranslation(&stTrans, boundSet.sphere.center.x, boundSet.sphere.center.y, boundSet.sphere.center.z);
-				D3DXVec3TransformCoord(&stDrawPosition, &stDrawPosition, &(boundSet.matrix * stTrans));
+			STBoxSize stBoxSize = _mBoxSizeList.find(_vBoneNameList[i])->second;
+			BOUNDSPHERESET boundSet;
+			ZeroMemory(&boundSet, sizeof(boundSet));
+			D3DXMATRIXA16 stTrans;
+			D3DXVECTOR3 stDrawPosition(0, 0, 0);
+			D3DXMatrixTranslation(&stTrans, boundSet.sphere.center.x, boundSet.sphere.center.y, boundSet.sphere.center.z);
+			D3DXVec3TransformCoord(&stDrawPosition, &stDrawPosition, &(boundSet.matrix * stTrans));
 
-				boundSet.sphere = gFunc::createBoundingSphere(
-					this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
-					stBoxSize.width / 1.3);
+			boundSet.sphere = gFunc::createBoundingSphere(
+				this->getPosition() + _mBoneInfoList.find(_vBoneNameList[i])->second.position,
+				stBoxSize.width / 1.3);
 
-				boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
-				boundSet.drawPosition = stDrawPosition;
+			boundSet.matrix = _mBoneInfoList.find(_vBoneNameList[i])->second.combineMatrix;
+			boundSet.drawPosition = stDrawPosition;
 
-				setBoundingSphere(_vBoneNameList[i], boundSet);
-			}
+			setBoundingSphere(_vBoneNameList[i], boundSet);
 		}
+	}
 
-		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 1.4f, 0.0f), 60),
-			D3DXVECTOR3(0.0f, 1.4f, 0.0f));
+	switch (_originType)
+	{
+	case type::male_zombie:case type::feMale_zombie:
+	{
+		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 5.4f, 0.0f), 1500),
+			D3DXVECTOR3(0.0f, 5.4f, 0.0f));
+
+		break;
+	}
+	case type::hulk_zombie:
+	{
+		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 6.4f, 0.0f), 2000),
+			D3DXVECTOR3(0.0f, 6.4f, 0.0f));
 
 		break;
 	}

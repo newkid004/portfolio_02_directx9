@@ -7,38 +7,50 @@ bulletManager::bulletManager(void)
 
 bulletManager::~bulletManager(void)
 {
-	for (int i = 0; i < _vGunBulletList.size(); ++i)
+	std::list<gunBullet*>::iterator gunIter = _vGunBulletList.begin();
+	std::list<fistBullet*>::iterator fistIter = _vFistBulletList.begin();
+	for (; gunIter != _vGunBulletList.end(); ++gunIter)
 	{
-		SAFE_DELETE(_vGunBulletList[i]);
+		SAFE_DELETE(*gunIter);
 	}
 
-	for (int i = 0; i < _vFistBulletList.size(); ++i)
+	for (; fistIter != _vFistBulletList.end(); ++fistIter)
 	{
-		SAFE_DELETE(_vFistBulletList[i]);
+		SAFE_DELETE(*fistIter);
 	}
 }
 
 void bulletManager::update(void)
 {
-	std::vector<gunBullet*>::iterator iter = _vGunBulletList.begin();
-	for (;iter != _vGunBulletList.end();)
+	std::list<gunBullet*>::iterator gunIter = _vGunBulletList.begin();
+	std::list<fistBullet*>::iterator fistIter = _vFistBulletList.begin();
+	for (; gunIter != _vGunBulletList.end();)
 	{
-		(*iter)->update();
+		(*gunIter)->update();
 
-		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*iter)->getPosition()) > 200)
+		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*gunIter)->getPosition()) > 200)
 		{
-			SAFE_DELETE((*iter));
-			iter = _vGunBulletList.erase(iter);
+			SAFE_DELETE((*gunIter));
+			gunIter = _vGunBulletList.erase(gunIter);
 		}
 		else
 		{
-			++iter;
+			++gunIter;
 		}
 	}
 
-	for (int i = 0; i < _vFistBulletList.size(); ++i)
+	for (; fistIter != _vFistBulletList.end();)
 	{
-		_vFistBulletList[i]->update();
+		(*fistIter)->update();
+		if ((*fistIter)->getTime() < 0.0f)
+		{
+			SAFE_DELETE(*fistIter);
+			fistIter = _vFistBulletList.erase(fistIter);
+		}
+		else
+		{
+			++fistIter;
+		}
 	}
 
 
@@ -46,9 +58,11 @@ void bulletManager::update(void)
 
 void bulletManager::draw(void)
 {
-	for (int i = 0; i < _vGunBulletList.size(); ++i)
+	std::list<gunBullet*>::iterator gunIter = _vGunBulletList.begin();
+
+	for (; gunIter != _vGunBulletList.end(); ++gunIter)
 	{
-		_vGunBulletList[i]->draw();
+		(*gunIter)->draw();
 	}
 }
 
@@ -86,16 +100,4 @@ void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & 
 		break;
 	}
 	}
-}
-
-void bulletManager::eraseGunBullet(int index)
-{
-	SAFE_DELETE(_vGunBulletList[index]);
-	_vGunBulletList.erase(_vGunBulletList.begin() + index);
-}
-
-void bulletManager::eraseFistBullet(int index)
-{
-	SAFE_DELETE(_vFistBulletList[index]);
-	_vFistBulletList.erase(_vFistBulletList.begin() + index);
 }

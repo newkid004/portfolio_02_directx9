@@ -81,6 +81,7 @@ public:
 	void init(void);
 	void update(void) override;
 	void findPart(const char* partName, int& partNumber);
+	void setupBoneInfo(std::string name, BYTE width, BYTE height, BYTE depth);
 protected:
 	void drawPre(void) override;
 	void drawDo(void) override;
@@ -101,7 +102,6 @@ private:
 	// 본
 	void setupBone(LPD3DXFRAME frame);
 	void setupBoneOnMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshContainer);
-	void setupBoneInfo(std::string name, const D3DXVECTOR3 & position, BYTE width, BYTE height, BYTE depth);
 
 	// 바운딩 박스 셋업
 	void setBoneBoundBox(void);

@@ -34,6 +34,7 @@ void weaponBase::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
 	_isLeft = (gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::RELOAD) ? false : true);
 	updateFire();
 	updateReload();
+	updateNormal();
 	
 	updateHandMatrix(combineMatrix);
 	staticMesh::update();
@@ -78,6 +79,16 @@ void weaponBase::updateReload(void)
 	}
 }
 
+void weaponBase::updateNormal(void)
+{
+	normalPre();
+	if (isNormalPossible())
+	{
+		normalDo();
+		normalPost();
+	}
+}
+
 void weaponBase::firePre(void)
 {
 	gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::PRESS);
@@ -100,8 +111,6 @@ void weaponBase::fireDo(void)
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_SHOOT);
 	_bindPMesh->getAControllInfo().trackPositionA = 0.0f;
 
-	// _handPosition = _position;
-	// D3DXVec3TransformCoord(&_handPosition, &_handPosition, &_bindPMesh->getLeftHandMatrix());
 	if (_pickPosition == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 	{
 		GET_CAMERA()->putOffsetPosition();
@@ -154,6 +163,25 @@ void weaponBase::reloadPost(void)
 	_infoWeapon.nextReloadTime = _infoWeapon.reloadDelay + MN_TIME->getRunningTime();
 }
 
+void weaponBase::normalPre(void)
+{
+	gDigit::pick(_infoWeapon.status, DIGIT::WEAPON::ATTACK);
+	// 상속한뒤 애니메이션 부분과 비트 부분 설정
+}
+
+void weaponBase::normalDo(void)
+{
+	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::ATTACK);
+	D3DXVECTOR3 stNeckPosition = _position;
+	D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
+	MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 1.0f, bulletBase::EBulletType::B_FIST);
+}
+
+void weaponBase::normalPost(void)
+{
+	_infoWeapon.nextFireTime = MN_WEAPON->getWeaponInfo(weapon_set::type::none).shotDelay;
+}
+
 void weaponBase::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])
 {
 	_localMatrix = _baseMatrix[0] * combineMatrix[0];
@@ -172,6 +200,11 @@ bool weaponBase::isReloadPossible(void)
 bool weaponBase::isStillFire(void)
 {
 	return gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::PRESS) || (MN_TIME->getRunningTime() < _infoWeapon.nextFireTime);
+}
+
+bool weaponBase::isNormalPossible(void)
+{
+	return gDigit::chk(_infoWeapon.status, DIGIT::WEAPON::ATTACK) || (MN_TIME->getRunningTime() < _infoWeapon.nextFireTime);
 }
 
 bool weaponBase::needReload(void)

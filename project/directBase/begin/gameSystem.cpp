@@ -15,15 +15,18 @@
 
 #include "enemyBase.h"
 #include "enemyFactory.h"
+#include "patternMesh.h"
 
 #include "eventBase.h"
 
+#include "mapObject.h"
 #include "bulletManager.h"
+#define FLAGPOSITION 0.16 / 1015.227
 
 gameSystem::gameSystem()
 {
 	_set.map_render = new maptool_render();
-	
+	_set.map = new mapObject();
 	initField();
 }
 
@@ -36,6 +39,7 @@ void gameSystem::update(void)
 {
 	_set.field->update();
 	_set.player->update();
+	_set.map->update();
 
 	collision();
 }
@@ -44,6 +48,7 @@ void gameSystem::draw(void)
 {
 	_set.field->draw();
 	_set.player->draw();
+	_set.map->draw();
 }
 
 void gameSystem::initField(void)
@@ -54,53 +59,112 @@ void gameSystem::initField(void)
 	
 	// enemy
 	auto & vEnemyList = field->getList().vEnemy;
-	vEnemyList.resize(1, nullptr);
 
+	// map
+	_set.map->init();
 }
 
 void gameSystem::collision(void)
 {
 	auto & vBulletList = GET_BULLET_MANAGER()->getGunBulletList();
-	
-	vector<gunBullet *>::iterator iter;
 
-	for (iter = vBulletList.begin(); iter != vBulletList.end();)
+	if (vBulletList.size() > 2)
 	{
-		auto mapObj = _set.field->getList().vWall;
-		auto ray = (*iter)->getRay();
+		int n = 0;
+	}
+	list<gunBullet *>::iterator bulletIter;
+	vector<enemyBase *>::iterator enemyIter;
+
+	for (bulletIter = vBulletList.begin(); bulletIter != vBulletList.end();)
+	{
+		// WALL
+		auto & mapObj = _set.map->getMapList();
+		auto ray = (*bulletIter)->getRay();
 
 		for (int i = 0; i < mapObj.size(); ++i)
 		{
 			auto wall = mapObj[i]->getMeshSet()->mesh;
 			auto box = mapObj[i]->getBoundingBoxList()[0];
 			mapObj[i]->getBoundingBoxFinal(&box);
-
-			if (pick::isLine2Box(&ray, (*iter)->getSpeed(), box))
+		
+			if (pick::isLine2Box(&ray, (*bulletIter)->getSpeed(), box))
 			{
 				pick::info info;
 				ZeroMemory(&info, sizeof(info));
 				pick::applyMatrix(&ray, &ray, &mapObj[i]->getMatrixFinal());
-
+		
 				if (pick::chkPick(&info, &ray, wall))
 				{
 					D3DXMATRIXA16 matrix = mapObj[i]->getMatrixFinal();
 					D3DXMatrixInverse(&matrix, NULL, &matrix);
 					pick::applyMatrix(&ray, &ray, &matrix);
-					D3DXVECTOR3 intersect = ray.origin + info.distance * ray.direction;
 
+					// 교차점
+					D3DXVECTOR3 intersect = ray.origin + info.distance * ray.direction;
+		
 					printf("벽 충돌!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
-					SAFE_DELETE((*iter));
-					iter = vBulletList.erase(iter);
-					if (vBulletList.size() == 0)
+					bulletIter = vBulletList.erase(bulletIter);
+
+					if (bulletIter == vBulletList.end())
 					{
 						return;
 					}
-					continue;
 				}
 			}
 		}
-		if(iter != vBulletList.end())
-			++iter;
+
+		// ENEMY
+		auto & field = _set.field;
+		auto & vEnemyList = field->getList().vEnemy;
+		for (enemyIter = vEnemyList.begin(); enemyIter != vEnemyList.end();)
+		{
+			auto & enemy = (*enemyIter)->getOriginMesh();
+			auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
+			auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
+			auto mSphere = enemy->getBoundingSphere();
+
+			mSphere.center += enemy->getBoundingSphereOffset();
+			mSphere.radius *= enemy->getScale().x;
+
+			D3DXVECTOR3 intersect;
+
+			if (pick::isLine2Sphere(&(*bulletIter)->getRay(), &intersect,
+				(*bulletIter)->getSpeed(), mSphere))
+			{
+				for (auto rValue : mBoundSphereSet)
+				{
+					auto sphere = rValue.second.sphere;
+					sphere.center = rValue.second.drawPosition;
+					sphere.radius *= enemy->getScale().x * 40;
+				
+					if (pick::isLine2Sphere(&(*bulletIter)->getRay(), &intersect,
+						(*bulletIter)->getSpeed(), sphere))
+					{
+						//printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
+						printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
+
+						SAFE_DELETE((*bulletIter));
+						bulletIter = vBulletList.erase(bulletIter);
+
+						if (bulletIter == vBulletList.end())
+						{
+							return;
+						}
+						
+					}
+				}
+			}
+			++enemyIter;
+			
+		}
+		if (vBulletList.size() != 0)
+		{
+			++bulletIter;
+		}
+		else
+		{
+			return;
+		}
 	}
 
 
@@ -115,6 +179,25 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 	auto & vUpdateList = listSet.vUpdateable;
 	auto & vRenderable = listSet.vRenderable;
 	enemyBase* result = enemyFactory::createEnemy(enemyType);
+	auto & origin = result->getOriginMesh();
+
+	origin->setupBoneInfo("ValveBiped_Bip01_Head1",		 9, 9, 9);
+	origin->setupBoneInfo("ValveBiped_Bip01_Spine1",	 14, 18, 10);
+	origin->setupBoneInfo("ValveBiped_Bip01_L_Foot",	 8, 8, 8);
+	origin->setupBoneInfo("ValveBiped_Bip01_R_Foot",	 8, 8, 8);
+	origin->setupBoneInfo("ValveBiped_Bip01_L_Calf",	 9, 9, 9);
+	origin->setupBoneInfo("ValveBiped_Bip01_R_Calf",	 9, 9, 9);
+	origin->setupBoneInfo("ValveBiped_Bip01_L_Thigh",	 9, 9, 9);
+	origin->setupBoneInfo("ValveBiped_Bip01_R_Thigh",	 9, 9, 9);
+	origin->setupBoneInfo("ValveBiped_Bip01_L_Hand",	 8, 8, 8);
+	origin->setupBoneInfo("ValveBiped_Bip01_R_Hand",	 8, 8, 8);
+	origin->setupBoneInfo("ValveBiped_Bip01_L_Forearm",  8, 8, 8);
+	origin->setupBoneInfo("ValveBiped_Bip01_R_Forearm",  8, 8, 8);
+	origin->setupBoneInfo("ValveBiped_Bip01_L_UpperArm", 7, 7, 7);
+	origin->setupBoneInfo("ValveBiped_Bip01_R_UpperArm", 7, 7, 7);
+
+	origin->init();
+	origin->setDebugEnable(true, EDebugDrawType::SPHERE);
 
 	_set.field->getMember().grape->putData(result, 2, result->getPosition(), result->getInfoCharacter().colRadius);
 	vTotal.push_back(result);
