@@ -17,7 +17,7 @@ public :
 	void draw(void) override;
 
 protected :
-	void putDigitStatus(bulletBase* bullet, characterBase* take);
+	void putDigitStatus(bulletBase* bullet, characterBase* take, int hitPart);
 	void putValue(bulletBase* bullet, characterBase* take);
 
 	particlePoint* createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & normal);

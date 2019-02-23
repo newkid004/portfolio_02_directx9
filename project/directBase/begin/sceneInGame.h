@@ -1,9 +1,13 @@
 #pragma once
 #include "kGlobalDefine.h"
 #include "sceneBase.h"
+#include "spriteBase.h"
 
 class sceneInGame : public sceneBase
 {
+private:
+	spriteBase* _crosshair[2];
+
 public:
 	virtual void init(void)		override;
 	virtual void update(void)	override;
@@ -18,11 +22,12 @@ private :
 	void initEvent(void);
 	void initEventWeapon(void);
 
+	void initUI(void);
 	void initSound(void);
 	
 
 public:
 	sceneInGame() {};
-	~sceneInGame() {};
+	~sceneInGame();
 };
 

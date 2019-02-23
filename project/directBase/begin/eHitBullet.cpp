@@ -23,10 +23,10 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 	auto viewBullet = static_cast<bulletBase*>(bullet);
 	auto viewTake = static_cast<characterBase*>(take);
 
-	putDigitStatus(viewBullet, viewTake);
+	putDigitStatus(viewBullet, viewTake, hitPart);
 	putValue(viewBullet, viewTake);
 
-	_particle = createParticle(viewBullet->getRay().origin, -viewBullet->getRay().direction);
+	_particle = createParticle(bullet->getIntersect(), -viewBullet->getRay().direction);
 	_particle->particleEmitStart(0.01f);
 }
 
@@ -47,10 +47,13 @@ void eHitCharacterBullet::draw(void)
 	_particle->draw();
 }
 
-void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * take)
+void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * take, int hitPart)
 {
 	// flag on : 피격 상태
 	gDigit::put(take->getInfoCharacter().status, inGame_digit::CHAR::BESHOT);
+
+	// 피격 부위 확인
+	gDigit::put(take->getStatusBeShot(), hitPart);
 
 	// 타격 무기 확인
 	int weaponType = bullet->getWeaponType();
@@ -61,12 +64,10 @@ void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * tak
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYSHOTGUN);
 
 	else if (
-		weaponType == weapon_set::type::normal ||
 		weaponType == weapon_set::type::zombie ||
 		weaponType == weapon_set::type::tank)
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYNORMAL);
 
-	// 피격 부위 확인
 }
 
 void eHitCharacterBullet::putValue(bulletBase* bullet, characterBase * take)

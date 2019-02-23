@@ -8,15 +8,16 @@
 #include "patternMesh.h"
 #include "bulletManager.h"
 #include "managerList.h"
+#include "camera.h"
+#include "sceneBase.h"
 
 using DIGIT = inGame_digit;
 
 weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 	:weaponBase::weaponBase(linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::normal);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::none);
 	_infoWeapon.damage = damage;
-	_infoWeapon.shotDelay = 0.0f;
 
 	D3DXMatrixIdentity(&_baseMatrix[0]);
 	D3DXMatrixIdentity(&_baseMatrix[1]);
@@ -48,7 +49,8 @@ void weaponNormal::normalPre(void)
 			{
 				D3DXVECTOR3 stNeckPosition = _bindPMesh->getPosition();
 				stNeckPosition.y += 9.0f;
-				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 1.0f, this);
+				MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(), 
+					inGame_value::bullet::speed, this);
 			}
 		}
 	}
@@ -83,5 +85,6 @@ void weaponNormal::normalPost(void)
 bool weaponNormal::isNormalPossible(void)
 {
 	return (MN_TIME->getRunningTime() > _infoWeapon.nextFireTime) &&
-		(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ADJACENT));
+		(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ADJACENT)
+			&&!(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::DEAD)));
 }

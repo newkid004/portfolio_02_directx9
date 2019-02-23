@@ -1,5 +1,6 @@
 #include "bulletManager.h"
 #include "gFunc.h"
+#include "gDigit.h"
 #include "managerList.h"
 #include "inGame_field.h"
 #include "inGame_digit.h"
@@ -7,6 +8,7 @@
 #include "patternMesh.h"
 #include "mapObject.h"
 #include "characterBase.h"
+#include "player.h"
 #include "weaponBase.h"
 #include "eventBase.h"
 
@@ -54,48 +56,48 @@ void bulletManager::init(void)
 
 void bulletManager::update(void)
 {
-	list<gunBullet*>::iterator gunIter = _vGunBulletList.begin();
-	list<fistBullet*>::iterator fistIter = _vFistBulletList.begin();
-	for (; gunIter != _vGunBulletList.end();)
+	_gunIter = _vGunBulletList.begin();
+	_fistIter = _vFistBulletList.begin();
+	for (; _gunIter != _vGunBulletList.end();)
 	{
-		(*gunIter)->update();
+		(*_gunIter)->update();
 
-		if (gunCollision(*gunIter))
+		if (gunCollision(*_gunIter))
 		{
-			//_gunIter = _vGunBulletList.erase(_gunIter);
-			//
-			//if (_gunIter == _vGunBulletList.end())
-			//{
-			//	continue;
-			//}
+			SAFE_DELETE((*_gunIter));
+			_gunIter = _vGunBulletList.erase(_gunIter);
+			
+			if (_gunIter == _vGunBulletList.end()) continue;
 		}
 
-		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*gunIter)->getPosition()) > 200)
+		if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*_gunIter)->getPosition()) > 200)
 		{
-			SAFE_DELETE((*gunIter));
-			gunIter = _vGunBulletList.erase(gunIter);
+			SAFE_DELETE((*_gunIter));
+			_gunIter = _vGunBulletList.erase(_gunIter);
 		}
-		else
-		{
-			++gunIter;
-		}
+		else ++_gunIter;
+		
 	}
 
-	for (; fistIter != _vFistBulletList.end();)
+	for (; _fistIter != _vFistBulletList.end();)
 	{
-		(*fistIter)->update();
+		(*_fistIter)->update();
 
-		fistCollision(*fistIter);
+		if (fistCollision(*_fistIter))
+		{
+			SAFE_DELETE(*_fistIter);
+			_fistIter = _vFistBulletList.erase(_fistIter);
 
-		if ((*fistIter)->getTime() < 0.0f)
-		{
-			SAFE_DELETE(*fistIter);
-			fistIter = _vFistBulletList.erase(fistIter);
+			if (_fistIter == _vFistBulletList.end()) continue;
 		}
-		else
+
+		if ((*_fistIter)->getTime() < 0.0f)
 		{
-			++fistIter;
+			SAFE_DELETE(*_fistIter);
+			_fistIter = _vFistBulletList.erase(_fistIter);
 		}
+		else ++_fistIter;
+		
 	}
 
 
@@ -150,13 +152,61 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 	auto & vEnemyList = SGT_GAME->getSet().field->getList().vEnemy;
 	for (enemyIter = vEnemyList.begin(); enemyIter != vEnemyList.end();)
 	{
-		auto & enemy = (*enemyIter)->getOriginMesh();
-		auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
-		auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
-		auto mSphere = enemy->getBoundingSphere();
+		if (!gDigit::chk((*enemyIter)->getInfoCharacter().status, inGame_digit::CHAR::DEAD))
+		{
+			auto & enemy = (*enemyIter)->getOriginMesh();
+			auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
+			auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
+			auto mSphere = enemy->getBoundingSphere();
 
-		mSphere.center += enemy->getBoundingSphereOffset();
-		mSphere.radius *= enemy->getScale().x;
+			mSphere.center += enemy->getBoundingSphereOffset();
+			mSphere.radius *= enemy->getScale().x;
+
+			D3DXVECTOR3 intersect;
+
+			if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
+				bullet->getSpeed(), mSphere))
+			{
+				for (auto rValue : mBoundSphereSet)
+				{
+					auto sphere = rValue.second.sphere;
+					sphere.center = rValue.second.drawPosition;
+					sphere.radius *= enemy->getScale().x * 40;
+
+					if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
+						bullet->getSpeed(), sphere))
+					{
+						printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
+
+						// 충돌 부위 파트
+						int hitPart = _oPartList.find(rValue.first)->second;
+
+						bullet->setIntersect(intersect);
+
+						MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter, hitPart));
+
+						return true;
+					}
+				}
+			}
+		}
+		if(enemyIter != vEnemyList.end()) ++enemyIter;
+	}
+	return false;
+}
+
+bool bulletManager::fistCollision(fistBullet * bullet)
+{	
+	if (_bindPlayer == nullptr) return false;
+
+	// 주체 : ENEMY, 대상 : PLAYER
+	if (bullet->getWeaponType() == weapon_set::type::zombie)
+	{
+		auto & mBoundSphereSet = _bindPlayer->getBoundingSphereSetList();
+		auto mSphere = _bindPlayer->getBoundingSphere();
+
+		mSphere.center += _bindPlayer->getBoundingSphereOffset();
+		mSphere.radius *= _bindPlayer->getScale().x;
 
 		D3DXVECTOR3 intersect;
 
@@ -167,87 +217,79 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 			{
 				auto sphere = rValue.second.sphere;
 				sphere.center = rValue.second.drawPosition;
-				sphere.radius *= enemy->getScale().x * 40;
-
+				sphere.radius *= _bindPlayer->getScale().x * 40;
+			
 				if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 					bullet->getSpeed(), sphere))
 				{
-					//printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
-					printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
 					
-					// 충돌 부위 파트
-					int hitPart = _oPartList.find(rValue.first)->second;
+					D3DXVECTOR3 zom2Player = _bindPlayer->getPosition() - bullet->getRay().origin;
+					float cosAngle = D3DXVec3Dot(&bullet->getRay().direction, &zom2Player);
+					
+			if (cosAngle < 0.0f)
+			{
+				return false;
+			}
 
-					MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter, hitPart));
+			printf("피격!! 피격 대상 : %d     %d\n", 
+			bullet->getWeaponType(),
+			rand() % 100);
 
-					return true;
+			// 충돌 시 이벤트 처리
+			// {
+
+			// }
+
+			return true;
 				}
 			}
 		}
-		++enemyIter;
 	}
-}
+	else
+	{
+		// 주체 : PLAYER, 대상 : ENEMY
+		std::vector<enemyBase *>::iterator enemyIter;
+		auto & vEnemyList = SGT_GAME->getSet().field->getList().vEnemy;
 
-bool bulletManager::fistCollision(fistBullet * bullet)
-{
+		for (enemyIter = vEnemyList.begin(); enemyIter != vEnemyList.end();)
+		{
+			auto & enemy = (*enemyIter)->getOriginMesh();
+			auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
+			auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
+			auto mSphere = enemy->getBoundingSphere();
+
+			mSphere.center += enemy->getBoundingSphereOffset();
+			mSphere.radius *= enemy->getScale().x;
+
+			D3DXVECTOR3 intersect;
+
+			if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
+				bullet->getSpeed(), mSphere))
+			{
+				for (auto rValue : mBoundSphereSet)
+				{
+					auto sphere = rValue.second.sphere;
+					sphere.center = rValue.second.drawPosition;
+					sphere.radius *= enemy->getScale().x * 40;
+
+					if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
+						bullet->getSpeed(), sphere))
+					{
+						printf("좀비 근접공격 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
+
+						// 충돌 부위 파트
+						int hitPart = _oPartList.find(rValue.first)->second;
+
+						MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter, hitPart));
+
+						return true;
+					}
+				}
+			}
+			if (enemyIter != vEnemyList.end()) ++enemyIter;
+		}
+	}
 	
-	//// ENEMY
-	//std::vector<enemyBase *>::iterator enemyIter;
-	//auto & vEnemyList = SGT_GAME->getSet().field->getList().vEnemy;
-	//for (enemyIter = vEnemyList.begin(); enemyIter != vEnemyList.end();)
-	//{
-	//	auto & enemy = (*enemyIter)->getOriginMesh();
-	//	auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
-	//	auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
-	//	auto mSphere = enemy->getBoundingSphere();
-	//
-	//	mSphere.center += enemy->getBoundingSphereOffset();
-	//	mSphere.radius *= enemy->getScale().x;
-	//
-	//	D3DXVECTOR3 intersect;
-	//
-	//	if (pick::isLine2Sphere(&(*_gunIter)->getRay(), &intersect,
-	//		(*_gunIter)->getSpeed(), mSphere))
-	//	{
-	//		for (auto rValue : mBoundSphereSet)
-	//		{
-	//			auto sphere = rValue.second.sphere;
-	//			sphere.center = rValue.second.drawPosition;
-	//			sphere.radius *= enemy->getScale().x * 40;
-	//
-	//			if (pick::isLine2Sphere(&(*_gunIter)->getRay(), &intersect,
-	//				(*_gunIter)->getSpeed(), sphere))
-	//			{
-	//				//printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
-	//				printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
-	//
-	//				// 충돌 부위 파트
-	//				int hitPart = _oPartList.find(rValue.first)->second;
-	//
-	//				MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter));
-	//
-	//				SAFE_DELETE((*_gunIter));
-	//				_gunIter = _vGunBulletList.erase(_gunIter);
-	//
-	//				if (_gunIter == _vGunBulletList.end())
-	//				{
-	//					return true;
-	//				}
-	//			}
-	//		}
-	//	}
-	//	++enemyIter;
-	//
-	//}
-	//if (_vGunBulletList.size() != 0)
-	//{
-	//	++_gunIter;
-	//}
-	//else
-	//{
-	//	return false;
-	//}
-	//
 	return false;
 }
 
@@ -275,8 +317,6 @@ void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & 
 			_vGunBulletList.push_back(bullet);
 		}
 	} break;
-
-	case weapon_set::type::normal:
 	case weapon_set::type::zombie:
 	case weapon_set::type::tank:
 	{

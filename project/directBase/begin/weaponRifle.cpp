@@ -7,6 +7,9 @@
 
 #include "characterBase.h"
 #include "bulletBase.h"
+#include "camera.h"
+#include "sceneBase.h"
+#include "soundManager.h"
 
 weaponRifle::weaponRifle(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
@@ -44,8 +47,12 @@ void weaponRifle::firePre(void)
 void weaponRifle::fireDo(void)
 {
 	weaponBase::fireDo();
-	GET_BULLET_MANAGER()->addBullet(_handPosition,_targetDirection,
+	//GET_BULLET_MANAGER()->addBullet(_handPosition,_targetDirection,
+	//	inGame_value::bullet::speed, this);
+	auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+	GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,
 		inGame_value::bullet::speed, this);
+	MN_SND->find("rifleShoot")->play(-1.0f, gFunc::rndFloat(0.5f,1.0f));
 }
 
 void weaponRifle::firePost(void)
