@@ -24,15 +24,14 @@ public :
 
 private :
 	set _set;
-	vector<string> _boneNameSet;
+
 public :
 	void update(void);
 	void draw(void);
-	void collision(void);
 
 protected :
 	void initField(void);
-	void initBone(void);
+
 public :
 	enemyBase* addEnemy(int enemyType = 1);
 
