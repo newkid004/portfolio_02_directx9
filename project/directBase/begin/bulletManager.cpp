@@ -218,20 +218,29 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 				auto sphere = rValue.second.sphere;
 				sphere.center = rValue.second.drawPosition;
 				sphere.radius *= _bindPlayer->getScale().x * 40;
-
+			
 				if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 					bullet->getSpeed(), sphere))
 				{
-					printf("피격!! 피격 대상 : %d     %d\n", 
-						bullet->getWeaponType(),
-						rand() % 100);
+					
+					D3DXVECTOR3 zom2Player = _bindPlayer->getPosition() - bullet->getRay().origin;
+					float cosAngle = D3DXVec3Dot(&bullet->getRay().direction, &zom2Player);
+					
+			if (cosAngle < 0.0f)
+			{
+				return false;
+			}
 
-					// 충돌 시 이벤트 처리
-					// {
+			printf("피격!! 피격 대상 : %d     %d\n", 
+			bullet->getWeaponType(),
+			rand() % 100);
 
-					// }
+			// 충돌 시 이벤트 처리
+			// {
 
-					return true;
+			// }
+
+			return true;
 				}
 			}
 		}

@@ -96,7 +96,9 @@ void sceneInGame::initSystem(void)
 {
 	// player
 	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
-	
+	pCharacter->getOriginMesh()->init();
+	pCharacter->getOriginMesh()->setDebugEnable(true, EDebugDrawType::SPHERE);
+
 	pCharacter->getNextBit() =
 		ATYPE_SURVIVOR |
 		AWEAPON_RIFLE |
