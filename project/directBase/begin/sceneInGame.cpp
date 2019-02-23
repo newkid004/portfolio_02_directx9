@@ -209,7 +209,7 @@ void sceneInGame::initUI(void)
 			MN_WIN->getWindowSize().cy / 2.0f, 0.0f));
 	}
 	_crosshair[0]->setScale(0.5f);
-	_crosshair[1]->setScale(3.0f);
+	_crosshair[1]->setScale(0.5f);
 }
 
 void sceneInGame::initSound(void)
