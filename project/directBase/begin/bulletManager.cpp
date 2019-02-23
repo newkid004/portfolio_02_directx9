@@ -174,7 +174,7 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 					// 충돌 부위 파트
 					int hitPart = _oPartList.find(rValue.first)->second;
 
-					MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter));
+					MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter, hitPart));
 
 					SAFE_DELETE((*_gunIter));
 					_gunIter = _vGunBulletList.erase(_gunIter);

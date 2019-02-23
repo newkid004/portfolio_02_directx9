@@ -58,12 +58,15 @@ void gameSystem::initField(void)
 	auto & vEnemyList = field->getList().vEnemy;
 
 	// map
+	_set.map->init();
+
 	D3DXVECTOR3 centerPos(0, 0, 0);
 	auto grape = field->getMember().grape;
-	_set.map->init();
 	for (auto & i : _set.map->getMapList())
 	{
 		D3DXVECTOR3 boxPos = i->getBoundingBoxList()[0].min;
+		i->calMatrixFinal();
+		D3DXVec3TransformCoord(&boxPos, &boxPos, &i->getMatrixFinal());
 		float radius = gFunc::Vec3Distance(centerPos, boxPos);
 		grape->putData(i, 0, i->getPosition(), radius);
 	}
