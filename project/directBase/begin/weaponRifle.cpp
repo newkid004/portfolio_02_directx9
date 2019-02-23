@@ -54,22 +54,6 @@ void weaponRifle::firePost(void)
 	--_infoWeapon.current;
 }
 
-void weaponRifle::reloadPre(void)
-{
-	weaponBase::reloadPre();
-}
-
-void weaponRifle::reloadDo(void)
-{
-	weaponBase::reloadDo();
-	
-}
-
-void weaponRifle::reloadPost(void)
-{
-	weaponBase::reloadPost();
-}
-
 void weaponRifle::reloadBullet()
 {
 	if (_infoWeapon.current + _infoWeapon.maximum >= _infoWeapon.reload)

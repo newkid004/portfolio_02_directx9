@@ -4,16 +4,15 @@
 
 class weaponNormal :public weaponBase
 {
+public:
+	virtual void updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull) override;
+
 protected:
-	virtual void firePre(void) override;
-	virtual void fireDo(void) override;
-	virtual void firePost(void) override;
+	virtual void normalPre(void) override;
+	virtual void normalDo(void) override;
+	virtual void normalPost(void) override;
 
-	virtual void reloadPre(void) override;
-	virtual void reloadDo(void) override;
-	virtual void reloadPost(void) override;
-
-	virtual void reloadBullet() {};
+	virtual bool isNormalPossible(void) override;
 public:
 	weaponNormal(characterBase* linkPatternDup, int damage);
 	virtual ~weaponNormal(void);

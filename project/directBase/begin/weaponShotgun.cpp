@@ -51,21 +51,6 @@ void weaponShotgun::firePost(void)
 	--_infoWeapon.current;
 }
 
-void weaponShotgun::reloadPre(void)
-{
-	weaponBase::reloadPre();
-}
-
-void weaponShotgun::reloadDo(void)
-{
-	weaponBase::reloadDo();
-}
-
-void weaponShotgun::reloadPost(void)
-{
-	weaponBase::reloadPost();
-}
-
 void weaponShotgun::reloadBullet()
 {
 	++_infoWeapon.current;

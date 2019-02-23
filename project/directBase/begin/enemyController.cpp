@@ -151,23 +151,23 @@ void enemyController::update2bit(void)
 	}
 
 	// 공격
-	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT))
-		//공격 딜레이추가?
+	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT) ||
+		gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK))
 	{
-		if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
-			== MALE_ATTACK)
-		{
-			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
-			{
-				gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
-			}
-		}
-		else
-		{
-			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_ATTACK);
-			changeBindBit(aniDefine::ANIBIT::SUB, MALE_ATTACK_NONE);
-			gDigit::put(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
-		}
+		//if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
+		//	== MALE_ATTACK)
+		//{
+		//	if (_bindCharacter->getAControllInfo().persent >= 0.8f)
+		//	{
+		//		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
+		//	}
+		//}
+		//else
+		//{
+		//	changeBindBit(aniDefine::ANIBIT::MAIN, MALE_ATTACK);
+		//	changeBindBit(aniDefine::ANIBIT::SUB, MALE_ATTACK_NONE);
+		//	gDigit::put(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
+		//}
 		_delay = VALUE::delayMove;
 		return;
 	}
@@ -374,7 +374,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_HEAD_FRONT);
 					}
 					else
 					{
@@ -389,7 +391,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_LEFT_FRONT);
 					}
 					else
 					{
@@ -404,7 +408,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_RIGHT_FRONT);
 					}
 					else
 					{
@@ -419,7 +425,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_PUMPSHOTGUN);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_MIDDLE_FRONT);
 					}
 					else
 					{
@@ -443,7 +451,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_HEAD_FRONT);
 					}
 					else
 					{
@@ -458,7 +468,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_LEFT_FRONT);
 					}
 					else
 					{
@@ -473,7 +485,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_RIGHT_FRONT);
 					}
 					else
 					{
@@ -488,7 +502,9 @@ void enemyController::updateBeShot(void)
 				{
 					if (_isFemale)
 					{
-
+						changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+						changeBindBit(ANIBIT::MAIN, FEMALE_DEAD);
+						changeBindBit(ANIBIT::SUB, FEMALE_DEAD_MIDDLE_FRONT);
 					}
 					else
 					{
@@ -510,13 +526,17 @@ void enemyController::updateBeShot(void)
 			//--, 달리는 중 피격, 머리
 			if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD))
 			{
-
+				changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+				changeBindBit(ANIBIT::MAIN, FEMALE_RUNNING_DEAD);
+				changeBindBit(ANIBIT::SUB, FEMALE_RD_HEAD);
 				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD);
 			}
 			//--, 달리는 중 피격, 중간
 			else if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE))
 			{
-
+				changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+				changeBindBit(ANIBIT::MAIN, FEMALE_RUNNING_DEAD);
+				changeBindBit(ANIBIT::SUB, FEMALE_RD_MIDDLE);
 				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::MIDDLE);
 			}
 			//--, 달리는 중 피격, 다른부위
@@ -524,7 +544,9 @@ void enemyController::updateBeShot(void)
 				gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT) ||
 				gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT))
 			{
-
+				changeBindBit(ANIBIT::WEAPON, AWEAPON_RIFLE);
+				changeBindBit(ANIBIT::MAIN, FEMALE_RUNNING_DEAD);
+				changeBindBit(ANIBIT::SUB, FEMALE_RD_ORDER);
 				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::ORDER);
 				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::RIGHT);
 				gDigit::pick(_bindCharacter->getStatusBeShot(), DIGIT::PART::LEFT);

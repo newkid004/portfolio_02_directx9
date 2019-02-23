@@ -478,13 +478,13 @@ void PatternManager::initMotionSurvivor(void)
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_PUMPSHOTGUN |
-		AMIX_ATTACK, arr, 1, 1.2f, false);
+		AMIX_ATTACK, arr, 1, 1.5f, false);
 
 	arr[0] = 64;
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_RIFLE |
-		AMIX_ATTACK, arr, 1, 1.2f, false);
+		AMIX_ATTACK, arr, 1, 1.5f, false);
 	//}
 
 	// º¶∞«, --, --, ¿Â¿¸, --
