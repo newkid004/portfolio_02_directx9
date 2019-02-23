@@ -619,6 +619,9 @@
     <Filter Include="main\classes\event\03_hitBullet">
       <UniqueIdentifier>{ee6078df-8843-4e90-b341-119b23a5e8c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="classes\global\utility\manager\common\sound">
+      <UniqueIdentifier>{fd665eeb-0f13-4f5f-88e4-4df911d67e8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1081,8 +1084,12 @@
     <ClInclude Include="eShootWeapon.h">
       <Filter>main\classes\event\02_shootWeapon</Filter>
     </ClInclude>
-    <ClInclude Include="soundManager.h" />
-    <ClInclude Include="eHitBullet.h" />
+    <ClInclude Include="eHitBullet.h">
+      <Filter>main\classes\event\03_hitBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h">
+      <Filter>classes\global\utility\manager\common\sound</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1473,8 +1480,12 @@
     <ClCompile Include="eShootWeapon.cpp">
       <Filter>main\classes\event\02_shootWeapon</Filter>
     </ClCompile>
-    <ClCompile Include="soundManager.cpp" />
-    <ClCompile Include="eHitBullet.cpp" />
+    <ClCompile Include="eHitBullet.cpp">
+      <Filter>main\classes\event\03_hitBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp">
+      <Filter>classes\global\utility\manager\common\sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

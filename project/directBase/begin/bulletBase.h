@@ -48,6 +48,7 @@ public:
 	pick::ray & getRay(void) { return _ray; }
 	D3DXVECTOR3 & getIntersect(void) { return _intersect; }
 
+	characterBase* & refBindCharacter(void) { return _bindCharacter; }
 
 public:
 

@@ -10,6 +10,8 @@
 #include "weaponBase.h"
 #include "eventBase.h"
 
+#include "eHitBullet.h"
+
 using namespace std;
 
 
@@ -172,8 +174,7 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 					// 충돌 부위 파트
 					int hitPart = _oPartList.find(rValue.first)->second;
 
-					
-
+					MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter));
 
 					SAFE_DELETE((*_gunIter));
 					_gunIter = _vGunBulletList.erase(_gunIter);

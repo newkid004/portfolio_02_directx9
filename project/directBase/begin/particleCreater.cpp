@@ -203,7 +203,7 @@ void particleCreater::setFountain(cParticle * input)
 	else
 		input->posInc = D3DXVECTOR3(
 			param->normal.x + gFunc::rndFloat(-5.0f, 5.0f),
-			param->normal.y + gFunc::rndFloat(8.0f, 10.0f),
+			param->normal.y + gFunc::rndFloat(-5.0f, 5.0f),
 			param->normal.z + gFunc::rndFloat(-5.0f, 5.0f));
 
 	// gravity
