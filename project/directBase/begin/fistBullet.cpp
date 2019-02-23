@@ -1,4 +1,5 @@
 #include "fistBullet.h"
+#include "timeManager.h"
 
 fistBullet::fistBullet(float speed, EBulletType type)
 :
@@ -12,7 +13,7 @@ fistBullet::~fistBullet(void)
 
 void fistBullet::update(void)
 {
-
+	_fPlayTime -= GET_TIME_MANAGER()->getDeltaTime();
 }
 
 void fistBullet::setRange(void)

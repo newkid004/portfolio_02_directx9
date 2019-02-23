@@ -53,8 +53,13 @@ staticMesh *& mapObject::getCeilObject(void)
 	return _ceilObject;
 }
 
-MAPLIST & mapObject::getMapList(void)
+MAPLIST & mapObject::getMapSetList(void)
 {
 	return m_oMapObjectList;
+}
+
+vector<wallMesh*> & mapObject::getMapList(void)
+{
+	return m_vMapList;
 }
 

@@ -75,10 +75,11 @@ public:
 	constexpr boundingSphere & refBoundingSphere(void) { return _bSphere; }
 	boundingSphere getBoundingSphere(void) 
 	{
-		boundingSphere mSphere;
-		mSphere.center = _bSphere.center + _offset; 
-		mSphere.radius = _bSphere.radius * this->getScale().x;
-		return mSphere;
+		//boundingSphere mSphere;
+		//mSphere.center = _bSphere.center + _offset; 
+		//mSphere.radius = _bSphere.radius * this->getScale().x;
+		//return mSphere;
+		return _bSphere;
 	}
 	const D3DXVECTOR3 & getBoundingSphereOffset(void) { return _offset; }
 

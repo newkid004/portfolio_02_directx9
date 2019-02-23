@@ -129,12 +129,9 @@ void mapObjectBase::addMapObject(string key, string meshFilePath, string effectF
 	stParameters.meshFilePath = meshFilePath;
 	stParameters.effectFilePath = effectFilePath;
 
-	m_oMapObjectList.insert(MAPLIST::value_type(key, new wallMesh(stParameters, textureFilePath, normalTextureFilePath)));
-}
-
-MAPLIST & mapObjectBase::getMapList(void)
-{
-	return m_oMapObjectList;
+	wallMesh* wall = new wallMesh(stParameters, textureFilePath, normalTextureFilePath);
+	m_oMapObjectList.insert(MAPLIST::value_type(key, wall));
+	m_vMapList.push_back(wall);
 }
 
 void mapObjectBase::setMeshUVOffset(string key, float offsetX, float offsetY)

@@ -16,7 +16,8 @@ public:
 
 public:
 	staticMesh*& getCeilObject(void);
-	MAPLIST & getMapList(void);
+	MAPLIST & getMapSetList(void);
+	vector<wallMesh*> & getMapList(void);
 
 	void setDebugEnable(bool input, EDebugDrawType type = EDebugDrawType::BOX);
 

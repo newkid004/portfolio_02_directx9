@@ -10,13 +10,13 @@ class bulletManager
 {
 private:
 
-	std::vector<gunBullet*> _vGunBulletList;
-	std::vector<fistBullet*> _vFistBulletList;
+	std::list<gunBullet*> _vGunBulletList;
+	std::list<fistBullet*> _vFistBulletList;
 
 public:
 	
-	std::vector<gunBullet*> & getGunBulletList(void) { return _vGunBulletList; }
-	std::vector<fistBullet*> & getFistBulletList(void) { return _vFistBulletList; }
+	std::list<gunBullet*> & getGunBulletList(void) { return _vGunBulletList; }
+	std::list<fistBullet*> & getFistBulletList(void) { return _vFistBulletList; }
 
 public:
 
@@ -28,8 +28,6 @@ public:
 	void addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed, 
 		bulletBase::EBulletType type = bulletBase::EBulletType::B_RIFLE);
 
-	void eraseGunBullet(int index);
-	void eraseFistBullet(int index);
 
 public:
 	DECLARE_SINGLETON(bulletManager);

@@ -210,40 +210,6 @@ bool pick::isLine2Sphere(ray * in_ray, D3DXVECTOR3 * outIntersection, float spee
 	}
 
 	return false;
-
-	//D3DXVECTOR3 l = bSphere.center - rayOrigin;
-	//float s = D3DXVec3Dot(&l, &rayDir);
-	//float l2 = D3DXVec3Dot(&l, &l);
-	//float r2 = bSphere.radius * bSphere.radius;
-	//float distance;
-	//
-	//if (s < 0 && l2 > r2)
-	//{
-	//	return false;
-	//}
-	//
-	//float m2 = l2 - s * s;
-	//
-	//if (m2 > r2)
-	//{
-	//	return false;
-	//}
-	//
-	//float q = sqrt(r2 - m2);
-	//
-	//
-	//if (l2 < r2)
-	//{
-	//	distance = s + q;
-	//}
-	//else
-	//{
-	//	distance = s - q;
-	//}
-	//
-	//*outIntersection = rayOrigin + distance * rayDir;
-	//
-	//return true;
 }
 
 bool pick::chkPick(ray * in_ray, boundingBox * bBox)

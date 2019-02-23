@@ -217,7 +217,7 @@ void enemyController::update2bit(void)
 
 
 	// 기본 상태
-	else if (getDistance2player() > VALUE::aletyDistance)
+	else if (_path->getDistance() > VALUE::aletyDistance)
 	{
 		if (_isFemale)
 		{
@@ -233,8 +233,8 @@ void enemyController::update2bit(void)
 		_bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
 	}
 	// 경계 상태
-	else if (getDistance2player() <= VALUE::aletyDistance &&
-		getDistance2player() >= VALUE::findSomthingDistance)
+	else if (_path->getDistance() <= VALUE::aletyDistance &&
+		_path->getDistance() >= VALUE::findSomthingDistance)
 	{
 		//D3DXVECTOR3 direction =  ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
 		//float cosValue = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z),
@@ -276,7 +276,7 @@ void enemyController::update2bit(void)
 		_delay = VALUE::delayAlert;
 	}
 	// 달리기
-	else if (getDistance2player() < VALUE::findSomthingDistance)
+	else if (_path->getDistance() < VALUE::findSomthingDistance)
 	{
 		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_RUN);
 		changeBindBit(aniDefine::ANIBIT::SUB, MALE_RUN_NONE);

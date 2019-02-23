@@ -23,8 +23,6 @@ protected:
 	void addMapObject(std::string key, std::string meshFilePath, std::string effectFilePath, 
 		string textureFilePath, string normalTextureFilePath);
 
-	MAPLIST & getMapList(void);
-
 	void setMeshUVOffset(string key, float offsetX, float offsetY);
 
 	void setMapObjectScale(std::string key, const D3DXVECTOR3 & a_rstScale);
@@ -43,4 +41,5 @@ public:
 protected:
 
 	MAPLIST m_oMapObjectList;
+	vector<wallMesh*> m_vMapList;
 };
