@@ -200,9 +200,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 	if (_bindPlayer == nullptr) return false;
 
 	// 주체 : ENEMY, 대상 : PLAYER
-	if (bullet->refBindCharacter()->getOriginMesh()->getOriginType() == patternMesh::type::male_zombie ||
-		bullet->refBindCharacter()->getOriginMesh()->getOriginType() == patternMesh::type::feMale_zombie ||
-		bullet->refBindCharacter()->getOriginMesh()->getOriginType() == patternMesh::type::hulk_zombie)
+	if (bullet->getWeaponType() == weapon_set::type::zombie)
 	{
 		auto & mBoundSphereSet = _bindPlayer->getBoundingSphereSetList();
 		auto mSphere = _bindPlayer->getBoundingSphere();
@@ -225,7 +223,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 					bullet->getSpeed(), sphere))
 				{
 					printf("피격!! 피격 대상 : %d     %d\n", 
-						bullet->refBindCharacter()->getOriginMesh()->getOriginType(),
+						bullet->getWeaponType(),
 						rand() % 100);
 
 					// 충돌 시 이벤트 처리
