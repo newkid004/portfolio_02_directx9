@@ -1,4 +1,5 @@
 #include "eHitBullet.h"
+#include "eventDef.h"
 
 #include "gDigit.h"
 #include "gFunc.h"
@@ -13,8 +14,12 @@
 #include "particleEmitter.h"
 #include "particleCreater.h"
 
-eHitCharacterBullet::eHitCharacterBullet(void * bullet, void * take, unsigned long param) :
-	eventBase(bullet, take, param, 0.3f)
+eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * take) :
+	eventBase(bullet, take, 
+		EVENT::TYPE::BULLET |
+		EVENT::KIND::BULLET::COLLISION |
+		EVENT::CALL::BULLET_COLLISION_TO::CHARACTER,
+		0.3f)
 {
 	auto viewBullet = static_cast<bulletBase*>(bullet);
 	auto viewTake = static_cast<characterBase*>(take);

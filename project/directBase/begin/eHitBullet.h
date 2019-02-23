@@ -2,6 +2,7 @@
 #include "kGlobalDefine.h"
 #include "eventBase.h"
 
+class bulletBase;
 class weaponBase;
 class characterBase;
 
@@ -23,7 +24,7 @@ protected :
 	particlePoint* createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & normal);
 
 public:
-	eHitCharacterBullet(void* bullet, void* take, unsigned long param);
+	eHitCharacterBullet(bulletBase* bullet, characterBase* take);
 	~eHitCharacterBullet();
 };
 
