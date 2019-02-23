@@ -613,6 +613,12 @@
     <Filter Include="classes\global\utility\manager\common\sound">
       <UniqueIdentifier>{fd665eeb-0f13-4f5f-88e4-4df911d67e8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\02_inGame\classes\object\spawner">
+      <UniqueIdentifier>{64ef8d3d-af9b-44a9-a74f-3ed15f894669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\01_mapTool\classes\brush\spawner">
+      <UniqueIdentifier>{550dffb0-1052-4aa4-b501-7384ab423032}</UniqueIdentifier>
+    </Filter>
     <Filter Include="main\classes\scene\02_inGame\classes\object\bullet">
       <UniqueIdentifier>{ca39e95e-3c2e-4620-bd47-c91e35fc581a}</UniqueIdentifier>
     </Filter>
@@ -1090,6 +1096,12 @@
     <ClInclude Include="bulletManager.h">
       <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>
     </ClInclude>
+    <ClInclude Include="spawner.h">
+      <Filter>main\classes\scene\02_inGame\classes\object\spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="maptool_brush_spawner.h">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\spawner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1482,6 +1494,12 @@
     </ClCompile>
     <ClCompile Include="soundManager.cpp">
       <Filter>classes\global\utility\manager\common\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="spawner.cpp">
+      <Filter>main\classes\scene\02_inGame\classes\object\spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="maptool_brush_spawner.cpp">
+      <Filter>main\classes\scene\01_mapTool\classes\brush\spawner</Filter>
     </ClCompile>
     <ClCompile Include="bulletManager.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>

@@ -18,7 +18,6 @@ weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 {
 	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::none);
 	_infoWeapon.damage = damage;
-	_infoWeapon.shotDelay = 0.0f;
 
 	D3DXMatrixIdentity(&_baseMatrix[0]);
 	D3DXMatrixIdentity(&_baseMatrix[1]);
@@ -87,6 +86,6 @@ void weaponNormal::normalPost(void)
 bool weaponNormal::isNormalPossible(void)
 {
 	return (MN_TIME->getRunningTime() > _infoWeapon.nextFireTime) &&
-		(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ADJACENT));
-			//&&!(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::DEAD))));
+		(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ADJACENT)
+			&&!(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::DEAD)));
 }

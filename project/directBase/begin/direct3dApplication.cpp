@@ -21,6 +21,7 @@ direct3dApplication::~direct3dApplication()
 	SAFE_DELETE(_label);
 
 	SAFE_RELEASE(_sprite);
+	MN_SND->release();
 }
 
 void direct3dApplication::init(void)
@@ -33,6 +34,7 @@ void direct3dApplication::init(void)
 	GET_INPUT_MANAGER()->init();
 	GET_EVENT_MANAGER()->init();
 	GET_BULLET_MANAGER()->init();
+	MN_SND->init();
 
 	createMember();
 }

@@ -40,12 +40,19 @@ void weaponManager::CreateWeaponInfo(void)
 	weapon_set shotgunSet;
 	weapon_set healkitSet;
 	weapon_set normalSet;
+	weapon_set zombie;
+	weapon_set tank;
+
+	normalSet.type = weapon_set::type::none;
+	normalSet.current = 1;
+	normalSet.damage = 5;
+	normalSet.shotDelay = 1.0f;
 
 	rifleSet.type = weapon_set::type::rifle;
 	rifleSet.current = 30;
 	rifleSet.reload = 30;
 	rifleSet.maximum = 180;
-	rifleSet.damage = 3;
+	rifleSet.damage = 1;
 	rifleSet.shotDelay = 0.1f;
 	rifleSet.reloadDelay = 2.0f;
 
@@ -62,17 +69,24 @@ void weaponManager::CreateWeaponInfo(void)
 	healkitSet.reload = 1;
 	healkitSet.maximum = 0;
 
-	normalSet.type = weapon_set::type::none;
-	normalSet.current = 1;
-	normalSet.damage = 5;
-	normalSet.shotDelay = 1.0f;
+	zombie.type = weapon_set::type::zombie;
+	zombie.current = 1;
+	zombie.damage = 5;
+	zombie.shotDelay = 0.0f;
 
-	_vWeaponInfo.resize(4 + 1);
+	tank.type = weapon_set::type::tank;
+	tank.current = 1;
+	tank.damage = 5;
+	tank.shotDelay = 0.0f;
+
+	_vWeaponInfo.resize(6);
 
 	_vWeaponInfo[weapon_set::type::none] = normalSet;
 	_vWeaponInfo[weapon_set::type::rifle] = rifleSet;
 	_vWeaponInfo[weapon_set::type::shotgun] = shotgunSet;
 	_vWeaponInfo[weapon_set::type::healkit] = healkitSet;
+	_vWeaponInfo[weapon_set::type::zombie] = zombie;
+	_vWeaponInfo[weapon_set::type::tank] = tank;
 }
 
 weaponBase * weaponManager::createWeapon(int weaponType)

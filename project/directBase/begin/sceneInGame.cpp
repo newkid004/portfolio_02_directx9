@@ -21,6 +21,7 @@
 
 #include "mapObject.h"
 #include "wallMesh.h"
+#include "soundManager.h"
 
 sceneInGame::~sceneInGame()
 {
@@ -38,6 +39,7 @@ void sceneInGame::init(void)
 	initSystem();
 	initField();
 	initEvent();
+	initSound();
 	initUI();
 }
 
@@ -217,5 +219,5 @@ void sceneInGame::initUI(void)
 
 void sceneInGame::initSound(void)
 {
-
+	MN_SND->addSound("rifleShoot", "resource/sound/weapon/rifle_fire.wav",false,false);
 }

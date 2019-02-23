@@ -64,7 +64,6 @@ void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * tak
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYSHOTGUN);
 
 	else if (
-		weaponType == weapon_set::type::normal ||
 		weaponType == weapon_set::type::zombie ||
 		weaponType == weapon_set::type::tank)
 		gDigit::put(take->getStatusBeShot(), inGame_digit::PART::BYNORMAL);

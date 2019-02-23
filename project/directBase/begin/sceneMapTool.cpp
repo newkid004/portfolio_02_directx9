@@ -15,6 +15,7 @@
 #include "maptool_brush_prop.h"
 #include "maptool_brush_node.h"
 #include "maptool_brush_trigger.h"
+#include "maptool_brush_spawner.h"
 
 #include "mapObject.h"
 
@@ -55,6 +56,7 @@ void sceneMapTool::init(void)
 	_mBrush.insert(decltype(_mBrush)::value_type("prop", new maptool_brush_prop(this)));
 	_mBrush.insert(decltype(_mBrush)::value_type("node", new maptool_brush_node(this)));
 	_mBrush.insert(decltype(_mBrush)::value_type("trigger", new maptool_brush_trigger(this)));
+	_mBrush.insert(decltype(_mBrush)::value_type("spawner", new maptool_brush_spawner(this)));
 
 	_currentBrush = _mBrush.find("prop")->second;
 
@@ -113,7 +115,10 @@ void sceneMapTool::updateControl_brush(void)
 	{
 		typedef maptool_data_io::baseType TYPE;
 
-		if (viewData->_baseType & TYPE::NODE)
+		if (viewData->_baseType & TYPE::SPAWNER)
+			_currentBrush = _mBrush.find("spawner")->second;
+
+		else if (viewData->_baseType & TYPE::NODE)
 			_currentBrush = _mBrush.find("node")->second;
 
 		else if (viewData->_baseType & TYPE::TRIGGER)
@@ -128,8 +133,11 @@ void sceneMapTool::updateControl_brush(void)
 		if (auto viewData = _window->getSet().focusedWindow->getItem())
 		{
 			typedef maptool_data_catalog::baseType TYPE;
-			
-			if (viewData->_baseType & TYPE::NODE)
+
+			if (viewData->_baseType & TYPE::SPAWNER)
+				_currentBrush = _mBrush.find("spawner")->second;
+
+			else if (viewData->_baseType & TYPE::NODE)
 				_currentBrush = _mBrush.find("node")->second;
 
 			else if (viewData->_baseType & TYPE::TRIGGER)

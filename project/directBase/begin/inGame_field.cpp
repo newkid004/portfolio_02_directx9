@@ -10,7 +10,6 @@
 
 inGame_field::inGame_field()
 {
-	_list.vSpawnPos.push_back(D3DXVECTOR3(0, 0, 20));
 }
 
 inGame_field::~inGame_field()

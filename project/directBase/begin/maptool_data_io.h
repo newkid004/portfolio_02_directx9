@@ -10,6 +10,7 @@ class mapObject;
 class nodeMesh;
 class triggerMesh;
 class wallMesh;
+class spawner;
 
 template<typename T>
 class aStar_grape_bind;
@@ -34,6 +35,7 @@ public :
 		NODE	= 1 << 5,
 		PATH	= 1 << 6,
 		TRIGGER	= 1 << 7,
+		SPAWNER	= 1 << 8,
 
 		BASE	= 0 << 0
 	};
@@ -135,6 +137,13 @@ public :
 			PATH() { _baseType |= baseType::PATH; }
 		};
 
+		struct SPAWNER : public NODE
+		{
+			virtual void write(json & in_Json) override;
+
+			SPAWNER() { _baseType |= baseType::SPAWNER; }
+		};
+
 	private :
 		OBJ() {}
 		~OBJ() {}
@@ -151,6 +160,7 @@ public :	// ----- parse ----- //
 	static bool parse(OBJ::NODE* own,		json & j_in);
 	static bool parse(OBJ::PATH* own,		json & j_in);
 	static bool parse(OBJ::WALL* own,		json & j_in);
+	static bool parse(OBJ::SPAWNER* own,	json & j_in);
 
 public :	// ----- apply ----- //
 	static void apply(OBJ::BASE* in,		baseObject* obj);
@@ -164,6 +174,7 @@ public :	// ----- apply ----- //
 	static void apply(OBJ::PATH* in,		grape* obj);
 	static void apply(OBJ::PATH* in,		inGame_grape* obj);
 	static void apply(OBJ::WALL* in,		wallMesh* obj);
+	static void apply(OBJ::SPAWNER* in,		spawner* obj);
 
 	static void apply(baseObject* in,		OBJ::BASE* data);
 	static void apply(staticMesh* in,		OBJ::PROP* data);
@@ -176,6 +187,7 @@ public :	// ----- apply ----- //
 	static void apply(grape* in,			OBJ::PATH* data);
 	static void apply(inGame_grape* in,		OBJ::PATH* data);
 	static void apply(wallMesh* in,			OBJ::WALL* data);
+	static void apply(spawner* in,			OBJ::SPAWNER* data);
 
 public :	// ----- creater ----- //
 	static void create(OBJ::BASE** out,		baseObject* obj);
@@ -189,6 +201,7 @@ public :	// ----- creater ----- //
 	static void create(OBJ::PATH** out,		grape* obj);
 	static void create(OBJ::PATH** out,		inGame_grape* obj);
 	static void create(OBJ::WALL** out,		wallMesh* obj);
+	static void create(OBJ::SPAWNER** out,	spawner* obj);
 
 	static void create(staticMesh** out,	OBJ::PROP* data);
 	static void create(staticMesh** out,	OBJ::BUMP* data);
@@ -199,6 +212,7 @@ public :	// ----- creater ----- //
 	static void create(grape** out,			OBJ::PATH* data);
 	static void create(inGame_grape** out,	OBJ::PATH* data);
 	static void create(wallMesh** out,		OBJ::WALL* data);
+	static void create(spawner** out,		OBJ::SPAWNER* data);
 
 private:
 	maptool_data_io() {};

@@ -174,6 +174,8 @@ technique techOrigin
 {
 	pass p0
 	{
+		ZENABLE = false;
+		
 		VertexShader = compile vs_3_0 vsOrigin();
 		PixelShader = compile ps_3_0 psSolid();
 	}

@@ -37,6 +37,8 @@ public :
 	void setPlaneRadius(float input) { _planeRadius = input; }
 	void setBindNode(aStar_node* input);
 
+	void calMatrixFinal(void) override;
+
 private :
 	LPD3DXMESH createPlane(void);
 

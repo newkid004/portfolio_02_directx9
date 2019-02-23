@@ -58,7 +58,10 @@ void maptool_io::buildObject()
 		auto & vData = vDataList[i];
 		auto & vObj = vObjList[i];
 
-		if (vData->_baseType & IO_DATA::baseType::NODE)
+		if (vData->_baseType & IO_DATA::baseType::SPAWNER)
+			IO_DATA::apply((IO_DATA::OBJ::SPAWNER*)vData, (nodeMesh*)vObj);
+
+		else if (vData->_baseType & IO_DATA::baseType::NODE)
 			continue;	// grape에서 따로 적용
 
 		else if (vData->_baseType & IO_DATA::baseType::WALL)
@@ -164,7 +167,15 @@ void maptool_io::spreadObject(void)
 
 		int baseType = js["baseType"];
 
-		if (baseType & IO_DATA::baseType::CHAR)
+		if (baseType & IO_DATA::baseType::SPAWNER)
+		{
+			IO_DATA::OBJ::SPAWNER* convert = new IO_DATA::OBJ::SPAWNER();
+			IO_DATA::parse(convert, js);
+			IO_DATA::create((nodeMesh**)&additionObject, convert);
+
+			additionData = convert;
+		}
+		else if (baseType & IO_DATA::baseType::CHAR)
 		{
 			IO_DATA::OBJ::CHAR* convert = new IO_DATA::OBJ::CHAR();
 			IO_DATA::parse(convert, js);
