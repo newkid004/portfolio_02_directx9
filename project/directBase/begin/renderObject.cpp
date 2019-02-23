@@ -67,6 +67,10 @@ void renderObject::getBoundingBoxFinal(boundingBox * out)
 		&out->max,
 		&out->max,
 		&_mWorld);
+
+	if (out->max.x < out->min.x) std::swap(out->max.x, out->min.x);
+	if (out->max.y < out->min.y) std::swap(out->max.y, out->min.y);
+	if (out->max.z < out->min.z) std::swap(out->max.z, out->min.z);
 }
 
 void renderObject::getBoundingSphereFinal(boundingSphere * out)
@@ -78,12 +82,11 @@ void renderObject::getBoundingSphereFinal(boundingSphere * out)
 		&_bSphere.center,
 		&mWorld);
 
-	out->radius = _bSphere.radius * this->getScale().x;
-	//out->radius = _bSphere.radius *
-	//	max(max(
-	//		mWorld(0, 0),
-	//		mWorld(1, 1)),
-	//		mWorld(2, 2));
+	out->radius = _bSphere.radius *
+		max(max(
+			mWorld(0, 0),
+			mWorld(1, 1)),
+			mWorld(2, 2));
 }
 
 void renderObject::getObjectBox(objectBox * out)

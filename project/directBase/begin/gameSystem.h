@@ -18,7 +18,7 @@ public :
 	{
 		player*			player		= nullptr;
 		inGame_field*	field		= nullptr;
-
+		mapObject*		map			= nullptr;
 		maptool_render* map_render	= nullptr;	// delete
 	};
 

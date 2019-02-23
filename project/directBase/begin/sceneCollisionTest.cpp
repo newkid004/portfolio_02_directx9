@@ -249,8 +249,8 @@ bool sceneCollisionTest::collisionNew(void)
 	//		}
 	//	}
 	//}
-
-	for (int i = 0; i < vFistBullet.size(); i++)
+	list<fistBullet*>::iterator fistIter = vFistBullet.begin();
+	for (;fistIter != vFistBullet.end();)
 	{
 		//if (pick::isLine2Box(&vFistBullet[i]->getRay(), vFistBullet[i]->getSpeed(), box[0]))
 		//{
@@ -261,8 +261,8 @@ bool sceneCollisionTest::collisionNew(void)
 				auto mSphere = m_pSkinnedMesh[j]->getBoundingSphere();
 				D3DXVECTOR3 intersect;
 				D3DXVECTOR3 intersect2;
-				if (pick::isLine2Sphere(&vFistBullet[i]->getRay(), &intersect,
-					vFistBullet[i]->getSpeed(), mSphere))
+				if (pick::isLine2Sphere(&(*fistIter)->getRay(), &intersect,
+					(*fistIter)->getSpeed(), mSphere))
 				{
 					for (auto rValue : mBoundSphereSet)
 					{
@@ -270,14 +270,15 @@ bool sceneCollisionTest::collisionNew(void)
 						sphere.center = rValue.second.drawPosition;
 						sphere.radius *= m_pSkinnedMesh[j]->getScale().x;
 
-						if (pick::isLine2Sphere(&vFistBullet[i]->getRay(), &intersect2,
-							vFistBullet[i]->getSpeed(), sphere))
+						if (pick::isLine2Sphere(&(*fistIter)->getRay(), &intersect2,
+							(*fistIter)->getSpeed(), sphere))
 						{
 							printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
 							//printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
 							
 							//printf("충돌!! %d\n", rand() % 100);
-							MN_BULLET->eraseFistBullet(i);
+							SAFE_DELETE(*fistIter);
+							fistIter = vFistBullet.erase(fistIter);
 							//return true;
 						}
 					}
@@ -291,9 +292,10 @@ bool sceneCollisionTest::collisionNew(void)
 
 bool sceneCollisionTest::collisionCheck(void)
 {
-	auto vBullet = MN_BULLET->getGunBulletList();
+	auto vGunBullet = MN_BULLET->getGunBulletList();
+	list<gunBullet*>::iterator gunIter = vGunBullet.begin();
 
-	for (int i = 0; i < vBullet.size(); i++)
+	for (; gunIter != vGunBullet.end();)
 	{
 		for (int j = 0; j < ZOMBIE_NUM; j++)
 		{
@@ -302,8 +304,8 @@ bool sceneCollisionTest::collisionCheck(void)
 			auto mSphere = m_pSkinnedMesh[j]->getBoundingSphere();
 			D3DXVECTOR3 intersect;
 			D3DXVECTOR3 intersect2;
-			if (pick::isLine2Sphere(&vBullet[i]->getRay(), &intersect,
-				vBullet[i]->getSpeed(), mSphere))
+			if (pick::isLine2Sphere(&(*gunIter)->getRay(), &intersect,
+				(*gunIter)->getSpeed(), mSphere))
 			{
 				for (auto rValue : mBoundSphereSet)
 				{
@@ -311,8 +313,8 @@ bool sceneCollisionTest::collisionCheck(void)
 					sphere.center = rValue.second.drawPosition;
 					sphere.radius *= m_pSkinnedMesh[j]->getScale().x;
 
-					if (pick::isLine2Sphere(&vBullet[i]->getRay(), &intersect2,
-						vBullet[i]->getSpeed(), sphere))
+					if (pick::isLine2Sphere(&(*gunIter)->getRay(), &intersect2,
+						(*gunIter)->getSpeed(), sphere))
 					{
 						printf("캐릭 충돌!! %d, intersect point : %f, %f, %f\n%s\n", rand() % 100, intersect2.x, intersect2.y, intersect2.z, rValue.first.c_str());
 						//printf("%d 캐릭 %s 충돌!! %d\n", index, rValue.first.c_str(), rand() % 100);
@@ -336,33 +338,34 @@ bool sceneCollisionTest::collisionCheck(void)
 bool sceneCollisionTest::collisionCheck2(void)
 {
 	auto vBullet = MN_BULLET->getGunBulletList();
+	list<gunBullet*>::iterator gunIter = vBullet.begin();
 	//auto sphere = m_pBoxObject->getBoundingSphere();
 	//m_pBoxObject->getBoundingSphereFinal(&sphere);
 	auto box = m_pBoxObject->getBoundingBoxList();
 	m_pBoxObject->getBoundingBoxFinal(&box[0]);
 	
-	for (int index = 0; index < vBullet.size(); index++)
+	for (; gunIter != vBullet.end();)
 	{
 		//if (pick::isLine2Sphere(&vBullet[index]->getRay(), &vBullet[index]->getPosition(), vBullet[index]->getSpeed(), sphere))
 		//{
 
-		if (pick::isLine2Box(&vBullet[index]->getRay(), vBullet[index]->getSpeed(), box[0]))
+		if (pick::isLine2Box(&(*gunIter)->getRay(), (*gunIter)->getSpeed(), box[0]))
 		{
 			pick::info info;
-			pick::applyMatrix(&vBullet[index]->getRay(), &vBullet[index]->getRay(), &m_pBoxObject->getMatrixFinal());
-			if (pick::chkPick(&info, &vBullet[index]->getRay(), m_pBoxObject->getMesh()))
+			pick::applyMatrix(&(*gunIter)->getRay(), &(*gunIter)->getRay(), &m_pBoxObject->getMatrixFinal());
+			if (pick::chkPick(&info, &(*gunIter)->getRay(), m_pBoxObject->getMesh()))
 			{
 				//if (!vBullet[index]->getOnOff())
 				//{
 				//	continue;
 				//}
-				////printf("충돌!! %d\n", rand() % 100);
+				//printf("충돌!! %d\n", rand() % 100);
 		
 				D3DXMATRIXA16 matrix = m_pBoxObject->getMatrixFinal();
 				D3DXMatrixInverse(&matrix, NULL, &matrix);
-				pick::applyMatrix(&vBullet[index]->getRay(), &vBullet[index]->getRay(), &matrix);
-				D3DXVECTOR3 intersect = vBullet[index]->getRay().origin + info.distance * vBullet[index]->getRay().direction;
-			
+				pick::applyMatrix(&(*gunIter)->getRay(), &(*gunIter)->getRay(), &matrix);
+				D3DXVECTOR3 intersect = (*gunIter)->getRay().origin + info.distance * (*gunIter)->getRay().direction;
+				
 				printf("충돌!! %d, intersect point : %f, %f, %f\n", rand() % 100,
 					intersect.x, intersect.y, intersect.z);
 

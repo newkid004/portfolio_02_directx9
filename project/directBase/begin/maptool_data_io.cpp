@@ -268,7 +268,7 @@ void maptool_data_io::apply(OBJ::TRIGGER * in, triggerMesh * obj)
 
 void maptool_data_io::apply(OBJ::FIELD * in, mapObject * obj)
 {
-	auto & mObject = obj->getMapList();
+	auto & mObject = obj->getMapSetList();
 	for (auto & subset : mObject)
 	{
 		auto & sName = subset.first;
@@ -378,7 +378,7 @@ void maptool_data_io::apply(mapObject * in, OBJ::FIELD * data)
 	apply((baseObject*)in, (OBJ::BASE*)data);
 	// terrain, ceil Á¦¿Ü
 	
-	mapObject::MAPLIST & mObjectList = in->getMapList();
+	mapObject::MAPLIST & mObjectList = in->getMapSetList();
 
 	mObjectList.reserve(data->_wall.size());
 	for (auto & i : data->_wall)
