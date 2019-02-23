@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -187,6 +187,7 @@
     <ClInclude Include="enemyBase.h" />
     <ClInclude Include="enemyController.h" />
     <ClInclude Include="enemyFactory.h" />
+    <ClInclude Include="eShootWeapon.h" />
     <ClInclude Include="eventAirPlane.h" />
     <ClInclude Include="eventMoveFar2building.h" />
     <ClInclude Include="fistBullet.h" />
@@ -276,7 +277,6 @@
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
     <ClInclude Include="skyBox.h" />
-    <ClInclude Include="sound.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="spriteBase.h" />
     <ClInclude Include="staticMesh.h" />
@@ -339,6 +339,7 @@
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="enemyController.cpp" />
     <ClCompile Include="enemyFactory.cpp" />
+    <ClCompile Include="eShootWeapon.cpp" />
     <ClCompile Include="eventAirPlane.cpp" />
     <ClCompile Include="eventMoveFar2building.cpp" />
     <ClCompile Include="fistBullet.cpp" />
@@ -413,7 +414,6 @@
     <ClCompile Include="sceneTest4.cpp" />
     <ClCompile Include="skinnedMesh.cpp" />
     <ClCompile Include="skyBox.cpp" />
-    <ClCompile Include="sound.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="spriteBase.cpp" />
     <ClCompile Include="staticMesh.cpp" />

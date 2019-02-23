@@ -9,13 +9,18 @@
 #include "inGame_field.h"
 #include "inGame_grape.h"
 
+#include "weaponBase.h"
+
 #include "eventDef.h"
 #include "eventCatcher.h"
 #include "eventBase.h"
+#include "eShootWeapon.h"
 
 #include "patternMesh.h"
-#include "characterBase.h"
 #include "player.h"
+
+#include "mapObject.h"
+#include "wallMesh.h"
 
 void sceneInGame::init(void)
 {
@@ -23,6 +28,7 @@ void sceneInGame::init(void)
 
 	initResource();
 	initSystem();
+	initField();
 	initEvent();
 }
 
@@ -92,6 +98,19 @@ void sceneInGame::initSystem(void)
 	SGT_GAME->addEnemy();
 }
 
+void sceneInGame::initField(void)
+{
+	auto field = SGT_GAME->getSet().field;
+
+	// make obj
+	auto & mapObj = field->getMember().mapObject;
+	mapObj = new mapObject();
+	mapObj->init();
+
+	// put obj
+	
+}
+
 void sceneInGame::initEvent(void)
 {
 	eventCatcher* eC[10];
@@ -127,7 +146,34 @@ void sceneInGame::initEvent(void)
 		// do shomthing
 	} );
 
+	initEventWeapon();
+}
 
+void sceneInGame::initEventWeapon(void)
+{
+	// 무기 발사 시
+	MN_EVENT->add(
+		EVENT::TYPE::WEAPON |
+		EVENT::ACT::WEAPON::SHOOT,
+		[](eventBase*)->void {},
+		[](eventBase* e)->void {
+
+		int eParam =
+			EVENT::TYPE::WEAPON |
+			EVENT::ACT::WEAPON::SHOOT;
+
+		auto own = static_cast<characterBase*>(e->getSour());
+		int weaponType = own->getWeapon()->getInfoWeapon().type;
+
+		switch (weaponType)
+		{
+		case weapon_set::type::shotgun:	eParam |= EVENT::KIND::WEAPON::SHOTGUN;	break;
+		case weapon_set::type::rifle:	eParam |= EVENT::KIND::WEAPON::RIFLE;	break;
+		}
+
+		MN_EVENT->add(new eShootWeapon(e->getSour(), eParam));
+
+	});
 }
 
 void sceneInGame::initSound(void)

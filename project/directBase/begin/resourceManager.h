@@ -3,7 +3,6 @@
 
 using namespace std;
 
-class sound;
 class skinnedMesh;
 class patternMesh;
 
@@ -18,7 +17,6 @@ private :
 	strMap<LPDIRECT3DTEXTURE9>		_mTexture;
 	strMap<meshSet*>				_mStaticMesh;
 	strMap<skinnedMesh*>			_mSkinnedMesh;
-	strMap<sound*>					_mSound;
 	strMap<LPDIRECT3DCUBETEXTURE9>	_mTextureCube;
 	strMap<patternMesh*>			_mPatternMesh;
 
@@ -29,7 +27,6 @@ public :
 	LPD3DXEFFECT			createEffect(const string & key);
 	LPDIRECT3DTEXTURE9		createTexture(const string & key);
 	LPDIRECT3DTEXTURE9		createSpriteTexture(const string & key);
-	sound*					createSound(const string & key, bool isBGM = true);
 	LPDIRECT3DCUBETEXTURE9	createTextureCube(const string & key);
 	patternMesh*			createPatternMesh(const string & key, void* makeParam);
 
@@ -40,7 +37,6 @@ public :
 	LPD3DXEFFECT			addEffect(const string & key, LPD3DXEFFECT value)					{ return addSomthing(key, value, _mEffect); }
 	LPDIRECT3DTEXTURE9		addTexture(const string & key, LPDIRECT3DTEXTURE9 value)			{ return addSomthing(key, value, _mTexture); }
 	LPDIRECT3DTEXTURE9		addSpriteTexture(const string & key, LPDIRECT3DTEXTURE9 value)		{ return addSomthing(key, value, _mTexture); }
-	sound*					addSound(const string & key, sound* value)							{ return addSomthing(key, value, _mSound); }
 	LPDIRECT3DCUBETEXTURE9	addTextureCube(const string & key, LPDIRECT3DCUBETEXTURE9 value)	{ return addSomthing(key, value, _mTextureCube); }
 	patternMesh*			addPatternMesh(const string & key, patternMesh* value)				{ return addSomthing(key, value, _mPatternMesh); }
 
@@ -55,8 +51,6 @@ public :
 	LPD3DXEFFECT			getEffect(const string & key, bool isAutoCreate = true);
 	LPDIRECT3DTEXTURE9		getTexture(const string & key, bool isAutoCreate = true);
 	LPDIRECT3DTEXTURE9		getSpriteTexture(const string & key, bool isAutoCreate = true);
-	sound*					getSoundBGM(const string & key, bool isAutoCreate = true);
-	sound*					getSoundSE(const string & key, bool isAutoCreate = true);
 	LPDIRECT3DCUBETEXTURE9	getTextureCube(const string & key, bool isAutoCreate = true);
 	patternMesh*			getPatternMesh(const string & key, void* makeParam, bool isAutoCreate = true);
 	patternMesh*			getPatternMesh(const string & key);

@@ -496,7 +496,7 @@ void PatternManager::initMotionSurvivor(void)
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_PUMPSHOTGUN |
-		AMIX_RELOAD, arr, 1, 0.6f, false);
+		AMIX_RELOAD, arr, 1, 0.8f, false);
 
 	//라이플, --. --, 장전, --
 	arr[0] = 76;
@@ -1597,31 +1597,24 @@ PatternManager::AniInfo & PatternManager::getPattern(int conditionCode)
 		if ((conditionCode & GET_ANIBITMASK(aniDefine::ANIBIT::CONDITION)) != 0)
 		{
 			int findCode = conditionCode - (conditionCode & GET_ANIBITMASK(aniDefine::ANIBIT::CONDITION));
-			return getPattern(findCode);
+			PatternManager::AniInfo &check = getPattern(findCode);
+			if (_motionBook[type].begin()->second != check) return check;
 		}
 
 		if ((conditionCode & GET_ANIBITMASK(aniDefine::ANIBIT::WEAPON)) != 0)
 		{
 			int findCode = conditionCode - (conditionCode & GET_ANIBITMASK(aniDefine::ANIBIT::WEAPON));
-			return getPattern(findCode);
+			PatternManager::AniInfo &check = getPattern(findCode);
+			if (_motionBook[type].begin()->second != check) return check;
 		}
 
 		if ((conditionCode & GET_ANIBITMASK(aniDefine::ANIBIT::SUB)) != 0)
 		{
 			int findCode = conditionCode - (conditionCode & GET_ANIBITMASK(aniDefine::ANIBIT::SUB));
-			return getPattern(findCode);
+			PatternManager::AniInfo &check = getPattern(findCode);
+			if (_motionBook[type].begin()->second != check) return check;
 		}
 	}
-	/*
-	int lastIndex = (conditionCode &GET_ANIBITMASK(aniDefine::ANIBIT::MAIN));
-	for (auto iterator : _motionBook[type])
-	{
-	if ((iterator.first & lastIndex) == lastIndex)
-	{
-	return iterator.second;
-	}
-	}
-	*/
 
 	return _motionBook[type].begin()->second;
 }

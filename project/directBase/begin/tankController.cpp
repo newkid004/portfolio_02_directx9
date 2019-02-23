@@ -113,26 +113,26 @@ void tankController::update2bit(void)
 				}
 			}
 
-			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ATTACK;
+			gDigit::put(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 		}
 		_delay = VALUE::delayMove;
 		return;
 	}
 	// 기본 상태
-	else if (_path->getDistance() > VALUE::delayAlert)
+	else if (getDistance2player() > VALUE::aletyDistance)
 	{
 		baseBit();
 		_delay = VALUE::delayHangOut;
 		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::IDLE;
 	}
 	// 경계 상태
-	else if (_path->getDistance() <= VALUE::aletyDistance &&
-		_path->getDistance() >= VALUE::findSomthingDistance)
+	else if (getDistance2player() <= VALUE::aletyDistance &&
+		getDistance2player() >= VALUE::findSomthingDistance)
 	{
-		D3DXVECTOR3 direction = ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
+		/*D3DXVECTOR3 direction = ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
 		float cosValue = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z),
-			&D3DXVECTOR2(direction.x, direction.z));
-		if (cosValue <= FLT_EPSILON)
+			&D3DXVECTOR2(direction.x, direction.z));*/
+		//if (cosValue <= FLT_EPSILON)
 		{
 			//소리치고
 			changeBindBit(aniDefine::ANIBIT::MAIN, HULK_IDLE);
@@ -141,25 +141,25 @@ void tankController::update2bit(void)
 			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ALERT;
 		}
 		// 회전하고
-		else
-		{
-			//다음 노드를 향해서 왼쪽으로 회전
-			if (cosValue > 0.0f)
-			{
-				changeBindBit(aniDefine::ANIBIT::MAIN, HULK_TURN);
-				changeBindBit(aniDefine::ANIBIT::SUB, HULK_TURN_LEFT);
-				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::LROTATE;
-			}
-			//다음 노드를 향해서 오른쪽으로 회전
-			else
-			{
-				changeBindBit(aniDefine::ANIBIT::MAIN, HULK_TURN);
-				changeBindBit(aniDefine::ANIBIT::SUB, HULK_TURN_RIGHT);
-				_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::RROTATE;
-			}
+		//else
+		//{
+		//	//다음 노드를 향해서 왼쪽으로 회전
+		//	if (cosValue > 0.0f)
+		//	{
+		//		changeBindBit(aniDefine::ANIBIT::MAIN, HULK_TURN);
+		//		changeBindBit(aniDefine::ANIBIT::SUB, HULK_TURN_LEFT);
+		//		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::LROTATE;
+		//	}
+		//	//다음 노드를 향해서 오른쪽으로 회전
+		//	else
+		//	{
+		//		changeBindBit(aniDefine::ANIBIT::MAIN, HULK_TURN);
+		//		changeBindBit(aniDefine::ANIBIT::SUB, HULK_TURN_RIGHT);
+		//		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::RROTATE;
+		//	}
 
 			_delay = VALUE::delayAlert;
-		}
+		//}
 	}
 	// 달리기
 	else if (_path->getDistance() < VALUE::findSomthingDistance)

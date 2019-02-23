@@ -30,6 +30,7 @@ struct EVENT
 		MAKE_EV(0x8, CHARACTER);
 		MAKE_EV(0x9, ENEMY);
 		MAKE_EV(0xA, TRIGGER);
+		MAKE_EV(0xB, WEAPON);
 	};
 
 	// ----- kind : 0x00f0 ----- //
@@ -107,6 +108,12 @@ struct EVENT
 			MAKE_EV(0x2, MOVE_FAR);
 			MAKE_EV(0x3, ZOMBIE_WAVE);
 		};
+
+		struct WEAPON
+		{
+			MAKE_EV(0x1, SHOTGUN);
+			MAKE_EV(0x2, RIFLE);
+		};
 	};
 
 	// ----- act : 0x0f00 ----- //
@@ -154,6 +161,11 @@ struct EVENT
 			MAKE_EV(0x1, ACTIVE);
 			MAKE_EV(0x2, CONTINUE);
 			MAKE_EV(0x3, COMPLETE);
+		};
+
+		struct WEAPON
+		{
+			MAKE_EV(0x1, SHOOT);
 		};
 	};
 

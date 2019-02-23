@@ -1,8 +1,6 @@
 #include "resourceManager.h"
 #include "managerList.h"
 
-#include "sound.h"
-
 #include "skinnedMesh.h"
 #include "patternMesh.h"
 #include "patternMeshDup.h"
@@ -18,7 +16,6 @@ resourceManager::~resourceManager()
 	for (auto iter : _mTexture)		{ SAFE_RELEASE(iter.second); }
 	for (auto iter : _mStaticMesh)	{ SAFE_DELETE(iter.second); }
 	for (auto iter : _mSkinnedMesh) { SAFE_DELETE(iter.second); }
-	for (auto iter : _mSound)		{ SAFE_DELETE(iter.second); }
 	for (auto iter : _mTextureCube)	{ SAFE_RELEASE(iter.second); }
 	for (auto iter : _mPatternMesh) { SAFE_DELETE(iter.second); }
 }
@@ -153,62 +150,6 @@ LPDIRECT3DTEXTURE9 resourceManager::createSpriteTexture(const string & key)
 	return result;
 }
 
-sound * resourceManager::createSound(const string & key, bool isBGM)
-{
-	sound* result = nullptr;
-
-	/*
-	< 메모리 맵 >
-	- 파일 시스템을 제어하기 위해 제공되는 기능
-	메모리에 접근하는 것처럼 파일 데이터를 조작 가능
-	메모리 맵 이용 시, 파일 포인터의 조작은 내부적으로 이루어지기 때문에
-	입출력을 편하게 가능
-	*/
-	HMMIO wavFile = mmioOpenA(	// memory map
-		(char*)key.c_str(),
-		NULL,
-		MMIO_READ);
-
-	if (wavFile != NULL)
-	{
-		MMCKINFO chunkInfo;
-		ZeroMemory(&chunkInfo, sizeof(chunkInfo));
-
-		chunkInfo.fccType = mmioFOURCC('W', 'A', 'V', 'E');
-		mmioDescend(wavFile, &chunkInfo, NULL, MMIO_FINDRIFF);				// find resource format
-
-		MMCKINFO subChunkInfo;
-		ZeroMemory(&subChunkInfo, sizeof(subChunkInfo));
-		subChunkInfo.ckid = mmioFOURCC('f', 'm', 't', ' ');
-		mmioDescend(wavFile, &subChunkInfo, &chunkInfo, MMIO_FINDCHUNK);	// find chunk
-
-		// 포맷 정보 설정
-		sound::wavInfo* wavInfo = new sound::wavInfo();
-		mmioRead(wavFile,
-			(char*)(&wavInfo->format),
-			sizeof(wavInfo->format));
-
-		mmioAscend(wavFile, &subChunkInfo, 0);
-
-		// 사운드 정보 설정
-		subChunkInfo.ckid = mmioFOURCC('d', 'a', 't', 'a');
-		mmioDescend(wavFile, &subChunkInfo, &chunkInfo, MMIO_FINDCHUNK);
-
-		wavInfo->numByte = subChunkInfo.cksize;
-		wavInfo->nBytes = (BYTE*)malloc(sizeof(BYTE) * subChunkInfo.cksize);
-
-		mmioRead(wavFile,
-			(char*)(wavInfo->nBytes),
-			subChunkInfo.cksize);
-
-		mmioClose(wavFile, 0);
-
-		return new sound(wavInfo, isBGM);
-	}
-
-	return result;
-}
-
 LPDIRECT3DCUBETEXTURE9 resourceManager::createTextureCube(const string & key)
 {
 	LPDIRECT3DCUBETEXTURE9 result = nullptr;
@@ -271,16 +212,6 @@ LPDIRECT3DTEXTURE9 resourceManager::getTexture(const string & key, bool isAutoCr
 LPDIRECT3DTEXTURE9 resourceManager::getSpriteTexture(const string & key, bool isAutoCreate)
 {
 	return getSomething(key, _mTexture, isAutoCreate, (function<LPDIRECT3DTEXTURE9(void)>)[&]()->auto { return createSpriteTexture(key); });
-}
-
-sound * resourceManager::getSoundBGM(const string & key, bool isAutoCreate)
-{
-	return getSomething(key, _mSound, isAutoCreate, (function<sound*(void)>)[&]()->auto { sound* c = createSound(key, true); return c; });
-}
-
-sound * resourceManager::getSoundSE(const string & key, bool isAutoCreate)
-{
-	return getSomething(key, _mSound, isAutoCreate, (function<sound*(void)>)[&]()->auto { sound* c = createSound(key, false); return c; });
 }
 
 LPDIRECT3DCUBETEXTURE9 resourceManager::getTextureCube(const string & key, bool isAutoCreate)

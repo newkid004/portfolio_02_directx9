@@ -67,6 +67,10 @@ void renderObject::getBoundingBoxFinal(boundingBox * out)
 		&out->max,
 		&out->max,
 		&_mWorld);
+
+	if (out->max.x < out->min.x) std::swap(out->max.x, out->min.x);
+	if (out->max.y < out->min.y) std::swap(out->max.y, out->min.y);
+	if (out->max.z < out->min.z) std::swap(out->max.z, out->min.z);
 }
 
 void renderObject::getBoundingSphereFinal(boundingSphere * out)

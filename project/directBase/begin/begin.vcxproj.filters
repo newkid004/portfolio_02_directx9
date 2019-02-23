@@ -112,9 +112,6 @@
     <Filter Include="classes\global\utility\animation\allocateHierarchy">
       <UniqueIdentifier>{7d36d6a7-c56c-465c-84b4-38ae24247fb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="classes\global\utility\sound">
-      <UniqueIdentifier>{b470d671-b6a8-4f18-b6d9-f20e5ad0f98e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="classes\global\utility\particle">
       <UniqueIdentifier>{3f811457-2206-4c14-ba3a-3b91c33e02ca}</UniqueIdentifier>
     </Filter>
@@ -162,9 +159,6 @@
     </Filter>
     <Filter Include="classes\global\utility\manager\direct\resource">
       <UniqueIdentifier>{a5740d01-8e23-4862-8087-9c20ada45979}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="classes\global\utility\manager\direct\sound">
-      <UniqueIdentifier>{363f62e9-1556-4871-b78f-93101521c8ac}</UniqueIdentifier>
     </Filter>
     <Filter Include="classes\global\utility\manager\direct\time">
       <UniqueIdentifier>{ae3b0c8c-0d25-4f0b-a0b4-84c8a4c5e110}</UniqueIdentifier>
@@ -619,6 +613,9 @@
     <Filter Include="main\classes\scene\02_inGame\classes\object\character\enemy\_base">
       <UniqueIdentifier>{9008f25c-3bbe-4e3a-99c8-ca80b30d39c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\event\02_shootWeapon">
+      <UniqueIdentifier>{b31c53d1-2e7c-442f-ab53-599c6dd9a9d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -701,12 +698,6 @@
     </ClInclude>
     <ClInclude Include="pickRay.h">
       <Filter>classes\global\function\pickRay</Filter>
-    </ClInclude>
-    <ClInclude Include="sound.h">
-      <Filter>classes\global\utility\sound</Filter>
-    </ClInclude>
-    <ClInclude Include="soundManager.h">
-      <Filter>classes\global\utility\manager\direct\sound</Filter>
     </ClInclude>
     <ClInclude Include="particleEmitter.h">
       <Filter>classes\global\utility\particle\emitter</Filter>
@@ -1084,6 +1075,10 @@
       <Filter>main\classes\scene\02_inGame</Filter>
     </ClInclude>
     <ClInclude Include="enemyFactory.h" />
+    <ClInclude Include="eShootWeapon.h">
+      <Filter>main\classes\event\02_shootWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="soundManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1151,12 +1146,6 @@
     </ClCompile>
     <ClCompile Include="pickRay.cpp">
       <Filter>classes\global\function\pickRay</Filter>
-    </ClCompile>
-    <ClCompile Include="sound.cpp">
-      <Filter>classes\global\utility\sound</Filter>
-    </ClCompile>
-    <ClCompile Include="soundManager.cpp">
-      <Filter>classes\global\utility\manager\direct\sound</Filter>
     </ClCompile>
     <ClCompile Include="particleEmitter.cpp">
       <Filter>classes\global\utility\particle\emitter</Filter>
@@ -1477,6 +1466,10 @@
     <ClCompile Include="menuScene.cpp">
       <Filter>main\classes\scene\02_inGame</Filter>
     </ClCompile>
+    <ClCompile Include="eShootWeapon.cpp">
+      <Filter>main\classes\event\02_shootWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="soundManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

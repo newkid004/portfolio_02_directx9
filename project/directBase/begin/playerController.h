@@ -9,7 +9,7 @@ public:
 
 protected :
 	void updateControl(void);
-
+	void updateAnimation(void);
 public:
 	playerController(characterBase* bindCharacter);
 	~playerController();

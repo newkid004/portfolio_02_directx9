@@ -11,6 +11,8 @@
 #include "sceneBase.h"
 #include "camera.h"
 
+#include "eShootWeapon.h"
+
 using DIGIT = inGame_digit;
 
 weaponBase::weaponBase(staticMesh::mParam param , characterBase* linkPatternDup)
@@ -98,21 +100,24 @@ void weaponBase::fireDo(void)
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_SHOOT);
 	_bindPMesh->getAControllInfo().trackPositionA = 0.0f;
 
-	_handPosition = _position;
-	D3DXVec3TransformCoord(&_handPosition, &_handPosition, &_bindPMesh->getLeftHandMatrix());
+	// _handPosition = _position;
+	// D3DXVec3TransformCoord(&_handPosition, &_handPosition, &_bindPMesh->getLeftHandMatrix());
 	if (_pickPosition == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 	{
-		D3DXVECTOR3 neckPosition = _position;
-		D3DXVec3TransformCoord(&neckPosition, &neckPosition, &_bindPMesh->getFinalNeckMatrix());
-
-		//_pickPosition = neckPosition + GET_CAMERA()->getDirectForward() *100.0f;
-		_pickPosition = neckPosition + _bindPMesh->getDirectForward() *100.0f;
+		GET_CAMERA()->putOffsetPosition();
+		_pickPosition = GET_CAMERA()->getOffsetPosition() + 
+			GET_CAMERA()->getDirectForward() *100.0f;
 	}
 
 	_targetDirection = _pickPosition - _handPosition;
 	D3DXVec3Normalize(&_targetDirection, &_targetDirection);
 
 	_pickPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+	// ----- event ----- //
+	MN_EVENT->add(new eventBase(_bindPMesh, nullptr,
+		EVENT::TYPE::WEAPON |
+		EVENT::ACT::WEAPON::SHOOT));
 }
 
 void weaponBase::firePost(void)

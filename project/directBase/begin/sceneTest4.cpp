@@ -12,6 +12,7 @@ void sceneTest4::init(void)
 	sceneBase::init();
 
 	_particle = createParticle();
+	_particle->setPosition(D3DXVECTOR3(0, 3, -10));
 }
 
 void sceneTest4::update(void)
@@ -45,7 +46,7 @@ particlePoint * sceneTest4::createParticle(void)
 	param.emitterParam.type = EParticleType::FOUNTAIN;
 	param.emitterParam.makeParam = particleCreater::makeParam(
 		particleCreater::PC_FOUNTAIN::MAKE, 
-		D3DXVECTOR3(0.5f, 0.5f, 0.0f), 
+		D3DXVECTOR3(0.5f, 0.5f, 100.0f), 
 		D3DXVECTOR3(0.3f, 0.3f, 0.3f), 
 		10.0f, 
 		3.0f);

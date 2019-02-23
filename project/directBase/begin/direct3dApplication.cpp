@@ -29,7 +29,6 @@ void direct3dApplication::init(void)
 
 	// 관리자 초기화
 	GET_DEVICE_MANAGER()->init();
-	GET_SOUND_MANAGER()->init();
 	GET_TIME_MANAGER()->init();
 	GET_INPUT_MANAGER()->init();
 	GET_EVENT_MANAGER()->init();

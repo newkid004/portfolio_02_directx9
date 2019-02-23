@@ -20,6 +20,8 @@
 #include "enemyBase.h"
 
 #include "gameSystem.h"
+#include "characterBase.h"
+#include "patternMesh.h"
 
 using DIGIT = inGame_digit;
 using VALUE = inGame_value::enemy;
@@ -32,8 +34,9 @@ enemyController::enemyController(characterBase * bindCharacter) :
 	_infoTimeEnemy.timeNextActive = MN_TIME->getRunningTime();
 	_delay = VALUE::delayHangOut;
 
-	std::string basePath = _bindCharacter->getOriginMesh()->getBasePath();
-	_isFemale = (basePath.find("female") != std::string::npos) ? true : false;
+	
+	_isFemale = (_bindCharacter->getOriginMesh()->getOriginType() 
+		== patternMesh::type::feMale_zombie ) ? true : false;
 	baseBit();
 }
 
@@ -348,19 +351,13 @@ void enemyController::updateFootPrint(void)
 		nextPlacePos.x += gFunc::rndFloat(-interval, interval);
 		nextPlacePos.y += gFunc::rndFloat(-interval, interval);
 
-		//_bindCharacter->rotate2Pos(
-		//	D3DXVECTOR3(
-		//		nextPlacePos.x,
-		//		0.0f,
-		//		nextPlacePos.y),
-		//	true, true);
-
 		_bindCharacter->rotate2Pos(
 			D3DXVECTOR3(
-				SGT_GAME->getSet().player->getPosition().x,
+				nextPlacePos.x,
 				0.0f,
-				SGT_GAME->getSet().player->getPosition().z),
+				nextPlacePos.y),
 			true, true);
+
 	}
 }
 
