@@ -55,6 +55,22 @@ struct inGame_digit
 		globalDigit RELOAD		= 1 << 0x1;
 		
 		globalDigit DO_FIRE		= 1 << 0x2;
+		globalDigit ATTACK		= 1 << 0x3;
+
+		globalDigit NONE		= 0;
+	};
+
+	//맞은 부위
+	struct PART
+	{
+		globalDigit HEAD		= 1 << 0x0;
+		globalDigit MIDDLE		= 1 << 0x1;
+		globalDigit ORDER		= 1 << 0x2;
+		globalDigit LEFT		= 1 << 0x3;
+		globalDigit RIGHT       = 1 << 0x4;
+
+		globalDigit BYRIFLE		= 1 << 0x5;
+		globalDigit BYSHOTGUN   = 1 << 0x6;
 
 		globalDigit NONE		= 0;
 	};
