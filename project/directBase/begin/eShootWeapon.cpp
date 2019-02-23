@@ -77,7 +77,5 @@ particlePoint * eShootWeapon::createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & no
 		1.0f,
 		0.3f);
 
-	auto result = new particlePoint(param);
-
-	return result;
+	return new particlePoint(param);
 }

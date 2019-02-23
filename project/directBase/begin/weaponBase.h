@@ -55,9 +55,10 @@ public :
 
 public :
 	weapon_set &	getInfoWeapon(void) { return _infoWeapon; }
-	void chanegePickPosition(D3DXVECTOR3 picking) { _pickPosition = picking; }
+	void chanegePickPosition(D3DXVECTOR3 & picking) { _pickPosition = picking; }
 
 	D3DXVECTOR3 & refHandPosition(void) { return _handPosition; }
+	characterBase* & refBindPMesh(void) { return _bindPMesh; }
 
 public:
 	weaponBase(staticMesh::mParam param , characterBase* linkPatternDup);
