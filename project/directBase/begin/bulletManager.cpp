@@ -200,6 +200,7 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 
 bool bulletManager::fistCollision(fistBullet * bullet)
 {
+	return false;
 }
 
 void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & forwardDir, float speed,
