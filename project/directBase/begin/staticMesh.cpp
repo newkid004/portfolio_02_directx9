@@ -39,6 +39,8 @@ void staticMesh::drawDo(void)
 {
 	renderObject::drawDo();
 
+	if (!_effect) return;
+
 	_effect->SetMatrix("_mWorld", &getMatrixFinal());
 	_effect->SetMatrix("_mView", &GET_CAMERA()->getMatrixView());
 	_effect->SetMatrix("_mProjection", &GET_CAMERA()->getMatrixProjection());

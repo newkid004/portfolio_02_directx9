@@ -60,6 +60,7 @@ public :
 
 	D3DXVECTOR3 & refHandPosition(void) { return _handPosition; }
 	characterBase* & refBindPMesh(void) { return _bindPMesh; }
+	D3DXVECTOR3 & refTargetDirection(void) { return _targetDirection; }
 
 public:
 	weaponBase(staticMesh::mParam param , characterBase* linkPatternDup);

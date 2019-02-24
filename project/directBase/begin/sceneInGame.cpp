@@ -137,9 +137,6 @@ void sceneInGame::initSystem(void)
 	// camera
 	_camera = new inGameCamera(pCharacter);
 
-	// cursur
-	ShowCursor(NULL);
-
 	// status
 	auto & sysStatus = SGT_GAME->getStatus();
 
@@ -205,7 +202,7 @@ void sceneInGame::initEventTrigger(void)
 		int & digitActive = SGT_GAME->getStatus().digitActive;
 		if (!gDigit::chk(digitActive, sysDigit::wave))
 		{
-			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave);
+			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave | sysDigit::enemySpawn);
 			MN_EVENT->add(new eEnemySpawner());
 		}
 	});

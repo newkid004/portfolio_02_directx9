@@ -3,6 +3,8 @@
 #include "managerList.h"
 #include "gFunc.h"
 
+#include "inGame_value.h"
+
 #include "characterBase.h"
 
 #include "particlePoint.h"
@@ -36,6 +38,13 @@ eShootWeapon::eShootWeapon(void* sour, unsigned long paramType) :
 	}
 
 	own->getWeapon()->refHandPosition() = _particle->getPosition();
+
+	// ÃÑ¾Ëµµ »ý¼º
+	auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+	GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,
+		inGame_value::bullet::speed, own->getWeapon());
+	GET_BULLET_MANAGER()->addBullet(own->getWeapon()->refHandPosition(), own->getWeapon()->refTargetDirection(),
+		inGame_value::bullet::speed, own->getWeapon(), bulletBase::TYPE::VISIBLE);
 }
 
 eShootWeapon::~eShootWeapon()

@@ -10,6 +10,8 @@
 #include "AnimationDef.h"
 #include "soundManager.h"
 
+#include "eventBase.h"
+
 triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 {
 	triggerBase* result = nullptr;
@@ -55,11 +57,21 @@ triggerBase * triggerFactory::createTrigger2type(int type, staticMesh* bindMesh)
 
 	} break;
 
-	case triggerBase::TYPE::AIR_PLANE : {
+	case triggerBase::TYPE::RADIO : {
+
+		result = new triggerBase(bindMesh);
+		result->refTriggerType() = type;
+
+		result->refActive() = [&](triggerBase* own)->void {
+
+			MN_EVENT->add(new eventBase(nullptr, nullptr,
+				EVENT::TYPE::TRIGGER |
+				EVENT::KIND::TRIGGER::AIR_PLANE |
+				EVENT::ACT::TRIGGER::ACTIVE));
+		};
 
 	} break;
 
-	default: { SAFE_DELETE(result); }
 	}
 
 	return result;

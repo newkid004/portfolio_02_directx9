@@ -7,6 +7,8 @@
 #include "eventBase.h"
 #include "eventDef.h"
 
+#include "aStar_path.h"
+
 #include "inGame_digit.h"
 #include "inGame_field.h"
 #include "inGame_grape.h"
@@ -66,7 +68,7 @@ enemyBase * enemyFactory::createEnemy(int type)
 			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
 			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()))
 	);
-	result->getInfoMove().maximumSpeed = 0.1f;
+	result->getInfoMove().maximumSpeed = 0.32f;
 
 	return result;
 }
