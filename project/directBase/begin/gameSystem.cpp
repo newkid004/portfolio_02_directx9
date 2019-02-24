@@ -19,6 +19,7 @@
 #include "enemyBase.h"
 #include "enemyFactory.h"
 #include "patternMesh.h"
+#include "enemyController.h"
 
 #include "eventBase.h"
 
@@ -120,6 +121,8 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 	vEnemyList.push_back(result);
 	vUpdateList.push_back(result);
 	vRenderable.push_back(result);
+
+	result->getController()->updatePath();
 
 	int evType = EVENT::TYPE::ENEMY | EVENT::ACT::ENEMY::ADDED;
 	if (gDigit::chk(inGame_digit::ENEMY::TANK, enemyType))			gDigit::put(evType, EVENT::KIND::ENEMY::TANKER);

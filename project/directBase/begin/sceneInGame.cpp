@@ -222,6 +222,14 @@ void sceneInGame::initEventTrigger(void)
 		{
 			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave | sysDigit::enemySpawn);
 			MN_EVENT->add(new eEnemySpawner());
+
+			MN_SND->getBGM()->stop();
+			MN_SND->find("waveStart")->play();
+			MN_SND->find("buttonOn")->play();
+		}
+		else
+		{
+			MN_SND->find("buttonAlready")->play();
 		}
 	});
 
@@ -236,10 +244,13 @@ void sceneInGame::initEventTrigger(void)
 		MN_SCENE->change("sceneEnding");
 		MN_EVENT->add(new eEndingComplet());
 
+		SGT_GAME->getSet().player->getPosition() = SGT_GAME->getSet().airPlane->getPosition();
 		SGT_GAME->getSet().airPlane->getNextBit() =
 			ATYPE_AIRPLANE |
 			AIRPLANE_OUTRO |
 			AIRPLANE_OUTRO_NONE;
+
+		MN_SND->find("Cfly")->play();
 	});
 }
 
@@ -298,11 +309,11 @@ void sceneInGame::initSound(void)
 
 
 	//background
-	//MN_SND->addSound("clear", "resource/sound/background/clear.wav", true, true);
+	MN_SND->addSound("clear", "resource/sound/background/clear.wav", true, true);
 	MN_SND->addSound("deathB", "resource/sound/background/deathS.wav", true, true);
 	MN_SND->addSound("inGameB", "resource/sound/background/inGameB.wav", true, true);//
 	//MN_SND->addSound("tankB", "resource/sound/background/tank.wav", true, false);
-	//MN_SND->addSound("waveStart", "resource/sound/background/waveStart.wav", true, false);
+	MN_SND->addSound("waveStart", "resource/sound/background/waveStart.wav", true, false);
 
 	//footSound
 	MN_SND->addSound("survivorF", "resource/sound/footSound/survivor/concrete1.wav",false,false); //
@@ -325,11 +336,11 @@ void sceneInGame::initSound(void)
 	MN_SND->addSound("shootWall", "resource/sound/terrain/concrete_impact_bullet1.wav", false, false);
 
 	//airplane
-	//MN_SND->addSound("buttonAlready", "resource/airplane/terrain/alreadyOn.wav", false, false);
-	//MN_SND->addSound("buttonOn", "resource/sound/airplane/buttonOn.wav", false, false);
-	//MN_SND->addSound("CdoorOpen", "resource/sound/airplane/c130_door_open.wav", false, false);
-	//MN_SND->addSound("Cfly", "resource/sound/airplane/c130_flyby.wav", false, false);
-	//MN_SND->addSound("Cidle", "resource/sound/airplane/c130_idle.wav", false, true);
+	MN_SND->addSound("buttonAlready", "resource/airplane/terrain/alreadyOn.wav", false, false);
+	MN_SND->addSound("buttonOn", "resource/sound/airplane/buttonOn.wav", false, false);
+	MN_SND->addSound("CdoorOpen", "resource/sound/airplane/c130_door_open.wav", false, false);
+	MN_SND->addSound("Cfly", "resource/sound/airplane/c130_flyby.wav", false, false);
+	MN_SND->addSound("Cidle", "resource/sound/airplane/c130_idle.wav", false, true);
 
 	//zombie
 	MN_SND->addSound("alert_f", "resource/sound/zombie/alert_f.wav", false, false);//
