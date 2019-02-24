@@ -7,7 +7,21 @@ class spriteBase;
 class deadScene :public sceneBase
 {
 private:
+	struct handInfo
+	{
+		LPDIRECT3DTEXTURE9 texture;
+		D3DXVECTOR2 size;
+		D3DXVECTOR2 position;
+		D3DXVECTOR2 scale;
+	};
+private:
 	spriteBase * _backGround = nullptr;
+	spriteBase * _died = nullptr;
+
+	handInfo _hand[2];
+
+	int _type;
+	float _downColor;
 
 public:
 	virtual void init(void) override;

@@ -49,7 +49,7 @@ void sceneInGame::init(void)
 	initSound();
 	initUI();
 
-	MN_SND->find("inGameB")->play(0.5f);
+	MN_SND->find("inGameB")->play();
 	_skyBox = createSkyBox();
 	_skyBox->setScale(D3DXVECTOR3(10, 10, 10));
 }
