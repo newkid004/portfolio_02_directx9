@@ -27,6 +27,6 @@ struct inGame_value
 
 	struct bullet
 	{
-		globalReal speed					= 1.0f;
+		globalReal speed					= 8.0f;
 	};
 };

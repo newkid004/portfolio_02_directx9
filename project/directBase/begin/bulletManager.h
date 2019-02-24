@@ -21,7 +21,7 @@ private:
 	std::list<fistBullet *>::iterator _fistIter;
 
 	player * _bindPlayer;
-
+	LPD3DXMESH result;
 public:
 	
 	std::list<gunBullet*> & getGunBulletList(void) { return _vGunBulletList; }

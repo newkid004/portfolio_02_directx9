@@ -209,12 +209,14 @@ void weaponBase::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])
 
 bool weaponBase::isShotPossible(void)
 {
-	return (0 < _infoWeapon.current) && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime());
+	return (0 < _infoWeapon.current) && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime())&&
+		!gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::DEAD);
 }
 
 bool weaponBase::isReloadPossible(void)
 {
-	return _infoWeapon.current < _infoWeapon.reload && 0 < _infoWeapon.maximum && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime());
+	return _infoWeapon.current < _infoWeapon.reload && 0 < _infoWeapon.maximum && (_infoWeapon.nextFireTime < MN_TIME->getRunningTime()) &&
+		!gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::DEAD);
 }
 
 bool weaponBase::isStillFire(void)

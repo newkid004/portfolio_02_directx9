@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -187,6 +187,7 @@
     <ClInclude Include="eEndingComplet.h" />
     <ClInclude Include="eEnemySpawner.h" />
     <ClInclude Include="eHitBullet.h" />
+    <ClInclude Include="deadScene.h" />
     <ClInclude Include="enemyBase.h" />
     <ClInclude Include="enemyController.h" />
     <ClInclude Include="enemyFactory.h" />
@@ -346,6 +347,7 @@
     <ClCompile Include="eEndingComplet.cpp" />
     <ClCompile Include="eEnemySpawner.cpp" />
     <ClCompile Include="eHitBullet.cpp" />
+    <ClCompile Include="deadScene.cpp" />
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="enemyController.cpp" />
     <ClCompile Include="enemyFactory.cpp" />

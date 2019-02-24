@@ -26,7 +26,7 @@
 #include "mapObject.h"
 #include "wallMesh.h"
 #include "soundManager.h"
-#include "sceneUI.h"
+#include "skyBox.h"
 
 
 sceneInGame::~sceneInGame()
@@ -50,6 +50,8 @@ void sceneInGame::init(void)
 	initUI();
 
 	MN_SND->find("inGameB")->play(0.5f);
+	_skyBox = createSkyBox();
+	_skyBox->setScale(D3DXVECTOR3(10, 10, 10));
 }
 
 void sceneInGame::update(void)
@@ -60,6 +62,9 @@ void sceneInGame::update(void)
 	GET_BULLET_MANAGER()->update();
 
 	MN_EVENT->update();
+
+	_skyBox->update();
+	_skyBox->getIsCull() = false;
 }
 
 void sceneInGame::draw(void)
@@ -70,6 +75,8 @@ void sceneInGame::draw(void)
 	GET_BULLET_MANAGER()->draw();
 
 	MN_EVENT->draw();
+
+	_skyBox->draw();
 }
 
 void sceneInGame::drawUI(void)
@@ -115,7 +122,7 @@ void sceneInGame::initSystem(void)
 	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
 	MN_BULLET->setBindPlayer(pCharacter);
 	pCharacter->getOriginMesh()->init();
-	pCharacter->getOriginMesh()->setDebugEnable(true, EDebugDrawType::SPHERE);
+	//pCharacter->getOriginMesh()->setDebugEnable(true, EDebugDrawType::SPHERE);
 
 	pCharacter->getNextBit() =
 		ATYPE_SURVIVOR |
@@ -292,7 +299,7 @@ void sceneInGame::initSound(void)
 
 	//background
 	//MN_SND->addSound("clear", "resource/sound/background/clear.wav", true, true);
-	//MN_SND->addSound("deathB", "resource/sound/background/deathS.wav", true, true);
+	MN_SND->addSound("deathB", "resource/sound/background/deathS.wav", true, true);
 	MN_SND->addSound("inGameB", "resource/sound/background/inGameB.wav", true, true);//
 	//MN_SND->addSound("tankB", "resource/sound/background/tank.wav", true, false);
 	//MN_SND->addSound("waveStart", "resource/sound/background/waveStart.wav", true, false);
@@ -341,4 +348,16 @@ void sceneInGame::initSound(void)
 	MN_SND->addSound("rage_run_f", "resource/sound/zombie/rage_run_f.wav", false, false);//
 	MN_SND->addSound("rage_run_m", "resource/sound/zombie/rage_run_m.wav", false, false);//
 
+}
+
+skyBox * sceneInGame::createSkyBox(void)
+{
+	skyBox::mParam stParameters = {
+		"resource/effect/skySphere.fx",
+		"resource/texture/skybox/sky2.png"
+	};
+
+	auto pSkybox = new skyBox(stParameters);
+
+	return pSkybox;
 }

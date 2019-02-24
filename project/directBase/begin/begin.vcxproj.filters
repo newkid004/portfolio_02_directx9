@@ -634,6 +634,9 @@
     <Filter Include="main\classes\scene\03_menu">
       <UniqueIdentifier>{9e2170cb-0023-4952-9919-9c7034f660df}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\04_dead">
+      <UniqueIdentifier>{6e8b742a-c0dc-4e65-9052-6c4bd4e66292}</UniqueIdentifier>
+    </Filter>
     <Filter Include="main\classes\scene\04_ending">
       <UniqueIdentifier>{8ef38299-5966-42f8-bece-cacdf6620014}</UniqueIdentifier>
     </Filter>
@@ -1120,6 +1123,9 @@
     <ClInclude Include="menuScene.h">
       <Filter>main\classes\scene\03_menu</Filter>
     </ClInclude>
+    <ClInclude Include="deadScene.h">
+      <Filter>main\classes\scene\04_dead</Filter>
+    </ClInclude>
     <ClInclude Include="sceneEnding.h">
       <Filter>main\classes\scene\04_ending</Filter>
     </ClInclude>
@@ -1533,6 +1539,9 @@
     </ClCompile>
     <ClCompile Include="menuScene.cpp">
       <Filter>main\classes\scene\03_menu</Filter>
+    </ClCompile>
+    <ClCompile Include="deadScene.cpp">
+      <Filter>main\classes\scene\04_dead</Filter>
     </ClCompile>
     <ClCompile Include="sceneEnding.cpp">
       <Filter>main\classes\scene\04_ending</Filter>
