@@ -98,6 +98,9 @@ void enemyController::update2bit(void)
 	// 피격 상태(총)
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT))
 	{
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
+
+
 		if (_soundT.effectSoundStart < MN_TIME->getRunningTime())
 		{
 			_soundT.effectSoundStart = MN_TIME->getRunningTime() + _soundT.effectSoundDelay;
@@ -203,6 +206,7 @@ void enemyController::update2bit(void)
 				//앞에서
 				changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONTWARD);
 			}
+			gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
 		}
 		_delay = VALUE::findSomthingDistance;
 		return;
