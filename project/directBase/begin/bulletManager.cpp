@@ -16,7 +16,6 @@
 
 using namespace std;
 
-
 bulletManager::bulletManager(void)
 {
 	_oPartList.insert(make_pair("ValveBiped_Bip01_Head1", inGame_digit::PART::HEAD));
@@ -167,22 +166,24 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 	}
 
 	// ENEMY
+	
 	std::vector<enemyBase *>::iterator enemyIter;
 	auto & vEnemyList = SGT_GAME->getSet().field->getList().vEnemy;
 	for (enemyIter = vEnemyList.begin(); enemyIter != vEnemyList.end();)
 	{
 		if (!gDigit::chk((*enemyIter)->getInfoCharacter().status, inGame_digit::CHAR::DEAD))
 		{
-			auto & enemy = (*enemyIter)->getOriginMesh();
+			auto & enemy = (*enemyIter);
 			auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
 			auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
 			auto mSphere = enemy->getBoundingSphere();
-
+			
 			mSphere.center += enemy->getBoundingSphereOffset();
-			mSphere.radius *= enemy->getScale().x;
-
+			mSphere.radius *= enemy->getOriginMesh()->getScale().x;
+			
 			D3DXVECTOR3 intersect;
 
+				
 			if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 				bullet->getSpeed(), mSphere))
 			{
@@ -190,20 +191,20 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 				{
 					auto sphere = rValue.second.sphere;
 					sphere.center = rValue.second.drawPosition;
-					sphere.radius *= enemy->getScale().x * 40;
-
+					sphere.radius *= enemy->getOriginMesh()->getScale().x * 40;
+				
 					if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 						bullet->getSpeed(), sphere))
 					{
-						printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
-
+						printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), (int)(*enemyIter));
+						//printf("캐릭 %d 충돌!!\n", (int)(*enemyIter));
+						
 						// 충돌 부위 파트
 						int hitPart = _oPartList.find(rValue.first)->second;
-
+				
 						bullet->setIntersect(intersect);
-
+						
 						MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter, hitPart));
-
 						return true;
 					}
 				}

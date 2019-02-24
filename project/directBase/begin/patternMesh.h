@@ -37,6 +37,7 @@ public:
 	struct STBoneInfo
 	{
 		D3DXVECTOR3 position;
+		D3DXMATRIXA16 matrix;
 		D3DXMATRIXA16 combineMatrix;
 	};
 
@@ -121,6 +122,7 @@ public:
 	LPD3DXEFFECT getEffect(void) { return _effect; }
 	D3DXMATRIXA16 &getHandMatrix(int index) { return _handMatrix[index]; }
 	D3DXMATRIXA16 &getNeckMatrix(void) { return _neckMatrix; }
+	BONEINFOLIST &getBoneInfoList(void) { return _mBoneInfoList; }
 public:
 	patternMesh(const mParam & param, ECharacterType characterType = ECharacterType::NONE);
 	virtual ~patternMesh();

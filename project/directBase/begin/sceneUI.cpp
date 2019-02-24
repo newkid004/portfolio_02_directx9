@@ -19,6 +19,8 @@ sceneUI::sceneUI()
 	_hpBar = new spriteBase("resource/texture/UI/hp_full.png");
 	_hpFont = new spriteBase("resource/texture/UI/hp.png");
 	_profile = new spriteBase("resource/texture/UI/survivor.tga");
+
+	initUI();
 }
 
 sceneUI::~sceneUI()

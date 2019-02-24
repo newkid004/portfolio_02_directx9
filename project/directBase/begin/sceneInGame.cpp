@@ -25,7 +25,6 @@
 #include "mapObject.h"
 #include "wallMesh.h"
 #include "soundManager.h"
-#include "sceneUI.h"
 
 
 sceneInGame::~sceneInGame()

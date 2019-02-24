@@ -2,12 +2,13 @@
 #include "kGlobalDefine.h"
 #include "renderObject.h"
 #include "AnimationDef.h"
+#include "patternMesh.h"
 
 //
 #include "weaponBase.h"
 //
 
-class patternMesh;
+//class patternMesh;
 
 class patternMeshDup : public renderObject
 {
@@ -16,8 +17,9 @@ protected:
 	ACInfo _controlInfo;
 	D3DXMATRIXA16 _finalHandMatrix[2];
 	D3DXMATRIXA16 _finalNeckMatrix;
-
+	patternMesh::BONEINFOLIST _mBoneInfoList;
 	weaponBase* _weapon;
+	LPD3DXMESH result;
 
 public:
 	virtual void update(void) override;
@@ -29,6 +31,7 @@ protected:
 
 private:
 	void calcurateHandMatrix(void);
+	void calcurateBoundSphereMatrix(void);
 
 public:
 	int &getNextBit() { return _controlInfo.NextMotionBit; }
