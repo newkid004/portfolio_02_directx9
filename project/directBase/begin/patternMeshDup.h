@@ -16,9 +16,7 @@ protected:
 	ACInfo _controlInfo;
 	D3DXMATRIXA16 _finalHandMatrix[2];
 	D3DXMATRIXA16 _finalNeckMatrix;
-	patternMesh::BONEINFOLIST _mBoneInfoList;
 	weaponBase* _weapon;
-	LPD3DXMESH result;
 
 public:
 	virtual void update(void) override;

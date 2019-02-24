@@ -1,4 +1,5 @@
 #include "patternMeshDup.h"
+#include "patternMesh.h"
 #include "managerList.h"
 
 patternMeshDup::patternMeshDup(patternMesh * duplicateTarget)
@@ -10,7 +11,6 @@ patternMeshDup::patternMeshDup(patternMesh * duplicateTarget)
 	_bBox = _bindPatternMesh->getBoundingBox();
 	_bSphere = _bindPatternMesh->getBoundingSphere();
 	_mbSphereSet = _bindPatternMesh->getBoundingSphereSetList();
-	_mBoneInfoList = _bindPatternMesh->getBoneInfoList();
 }
 
 patternMeshDup::~patternMeshDup(void)
@@ -67,6 +67,7 @@ void patternMeshDup::calcurateHandMatrix(void)
 
 void patternMeshDup::calcurateBoundSphereMatrix(void)
 {
+	patternMesh::BONEINFOLIST _mBoneInfoList;
 	_mBoneInfoList = _bindPatternMesh->getBoneInfoList();
 	_bSphere = _bindPatternMesh->getBoundingSphere();
 	_offset = _bindPatternMesh->getBoundingSphereOffset();
