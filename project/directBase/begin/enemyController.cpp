@@ -183,6 +183,7 @@ void enemyController::update2bit(void)
 			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
 			{
 				gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
+				return;
 			}
 		}
 		else
