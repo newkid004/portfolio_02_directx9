@@ -5,6 +5,11 @@
 #include "inGame_value.h"
 
 #include "weaponManager.h"
+#include "soundManager.h"
+#include "gFunc.h"
+#include "managerList.h"
+#include "camera.h"
+#include "sceneBase.h"
 
 weaponShotgun::weaponShotgun(staticMesh::mParam param , characterBase* linkPatternDup, int damage)
 	:weaponBase::weaponBase(param, linkPatternDup)
@@ -41,8 +46,15 @@ void weaponShotgun::firePre(void)
 void weaponShotgun::fireDo(void)
 {
 	weaponBase::fireDo();
-	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
-		inGame_value::bullet::speed, this);
+	/*
+	오류나서 주석쳤습니다 <박재홍>
+	*/
+	//GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
+	//	inGame_value::bullet::speed, this,bulletBase::TYPE::VISIBLE);
+	//auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+	//GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,
+	//	inGame_value::bullet::speed, this);
+	MN_SND->find("shotgunShoot")->play(-1.0f,gFunc::rndFloat( 0.8f, 1.0f));
 }
 
 void weaponShotgun::firePost(void)
@@ -54,7 +66,12 @@ void weaponShotgun::firePost(void)
 void weaponShotgun::reloadBullet()
 {
 	++_infoWeapon.current;
-	--_infoWeapon.maximum;
+	--_infoWeapon.maximum; 
+	MN_SND->find("sLoadShell")->play(-1.0f);
+	if (_infoWeapon.current == _infoWeapon.reload)
+	{
+		MN_SND->find("sPump")->play();
+	}
 }
 
 void weaponShotgun::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])

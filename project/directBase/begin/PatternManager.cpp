@@ -844,7 +844,7 @@ void PatternManager::initMaleZombie(void)
 		ATYPE_ZOMBIE_MALE |
 		MALE_RUN |
 		MALE_RUN_NONE,
-		arr, 1, 0.8f, true);
+		arr, 1, 1.2f, true);
 
 	// --, 밀쳐진, 뒤에서
 	arr[0] = 42;
@@ -1186,7 +1186,7 @@ void PatternManager::initFemaleZombie(void)
 		ATYPE_ZOMBIE_FEMALE |
 		FEMALE_RUN |
 		FEMALE_RUN_NONE,
-		arr, 1, 0.8f, true);
+		arr, 1, 1.5f, true);
 
 	// SHOVED
 	// --, 밀린 동작, 뒤에서

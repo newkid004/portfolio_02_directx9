@@ -53,6 +53,7 @@ public :
 	static D3DXVECTOR3				Vec2Dir(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { D3DXVECTOR3 result; D3DXVec3Normalize(&result, &(v2 - v1)); return result; }
 	static float					Vec3Distance(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVec3Length(&(v1 - v2)); }
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
+	static float					getSoundVolumeToPlayer(const D3DXVECTOR3 & position);
 
 	// ³­¼ö
 	static int						rndInt(int min, int max);

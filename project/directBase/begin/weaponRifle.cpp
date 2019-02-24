@@ -47,11 +47,14 @@ void weaponRifle::firePre(void)
 void weaponRifle::fireDo(void)
 {
 	weaponBase::fireDo();
+	/*
+	오류나서 주석쳤습니다 <박재홍>
+	*/
 	//GET_BULLET_MANAGER()->addBullet(_handPosition,_targetDirection,
+	//	inGame_value::bullet::speed, this,bulletBase::TYPE::VISIBLE);
+	//auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+	//GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,
 	//	inGame_value::bullet::speed, this);
-	auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
-	GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,
-		inGame_value::bullet::speed, this);
 	MN_SND->find("rifleShoot")->play(-1.0f, gFunc::rndFloat(0.5f,1.0f));
 }
 
@@ -74,6 +77,7 @@ void weaponRifle::reloadBullet()
 		_infoWeapon.current += _infoWeapon.maximum;
 		_infoWeapon.maximum = 0;
 	}
+	MN_SND->find("rClipIn")->play();
 }
 
 void weaponRifle::updateHandMatrix(D3DXMATRIXA16 combineMatrix[])

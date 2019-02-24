@@ -35,15 +35,17 @@ enemyBase * enemyFactory::createEnemy(int type)
 		case 1: result = new enemyBase(MN_SRC->getPatternMesh("enemy_female_0"));	break;
 		}
 	}
-
-	auto & vSpawnPos = SGT_GAME->getSet().field->getList().vSpawnPos;
-	auto & sp = vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)];
-	result->setPosition(sp->getPosition() +
-		D3DXVECTOR3(
-			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
-			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
-			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()))
-	);
+	/*
+	오류떠서 주석쳣엉 <박재홍>
+	*/
+	//auto & vSpawnPos = SGT_GAME->getSet().field->getList().vSpawnPos;
+	//auto & sp = vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)];
+	//result->setPosition(sp->getPosition() +
+	//	D3DXVECTOR3(
+	//		gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
+	//		gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
+	//		gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()))
+	//);
 	result->getInfoMove().maximumSpeed = 0.1f;
 
 

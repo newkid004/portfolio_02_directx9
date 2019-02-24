@@ -16,7 +16,7 @@ using DIGIT = inGame_digit;
 weaponNormal::weaponNormal(characterBase * linkPatternDup, int damage)
 	:weaponBase::weaponBase(linkPatternDup)
 {
-	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::none);
+	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::zombie);
 	_infoWeapon.damage = damage;
 
 	D3DXMatrixIdentity(&_baseMatrix[0]);
@@ -49,8 +49,7 @@ void weaponNormal::normalPre(void)
 			{
 				D3DXVECTOR3 stNeckPosition = _bindPMesh->getPosition();
 				stNeckPosition.y += 9.0f;
-				_bindPMesh->getWeapon()->getInfoWeapon().type = weapon_set::type::zombie;
-				MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(), 
+				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 
 					inGame_value::bullet::speed, this);
 			}
 		}
