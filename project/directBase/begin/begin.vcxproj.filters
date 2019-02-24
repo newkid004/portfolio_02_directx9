@@ -629,7 +629,7 @@
       <UniqueIdentifier>{d079666c-7f10-43a9-8ca4-33253fa8debf}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\classes\event\04_enemySpawner">
-      <UniqueIdentifier>{57c585e8-9afb-4f92-8e82-3330e3880a51}</UniqueIdentifier>
+      <UniqueIdentifier>{5310167d-4db3-418b-81b5-15bfb5e2bf12}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1105,7 +1105,9 @@
     <ClInclude Include="maptool_brush_spawner.h">
       <Filter>main\classes\scene\01_mapTool\classes\brush\spawner</Filter>
     </ClInclude>
-    <ClInclude Include="eEnemySpawner.h" />
+    <ClInclude Include="eEnemySpawner.h">
+      <Filter>main\classes\event\04_enemySpawner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1508,7 +1510,9 @@
     <ClCompile Include="bulletManager.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="eEnemySpawner.cpp" />
+    <ClCompile Include="eEnemySpawner.cpp">
+      <Filter>main\classes\event\04_enemySpawner</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

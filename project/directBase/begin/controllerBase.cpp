@@ -122,6 +122,9 @@ void controllerBase::updateFootPrint(void)
 			_destPos = inGame_node::getData(playerNode)->getPosition();
 		else
 			_destPos = inGame_node::getData(pathNodeList.front()->getMember().nextNode)->getPosition();
+
+		_destPos.x += gFunc::rndFloat(-3.0f, 3.0f);
+		_destPos.z += gFunc::rndFloat(-3.0f, 3.0f);
 	}
 }
 

@@ -11,6 +11,7 @@
 #include "staticMesh.h"
 #include "mapObject.h"
 #include "nodeMesh.h"
+#include "spawner.h"
 #include "triggerMesh.h"
 
 #include "aStar_grape_bind.h"
@@ -59,7 +60,7 @@ void maptool_io::buildObject()
 		auto & vObj = vObjList[i];
 
 		if (vData->_baseType & IO_DATA::baseType::SPAWNER)
-			IO_DATA::apply((IO_DATA::OBJ::SPAWNER*)vData, (nodeMesh*)vObj);
+			IO_DATA::apply((IO_DATA::OBJ::SPAWNER*)vData, (spawner*)vObj);
 
 		else if (vData->_baseType & IO_DATA::baseType::NODE)
 			continue;	// grape에서 따로 적용
@@ -171,7 +172,7 @@ void maptool_io::spreadObject(void)
 		{
 			IO_DATA::OBJ::SPAWNER* convert = new IO_DATA::OBJ::SPAWNER();
 			IO_DATA::parse(convert, js);
-			IO_DATA::create((nodeMesh**)&additionObject, convert);
+			IO_DATA::create((spawner**)&additionObject, convert);
 
 			additionData = convert;
 		}
