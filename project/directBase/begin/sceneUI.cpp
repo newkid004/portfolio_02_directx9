@@ -1,6 +1,7 @@
 #include "sceneUI.h"
 #include "managerList.h"
-
+#include "player.h"
+#include "weaponBase.h"
 
 sceneUI::sceneUI()
 {
