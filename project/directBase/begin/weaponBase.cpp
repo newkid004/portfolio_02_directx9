@@ -150,7 +150,7 @@ void weaponBase::reloadPre(void)
 			if ((_infoWeapon.current >= _infoWeapon.reload) || _infoWeapon.maximum == 0)
 			{
 				CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
-				if (_infoWeapon.type = weapon_set::type::rifle)
+				if (_infoWeapon.type == weapon_set::type::rifle)
 				{
 					MN_SND->find("rReady")->play();
 				}
