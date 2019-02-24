@@ -6,6 +6,8 @@ class spriteBase;
 
 class menuScene : public sceneBase
 {
+private:
+
 	struct bloodSpriteInfo
 	{
 		int type;

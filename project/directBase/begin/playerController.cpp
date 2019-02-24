@@ -21,8 +21,11 @@ playerController::~playerController()
 
 void playerController::update(void)
 {
-	updatePlace();
-	updateControl();
+	if (!gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
+	{
+		updatePlace();
+		updateControl();
+	}
 	updateAnimation();
 }
 
@@ -49,7 +52,7 @@ void playerController::updateControl(void)
 void playerController::updateAnimation(void)
 {
 	int status = _bindCharacter->getInfoMove().status;
-	if (gDigit::chk(status, DIGIT::CHAR::DEAD))
+	if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
 	{
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_TRIP);
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, ATRIP_BACKWARD);

@@ -14,6 +14,7 @@
 #include "wallCollision.h"
 #include "weaponTest.h"
 #include "menuScene.h"
+#include "deadScene.h"
 
 void mainGame::init(void)
 {
@@ -26,6 +27,7 @@ void mainGame::init(void)
 	MN_SCENE->add("menuScene", new menuScene());
 	MN_SCENE->add("sceneInGame", new sceneInGame());
 	MN_SCENE->add("sceneMapTool", new sceneMapTool());
+	MN_SCENE->add("deadScene", new deadScene());
 
 	/*/ // test complete
 	MN_SCENE->add("scene1", new sceneTest1);			// json
@@ -44,7 +46,7 @@ void mainGame::init(void)
 
 	//*/
 
-	MN_SCENE->change("menuScene");
+	MN_SCENE->change("deadScene");
 }
 
 void mainGame::update(void)

@@ -186,6 +186,7 @@
     <ClInclude Include="controllerBase.h" />
     <ClInclude Include="eEnemySpawner.h" />
     <ClInclude Include="eHitBullet.h" />
+    <ClInclude Include="deadScene.h" />
     <ClInclude Include="enemyBase.h" />
     <ClInclude Include="enemyController.h" />
     <ClInclude Include="enemyFactory.h" />
@@ -343,6 +344,7 @@
     <ClCompile Include="controllerBase.cpp" />
     <ClCompile Include="eEnemySpawner.cpp" />
     <ClCompile Include="eHitBullet.cpp" />
+    <ClCompile Include="deadScene.cpp" />
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="enemyController.cpp" />
     <ClCompile Include="enemyFactory.cpp" />

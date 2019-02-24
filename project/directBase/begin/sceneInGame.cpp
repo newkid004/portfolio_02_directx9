@@ -264,7 +264,7 @@ void sceneInGame::initSound(void)
 
 	//background
 	//MN_SND->addSound("clear", "resource/sound/background/clear.wav", true, true);
-	//MN_SND->addSound("deathB", "resource/sound/background/deathS.wav", true, true);
+	MN_SND->addSound("deathB", "resource/sound/background/deathS.wav", true, true);
 	MN_SND->addSound("inGameB", "resource/sound/background/inGameB.wav", true, true);//
 	//MN_SND->addSound("tankB", "resource/sound/background/tank.wav", true, false);
 	//MN_SND->addSound("waveStart", "resource/sound/background/waveStart.wav", true, false);
