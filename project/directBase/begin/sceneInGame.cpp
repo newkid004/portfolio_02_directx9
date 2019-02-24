@@ -49,8 +49,6 @@ void sceneInGame::init(void)
 	initUI();
 
 	MN_SND->find("inGameB")->play();
-	_skyBox = createSkyBox();
-	_skyBox->setScale(D3DXVECTOR3(10, 10, 10));
 }
 
 void sceneInGame::update(void)
