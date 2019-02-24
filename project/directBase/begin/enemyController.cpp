@@ -98,6 +98,9 @@ void enemyController::update2bit(void)
 	// 피격 상태(총)
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT))
 	{
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
+
+
 		if (_soundT.effectSoundStart < MN_TIME->getRunningTime())
 		{
 			_soundT.effectSoundStart = MN_TIME->getRunningTime() + _soundT.effectSoundDelay;
@@ -203,6 +206,7 @@ void enemyController::update2bit(void)
 				//앞에서
 				changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONTWARD);
 			}
+			gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
 		}
 		_delay = VALUE::findSomthingDistance;
 		return;
@@ -217,7 +221,7 @@ void enemyController::update2bit(void)
 
 
 	// 기본 상태
-	else if (distance > (isWave ? VALUE::aletyDistance : VALUE::aletyDistance * 100))
+	else if (distance > (isWave ? VALUE::aletyDistance * 100 : VALUE::aletyDistance ))
 	{
 		
 		if (_isFemale)
@@ -268,8 +272,8 @@ void enemyController::update2bit(void)
 		_bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
 	}
 	// 경계 상태
-	else if (	distance <= (isWave ? VALUE::aletyDistance : VALUE::aletyDistance * 10) &&
-				distance >= (isWave ? VALUE::findSomthingDistance : VALUE::findSomthingDistance * 10))
+	else if (	distance <= (isWave ? VALUE::aletyDistance * 100 : VALUE::aletyDistance ) &&
+				distance >= (isWave ? VALUE::findSomthingDistance * 100 : VALUE::findSomthingDistance ))
 	{
 		// 둘러보고
 		if (_isFemale)
@@ -319,7 +323,7 @@ void enemyController::update2bit(void)
 		_delay = VALUE::delayAlert;
 	}
 	// 달리기
-	else if (distance < (isWave ? VALUE::findSomthingDistance : 10 * VALUE::findSomthingDistance))
+	else if (distance < (isWave ? VALUE::findSomthingDistance * 100 : VALUE::findSomthingDistance))
 	{
 		if(_soundT.footSoundStart < MN_TIME->getRunningTime())
 		{ 
