@@ -16,6 +16,8 @@ private:
 	spriteBase* _hpFont;
 	spriteBase* _profile;
 
+
+	LPDIRECT3DTEXTURE9 number[2];
 public:
 	void update(void);
 	void draw(void);

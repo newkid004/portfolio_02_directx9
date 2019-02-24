@@ -2,6 +2,7 @@
 #include "kGlobalDefine.h"
 #include "sceneBase.h"
 #include "spriteBase.h"
+#include "sceneUI.h"
 
 class sceneInGame : public sceneBase
 {
