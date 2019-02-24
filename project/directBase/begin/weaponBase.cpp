@@ -119,12 +119,11 @@ void weaponBase::fireDo(void)
 
 	GET_CAMERA()->putOffsetPosition();
 	_pickPosition = GET_CAMERA()->getOffsetPosition() + 
-		GET_CAMERA()->getDirectForward() *100.0f;
+		GET_CAMERA()->getDirectForward() *50.0f;
 
 	_targetDirection = _pickPosition - _handPosition;
 	D3DXVec3Normalize(&_targetDirection, &_targetDirection);
 
-	_pickPosition = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	// ----- event ----- //
 	MN_EVENT->add(new eventBase(_bindPMesh, nullptr,
