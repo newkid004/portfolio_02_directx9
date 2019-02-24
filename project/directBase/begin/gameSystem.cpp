@@ -137,6 +137,8 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 	else if (gDigit::chk(inGame_digit::ENEMY::COMMON, enemyType))	gDigit::put(evType, EVENT::KIND::ENEMY::BASE);
 
 	MN_EVENT->add(new eventBase(result, nullptr, evType));
+
+	result->getPosition().y = 0;
 	
 	return result;
 }

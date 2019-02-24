@@ -124,10 +124,11 @@ void sceneInGame::initSystem(void)
 		AMIX_NONE |
 		AIDLE_STANDING;
 
-
 	pCharacter->getWeapon() = MN_WEAPON->createWeapon(weapon_set::type::rifle);
 	pCharacter->getInfoCharacter().maxHp = 100;
 	pCharacter->getInfoCharacter().nowHp = 100;
+
+	pCharacter->setPosition(D3DXVECTOR3(10, 0, -85));
 
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_grid);
@@ -136,6 +137,7 @@ void sceneInGame::initSystem(void)
 
 	// camera
 	_camera = new inGameCamera(pCharacter);
+	_camera->rotateY(180);
 
 	// status
 	auto & sysStatus = SGT_GAME->getStatus();

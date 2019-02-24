@@ -7,6 +7,7 @@
 
 #include "patternMeshDup.h"
 #include "player.h"
+#include "skyBox.h"
 
 sceneEnding::sceneEnding()
 {
@@ -49,7 +50,7 @@ void sceneEnding::update(void)
 		MN_SND->getBGM()->stop();
 		MN_SND->find("inGameB")->play();
 		MN_SND->find("clear")->play();
-
+		SGT_GAME->getSkyBox()->setScale(D3DXVECTOR3(30, 30, 30));
 		_isInit = true;
 	}
 

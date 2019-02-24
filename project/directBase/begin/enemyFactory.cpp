@@ -109,6 +109,7 @@ enemyBase * enemyFactory::recycleEnemy(int type)
 				0.0f,
 				gFunc::rndFloat(-viewSpawner->getPlaneRadius(), viewSpawner->getPlaneRadius()))
 		);
+		recycleable->getPosition().y = 0;
 		recycleable->getInfoCharacter().nowHp = recycleable->getInfoCharacter().maxHp;
 		recycleable->getInfoCharacter().status = 0;
 
