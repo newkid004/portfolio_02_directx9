@@ -157,7 +157,7 @@ void sceneInGame::initField(void)
 		auto e = SGT_GAME->addEnemy();
 		e->setPosition( D3DXVECTOR3(
 			gFunc::rndFloat(-80.0f, 80.0f),
-			gFunc::rndFloat(-80.0f, 80.0f),
+			0.0f,
 			gFunc::rndFloat(-80.0f, 80.0f)));
 	}
 }

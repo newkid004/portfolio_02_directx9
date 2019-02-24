@@ -39,6 +39,13 @@ eShootWeapon::eShootWeapon(void* sour, unsigned long paramType) :
 
 	own->getWeapon()->refHandPosition() = _particle->getPosition();
 
+	D3DXVECTOR3 pickPosition = GET_CAMERA()->getOffsetPosition() +
+		GET_CAMERA()->getDirectForward() *100.0f;
+
+	auto & targetDirection = own->getWeapon()->refTargetDirection();
+	targetDirection = pickPosition - _particle->getPosition();
+	D3DXVec3Normalize(&targetDirection, &targetDirection);
+
 	// ÃÑ¾Ëµµ »ý¼º
 	auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
 	GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,

@@ -117,14 +117,6 @@ void weaponBase::fireDo(void)
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_SHOOT);
 	_bindPMesh->getAControllInfo().trackPositionA = 0.0f;
 
-	GET_CAMERA()->putOffsetPosition();
-	_pickPosition = GET_CAMERA()->getOffsetPosition() + 
-		GET_CAMERA()->getDirectForward() *75.0f;
-
-	_targetDirection = _pickPosition - _handPosition;
-	D3DXVec3Normalize(&_targetDirection, &_targetDirection);
-
-
 	// ----- event ----- //
 	MN_EVENT->add(new eventBase(_bindPMesh, nullptr,
 		EVENT::TYPE::WEAPON |
