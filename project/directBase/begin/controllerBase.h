@@ -19,7 +19,11 @@ public :
 
 protected :
 	virtual void updatePlace(void);
+
+public :
 	virtual void updatePath(void);
+
+protected :
 	virtual void updateFootPrint(void);
 
 private :

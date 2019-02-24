@@ -56,6 +56,9 @@ void enemyController::update(void)
 
 void enemyController::update2bit(void)
 {
+	float distance = getDistance2player();
+	bool isWave = gDigit::chk(SGT_GAME->getStatus().digitActive, sysDigit::wave);
+
 	// 넘어지는 상태(죽음)
 	if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
 	{
@@ -189,35 +192,15 @@ void enemyController::update2bit(void)
 			/*
 			이것으로 움직이는  지를 체크 가능한가?
 			*/
-			D3DXVECTOR3 playerToEnemyDirection = _bindCharacter->getPosition() - SGT_GAME->getSet().player->getPosition();
-			float angle = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x,_bindCharacter->getDirectForward().z),
-				&D3DXVECTOR2(playerToEnemyDirection.x, playerToEnemyDirection.z));
 			if (gDigit::chk(_bindCharacter->getInfoMove().status, DIGIT::MOVE::MOVEING))
 			{
-				if (angle < 0)
-				{
-					//달리는 도중 뒤에서
-					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_BACK_RUN);
-				}
-				else
-				{
-					//달리는 도중 앞에서
-					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONT_RUN);
-				}
+				//달리는 도중 앞에서
+				changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONT_RUN);
 			}
 			else
 			{
-				if (angle < 0)
-				{
-					//뒤에서
-					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_BACKWARD);
-				}
-				else
-				{
-					//앞에서
-					changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONTWARD);
-				}
-
+				//앞에서
+				changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_SHOVED_FRONTWARD);
 			}
 		}
 		_delay = VALUE::findSomthingDistance;
@@ -233,7 +216,7 @@ void enemyController::update2bit(void)
 
 
 	// 기본 상태
-	else if (getDistance2player() > VALUE::aletyDistance)
+	else if (distance > (isWave ? VALUE::aletyDistance : VALUE::aletyDistance * 100))
 	{
 		
 		if (_isFemale)
@@ -284,8 +267,8 @@ void enemyController::update2bit(void)
 		_bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
 	}
 	// 경계 상태
-	else if (getDistance2player() <= VALUE::aletyDistance &&
-		getDistance2player() >= VALUE::findSomthingDistance)
+	else if (	distance <= (isWave ? VALUE::aletyDistance : VALUE::aletyDistance * 10) &&
+				distance >= (isWave ? VALUE::findSomthingDistance : VALUE::findSomthingDistance * 10))
 	{
 		// 둘러보고
 		if (_isFemale)
@@ -335,7 +318,7 @@ void enemyController::update2bit(void)
 		_delay = VALUE::delayAlert;
 	}
 	// 달리기
-	else if (getDistance2player() < VALUE::findSomthingDistance)
+	else if (distance < (isWave ? VALUE::findSomthingDistance : 10 * VALUE::findSomthingDistance))
 	{
 		if(_soundT.footSoundStart < MN_TIME->getRunningTime())
 		{ 

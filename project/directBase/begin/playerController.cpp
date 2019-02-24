@@ -56,6 +56,15 @@ void playerController::updateAnimation(void)
 	{
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_TRIP);
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, ATRIP_BACKWARD);
+		if ((_bindCharacter->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN)) == AMAIN_TRIP)
+		{
+			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
+			{
+				MN_SND->getBGM()->stop();
+				MN_SND->find("deathB")->play();
+				MN_SCENE->change("deadScene");
+			}
+		}
 		return;
 	}
 

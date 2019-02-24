@@ -33,8 +33,10 @@ void menuScene::update(void)
 	{
 		// 메인게임으로 scene 전환
 		ShowCursor(FALSE);
-		MN_SCENE->change("sceneInGame");
 		MN_SND->find("menu_accept")->play();
+		MN_SND->find("gamestartup1")->stop();
+		MN_SND->find("inGameB")->play();
+		MN_SCENE->change("sceneInGame");
 	}
 	else if (MN_KEY->mouseUp() && intersectMouseToRect(mapToolButton.rc))
 	{

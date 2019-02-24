@@ -55,5 +55,9 @@ void eEnemySpawner::update(void)
 			ATYPE_AIRPLANE |
 			AIRPLANE_OPEN |
 			AIRPLANE_OPEN_NONE;
+
+		auto snd = MN_SND->find("CdoorOpen");
+		if (!snd->isPlaySound())
+			snd->play();
 	}
 }

@@ -291,6 +291,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 						int hitPart = _oPartList.find(rValue.first)->second;
 
 						MN_EVENT->add(new eHitCharacterBullet(bullet, *enemyIter, hitPart));
+						gDigit::put((*enemyIter)->getInfoCharacter().status, inGame_digit::CHAR::SHOVED);
 
 						return true;
 					}
