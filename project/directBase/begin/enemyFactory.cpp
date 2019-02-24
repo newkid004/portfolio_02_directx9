@@ -58,7 +58,7 @@ enemyBase * enemyFactory::createEnemy(int type)
 		origin->setupBoneInfo("ValveBiped_Bip01_R_UpperArm", 7, 7, 7);
 
 		origin->init();
-		origin->setDebugEnable(true, EDebugDrawType::SPHERE);
+		//origin->setDebugEnable(true, EDebugDrawType::SPHERE);
 	}
 	auto & vSpawnPos = SGT_GAME->getSet().field->getList().vSpawnPos;
 	auto & sp = vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)];

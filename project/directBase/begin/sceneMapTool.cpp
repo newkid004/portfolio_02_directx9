@@ -47,7 +47,6 @@ void sceneMapTool::init(void)
 
 	//_mapObject = new mapObject();
 	//_mapObject->init();
-
 	_window	= new maptool_window();
 	_field	= new maptool_field(_mapObject);
 	_render	= new maptool_render();
@@ -79,7 +78,7 @@ void sceneMapTool::update(void)
 
 	_window->update();
 	_field->update();
-	//_skybox->update();
+	_skybox->update();
 }
 
 void sceneMapTool::draw(void)
@@ -89,8 +88,7 @@ void sceneMapTool::draw(void)
 	drawSelection();
 
 	_field->draw();
-
-	//_skybox->draw();
+	_skybox->draw();
 }
 
 void sceneMapTool::drawUI(void)
