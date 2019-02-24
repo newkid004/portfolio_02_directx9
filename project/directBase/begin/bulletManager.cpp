@@ -155,7 +155,8 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 
 				// 교차점
 				D3DXVECTOR3 intersect = ray.origin + info.distance * ray.direction;
-
+				MN_SND->find("shootWall")->play(gFunc::getSoundVolumeToPlayer(mapObj[i]->getPosition()),
+					gFunc::rndFloat(0.8f, 1.0f));
 				printf("벽 충돌!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
 				
 				return true;
@@ -235,6 +236,9 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 					
 			if (cosAngle < 0.0f) return false;
 
+			if(!MN_SND->find("hitbyEnemey")->isPlaySound())	MN_SND->find("hitbyEnemey")->play(-1.0f, gFunc::rndFloat(0.7f, 1.0f));
+			MN_SND->find("hit_punch")->play(-1.0f, gFunc::rndFloat(0.7f, 1.0f));
+
 			printf("피격!! 피격 대상 : %d     %d\n", 
 			bullet->getWeaponType(),
 			rand() % 100);
@@ -277,6 +281,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 					if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 						bullet->getSpeed(), sphere))
 					{
+						MN_SND->find("hitEnemy")->play(-1.0f, gFunc::rndFloat(0.8f, 1.0f));
 						printf("좀비 근접공격 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
 
 						// 충돌 부위 파트

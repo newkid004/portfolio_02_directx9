@@ -72,7 +72,7 @@ void weaponManager::CreateWeaponInfo(void)
 	zombie.type = weapon_set::type::zombie;
 	zombie.current = 1;
 	zombie.damage = 5;
-	zombie.shotDelay = 0.0f;
+	zombie.shotDelay = 1.0f;
 
 	tank.type = weapon_set::type::tank;
 	tank.current = 1;

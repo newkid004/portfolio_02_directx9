@@ -10,6 +10,7 @@
 #include "managerList.h"
 #include "camera.h"
 #include "sceneBase.h"
+#include "gFunc.h"
 
 using DIGIT = inGame_digit;
 
@@ -43,14 +44,15 @@ void weaponNormal::normalPre(void)
 	case patternMesh::type::male_zombie:
 	case patternMesh::type::feMale_zombie:
 	{
-		if ((currentBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN)) == MALE_ATTACK)
+		if ((currentBit & GET_ANIBITMASK(aniDefine::ANIBIT::MAIN)) == MALE_ATTACK )
 		{
-			if (_bindPMesh->getAControllInfo().persent >= 0.9f)
+			if (_bindPMesh->getAControllInfo().isEnd)
 			{
 				D3DXVECTOR3 stNeckPosition = _bindPMesh->getPosition();
 				stNeckPosition.y += 9.0f;
 				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 
 					inGame_value::bullet::speed, this);
+				MN_SND->find("claw_miss")->play(-1.0f, gFunc::rndFloat(0.8f, 1.0f));
 			}
 		}
 	}

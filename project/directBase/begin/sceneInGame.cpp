@@ -245,12 +245,12 @@ void sceneInGame::initSound(void)
 	MN_SND->addSound("commonF", "resource/sound/footSound/common/concrete3.wav",false,false); //?
 
 	//survivor
-	//MN_SND->addSound("bandaging", "resource/sound/survivor/bandaging_1.wav", false, false);
-	//MN_SND->addSound("survivorDamage", "resource/sound/survivor/damage1.wav", false, false);
-	//MN_SND->addSound("hitbyEnemey", "resource/sound/survivor/hordattack05.wav", false, false);
+	MN_SND->addSound("bandaging", "resource/sound/survivor/bandaging_1.wav", false, false);
+	MN_SND->addSound("survivorDamage", "resource/sound/survivor/damage1.wav", false, false);//새거요망
+	MN_SND->addSound("hitbyEnemey", "resource/sound/survivor/hordattack05.wav", false, false);//
 	//MN_SND->addSound("incomingVoice", "resource/sound/survivor/incoming02.wav", false, false);
-	//MN_SND->addSound("hitEnemy", "resource/sound/survivor/rifle_swing_hit_infected9.wav", false, false);
-	//MN_SND->addSound("hitWall", "resource/sound/survivor/rifle_swing_hit_world.wav", false, false);
+	MN_SND->addSound("hitEnemy", "resource/sound/survivor/rifle_swing_hit_infected9.wav", false, false);//
+	MN_SND->addSound("hitWall", "resource/sound/survivor/rifle_swing_hit_world.wav", false, false);
 	//MN_SND->addSound("survivorShoved", "resource/sound/survivor/shoved01.wav", false, false);
 	MN_SND->addSound("swingWeapon", "resource/sound/survivor/swish_weaponswing_swipe3.wav", false, false);//
 	MN_SND->addSound("takeRifle", "resource/sound/survivor/takeassaultrifle01.wav", false, false);//
@@ -258,31 +258,30 @@ void sceneInGame::initSound(void)
 	MN_SND->addSound("takeShotgun", "resource/sound/survivor/takeshotgun01.wav", false, false);//
 
 	//terrainCollision
-	//MN_SND->addSound("shootWall", "resource/sound/terrain/concrete_impact_bullet1.wav", false, false);
-	//MN_SND->addSound("takeShotgun", "resource/sound/terrain/rock_impact_hard2.wav", false, false);
+	MN_SND->addSound("shootWall", "resource/sound/terrain/concrete_impact_bullet1.wav", false, false);
 
 	//airplane
-	//MN_SND->addSound("buttonAlready", "resource/sound/terrain/alreadyOn.wav", false, false);
-	//MN_SND->addSound("buttonOn", "resource/sound/terrain/buttonOn.wav", false, false);
-	//MN_SND->addSound("CdoorOpen", "resource/sound/terrain/c130_door_open.wav", false, false);
-	//MN_SND->addSound("Cfly", "resource/sound/terrain/c130_flyby.wav", false, false);
-	//MN_SND->addSound("Cidle", "resource/sound/terrain/c130_idle.wav", false, true);
+	//MN_SND->addSound("buttonAlready", "resource/airplane/terrain/alreadyOn.wav", false, false);
+	//MN_SND->addSound("buttonOn", "resource/sound/airplane/buttonOn.wav", false, false);
+	//MN_SND->addSound("CdoorOpen", "resource/sound/airplane/c130_door_open.wav", false, false);
+	//MN_SND->addSound("Cfly", "resource/sound/airplane/c130_flyby.wav", false, false);
+	//MN_SND->addSound("Cidle", "resource/sound/airplane/c130_idle.wav", false, true);
 
 	//zombie
-	MN_SND->addSound("alert_f", "resource/sound/terrain/alert_f.wav", false, false);
-	MN_SND->addSound("alert_m", "resource/sound/terrain/alert_m.wav", false, false);
-	MN_SND->addSound("been_shot_f", "resource/sound/terrain/been_shot_f.wav", false, false);
-	MN_SND->addSound("been_shot_m", "resource/sound/terrain/been_shot_m.wav", false, false);
-	MN_SND->addSound("breathing", "resource/sound/terrain/breathing08.wav", false, false);
-	//MN_SND->addSound("bullet_gib", "resource/sound/terrain/bullet_gib_06.wav", false, false);
-	//MN_SND->addSound("claw_miss", "resource/sound/terrain/claw_miss_1.wav", false, false);
-	//MN_SND->addSound("claw_scrape", "resource/sound/terrain/claw_scrape_3.wav", false, false);
-	MN_SND->addSound("death_f", "resource/sound/terrain/death_f.wav", false, false);
-	MN_SND->addSound("death_m", "resource/sound/terrain/death_m.wav", false, false);
-	MN_SND->addSound("headless", "resource/sound/terrain/headless_1.wav", false, false);
-	MN_SND->addSound("hit_punch", "resource/sound/terrain/hit_punch_05.wav", false, false);
-	MN_SND->addSound("idle_breath", "resource/sound/terrain/idle_breath_02.wav", false, false);
-	MN_SND->addSound("rage_run_f", "resource/sound/terrain/rage_run_f.wav", false, false);
-	MN_SND->addSound("rage_run_m", "resource/sound/terrain/rage_run_m.wav", false, false);
+	MN_SND->addSound("alert_f", "resource/sound/zombie/alert_f.wav", false, false);//
+	MN_SND->addSound("alert_m", "resource/sound/zombie/alert_m.wav", false, false);//
+	MN_SND->addSound("been_shot_f", "resource/sound/zombie/been_shot_f.wav", false, false);//
+	MN_SND->addSound("been_shot_m", "resource/sound/zombie/been_shot_m.wav", false, false);//
+	MN_SND->addSound("breathing", "resource/sound/zombie/breathing08.wav", false, false);// 여자필요
+	MN_SND->addSound("bullet_gib", "resource/sound/zombie/bullet_gib_06.wav", false, false);//
+	MN_SND->addSound("claw_miss", "resource/sound/zombie/claw_miss_1.wav", false, false);//
+	//MN_SND->addSound("claw_scrape", "resource/sound/zombie/claw_scrape_3.wav", false, false);
+	MN_SND->addSound("death_f", "resource/sound/zombie/death_f.wav", false, false);//
+	MN_SND->addSound("death_m", "resource/sound/zombie/death_m.wav", false, false);//
+	MN_SND->addSound("headless", "resource/sound/zombie/headless_1.wav", false, false);//
+	MN_SND->addSound("hit_punch", "resource/sound/zombie/hit_punch_05.wav", false, false);
+	MN_SND->addSound("idle_breath", "resource/sound/zombie/idle_breath_02.wav", false, false);
+	MN_SND->addSound("rage_run_f", "resource/sound/zombie/rage_run_f.wav", false, false);//
+	MN_SND->addSound("rage_run_m", "resource/sound/zombie/rage_run_m.wav", false, false);//
 
 }
