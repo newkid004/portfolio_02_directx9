@@ -57,6 +57,7 @@ void enemyController::update(void)
 void enemyController::update2bit(void)
 {
 	float distance = getDistance2player();
+	bool isWave = gDigit::chk(SGT_GAME->getStatus().digitActive, sysDigit::wave);
 
 	// 넘어지는 상태(죽음)
 	if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
@@ -235,7 +236,7 @@ void enemyController::update2bit(void)
 
 
 	// 기본 상태
-	else if (distance > VALUE::aletyDistance)
+	else if (distance > (isWave ? VALUE::aletyDistance : VALUE::aletyDistance * 100))
 	{
 		
 		if (_isFemale)
@@ -286,8 +287,8 @@ void enemyController::update2bit(void)
 		_bindCharacter->getInfoCharacter().status =  DIGIT::CHAR::IDLE;
 	}
 	// 경계 상태
-	else if (distance <= VALUE::aletyDistance &&
-		distance >= VALUE::findSomthingDistance)
+	else if (	distance <= (isWave ? VALUE::aletyDistance : VALUE::aletyDistance * 10) &&
+				distance >= (isWave ? VALUE::findSomthingDistance : VALUE::findSomthingDistance * 10))
 	{
 		// 둘러보고
 		if (_isFemale)
@@ -337,7 +338,7 @@ void enemyController::update2bit(void)
 		_delay = VALUE::delayAlert;
 	}
 	// 달리기
-	else if (distance < VALUE::findSomthingDistance || gDigit::chk(SGT_GAME->getStatus().digitActive, sysDigit::wave))
+	else if (distance < (isWave ? VALUE::findSomthingDistance : 10 * VALUE::findSomthingDistance))
 	{
 		if(_soundT.footSoundStart < MN_TIME->getRunningTime())
 		{ 

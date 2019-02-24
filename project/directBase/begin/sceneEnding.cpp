@@ -46,8 +46,8 @@ void sceneEnding::update(void)
 
 		SGT_GAME->getSet().player->setVisible(false);
 
-		// MN_SND->getBGM()->stop();
-		// MN_SND->find("clear")->play();
+		MN_SND->getBGM()->stop();
+		MN_SND->find("clear")->play();
 
 		_isInit = true;
 	}
