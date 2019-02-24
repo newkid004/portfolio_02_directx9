@@ -637,6 +637,12 @@
     <Filter Include="main\classes\scene\04_dead">
       <UniqueIdentifier>{6e8b742a-c0dc-4e65-9052-6c4bd4e66292}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\04_ending">
+      <UniqueIdentifier>{8ef38299-5966-42f8-bece-cacdf6620014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\event\05_endingComplet">
+      <UniqueIdentifier>{2122654a-1b7b-4d9e-a3af-dad7d97f7bc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1120,6 +1126,12 @@
     <ClInclude Include="deadScene.h">
       <Filter>main\classes\scene\04_dead</Filter>
     </ClInclude>
+    <ClInclude Include="sceneEnding.h">
+      <Filter>main\classes\scene\04_ending</Filter>
+    </ClInclude>
+    <ClInclude Include="eEndingComplet.h">
+      <Filter>main\classes\event\05_endingComplet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1530,6 +1542,12 @@
     </ClCompile>
     <ClCompile Include="deadScene.cpp">
       <Filter>main\classes\scene\04_dead</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneEnding.cpp">
+      <Filter>main\classes\scene\04_ending</Filter>
+    </ClCompile>
+    <ClCompile Include="eEndingComplet.cpp">
+      <Filter>main\classes\event\05_endingComplet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

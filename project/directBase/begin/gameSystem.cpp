@@ -92,15 +92,16 @@ void gameSystem::initAirPlane(void)
 
 	auto sourceAirPlane = MN_SRC->getPatternMesh("airPlane", &param);
 	sourceAirPlane->rotateZ(180.0f);
+	sourceAirPlane->rotateY(60.0f);
 	sourceAirPlane->setScale(0.004 * 0.7);
 	sourceAirPlane->calMatrixFinal();
 
 	airPlane = new patternMeshDup(sourceAirPlane);
-	airPlane->setPosition(D3DXVECTOR3(0, 0, 0));
+	airPlane->setPosition(D3DXVECTOR3(-80, 0, 80));
 	airPlane->getNextBit() =
 		ATYPE_AIRPLANE |
 		AIRPLANE_IDLE |
-		AIRPLANE_IDLE_ON;
+		AIRPLANE_IDLE_OFF;
 }
 
 enemyBase * gameSystem::addEnemy(int enemyType)

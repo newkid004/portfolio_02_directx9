@@ -16,7 +16,6 @@
 #include "gameSystem.h"
 
 // ----- def ----- //
-#define MN_WIN		GET_WINDOW_MANAGER()
 #define MN_DEV		GET_DEVICE_MANAGER()->getDevice()
 #define MN_KEY		GET_INPUT_MANAGER()
 #define MN_TIME		GET_TIME_MANAGER()

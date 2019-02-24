@@ -54,6 +54,10 @@ public :
 	static float					Vec3Distance(const D3DXVECTOR3 & v1, const D3DXVECTOR3 & v2) { return D3DXVec3Length(&(v1 - v2)); }
 	static DWORD					float2DWORD(float input) { float* f = &input; return *((DWORD*)f); };
 	static float					getSoundVolumeToPlayer(const D3DXVECTOR3 & position);
+	
+	// 보간
+	template<typename T>
+	inline static T					lerp(T & lerp1, T & lerp2, float percent) { return (1.0f - percent) * lerp1 + percent * lerp2; }
 
 	// 난수
 	static int						rndInt(int min, int max);

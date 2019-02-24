@@ -65,8 +65,8 @@ void sceneUI::draw(void)
 
 	//주무기의 현재/전체 탄환수
 	D3DXVECTOR2 &winCen = D3DXVECTOR2(MN_WIN->getWindowSize().cx / 2.0f, MN_WIN->getWindowSize().cy / 2.0f);
-	D3DXVECTOR2 position = D3DXVECTOR2(winCen.x+510.0f, winCen.y-50.0f);
-	drawNumber(_number[0], SGT_GAME->getSet().player->getWeapon()->getInfoWeapon().current, position,D3DXVECTOR2(1.2f,1.2f));
+	D3DXVECTOR2 position = D3DXVECTOR2(winCen.x + 510.0f, winCen.y - 50.0f);
+	drawNumber(_number[0], SGT_GAME->getSet().player->getWeapon()->getInfoWeapon().current, position, D3DXVECTOR2(1.2f, 1.2f));
 	position.x += 60.0f;
 	position.y += 10.0f;
 	drawNumber(_number[1], SGT_GAME->getSet().player->getWeapon()->getInfoWeapon().maximum, position, D3DXVECTOR2(0.9f, 0.9f));
@@ -80,7 +80,7 @@ void sceneUI::draw(void)
 
 	//체력 숫자
 	if (persent < 0.3f)		hp = _number[4];
-	else if (persent <0.6f)	hp = _number[3];
+	else if (persent < 0.6f)	hp = _number[3];
 	else					hp = _number[2];
 	position = D3DXVECTOR2(winCen.x + 420.0f, winCen.y + 280.0f);
 	drawNumber(hp, cHp,position,D3DXVECTOR2(1.3f,1.3f));
@@ -92,9 +92,9 @@ void sceneUI::draw(void)
 	D3DXVECTOR2 scale = D3DXVECTOR2(1.75f, 2.1f);
 	size.x *= scale.x;
 	size.y *= scale.y;
-	if (persent < 0.3f)		hp	=	_hpBar[2];
-	else if(persent <0.6f)	hp	=	_hpBar[1];
-	else					hp	=	_hpBar[0];
+	if (persent < 0.3f)		hp = _hpBar[2];
+	else if (persent < 0.6f)	hp = _hpBar[1];
+	else					hp = _hpBar[0];
 	gFunc::drawSprite(hp,
 		D3DXVECTOR2(winCen.x + 380, winCen.y + 326),
 		size,
@@ -128,50 +128,50 @@ void sceneUI::initResource(void)
 
 void sceneUI::initUI(void)
 {
-	D3DXVECTOR2 winCen = D3DXVECTOR2(MN_WIN->getWindowSize().cx/2.0f, MN_WIN->getWindowSize().cy/2.0f);
+	D3DXVECTOR2 winCen = D3DXVECTOR2(MN_WIN->getWindowSize().cx / 2.0f, MN_WIN->getWindowSize().cy / 2.0f);
 
 	// INVENTORY
 	_m16[0]->setScale(1.2f);
 	_m16[1]->setScale(1.2f);
-	_m16[0]->setPosition(D3DXVECTOR3(winCen.x  + 560,
-		winCen.y  - 65, 0.0f));
-	_m16[1]->setPosition(D3DXVECTOR3(winCen.x  + 560,
-		winCen.y  - 65, 0.0f));
+	_m16[0]->setPosition(D3DXVECTOR3(winCen.x + 560,
+		winCen.y - 65, 0.0f));
+	_m16[1]->setPosition(D3DXVECTOR3(winCen.x + 560,
+		winCen.y - 65, 0.0f));
 
 	_shotGun[0]->setScale(1.2f);
 	_shotGun[1]->setScale(1.2f);
-	_shotGun[0]->setPosition(D3DXVECTOR3(winCen.x  + 560,
-		winCen.y  - 65, 0.0f));
-	_shotGun[1]->setPosition(D3DXVECTOR3(winCen.x  + 560,
-		winCen.y  - 65, 0.0f));
+	_shotGun[0]->setPosition(D3DXVECTOR3(winCen.x + 560,
+		winCen.y - 65, 0.0f));
+	_shotGun[1]->setPosition(D3DXVECTOR3(winCen.x + 560,
+		winCen.y - 65, 0.0f));
 
-	_healKit[0]->setPosition(D3DXVECTOR3(winCen.x  + 605,
-		winCen.y  + 50, 0.0f));
+	_healKit[0]->setPosition(D3DXVECTOR3(winCen.x + 605,
+		winCen.y + 50, 0.0f));
 	_healKit[0]->setScale(1.3f);
-	_healKit[1]->setPosition(D3DXVECTOR3(winCen.x  + 605,
-		winCen.y  + 50, 0.0f));
+	_healKit[1]->setPosition(D3DXVECTOR3(winCen.x + 605,
+		winCen.y + 50, 0.0f));
 	_healKit[1]->setScale(1.3f);
 
 	// INVENSLOT
-	_itemSlot[0]->setPosition(D3DXVECTOR3(winCen.x  + 560,
-		winCen.y  - 35, 0.0f));
+	_itemSlot[0]->setPosition(D3DXVECTOR3(winCen.x + 560,
+		winCen.y - 35, 0.0f));
 	_itemSlot[0]->setScale(1.3f);
 
-	_itemSlot[1]->setPosition(D3DXVECTOR3(winCen.x  + 605,
-		winCen.y  + 50, 0.0f));
+	_itemSlot[1]->setPosition(D3DXVECTOR3(winCen.x + 605,
+		winCen.y + 50, 0.0f));
 	_itemSlot[1]->setScale(1.3f);
 
 	// HP BAR
-	_hpBarBg->setPosition(D3DXVECTOR3(winCen.x  + 500,
-		winCen.y  + 336, 0.0f));
+	_hpBarBg->setPosition(D3DXVECTOR3(winCen.x + 500,
+		winCen.y + 336, 0.0f));
 	_hpBarBg->setScale(1.7f);
 
-	_hpFont->setPosition(D3DXVECTOR3(winCen.x  + 400,
-		winCen.y  + 295, 0.0f));
+	_hpFont->setPosition(D3DXVECTOR3(winCen.x + 400,
+		winCen.y + 295, 0.0f));
 	_hpFont->setScale(2.2f);
 
-	_profile->setPosition(D3DXVECTOR3(winCen.x  + 335,
-		winCen.y  + 310, 0.0f));
+	_profile->setPosition(D3DXVECTOR3(winCen.x + 335,
+		winCen.y + 310, 0.0f));
 	_profile->setScale(1.1f);
 }
 
@@ -202,11 +202,11 @@ void sceneUI::drawNumber(LPDIRECT3DTEXTURE9 texture, int num, D3DXVECTOR2 positi
 	for (int i = 0; i < numberSlot.size(); ++i)
 	{
 		gFunc::drawSprite(texture,
-			D3DXVECTOR2(position.x + (size.x-5) * scale.x*i,position.y),
+			D3DXVECTOR2(position.x + (size.x - 5) * scale.x*i, position.y),
 			size*scale.x,
 			scale,
 			1.0f,
-			&D3DXVECTOR2(size.x*scale.x*numberSlot[numberSlot.size()-1-i], 0.0f));
+			&D3DXVECTOR2(size.x*scale.x*numberSlot[numberSlot.size() - 1 - i], 0.0f));
 	}
 }
 

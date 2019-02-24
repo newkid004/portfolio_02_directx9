@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -184,6 +184,7 @@
     <ClInclude Include="charaterArea.h" />
     <ClInclude Include="characterBase.h" />
     <ClInclude Include="controllerBase.h" />
+    <ClInclude Include="eEndingComplet.h" />
     <ClInclude Include="eEnemySpawner.h" />
     <ClInclude Include="eHitBullet.h" />
     <ClInclude Include="deadScene.h" />
@@ -271,6 +272,7 @@
     <ClInclude Include="resourceManager.h" />
     <ClInclude Include="sceneBase.h" />
     <ClInclude Include="sceneCollisionTest.h" />
+    <ClInclude Include="sceneEnding.h" />
     <ClInclude Include="sceneInGame.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="sceneMapTool.h" />
@@ -342,6 +344,7 @@
     <ClCompile Include="buttonStatic.cpp" />
     <ClCompile Include="characterBase.cpp" />
     <ClCompile Include="controllerBase.cpp" />
+    <ClCompile Include="eEndingComplet.cpp" />
     <ClCompile Include="eEnemySpawner.cpp" />
     <ClCompile Include="eHitBullet.cpp" />
     <ClCompile Include="deadScene.cpp" />
@@ -415,6 +418,7 @@
     <ClCompile Include="resourceManager.cpp" />
     <ClCompile Include="sceneBase.cpp" />
     <ClCompile Include="sceneCollisionTest.cpp" />
+    <ClCompile Include="sceneEnding.cpp" />
     <ClCompile Include="sceneInGame.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="sceneMapTool.cpp" />

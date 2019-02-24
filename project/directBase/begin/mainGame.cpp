@@ -4,6 +4,7 @@
 
 #include "sceneMapTool.h"
 #include "sceneInGame.h"
+#include "sceneEnding.h"
 
 #include "sceneTest1.h"
 #include "sceneTest2.h"
@@ -28,6 +29,7 @@ void mainGame::init(void)
 	MN_SCENE->add("sceneInGame", new sceneInGame());
 	MN_SCENE->add("sceneMapTool", new sceneMapTool());
 	MN_SCENE->add("deadScene", new deadScene());
+	MN_SCENE->add("sceneEnding", new sceneEnding());
 
 	/*/ // test complete
 	MN_SCENE->add("scene1", new sceneTest1);			// json

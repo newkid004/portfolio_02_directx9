@@ -4,12 +4,14 @@
 #include "spriteBase.h"
 #include "sceneUI.h"
 
+class skyBox;
+
 class sceneInGame : public sceneBase
 {
 private:
 	spriteBase* _crosshair[2];
 	sceneUI* _ui;
-	
+	skyBox* _skyBox;
 
 public:
 	virtual void init(void)		override;
@@ -29,7 +31,7 @@ private :
 	void initUI(void);
 	void initSound(void);
 	
-
+	skyBox* createSkyBox(void);
 public:
 	sceneInGame() {};
 	~sceneInGame();

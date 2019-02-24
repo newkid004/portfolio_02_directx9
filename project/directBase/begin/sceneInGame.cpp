@@ -17,6 +17,7 @@
 #include "eventBase.h"
 #include "eShootWeapon.h"
 #include "eEnemySpawner.h"
+#include "eEndingComplet.h"
 
 #include "patternMesh.h"
 #include "player.h"
@@ -25,6 +26,7 @@
 #include "mapObject.h"
 #include "wallMesh.h"
 #include "soundManager.h"
+#include "skyBox.h"
 
 
 sceneInGame::~sceneInGame()
@@ -47,6 +49,9 @@ void sceneInGame::init(void)
 	initSound();
 	initUI();
 
+	MN_SND->find("inGameB")->play();
+	_skyBox = createSkyBox();
+	_skyBox->setScale(D3DXVECTOR3(10, 10, 10));
 }
 
 void sceneInGame::update(void)
@@ -57,6 +62,9 @@ void sceneInGame::update(void)
 	GET_BULLET_MANAGER()->update();
 
 	MN_EVENT->update();
+
+	_skyBox->update();
+	_skyBox->getIsCull() = false;
 }
 
 void sceneInGame::draw(void)
@@ -67,11 +75,13 @@ void sceneInGame::draw(void)
 	GET_BULLET_MANAGER()->draw();
 
 	MN_EVENT->draw();
+
+	_skyBox->draw();
 }
 
 void sceneInGame::drawUI(void)
 {
-	sceneBase::drawUI();
+	// sceneBase::drawUI();
 
 	_ui->draw();
 
@@ -112,7 +122,7 @@ void sceneInGame::initSystem(void)
 	auto pCharacter = SGT_GAME->getSet().player = new player(MN_SRC->getPatternMesh("test"));
 	MN_BULLET->setBindPlayer(pCharacter);
 	pCharacter->getOriginMesh()->init();
-	pCharacter->getOriginMesh()->setDebugEnable(true, EDebugDrawType::SPHERE);
+	//pCharacter->getOriginMesh()->setDebugEnable(true, EDebugDrawType::SPHERE);
 
 	pCharacter->getNextBit() =
 		ATYPE_SURVIVOR |
@@ -213,6 +223,23 @@ void sceneInGame::initEventTrigger(void)
 			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave | sysDigit::enemySpawn);
 			MN_EVENT->add(new eEnemySpawner());
 		}
+	});
+
+	// wave ³¡
+	MN_EVENT->add(
+		EVENT::TYPE::TRIGGER |
+		EVENT::KIND::TRIGGER::AIR_PLANE |
+		EVENT::ACT::TRIGGER::COMPLETE,
+		[](eventBase*)->void {},
+		[](eventBase*)->void {
+
+		MN_SCENE->change("sceneEnding");
+		MN_EVENT->add(new eEndingComplet());
+
+		SGT_GAME->getSet().airPlane->getNextBit() =
+			ATYPE_AIRPLANE |
+			AIRPLANE_OUTRO |
+			AIRPLANE_OUTRO_NONE;
 	});
 }
 
@@ -321,4 +348,16 @@ void sceneInGame::initSound(void)
 	MN_SND->addSound("rage_run_f", "resource/sound/zombie/rage_run_f.wav", false, false);//
 	MN_SND->addSound("rage_run_m", "resource/sound/zombie/rage_run_m.wav", false, false);//
 
+}
+
+skyBox * sceneInGame::createSkyBox(void)
+{
+	skyBox::mParam stParameters = {
+		"resource/effect/skySphere.fx",
+		"resource/texture/skybox/sky2.png"
+	};
+
+	auto pSkybox = new skyBox(stParameters);
+
+	return pSkybox;
 }
