@@ -62,26 +62,31 @@ void enemyController::update2bit(void)
 		changeBindBit(ANIBIT::WEAPON, AWEAPON_NONE);
 		if (_isFemale)
 		{
+			if (_soundT.mouse.find("death_f") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 2.5f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "death_f";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("death_f")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+			}
 			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_LYING);
 			//뒤로
 			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_BACKWARD);
-			//왼쪽
-			//changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_LEFTWARD);
-			//오른쪽
-			//changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_RIGHTWARD);
-			//앞으로
-			//changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_LYING_FRONTWARD);
 		}
 		else
 		{
+			if (_soundT.mouse.find("death_m") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 2.5f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "death_m";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("death_m")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+			}
 			//뒤로
 			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_LYING);
 			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_BACKWARD);
-
-			//왼쪽으로
-			//changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_LEFTWARD);
-			//앞으로
-			//changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_FRONTWARD);
 		}
 		_delay = VALUE::delayHangOut;
 		return;
@@ -90,6 +95,77 @@ void enemyController::update2bit(void)
 	// 피격 상태(총)
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT))
 	{
+		if (_soundT.effectSoundStart < MN_TIME->getRunningTime())
+		{
+			_soundT.effectSoundStart = MN_TIME->getRunningTime() + _soundT.effectSoundDelay;
+			MN_SND->find("bullet_gib")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+				gFunc::rndFloat(0.6f, 0.8f));
+		}
+		if (gDigit::chk(_bindCharacter->getStatusBeShot(), DIGIT::PART::HEAD))
+		{
+			if (_soundT.mouse.find("headless") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 2.5f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "headless";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("headless")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+			}
+			else
+			{
+				if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+				{
+					MN_SND->find("headless")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+						gFunc::rndFloat(0.6f, 1.0f));
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				}
+			}
+		}
+		else
+		{
+			if (_isFemale)
+			{
+				if (_soundT.mouse.find("been_shot_f") == std::string::npos)
+				{
+					_soundT.mouseSoundDelay = 2.5f;
+					MN_SND->find(_soundT.mouse)->stop();
+					_soundT.mouse = "been_shot_f";
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+					MN_SND->find("been_shot_f")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+				}
+				else
+				{
+					if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+					{
+						MN_SND->find("been_shot_f")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+							gFunc::rndFloat(0.6f, 1.0f));
+						_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+					}
+				}
+			}
+			else
+			{
+				if (_soundT.mouse.find("been_shot_m") == std::string::npos)
+				{
+					_soundT.mouseSoundDelay = 2.5f;
+					MN_SND->find(_soundT.mouse)->stop();
+					_soundT.mouse = "been_shot_m";
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+					MN_SND->find("been_shot_m")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+				}
+				else
+				{
+					if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+					{
+						MN_SND->find("been_shot_m")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+							gFunc::rndFloat(0.6f, 1.0f));
+						_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+					}
+				}
+
+			}
+		}
+
 		updateBeShot();
 		return;
 	}
@@ -159,13 +235,48 @@ void enemyController::update2bit(void)
 	// 기본 상태
 	else if (getDistance2player() > VALUE::aletyDistance)
 	{
+		
 		if (_isFemale)
 		{
 			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_IDLE);
 			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_IDLE_NEUTRAL1);
+			if (_soundT.mouse.find("idle_breath") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 2.5f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "idle_breath";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("idle_breath")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+			}
+			else
+			{
+				if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+				{
+					MN_SND->find("idle_breath")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+						gFunc::rndFloat(0.6f, 1.0f));
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				}
+			}
 		}
 		else
 		{
+			if (_soundT.mouse.find("breathing") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 2.5f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "breathing";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("breathing")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+			}
+			else
+			{
+				if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+				{
+					MN_SND->find("breathing")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+						gFunc::rndFloat(0.6f, 1.0f));
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				}
+			}
 			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_IDLE);
 			changeBindBit(aniDefine::ANIBIT::SUB, MALE_IDLE_NEUTRAL1);
 		}
@@ -176,48 +287,105 @@ void enemyController::update2bit(void)
 	else if (getDistance2player() <= VALUE::aletyDistance &&
 		getDistance2player() >= VALUE::findSomthingDistance)
 	{
-		//D3DXVECTOR3 direction =  ((enemyBase*)_bindCharacter)->refNextPlacePos() - _bindCharacter->getPosition();
-		//float cosValue = D3DXVec2Dot(&D3DXVECTOR2(_bindCharacter->getDirectForward().x, _bindCharacter->getDirectForward().z),
-		//	&D3DXVECTOR2(direction.x, direction.z));
-		//if (cosValue <= FLT_EPSILON)
+		// 둘러보고
+		if (_isFemale)
 		{
-			// 둘러보고
-			if (_isFemale)
+			if (_soundT.mouse.find("alert_f") == std::string::npos)
 			{
-				changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_IDLE);
-				changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_IDLE_ALERT);
+				_soundT.mouseSoundDelay = 3.0f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "alert_f";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("alert_f")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
 			}
 			else
 			{
-				changeBindBit(aniDefine::ANIBIT::MAIN, MALE_IDLE);
-				changeBindBit(aniDefine::ANIBIT::SUB, MALE_IDLE_ALERT);
+				if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+				{
+					MN_SND->find("alert_f")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				}
 			}
-			_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ALERT;
+			changeBindBit(aniDefine::ANIBIT::MAIN, FEMALE_IDLE);
+			changeBindBit(aniDefine::ANIBIT::SUB, FEMALE_IDLE_ALERT);
 		}
-		//}
-		//// 회전하고
-		//else
-		//{
-		//	//다음노드를 향해서 왼쪽으로 회전
-		//	if (cosValue > 0.0f)
-		//	{
-		//		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
-		//		changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_LEFT);
-		//		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::LROTATE;
-		//	}
-		//	//다음 노드를 향해서 오른쪽으로 회전
-		//	else
-		//	{
-		//		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_TURN);
-		//		changeBindBit(aniDefine::ANIBIT::SUB, MALE_TURN_RIGHT);
-		//		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::RROTATE;
-		//	}
-		//}
+		else
+		{
+			if (_soundT.mouse.find("alert_m") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 3.0f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "alert_m";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("alert_m")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+			}
+			else
+			{
+				if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+				{
+					MN_SND->find("alert_m")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				}
+			}
+			changeBindBit(aniDefine::ANIBIT::MAIN, MALE_IDLE);
+			changeBindBit(aniDefine::ANIBIT::SUB, MALE_IDLE_ALERT);
+		}
+		_bindCharacter->getInfoCharacter().status = DIGIT::CHAR::ALERT;
+		
 		_delay = VALUE::delayAlert;
 	}
 	// 달리기
 	else if (getDistance2player() < VALUE::findSomthingDistance)
 	{
+		if(_soundT.footSoundStart < MN_TIME->getRunningTime())
+		{ 
+			_soundT.footSoundStart = MN_TIME->getRunningTime() + _soundT.footSoundDelay;
+			MN_SND->find("commonF")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()));
+		}
+		if (_isFemale)
+		{
+			if (_soundT.mouse.find("rage_run_f") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 1.5f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "rage_run_f";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("rage_run_f")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+					gFunc::rndFloat(0.5f,1.0f));
+			}
+			else
+			{
+				if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+				{
+					MN_SND->find("rage_run_f")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+						gFunc::rndFloat(0.5f, 1.0f));
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				}
+			}
+
+		}
+		else
+		{
+			if (_soundT.mouse.find("rage_run_m") == std::string::npos)
+			{
+				_soundT.mouseSoundDelay = 3.0f;
+				MN_SND->find(_soundT.mouse)->stop();
+				_soundT.mouse = "rage_run_m";
+				_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				MN_SND->find("rage_run_m")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+					gFunc::rndFloat(0.5f, 1.0f));
+			}
+			else
+			{
+				if (_soundT.mouseSoundStart < MN_TIME->getRunningTime())
+				{
+					MN_SND->find("rage_run_m")->play(gFunc::getSoundVolumeToPlayer(_bindCharacter->getPosition()),
+						gFunc::rndFloat(0.5f, 1.0f));
+					_soundT.mouseSoundStart = MN_TIME->getRunningTime() + _soundT.mouseSoundDelay;
+				}
+			}
+		}
+
 		changeBindBit(aniDefine::ANIBIT::MAIN, MALE_RUN);
 		changeBindBit(aniDefine::ANIBIT::SUB, MALE_RUN_NONE);
 		_delay = VALUE::delayMove;

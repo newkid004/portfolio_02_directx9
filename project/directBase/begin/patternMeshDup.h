@@ -17,8 +17,6 @@ protected:
 	D3DXMATRIXA16 _finalHandMatrix[2];
 	D3DXMATRIXA16 _finalNeckMatrix;
 
-	weaponBase* _weapon;
-
 public:
 	virtual void update(void) override;
 

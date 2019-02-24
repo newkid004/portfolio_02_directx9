@@ -1108,6 +1108,9 @@
     <ClInclude Include="eEnemySpawner.h">
       <Filter>main\classes\event\04_enemySpawner</Filter>
     </ClInclude>
+    <ClInclude Include="sceneUI.h">
+      <Filter>main\classes\scene\02_inGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1512,6 +1515,9 @@
     </ClCompile>
     <ClCompile Include="eEnemySpawner.cpp">
       <Filter>main\classes\event\04_enemySpawner</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneUI.cpp">
+      <Filter>main\classes\scene\02_inGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

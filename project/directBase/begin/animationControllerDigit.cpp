@@ -35,6 +35,7 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 	// 컨트롤러 설정 초기화
 	resetAnimationController();
 
+	acInfo.isEnd = false;
 	//모션이 변했는지 판별
 	if (acInfo.CurrentMotionBit != acInfo.NextMotionBit)
 	{
@@ -100,9 +101,11 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 	// 애니메이션이 끝나갈 경우(같은 모션 반복)
 	if (acInfo.persent >= 0.90f && acInfo.leftMixTime <= FLT_EPSILON && acInfo.maxMixTime <= FLT_EPSILON)
 	{
+		acInfo.isEnd = true;
 		acInfo.maxMixTime = 0.2f / acInfo.timeScale;
 		acInfo.leftMixTime = acInfo.maxMixTime;
 		acInfo.nextAniCount = min(acInfo.aniCount + 1, acInfo.motionVector.size() - 1);
+		acInfo.persent = 0.0f;
 
 		//처음으로 돌아가는 모션판단
 		if ((acInfo.CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE)) == ATYPE_ZOMBIE_MALE)
@@ -133,7 +136,7 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 		acInfo.trackPositionB = 0.0f;
 		acInfo.trackWeightA = 1.0f;
 		acInfo.trackWeightB = 0.0f;
-		acInfo.persent = acInfo.trackPositionA/ m_pNextAnimationSet->GetPeriod();
+		acInfo.persent = 0.0f;
 		// 동작이 전환되는 경우
 		if (acInfo.nextMotionVector.size() != 0)
 		{

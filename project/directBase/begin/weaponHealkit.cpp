@@ -48,6 +48,7 @@ void weaponHealkit::firePre(void)
 	{
 		if (MN_KEY->mouseUp())
 		{
+			MN_SND->find("bandaging")->stop();
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_IDLE);
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::SUB, AIDLE_STANDING);
 			_bindPMesh->setDirectionRight(_originR);
@@ -57,6 +58,7 @@ void weaponHealkit::firePre(void)
 		else if(_bindPMesh->getAControllInfo().persent >= 0.8f)
 		{
 			//무기는 밖에서 바꿔줘야함
+			MN_SND->find("bandaging")->stop();
 			_bindPMesh->getAControllInfo().persent = 0.0f;
 			--_infoWeapon.current;
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_IDLE);
@@ -82,4 +84,5 @@ void weaponHealkit::fireDo(void)
 	}
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_HEAL);
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::SUB, AHEAL_SELF_STANDING);
+	MN_SND->find("bandaging")->play();
 }

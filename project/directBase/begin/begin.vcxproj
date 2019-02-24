@@ -277,6 +277,7 @@
     <ClInclude Include="sceneTest2.h" />
     <ClInclude Include="sceneTest3.h" />
     <ClInclude Include="sceneTest4.h" />
+    <ClInclude Include="sceneUI.h" />
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="skinnedMesh.h" />
     <ClInclude Include="skyBox.h" />
@@ -419,6 +420,7 @@
     <ClCompile Include="sceneTest2.cpp" />
     <ClCompile Include="sceneTest3.cpp" />
     <ClCompile Include="sceneTest4.cpp" />
+    <ClCompile Include="sceneUI.cpp" />
     <ClCompile Include="skinnedMesh.cpp" />
     <ClCompile Include="skyBox.cpp" />
     <ClCompile Include="soundManager.cpp" />

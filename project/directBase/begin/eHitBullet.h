@@ -4,7 +4,7 @@
 
 class bulletBase;
 class characterBase;
-
+class wallMesh;
 class particlePoint;
 
 class eHitCharacterBullet : public eventBase
@@ -27,3 +27,19 @@ public:
 	~eHitCharacterBullet();
 };
 
+class eHitWallBullet : public eventBase
+{
+protected:
+	particlePoint* _particle = nullptr;
+
+public:
+	void update(void) override;
+	void draw(void) override;
+
+protected:
+	particlePoint* createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & normal);
+
+public:
+	eHitWallBullet(bulletBase* bullet, wallMesh* take);
+	~eHitWallBullet();
+};
