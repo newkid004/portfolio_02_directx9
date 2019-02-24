@@ -481,6 +481,8 @@ float enemyController::getDistance2player(void)
 	auto placedNode = _bindCharacter->getPlacedNode();
 	auto playerNode = viewPlayer->getPlacedNode();
 
+	if (!_path) return 10000.0f;
+
 	auto & path = _path->unpack();
 
 	if (placedNode == playerNode || path.size() < 2)

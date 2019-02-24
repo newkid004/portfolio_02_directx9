@@ -68,7 +68,11 @@ enemyBase * enemyFactory::createEnemy(int type)
 			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
 			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()))
 	);
-	result->getInfoMove().maximumSpeed = 0.32f;
+	if (result)
+	{
+		result->refEnemyType() = type;
+		result->getInfoMove().maximumSpeed = 0.32f;
+	}
 
 	return result;
 }
@@ -112,6 +116,7 @@ enemyBase * enemyFactory::recycleEnemy(int type)
 		SAFE_DELETE(recycleable->getController()->getPath());
 
 		result = recycleable;
+		result->getController()->createPath2Player();
 	}
 	else
 	{
