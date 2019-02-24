@@ -185,6 +185,16 @@ void sceneInGame::initEvent(void)
 		EA_CHARACTER_WALK |
 		EC_PLAYER_STATE_CHANGE_DECREASE);
 
+	eC[2] = new eventCatcher(
+		EVENT::TYPE::CHARACTER |
+		EVENT::KIND::CHARACTER::PLAYER |
+		EVENT::ACT::CHARACTER::DEATH,
+		[](eventBase* e)->void {
+
+	},
+		[](eventBase*)->void {}
+	);
+
 	initEventTrigger();
 	initEventWeapon();
 }
