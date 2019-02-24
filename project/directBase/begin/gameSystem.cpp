@@ -50,7 +50,10 @@ void gameSystem::update(void)
 void gameSystem::draw(void)
 {
 	_set.field->draw();
+
+	_set.airPlane->getIsCull() = false;
 	_set.airPlane->draw();
+
 	_set.player->draw();
 	_set.map->draw();
 }
@@ -87,8 +90,13 @@ void gameSystem::initAirPlane(void)
 	param.effectFilePath = "resource/effect/zombie.fx";
 	param.filePath = "resource/mesh/L4D1/c130/c130.X";
 
-	airPlane = new patternMesh(param);
-	airPlane->setPosition(D3DXVECTOR3(100, 0, 100));
+	airPlane = new patternMeshDup(MN_SRC->getPatternMesh("airPlane", &param));
+	airPlane->setPosition(D3DXVECTOR3(0, 0, 0));
+	airPlane->setScale(0.04f);
+	airPlane->getNextBit() =
+		ATYPE_AIRPLANE |
+		AIRPLANE_IDLE |
+		AIRPLANE_IDLE_ON;
 }
 
 enemyBase * gameSystem::addEnemy(int enemyType)

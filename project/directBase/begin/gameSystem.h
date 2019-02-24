@@ -6,7 +6,7 @@ class player;
 class mapObject;
 class inGame_grape;
 class inGame_field;
-class patternMesh;
+class patternMeshDup;
 
 class enemyBase;
 
@@ -21,7 +21,7 @@ public :
 		inGame_field*	field		= nullptr;
 		mapObject*		map			= nullptr;
 		maptool_render* map_render	= nullptr;	// delete
-		patternMesh*	airPlane	= nullptr;
+		patternMeshDup*	airPlane	= nullptr;
 	};
 
 	struct status
@@ -37,7 +37,7 @@ public :
 		float timeTotalWave = 180.0f;
 		float timeLeftWave = 0.0f;		// ref
 
-		int numMaximumEnemy = 20;
+		int numMaximumEnemy = 10;
 	};
 
 private :
