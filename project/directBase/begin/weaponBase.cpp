@@ -163,7 +163,7 @@ void weaponBase::reloadDo(void)
 {
 	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::RELOAD);
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_RELOAD);
-	if (_infoWeapon.type = weapon_set::type::rifle)
+	if (_infoWeapon.type == weapon_set::type::rifle)
 	{
 		MN_SND->find("rClipOut")->play();
 	}
