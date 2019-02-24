@@ -60,6 +60,7 @@ void playerController::updateAnimation(void)
 		{
 			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
 			{
+				MN_SND->getBGM()->stop();
 				MN_SND->find("deathB")->play();
 				MN_SCENE->change("deadScene");
 			}
