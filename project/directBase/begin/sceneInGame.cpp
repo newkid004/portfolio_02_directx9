@@ -205,7 +205,7 @@ void sceneInGame::initEventTrigger(void)
 		int & digitActive = SGT_GAME->getStatus().digitActive;
 		if (!gDigit::chk(digitActive, sysDigit::wave))
 		{
-			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave);
+			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave | sysDigit::enemySpawn);
 			MN_EVENT->add(new eEnemySpawner());
 		}
 	});

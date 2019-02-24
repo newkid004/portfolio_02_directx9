@@ -451,7 +451,7 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 	string xPath = "resource/mesh/L4D1/items/";
 	string tPath = "resource/texture/maptool/catalog/trigger/";
 
-	function<void(char*)> inputContent = [&](char* fName)->void {
+	function<void(char*, int triggerType)> inputContent = [&](char* fName, int triggerType)->void {
 		param.meshFilePath = xPath + fName + ".X";
 		CATALOG::create(&item, &param);
 		string textureFilePath = tPath + fName + ".PNG";
@@ -459,16 +459,17 @@ void maptool_window::createContent_trigger(std::vector<maptool_data_catalog::OBJ
 		
 		vContent.push_back(item);
 
-		item->_triggerType = vContent.size();
+		item->_triggerType = triggerType;
 		item->_object->refBind() = triggerFactory::createTrigger2type(
 			item->_triggerType,
 			(staticMesh*)item->_object);
 		item->_object->setScale(D3DXVECTOR3(0.006f, 0.006f, 0.006f));
 	};
 
-	inputContent("rifle");
-	inputContent("shotgun");
-	inputContent("medikit");
+	inputContent("rifle",	triggerBase::TYPE::MACHINE_GUN);
+	inputContent("shotgun",	triggerBase::TYPE::SHOT_GUN);
+	inputContent("medikit",	triggerBase::TYPE::MEDKIT);
+	inputContent("radio",	triggerBase::TYPE::RADIO);
 }
 
 void maptool_window::createContent_spawner(std::vector<maptool_data_catalog::OBJ::SPAWNER*>& vContent)

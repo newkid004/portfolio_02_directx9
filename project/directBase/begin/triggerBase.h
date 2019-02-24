@@ -15,8 +15,7 @@ public :
 		static constexpr int MEDKIT			= 0x3;
 		static constexpr int NORMAL			= 0x4;
 
-		static constexpr int AIR_PLANE		= 0x1 << 4;
-		static constexpr int SPAWNER		= 0x2 << 4;
+		static constexpr int RADIO			= 0x1 << 4;
 	};
 
 protected :
