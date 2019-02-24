@@ -1102,6 +1102,9 @@
     <ClInclude Include="maptool_brush_spawner.h">
       <Filter>main\classes\scene\01_mapTool\classes\brush\spawner</Filter>
     </ClInclude>
+    <ClInclude Include="sceneUI.h">
+      <Filter>main\classes\scene\02_inGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1503,6 +1506,9 @@
     </ClCompile>
     <ClCompile Include="bulletManager.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneUI.cpp">
+      <Filter>main\classes\scene\02_inGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

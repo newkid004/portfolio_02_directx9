@@ -114,3 +114,67 @@ particlePoint * eHitCharacterBullet::createParticle(D3DXVECTOR3 & pos, D3DXVECTO
 
 	return result;
 }
+
+
+eHitWallBullet::eHitWallBullet(bulletBase * bullet, wallMesh * take) :
+	eventBase(bullet, take,
+		EVENT::TYPE::BULLET |
+		EVENT::KIND::BULLET::COLLISION |
+		EVENT::CALL::BULLET_COLLISION_TO::WALL,
+		0.3f)
+{
+	auto viewBullet = static_cast<bulletBase*>(bullet);
+
+	_particle = createParticle(bullet->getIntersect(), -viewBullet->getRay().direction);
+	_particle->particleEmitStart(0.01f);
+}
+
+eHitWallBullet::~eHitWallBullet()
+{
+	SAFE_DELETE(_particle);
+}
+
+
+void eHitWallBullet::update(void)
+{
+	eventBase::update();
+	_particle->update();
+}
+
+void eHitWallBullet::draw(void)
+{
+	_particle->getIsCull() = false;
+	_particle->draw();
+}
+
+particlePoint * eHitWallBullet::createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & normal)
+{
+	static constexpr char* wallParticle[4] = {
+		"resource/texture/wall/brick1.png",
+		"resource/texture/wall/brick2.png",
+		"resource/texture/wall/brick3.png",
+		"resource/texture/wall/brick4.png"
+	};
+
+	particleEmitter::particle makeParam;
+	particlePoint::mParams param;
+	param.textureFilePath = wallParticle[gFunc::rndInt(0, 3)];
+	param.emitterParam.maxNumParticle = 50;
+	param.emitterParam.numParticlePerSecond = 90;
+	param.emitterParam.type = EParticleType::FOUNTAIN;
+	param.emitterParam.makeParam = particleCreater::makeParam(
+		particleCreater::PC_FOUNTAIN::MAKE,
+		normal * 10,
+		D3DXVECTOR3(
+			gFunc::rndFloat(-30.0f, 30.f),
+			gFunc::rndFloat(-30.0f, 30.f),
+			gFunc::rndFloat(-30.0f, 30.f)),
+		0.3f,
+		0.9f,
+		0.3f);
+
+	auto result = new particlePoint(param);
+	result->setPosition(pos);
+
+	return result;
+}

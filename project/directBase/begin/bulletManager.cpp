@@ -157,7 +157,9 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 				D3DXVECTOR3 intersect = ray.origin + info.distance * ray.direction;
 
 				printf("º® Ãæµ¹!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
-				
+				bullet->setIntersect(intersect);
+				MN_EVENT->add(new eHitWallBullet(bullet, mapObj[i]));
+
 				return true;
 			}
 		}
