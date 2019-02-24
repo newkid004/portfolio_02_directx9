@@ -30,7 +30,7 @@ void gunBullet::drawPre(void)
 void gunBullet::drawDo(void)
 {
 	renderObject::drawDo();
-
+	
 	D3DXMATRIXA16 stWorldMatrix = this->getMatrixFinal();
 
 	MN_DEV->SetTransform(D3DTS_WORLD, &stWorldMatrix);

@@ -4,7 +4,7 @@
 #include "gunBullet.h"
 #include "fistBullet.h"
 
-#define BULLET_MAX 12
+#define SHOTGUN_MAX 12
 class player;
 
 class weaponBase;
