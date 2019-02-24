@@ -25,6 +25,7 @@
 
 #include "mapObject.h"
 #include "bulletManager.h"
+#include "skyBox.h"
 
 gameSystem::gameSystem()
 {
@@ -32,6 +33,9 @@ gameSystem::gameSystem()
 	_set.map = new mapObject();
 	initField();
 	initAirPlane();
+	_skyBox = createSkyBox();
+	_skyBox->setScale(D3DXVECTOR3(10, 10, 10));
+	_skyBox->getIsCull() = false;
 }
 
 gameSystem::~gameSystem()
@@ -46,6 +50,16 @@ void gameSystem::update(void)
 	_set.player->update();
 	GET_CAMERA()->putOffsetPosition();
 	_set.map->update();
+	_skyBox->update();
+
+	//if (MN_KEY->keyPress(DIK_1))
+	//{
+	//	setDebugEnable(true);
+	//}
+	//else if (MN_KEY->keyPress(DIK_2))
+	//{
+	//	setDebugEnable(false);
+	//}
 }
 
 void gameSystem::draw(void)
@@ -57,6 +71,8 @@ void gameSystem::draw(void)
 
 	_set.player->draw();
 	_set.map->draw();
+
+	_skyBox->draw();
 }
 
 void gameSystem::initField(void)
@@ -131,4 +147,36 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 	MN_EVENT->add(new eventBase(result, nullptr, evType));
 	
 	return result;
+}
+
+void gameSystem::setDebugEnable(bool value)
+{
+	if (value)
+	{
+		_set.player->setDebugEnable(value, EDebugDrawType::SPHERE);
+		for (auto rValue : _set.field->getList().vEnemy)
+		{
+			rValue->setDebugEnable(value, EDebugDrawType::SPHERE);
+		}
+	}
+	else
+	{
+		_set.player->setDebugEnable(value);
+		for (auto rValue : _set.field->getList().vEnemy)
+		{
+			rValue->setDebugEnable(value);
+		}
+	}
+}
+
+skyBox * gameSystem::createSkyBox(void)
+{
+	skyBox::mParam stParameters = {
+		"resource/effect/skySphere.fx",
+		"resource/texture/skybox/sky2.png"
+	};
+
+	auto pSkybox = new skyBox(stParameters);
+
+	return pSkybox;
 }
