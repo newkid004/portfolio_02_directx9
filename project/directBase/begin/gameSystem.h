@@ -61,7 +61,7 @@ public :
 public :
 	set & getSet(void) { return _set; }
 	status & getStatus(void) { return _status; }
-
+	skyBox* &getSkyBox(void) { return _skyBox; }
 public:
 	gameSystem();
 	~gameSystem();
