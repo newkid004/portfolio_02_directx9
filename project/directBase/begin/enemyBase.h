@@ -13,9 +13,6 @@ public :
 
 protected :
 	void updateApproach(void);
-	void updateAlert(void);
-
-	void doResurrection(void);
 
 public :
 	int & refEnemyType(void) { return _enemyType; }

@@ -20,6 +20,7 @@ private :
 	void initField(void);
 
 	void initEvent(void);
+	void initEventTrigger(void);
 	void initEventWeapon(void);
 
 	void initUI(void);

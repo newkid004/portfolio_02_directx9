@@ -44,7 +44,6 @@ void tankController::update2bit(void)
 		}
 		
 		_delay = VALUE::delayHangOut;
-		_infoTimeEnemy.timeNextDisappear = MN_TIME->getRunningTime() + 3.0f;
 		return;
 	}
 	// 피격 상태

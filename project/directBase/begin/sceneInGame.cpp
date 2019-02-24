@@ -1,6 +1,7 @@
 #include "sceneInGame.h"
 
 #include "managerList.h"
+#include "gDigit.h"
 
 #include "sceneBase.h"
 #include "debugGrid.h"
@@ -15,13 +16,16 @@
 #include "eventCatcher.h"
 #include "eventBase.h"
 #include "eShootWeapon.h"
+#include "eEnemySpawner.h"
 
 #include "patternMesh.h"
 #include "player.h"
+#include "enemyBase.h"
 
 #include "mapObject.h"
 #include "wallMesh.h"
 #include "soundManager.h"
+
 
 sceneInGame::~sceneInGame()
 {
@@ -124,10 +128,11 @@ void sceneInGame::initSystem(void)
 	_camera = new inGameCamera(pCharacter);
 
 	// cursur
-	// ShowCursor(NULL);
+	ShowCursor(NULL);
 
-	//
-	SGT_GAME->addEnemy();
+	// status
+	auto & sysStatus = SGT_GAME->getStatus();
+
 }
 
 void sceneInGame::initField(void)
@@ -139,8 +144,15 @@ void sceneInGame::initField(void)
 	mapObj = new mapObject();
 	mapObj->init();
 
-	// put obj
-	
+	// put enemy
+	for (int i = 0; i < 5; ++i)
+	{
+		auto e = SGT_GAME->addEnemy();
+		e->setPosition( D3DXVECTOR3(
+			gFunc::rndFloat(-80.0f, 80.0f),
+			gFunc::rndFloat(-80.0f, 80.0f),
+			gFunc::rndFloat(-80.0f, 80.0f)));
+	}
 }
 
 void sceneInGame::initEvent(void)
@@ -166,19 +178,27 @@ void sceneInGame::initEvent(void)
 		EA_CHARACTER_WALK |
 		EC_PLAYER_STATE_CHANGE_DECREASE);
 
-	// < trigger >
-	// 비행기 시간 완료
+	initEventTrigger();
+	initEventWeapon();
+}
+
+void sceneInGame::initEventTrigger(void)
+{
+	// wave 시작
 	MN_EVENT->add(
 		EVENT::TYPE::TRIGGER |
 		EVENT::KIND::TRIGGER::AIR_PLANE |
-		EVENT::ACT::TRIGGER::COMPLETE,
+		EVENT::ACT::TRIGGER::ACTIVE,
 		[](eventBase*)->void {},
 		[](eventBase*)->void {
 
-		// do shomthing
-	} );
-
-	initEventWeapon();
+		int & digitActive = SGT_GAME->getStatus().digitActive;
+		if (!gDigit::chk(digitActive, sysDigit::wave))
+		{
+			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave);
+			MN_EVENT->add(new eEnemySpawner());
+		}
+	});
 }
 
 void sceneInGame::initEventWeapon(void)
@@ -204,7 +224,6 @@ void sceneInGame::initEventWeapon(void)
 		}
 
 		MN_EVENT->add(new eShootWeapon(e->getSour(), eParam));
-
 	});
 }
 
