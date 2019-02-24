@@ -13,9 +13,6 @@ private :
 	TCHAR* _className = NULL;
 	windowMessageHandler* _winMessageHandler = NULL;
 
-public :	// ----- ΩÃ±€≈Ê ----- //
-	DECLARE_SINGLETON(windowManager);
-
 public :	// ----- FW ----- //
 	void init(
 		HINSTANCE hInstance,
@@ -40,7 +37,10 @@ public :	// ----- ¿Œ≈Õ∆‰¿ÃΩ∫ ----- //
 		WPARAM wParam,
 		LPARAM lParam) override;
 
-private :
+public :
+	DECLARE_SINGLETON(windowManager);
+
+public :
 	windowManager() :
 		_className(TEXT(WINNAME)) 
 	{
@@ -52,3 +52,4 @@ private :
 	};
 };
 
+#define MN_WIN windowManager::getInstance()

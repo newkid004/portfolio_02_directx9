@@ -17,6 +17,7 @@
 #include "eventBase.h"
 #include "eShootWeapon.h"
 #include "eEnemySpawner.h"
+#include "eEndingComplet.h"
 
 #include "patternMesh.h"
 #include "player.h"
@@ -73,7 +74,7 @@ void sceneInGame::draw(void)
 
 void sceneInGame::drawUI(void)
 {
-	sceneBase::drawUI();
+	// sceneBase::drawUI();
 
 	_ui->draw();
 
@@ -215,6 +216,23 @@ void sceneInGame::initEventTrigger(void)
 			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave | sysDigit::enemySpawn);
 			MN_EVENT->add(new eEnemySpawner());
 		}
+	});
+
+	// wave ³¡
+	MN_EVENT->add(
+		EVENT::TYPE::TRIGGER |
+		EVENT::KIND::TRIGGER::AIR_PLANE |
+		EVENT::ACT::TRIGGER::COMPLETE,
+		[](eventBase*)->void {},
+		[](eventBase*)->void {
+
+		MN_SCENE->change("sceneEnding");
+		MN_EVENT->add(new eEndingComplet());
+
+		SGT_GAME->getSet().airPlane->getNextBit() =
+			ATYPE_AIRPLANE |
+			AIRPLANE_OUTRO |
+			AIRPLANE_OUTRO_NONE;
 	});
 }
 

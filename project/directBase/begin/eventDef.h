@@ -168,6 +168,7 @@ struct EVENT
 			MAKE_EV(0x1, ACTIVE);
 			MAKE_EV(0x2, CONTINUE);
 			MAKE_EV(0x3, COMPLETE);
+			MAKE_EV(0x4, GAME_END);
 		};
 
 		struct WEAPON
