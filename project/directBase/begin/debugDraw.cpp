@@ -73,6 +73,19 @@ void debugDraw::drawDo(void)
 		drawBoundingSphere();
 
 	drawGuideLine();
+
+	if (MN_KEY->keyPress(DIK_1))
+	{
+		_drawType = EDebugDrawType::NONE;
+	}
+	else if (MN_KEY->keyPress(DIK_2))
+	{
+		_drawType = EDebugDrawType::BOX;
+	}
+	else if (MN_KEY->keyPress(DIK_3))
+	{
+		_drawType = EDebugDrawType::SPHERE;
+	}
 }
 
 void debugDraw::drawPost(void)
@@ -94,17 +107,6 @@ void debugDraw::updateBoundingMatrix(void)
 	for (auto rValue : _mMeshBoundingSphereSetList)
 	{
 		_mbSphereSet.find(rValue.first)->second.matrix = _bindObject->getBoundingBoxSetList().find(rValue.first)->second.matrix;
-	}
-
-	
-
-	if (MN_KEY->keyPress(DIK_1))
-	{
-		_drawType = EDebugDrawType::BOX;
-	}
-	else if (MN_KEY->keyPress(DIK_2))
-	{
-		_drawType = EDebugDrawType::SPHERE;
 	}
 }
 

@@ -11,6 +11,7 @@ class patternMeshDup;
 class enemyBase;
 
 class maptool_render;
+class skyBox;
 
 class gameSystem : public singletonBase<gameSystem>
 {
@@ -43,7 +44,7 @@ public :
 private :
 	set _set;
 	status _status;
-
+	skyBox* _skyBox;
 public :
 	void update(void);
 	void draw(void);
@@ -51,9 +52,11 @@ public :
 protected :
 	void initField(void);
 	void initAirPlane(void);
+	skyBox* createSkyBox(void);
 
 public :
 	enemyBase* addEnemy(int enemyType = 1);
+	void setDebugEnable(bool value);
 
 public :
 	set & getSet(void) { return _set; }

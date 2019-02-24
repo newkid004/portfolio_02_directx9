@@ -191,7 +191,7 @@ void weaponBase::normalDo(void)
 	_infoWeapon.type = weapon_set::type::none;
 
 	MN_BULLET->addBullet(GET_CAMERA()->getPosition(), GET_CAMERA()->getDirectForward(),
-		10.0f, this);
+		15.0f, this);
 	MN_SND->find("swingWeapon")->play();
 
 	_infoWeapon.type = preType;
