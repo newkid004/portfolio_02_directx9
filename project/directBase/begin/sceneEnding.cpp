@@ -6,6 +6,7 @@
 #include "camera.h"
 
 #include "patternMeshDup.h"
+#include "player.h"
 
 sceneEnding::sceneEnding()
 {
@@ -42,6 +43,11 @@ void sceneEnding::update(void)
 
 		_sourPos.x = MN_WIN->getWindowSize().cx * 0.85f;
 		_sourPos.y = MN_WIN->getWindowSize().cy * 0.15f;
+
+		SGT_GAME->getSet().player->setVisible(false);
+
+		// MN_SND->getBGM()->stop();
+		// MN_SND->find("clear")->play();
 
 		_isInit = true;
 	}
