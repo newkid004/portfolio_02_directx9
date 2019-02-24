@@ -2,9 +2,12 @@
 
 #include "managerList.h"
 #include "gDigit.h"
-
 #include "gFunc.h"
 #include "pickRay.h"
+
+#include "sceneBase.h"
+#include "camera.h"
+
 #include "maptool_render.h"
 #include "inGame_io.h"
 #include "inGame_field.h"
@@ -27,6 +30,7 @@ gameSystem::gameSystem()
 	_set.map_render = new maptool_render();
 	_set.map = new mapObject();
 	initField();
+	initAirPlane();
 }
 
 gameSystem::~gameSystem()
@@ -37,13 +41,16 @@ gameSystem::~gameSystem()
 void gameSystem::update(void)
 {
 	_set.field->update();
+	_set.airPlane->update();
 	_set.player->update();
+	GET_CAMERA()->putOffsetPosition();
 	_set.map->update();
 }
 
 void gameSystem::draw(void)
 {
 	_set.field->draw();
+	_set.airPlane->draw();
 	_set.player->draw();
 	_set.map->draw();
 }
@@ -70,6 +77,18 @@ void gameSystem::initField(void)
 		float radius = gFunc::Vec3Distance(centerPos, boxPos);
 		grape->putData(i, 0, i->getPosition(), radius);
 	}
+}
+
+void gameSystem::initAirPlane(void)
+{
+	auto & airPlane = _set.airPlane;
+
+	patternMesh::mParam param;
+	param.effectFilePath = "resource/effect/zombie.fx";
+	param.filePath = "resource/mesh/L4D1/c130/c130.X";
+
+	airPlane = new patternMesh(param);
+	airPlane->setPosition(D3DXVECTOR3(100, 0, 100));
 }
 
 enemyBase * gameSystem::addEnemy(int enemyType)
