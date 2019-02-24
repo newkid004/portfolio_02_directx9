@@ -158,7 +158,9 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 				MN_SND->find("shootWall")->play(gFunc::getSoundVolumeToPlayer(mapObj[i]->getPosition()),
 					gFunc::rndFloat(0.8f, 1.0f));
 				printf("º® Ãæµ¹!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
-				
+				bullet->setIntersect(intersect);
+				MN_EVENT->add(new eHitWallBullet(bullet, mapObj[i]));
+
 				return true;
 			}
 		}

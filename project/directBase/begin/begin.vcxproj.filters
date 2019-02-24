@@ -1106,6 +1106,9 @@
       <Filter>main\classes\scene\01_mapTool\classes\brush\spawner</Filter>
     </ClInclude>
     <ClInclude Include="eEnemySpawner.h" />
+    <ClInclude Include="sceneUI.h">
+      <Filter>main\classes\scene\02_inGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="windowManager.cpp">
@@ -1509,6 +1512,9 @@
       <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>
     </ClCompile>
     <ClCompile Include="eEnemySpawner.cpp" />
+    <ClCompile Include="sceneUI.cpp">
+      <Filter>main\classes\scene\02_inGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="gMng.inl">

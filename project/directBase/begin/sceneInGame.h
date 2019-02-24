@@ -7,6 +7,8 @@ class sceneInGame : public sceneBase
 {
 private:
 	spriteBase* _crosshair[2];
+	sceneUI* _ui;
+	
 
 public:
 	virtual void init(void)		override;
@@ -31,4 +33,3 @@ public:
 	sceneInGame() {};
 	~sceneInGame();
 };
-

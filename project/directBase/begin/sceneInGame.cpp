@@ -25,6 +25,7 @@
 #include "mapObject.h"
 #include "wallMesh.h"
 #include "soundManager.h"
+#include "sceneUI.h"
 
 
 sceneInGame::~sceneInGame()
@@ -33,6 +34,7 @@ sceneInGame::~sceneInGame()
 	{
 		SAFE_DELETE(_crosshair[i]);
 	}
+	SAFE_DELETE(_ui);
 }
 
 void sceneInGame::init(void)
@@ -73,6 +75,8 @@ void sceneInGame::drawUI(void)
 {
 	sceneBase::drawUI();
 
+	_ui->draw();
+
 	//crosshair
 	switch (SGT_GAME->getSet().player->getWeapon()->getInfoWeapon().type)
 	{
@@ -81,6 +85,7 @@ void sceneInGame::drawUI(void)
 		_crosshair[SGT_GAME->getSet().player->getWeapon()->getInfoWeapon().type - 1]->drawUI();
 		break;
 	}
+
 }
 
 void sceneInGame::initResource(void)
@@ -96,8 +101,11 @@ void sceneInGame::initResource(void)
 	param.filePath = "resource/mesh/L4D1/female/female.X";			MN_SRC->getPatternMesh("enemy_female_0", &param)->setScale(0.004f);
 
 	//UI
-	_crosshair[0] = new spriteBase("resource/texture/UI/crosshair.png");
-	_crosshair[1] = new spriteBase("resource/texture/UI/crosshairShotgun.png");
+	_crosshair[0]	= new spriteBase("resource/texture/UI/crosshair.png");
+	_crosshair[1]	= new spriteBase("resource/texture/UI/crosshairShotgun.png");
+
+	
+
 }
 
 void sceneInGame::initSystem(void)
@@ -237,6 +245,9 @@ void sceneInGame::initUI(void)
 			MN_WIN->getWindowSize().cy / 2.0f, 0.0f));
 		_crosshair[i]->setScale(0.3f);
 	}
+
+	_ui = new sceneUI();
+
 }
 
 void sceneInGame::initSound(void)
