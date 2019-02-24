@@ -265,7 +265,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 
 			mSphere.center += enemy->getBoundingSphereOffset();
 			mSphere.radius *= enemy->getScale().x;
-			gFunc::
+
 			D3DXVECTOR3 intersect;
 
 			if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
@@ -325,7 +325,6 @@ void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & 
 		}
 	} break;
 	case weapon_set::type::none:
-	case weapon_set::type::normal:
 	case weapon_set::type::zombie:
 	case weapon_set::type::tank:
 	{
