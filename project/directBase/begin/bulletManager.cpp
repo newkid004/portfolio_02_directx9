@@ -156,7 +156,7 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 				D3DXVECTOR3 intersect = ray.origin + info.distance * ray.direction;
 				MN_SND->find("shootWall")->play(gFunc::getSoundVolumeToPlayer(mapObj[i]->getPosition()),
 					gFunc::rndFloat(0.8f, 1.0f));
-				printf("벽 충돌!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
+				//printf("벽 충돌!! intersect point : %f, %f, %f\n", intersect.x, intersect.y, intersect.z);
 				bullet->setIntersect(intersect);
 				MN_EVENT->add(new eHitWallBullet(bullet, mapObj[i]));
 
@@ -196,7 +196,7 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 					if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 						bullet->getSpeed(), sphere))
 					{
-						printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), (int)(*enemyIter));
+						//printf("캐릭 %s 충돌!! %d\n", rValue.first.c_str(), (int)(*enemyIter));
 						//printf("캐릭 %d 충돌!!\n", (int)(*enemyIter));
 						
 						// 충돌 부위 파트
@@ -242,9 +242,9 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 			if(!MN_SND->find("hitbyEnemey")->isPlaySound())	MN_SND->find("hitbyEnemey")->play(-1.0f, gFunc::rndFloat(0.7f, 1.0f));
 			MN_SND->find("hit_punch")->play(-1.0f, gFunc::rndFloat(0.7f, 1.0f));
 
-			printf("피격!! 피격 대상 : %d     %d\n", 
-			bullet->getWeaponType(),
-			rand() % 100);
+			//printf("피격!! 피격 대상 : %d     %d\n", 
+			//bullet->getWeaponType(),
+			//rand() % 100);
 
 			// 충돌 시 이벤트 처리
 			// {
@@ -262,13 +262,13 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 
 		for (enemyIter = vEnemyList.begin(); enemyIter != vEnemyList.end();)
 		{
-			auto & enemy = (*enemyIter)->getOriginMesh();
+			auto & enemy = (*enemyIter);
 			auto & mBoundBoxSet = enemy->getBoundingBoxSetList();
 			auto & mBoundSphereSet = enemy->getBoundingSphereSetList();
 			auto mSphere = enemy->getBoundingSphere();
 
 			mSphere.center += enemy->getBoundingSphereOffset();
-			mSphere.radius *= enemy->getScale().x;
+			mSphere.radius *= enemy->getOriginMesh()->getScale().x;
 
 			D3DXVECTOR3 intersect;
 
@@ -279,13 +279,13 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 				{
 					auto sphere = rValue.second.sphere;
 					sphere.center = rValue.second.drawPosition;
-					sphere.radius *= enemy->getScale().x * 40;
+					sphere.radius *= enemy->getOriginMesh()->getScale().x * 40;
 
 					if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 						bullet->getSpeed(), sphere))
 					{
 						MN_SND->find("hitEnemy")->play(-1.0f, gFunc::rndFloat(0.8f, 1.0f));
-						printf("좀비 근접공격 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
+						//printf("좀비 근접공격 %s 충돌!! %d\n", rValue.first.c_str(), rand() % 100);
 
 						// 충돌 부위 파트
 						int hitPart = _oPartList.find(rValue.first)->second;
