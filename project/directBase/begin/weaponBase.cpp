@@ -180,7 +180,8 @@ void weaponBase::normalPre(void)
 	if ((_bindPMesh->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX))
 		== AMIX_ATTACK)
 	{
-		if (_bindPMesh->getAControllInfo().persent >= 0.8f)
+		if (_bindPMesh->getAControllInfo().persent >= 0.7f)
+		//if(_bindPMesh->getAControllInfo().isEnd)
 		{
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
 		}
@@ -191,15 +192,15 @@ void weaponBase::normalDo(void)
 {
 	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::ATTACK);
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_ATTACK);
-	D3DXVECTOR3 stNeckPosition = _position;
-	D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
+	//D3DXVECTOR3 stNeckPosition = _position;
+	//D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
 
 	// 공격 타입 보존
 	int preType = _infoWeapon.type;
 	_infoWeapon.type = weapon_set::type::none;
 
-	MN_BULLET->addBullet(stNeckPosition, GET_CAMERA()->getDirectForward(),
-		inGame_value::bullet::speed, this);
+	MN_BULLET->addBullet(GET_CAMERA()->getPosition(), GET_CAMERA()->getDirectForward(),
+		10.0f, this);
 	MN_SND->find("swingWeapon")->play();
 
 	_infoWeapon.type = preType;

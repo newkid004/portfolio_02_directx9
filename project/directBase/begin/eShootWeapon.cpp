@@ -67,7 +67,7 @@ particlePoint * eShootWeapon::createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & no
 		particleCreater::PC_FOUNTAIN::MAKE,
 		(normal * 30) + D3DXVECTOR3(
 			gFunc::rndFloat(-10.0f, 10.0f),
-			gFunc::rndFloat(-20.0f, 00.0f),
+			gFunc::rndFloat(-10.0f, 10.0f),
 			gFunc::rndFloat(-10.0f, 10.0f)), 
 		D3DXVECTOR3(
 			gFunc::rndFloat(-50.0f, 50.f),

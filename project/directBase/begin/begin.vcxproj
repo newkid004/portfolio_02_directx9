@@ -184,6 +184,7 @@
     <ClInclude Include="charaterArea.h" />
     <ClInclude Include="characterBase.h" />
     <ClInclude Include="controllerBase.h" />
+    <ClInclude Include="eEnemySpawner.h" />
     <ClInclude Include="eHitBullet.h" />
     <ClInclude Include="enemyBase.h" />
     <ClInclude Include="enemyController.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="buttonStatic.cpp" />
     <ClCompile Include="characterBase.cpp" />
     <ClCompile Include="controllerBase.cpp" />
+    <ClCompile Include="eEnemySpawner.cpp" />
     <ClCompile Include="eHitBullet.cpp" />
     <ClCompile Include="enemyBase.cpp" />
     <ClCompile Include="enemyController.cpp" />

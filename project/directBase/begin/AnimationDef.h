@@ -16,6 +16,7 @@ struct ACInfo
 	float timeScale;
 	float nextTimeScale;
 	float persent;
+	bool isEnd;
 	//bool isCancel;
 	//bool isNextCancel;
 	std::vector<int> motionVector;

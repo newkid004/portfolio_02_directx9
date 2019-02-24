@@ -24,7 +24,7 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 	auto viewTake = static_cast<characterBase*>(take);
 
 	putDigitStatus(viewBullet, viewTake, hitPart);
-	putValue(viewBullet, viewTake);
+	putValue(viewBullet, viewTake, hitPart);
 
 	_particle = createParticle(bullet->getIntersect(), -viewBullet->getRay().direction);
 	_particle->particleEmitStart(0.01f);
@@ -70,11 +70,15 @@ void eHitCharacterBullet::putDigitStatus(bulletBase* bullet, characterBase * tak
 
 }
 
-void eHitCharacterBullet::putValue(bulletBase* bullet, characterBase * take)
+void eHitCharacterBullet::putValue(bulletBase* bullet, characterBase * take, int hitPart)
 {
 	// 데미지 전달
 	int & nowHp = take->getInfoCharacter().nowHp;
-	nowHp -= bullet->getDamage();
+
+	nowHp -= gDigit::chk(hitPart, inGame_digit::PART::HEAD) ?
+		bullet->getDamage() * 2 :
+		bullet->getDamage();
+
 	if (nowHp < 1)
 		gDigit::put(take->getInfoCharacter().status, inGame_digit::CHAR::DEAD);
 

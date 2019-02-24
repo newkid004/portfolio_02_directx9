@@ -13,6 +13,9 @@
 
 #include "enemyBase.h"
 #include "nodeMesh.h"
+#include "patternMesh.h"
+
+#include "controllerBase.h"
 
 using DIGIT = inGame_digit;
 #define DIGIT_CHK(d) (type & d)
@@ -34,20 +37,36 @@ enemyBase * enemyFactory::createEnemy(int type)
 		case 0: result = new enemyBase(MN_SRC->getPatternMesh("enemy_male_0"));		break;
 		case 1: result = new enemyBase(MN_SRC->getPatternMesh("enemy_female_0"));	break;
 		}
-	}
-	/*
-	오류떠서 주석쳣엉 <박재홍>
-	*/
-	//auto & vSpawnPos = SGT_GAME->getSet().field->getList().vSpawnPos;
-	//auto & sp = vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)];
-	//result->setPosition(sp->getPosition() +
-	//	D3DXVECTOR3(
-	//		gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
-	//		gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
-	//		gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()))
-	//);
-	result->getInfoMove().maximumSpeed = 0.1f;
 
+		auto & origin = result->getOriginMesh();
+
+		origin->setupBoneInfo("ValveBiped_Bip01_Head1", 9, 9, 9);
+		origin->setupBoneInfo("ValveBiped_Bip01_Spine1", 14, 18, 10);
+		origin->setupBoneInfo("ValveBiped_Bip01_L_Foot", 8, 8, 8);
+		origin->setupBoneInfo("ValveBiped_Bip01_R_Foot", 8, 8, 8);
+		origin->setupBoneInfo("ValveBiped_Bip01_L_Calf", 9, 9, 9);
+		origin->setupBoneInfo("ValveBiped_Bip01_R_Calf", 9, 9, 9);
+		origin->setupBoneInfo("ValveBiped_Bip01_L_Thigh", 9, 9, 9);
+		origin->setupBoneInfo("ValveBiped_Bip01_R_Thigh", 9, 9, 9);
+		origin->setupBoneInfo("ValveBiped_Bip01_L_Hand", 8, 8, 8);
+		origin->setupBoneInfo("ValveBiped_Bip01_R_Hand", 8, 8, 8);
+		origin->setupBoneInfo("ValveBiped_Bip01_L_Forearm", 8, 8, 8);
+		origin->setupBoneInfo("ValveBiped_Bip01_R_Forearm", 8, 8, 8);
+		origin->setupBoneInfo("ValveBiped_Bip01_L_UpperArm", 7, 7, 7);
+		origin->setupBoneInfo("ValveBiped_Bip01_R_UpperArm", 7, 7, 7);
+
+		origin->init();
+		origin->setDebugEnable(true, EDebugDrawType::SPHERE);
+	}
+	auto & vSpawnPos = SGT_GAME->getSet().field->getList().vSpawnPos;
+	auto & sp = vSpawnPos[gFunc::rndInt(0, vSpawnPos.size() - 1)];
+	result->setPosition(sp->getPosition() +
+		D3DXVECTOR3(
+			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
+			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()),
+			gFunc::rndFloat(-sp->getPlaneRadius(), sp->getPlaneRadius()))
+	);
+	result->getInfoMove().maximumSpeed = 0.1f;
 
 	return result;
 }
@@ -88,12 +107,14 @@ enemyBase * enemyFactory::recycleEnemy(int type)
 		recycleable->getInfoCharacter().status = 0;
 
 		grape->putData(recycleable, 2, recycleable->getPosition(), recycleable->getInfoCharacter().colRadius);
+		SAFE_DELETE(recycleable->getController()->getPath());
 
 		result = recycleable;
 	}
 	else
 	{
-		result = SGT_GAME->addEnemy(type);
+		if (vEnemyList.size() < SGT_GAME->getStatus().numMaximumEnemy)
+			result = SGT_GAME->addEnemy(type);
 	}
 
 	int evType = EVENT::TYPE::ENEMY | EVENT::ACT::ENEMY::RESURRECTION;

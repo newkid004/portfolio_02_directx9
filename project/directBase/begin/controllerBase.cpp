@@ -93,7 +93,10 @@ void controllerBase::updateFootPrint(void)
 
 	// 길이 없거나, 플레이어와 같은 위치면 확인 불필요
 	if (pathNodeList.size() <= 1 || pathNodeList.front()->getMember().placedNode == playerNode)
+	{
+		_destPos = SGT_GAME->getSet().player->getPosition();
 		return;
+	}
 
 	D3DXVECTOR3 position = _bindCharacter->getPosition();
 	position.y = 0.0f;
@@ -114,6 +117,11 @@ void controllerBase::updateFootPrint(void)
 		// path 진행
 		_path->advance();
 		placedNode = pathNodeList.front()->getMember().placedNode;
+
+		if (pathNodeList.size() < 2)
+			_destPos = inGame_node::getData(playerNode)->getPosition();
+		else
+			_destPos = inGame_node::getData(pathNodeList.front()->getMember().nextNode)->getPosition();
 	}
 }
 

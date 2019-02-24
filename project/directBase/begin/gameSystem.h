@@ -22,8 +22,25 @@ public :
 		maptool_render* map_render	= nullptr;	// delete
 	};
 
+	struct status
+	{
+		struct digit
+		{
+			globalDigit wave		= 1 << 0;
+			globalDigit enemySpawn	= 1 << 1;
+			globalDigit rideable	= 1 << 2;
+		};
+		int digitActive = 0.0f;
+
+		float timeTotalWave = 180.0f;
+		float timeLeftWave = 0.0f;		// ref
+
+		int numMaximumEnemy = 20;
+	};
+
 private :
 	set _set;
+	status _status;
 
 public :
 	void update(void);
@@ -37,6 +54,7 @@ public :
 
 public :
 	set & getSet(void) { return _set; }
+	status & getStatus(void) { return _status; }
 
 public:
 	gameSystem();
@@ -44,3 +62,4 @@ public:
 };
 
 #define SGT_GAME gameSystem::getInstance()
+using sysDigit = gameSystem::status::digit;

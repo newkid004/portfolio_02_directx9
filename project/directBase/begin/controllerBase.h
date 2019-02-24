@@ -32,6 +32,7 @@ public :
 public :
 	characterBase* & getBindCharacter(void) { return _bindCharacter; }
 	aStar_path* & getPath(void) { return _path; }
+	constexpr D3DXVECTOR3 & getDestPos(void) { return _destPos; }
 
 public:
 	controllerBase(characterBase* bindCharacter);

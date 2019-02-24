@@ -4,6 +4,10 @@
 #include "gFunc.h"
 #include "gDigit.h"
 
+#include "aStar_path.h"
+#include "aStar_node.h"
+#include "aStar_runner.h"
+
 #include "inGame_digit.h"
 #include "inGame_value.h"
 
@@ -46,19 +50,11 @@ void enemyBase::update(void)
 
 	// 죽음
 	if (gDigit::chk(charStatus, DIGIT_CHAR::DEAD))
-	{
-		// 재소환 갱신
-		doResurrection();
 		return;
-	}
 
 	// 접근
 	if (gDigit::chk(charStatus, DIGIT_CHAR::APPROACH))
 		updateApproach();
-
-	// 거리 확인
-	//else
-	//	updateAlert();
 }
 
 void enemyBase::updateApproach(void)
@@ -74,27 +70,7 @@ void enemyBase::updateApproach(void)
 	else
 	{
 		gDigit::pick(charStatus, DIGIT_CHAR::ADJACENT);
-		rotate2Pos(refPlayer->getPosition(), true, true);
+		rotate2Pos(_controller->getDestPos(), true, true);
 		moveDo(DIGIT::KEY::W);
 	}
-}
-
-void enemyBase::updateAlert(void)
-{
-	int & charStatus = _infoCharacter.status;
-	auto refPlayer = SGT_GAME->getSet().player;
-
-	float distance = gFunc::Vec3Distance(refPlayer->getPosition(), _position);
-	if (distance < inGame_value::enemy::aletyDistance)
-		gDigit::put(charStatus, DIGIT_CHAR::ALERT);
-}
-
-void enemyBase::doResurrection(void)
-{
-	// 부활시간 확인
-	enemyController* con = static_cast<enemyController*>(_controller);
-	if (MN_TIME->getRunningTime() < con->refInfoTimeEnemy().timeNextAlive)
-		return;
-
-
 }

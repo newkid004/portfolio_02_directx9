@@ -503,7 +503,7 @@ void PatternManager::initMotionSurvivor(void)
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AWEAPON_RIFLE |
-		AMIX_RELOAD, arr, 1, 0.4f, false);
+		AMIX_RELOAD, arr, 1, 0.7f, false);
 
 	//¼¦°Ç, --, --, ÃÑ»Ì±â, --
 	arr[0] = 88;

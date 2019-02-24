@@ -87,7 +87,4 @@ struct weapon_set
 struct timeEnemy_set
 {
 	float timeNextActive	= 0.0f;		// 다음 행동 대기 시간
-
-	float timeNextDisappear	= 0.0f;		// 사망 시, 없어질 시간
-	float timeNextAlive		= 0.0f;		// 사망 시, 다음 출현
 };
