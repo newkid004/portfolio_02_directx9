@@ -629,7 +629,10 @@
       <UniqueIdentifier>{d079666c-7f10-43a9-8ca4-33253fa8debf}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\classes\event\04_enemySpawner">
-      <UniqueIdentifier>{57c585e8-9afb-4f92-8e82-3330e3880a51}</UniqueIdentifier>
+      <UniqueIdentifier>{5310167d-4db3-418b-81b5-15bfb5e2bf12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\classes\scene\03_menu">
+      <UniqueIdentifier>{9e2170cb-0023-4952-9919-9c7034f660df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1083,9 +1086,6 @@
     <ClInclude Include="enemyBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy\_base</Filter>
     </ClInclude>
-    <ClInclude Include="menuScene.h">
-      <Filter>main\classes\scene\02_inGame</Filter>
-    </ClInclude>
     <ClInclude Include="enemyFactory.h" />
     <ClInclude Include="eShootWeapon.h">
       <Filter>main\classes\event\02_shootWeapon</Filter>
@@ -1105,9 +1105,14 @@
     <ClInclude Include="maptool_brush_spawner.h">
       <Filter>main\classes\scene\01_mapTool\classes\brush\spawner</Filter>
     </ClInclude>
-    <ClInclude Include="eEnemySpawner.h" />
+    <ClInclude Include="eEnemySpawner.h">
+      <Filter>main\classes\event\04_enemySpawner</Filter>
+    </ClInclude>
     <ClInclude Include="sceneUI.h">
       <Filter>main\classes\scene\02_inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="menuScene.h">
+      <Filter>main\classes\scene\03_menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1490,9 +1495,6 @@
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy\_base</Filter>
     </ClCompile>
     <ClCompile Include="enemyFactory.cpp" />
-    <ClCompile Include="menuScene.cpp">
-      <Filter>main\classes\scene\02_inGame</Filter>
-    </ClCompile>
     <ClCompile Include="eShootWeapon.cpp">
       <Filter>main\classes\event\02_shootWeapon</Filter>
     </ClCompile>
@@ -1511,9 +1513,14 @@
     <ClCompile Include="bulletManager.cpp">
       <Filter>main\classes\scene\02_inGame\classes\object\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="eEnemySpawner.cpp" />
+    <ClCompile Include="eEnemySpawner.cpp">
+      <Filter>main\classes\event\04_enemySpawner</Filter>
+    </ClCompile>
     <ClCompile Include="sceneUI.cpp">
       <Filter>main\classes\scene\02_inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="menuScene.cpp">
+      <Filter>main\classes\scene\03_menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

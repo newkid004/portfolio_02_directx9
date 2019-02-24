@@ -125,6 +125,8 @@ void sceneInGame::initSystem(void)
 
 
 	pCharacter->getWeapon() = MN_WEAPON->createWeapon(weapon_set::type::rifle);
+	pCharacter->getInfoCharacter().maxHp = 100;
+	pCharacter->getInfoCharacter().nowHp = 100;
 
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_grid);
@@ -133,9 +135,6 @@ void sceneInGame::initSystem(void)
 
 	// camera
 	_camera = new inGameCamera(pCharacter);
-
-	// cursur
-	ShowCursor(NULL);
 
 	// status
 	auto & sysStatus = SGT_GAME->getStatus();
@@ -157,7 +156,7 @@ void sceneInGame::initField(void)
 		auto e = SGT_GAME->addEnemy();
 		e->setPosition( D3DXVECTOR3(
 			gFunc::rndFloat(-80.0f, 80.0f),
-			gFunc::rndFloat(-80.0f, 80.0f),
+			0.0f,
 			gFunc::rndFloat(-80.0f, 80.0f)));
 	}
 }
@@ -185,6 +184,16 @@ void sceneInGame::initEvent(void)
 		EA_CHARACTER_WALK |
 		EC_PLAYER_STATE_CHANGE_DECREASE);
 
+	eC[2] = new eventCatcher(
+		EVENT::TYPE::CHARACTER |
+		EVENT::KIND::CHARACTER::PLAYER |
+		EVENT::ACT::CHARACTER::DEATH,
+		[](eventBase* e)->void {
+
+	},
+		[](eventBase*)->void {}
+	);
+
 	initEventTrigger();
 	initEventWeapon();
 }
@@ -202,7 +211,7 @@ void sceneInGame::initEventTrigger(void)
 		int & digitActive = SGT_GAME->getStatus().digitActive;
 		if (!gDigit::chk(digitActive, sysDigit::wave))
 		{
-			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave);
+			gDigit::put(SGT_GAME->getStatus().digitActive, sysDigit::wave | sysDigit::enemySpawn);
 			MN_EVENT->add(new eEnemySpawner());
 		}
 	});

@@ -248,7 +248,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 
 			// 충돌 시 이벤트 처리
 			// {
-
+			MN_EVENT->add(new eHitCharacterBullet(bullet, SGT_GAME->getSet().player, 0));
 			// }
 
 			return true;

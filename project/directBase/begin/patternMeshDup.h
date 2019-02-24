@@ -2,13 +2,12 @@
 #include "kGlobalDefine.h"
 #include "renderObject.h"
 #include "AnimationDef.h"
-#include "patternMesh.h"
 
 //
 #include "weaponBase.h"
 //
 
-//class patternMesh;
+class patternMesh;
 
 class patternMeshDup : public renderObject
 {
