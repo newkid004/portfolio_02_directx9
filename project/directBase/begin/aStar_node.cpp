@@ -71,7 +71,7 @@ float aStar_node::getInterval(aStar_node * n1, aStar_node * n2)
 {
 	aStar_node::info *info1, *info2;
 	n1->getInfo(info1);
-	n1->getInfo(info2);
+	n2->getInfo(info2);
 
 	return gFunc::Vec3Distance(info1->pos, info2->pos);
 }

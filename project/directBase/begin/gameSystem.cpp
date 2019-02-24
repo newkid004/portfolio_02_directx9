@@ -74,32 +74,14 @@ void gameSystem::initField(void)
 
 enemyBase * gameSystem::addEnemy(int enemyType)
 {
+	enemyBase* result = enemyFactory::createEnemy(enemyType);
+
 	auto & listSet = _set.field->getList();
 
 	auto & vTotal = listSet.vTotalObject;
 	auto & vEnemyList = listSet.vEnemy;
 	auto & vUpdateList = listSet.vUpdateable;
 	auto & vRenderable = listSet.vRenderable;
-	enemyBase* result = enemyFactory::createEnemy(enemyType);
-	auto & origin = result->getOriginMesh();
-
-	origin->setupBoneInfo("ValveBiped_Bip01_Head1",		 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_Spine1",	 14, 18, 10);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Foot",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Foot",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Calf",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Calf",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Thigh",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Thigh",	 9, 9, 9);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Hand",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Hand",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_Forearm",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_Forearm",	 8, 8, 8);
-	origin->setupBoneInfo("ValveBiped_Bip01_L_UpperArm", 7, 7, 7);
-	origin->setupBoneInfo("ValveBiped_Bip01_R_UpperArm", 7, 7, 7);
-
-	origin->init();
-	origin->setDebugEnable(true, EDebugDrawType::SPHERE);
 
 	_set.field->getMember().grape->putData(result, 2, result->getPosition(), result->getInfoCharacter().colRadius);
 	vTotal.push_back(result);
@@ -108,10 +90,10 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 	vRenderable.push_back(result);
 
 	int evType = EVENT::TYPE::ENEMY | EVENT::ACT::ENEMY::ADDED;
-	if (gDigit::chk(inGame_digit::ENEMY::TANK, enemyType))			evType |= EVENT::KIND::ENEMY::TANKER;
-	else if (gDigit::chk(inGame_digit::ENEMY::COMMON, enemyType))	evType |= EVENT::KIND::ENEMY::BASE;
+	if (gDigit::chk(inGame_digit::ENEMY::TANK, enemyType))			gDigit::put(evType, EVENT::KIND::ENEMY::TANKER);
+	else if (gDigit::chk(inGame_digit::ENEMY::COMMON, enemyType))	gDigit::put(evType, EVENT::KIND::ENEMY::BASE);
 
 	MN_EVENT->add(new eventBase(result, nullptr, evType));
-
+	
 	return result;
 }

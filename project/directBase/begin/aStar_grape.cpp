@@ -113,7 +113,7 @@ void aStar_grape::pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* 
 			bool isInCloseList = false;
 			for (auto i : closeList)
 			{
-				if (viewNode == i->getMember().placedNode)
+				if (viewNode->getIndex() == i->getMember().placedNode->getIndex())
 				{
 					isInCloseList = true;
 					break;
@@ -126,7 +126,7 @@ void aStar_grape::pathfind(aStar_path** out_path, aStar_node* sour, aStar_node* 
 			bool isInOpenList = false;
 			for (auto i : openList)
 			{
-				if (viewNode == i->getMember().placedNode)
+				if (viewNode->getIndex() == i->getMember().placedNode->getIndex())
 				{
 					isInOpenList = true;
 

@@ -18,7 +18,7 @@ public :
 
 protected :
 	void putDigitStatus(bulletBase* bullet, characterBase* take, int hitPart);
-	void putValue(bulletBase* bullet, characterBase* take);
+	void putValue(bulletBase* bullet, characterBase* take, int hitPart);
 
 	particlePoint* createParticle(D3DXVECTOR3 & pos, D3DXVECTOR3 & normal);
 

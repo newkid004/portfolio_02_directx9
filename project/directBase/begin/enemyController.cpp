@@ -35,7 +35,6 @@ enemyController::enemyController(characterBase * bindCharacter) :
 	_infoTimeEnemy.timeNextActive = MN_TIME->getRunningTime();
 	_delay = VALUE::delayHangOut;
 
-	
 	_isFemale = (_bindCharacter->getOriginMesh()->getOriginType() 
 		== patternMesh::type::feMale_zombie ) ? true : false;
 	baseBit();
@@ -90,8 +89,6 @@ void enemyController::update2bit(void)
 			changeBindBit(aniDefine::ANIBIT::SUB, MALE_LYING_BACKWARD);
 		}
 		_delay = VALUE::delayHangOut;
-		// 3ÃÊµÚ »ç¶óÁü
-		_infoTimeEnemy.timeNextDisappear = MN_TIME->getRunningTime() + 3.0f;
 		return;
 	}
 	
@@ -491,7 +488,7 @@ float enemyController::getDistance2player(void)
 		auto & nextPathOwn = path.front()->getMember().nextRunner;
 		auto & prevPathPlayer = path.back()->getMember().prevRunner;
 		float intervalOwn = aStar_node::getInterval(placedNode, nextPathOwn->getMember().placedNode);
-		float intervalPlayer = aStar_node::getInterval(viewPlayer->getPlacedNode(), prevPathPlayer->getMember().prevNode);
+		float intervalPlayer = aStar_node::getInterval(viewPlayer->getPlacedNode(), prevPathPlayer->getMember().placedNode);
 
 		aStar_node::info *infoOwn, *infoPlayer;
 		nextPathOwn->getMember().placedNode->getInfo(infoOwn);

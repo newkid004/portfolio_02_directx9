@@ -70,23 +70,28 @@ inline void heap<T, st_COMP>::pop(void)
 
 	do
 	{
+		int preIndex = index;
+
 		compL = false;
 		compR = false;
 
 		int indexL = childIndex(index, true);
 		int indexR = childIndex(index, false);
 
-		if (indexL < maxIndex) compL = compare(_vData[index], _vData[indexL]);
-		if (indexR < maxIndex) compR = compare(_vData[index], _vData[indexR]);
+		if (indexL < maxIndex) compL = compare(_vData[indexL], _vData[index]);
+		if (indexR < maxIndex) compR = compare(_vData[indexR], _vData[index]);
 
 		if (compL && compR)
-			index = compare(_vData[indexL], _vData[indexR]) ? indexL : indexR;
+			index = compare(_vData[indexL], _vData[indexR]) ? indexR : indexL;
 
 		else if (compL)
 			index = indexL;
 
 		else if (compR)
 			index = indexR;
+
+		if (compL || compR)
+			std::swap(_vData[index], _vData[preIndex]);
 
 	} while (compL || compR);
 }
