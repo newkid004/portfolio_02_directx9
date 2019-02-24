@@ -49,11 +49,11 @@ void weaponShotgun::fireDo(void)
 	/*
 	오류나서 주석쳤습니다 <박재홍>
 	*/
-	//GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
-	//	inGame_value::bullet::speed, this,bulletBase::TYPE::VISIBLE);
-	//auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
-	//GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,
-	//	inGame_value::bullet::speed, this);
+	auto stRay = gFunc::createPickRay(MN_KEY->getMousePos(), GET_CAMERA()->getPosition());
+	GET_BULLET_MANAGER()->addBullet(stRay.origin, stRay.direction,
+		inGame_value::bullet::speed, this);
+	GET_BULLET_MANAGER()->addBullet(_handPosition, _targetDirection,
+		inGame_value::bullet::speed, this, bulletBase::TYPE::VISIBLE);
 	MN_SND->find("shotgunShoot")->play(-1.0f,gFunc::rndFloat( 0.8f, 1.0f));
 }
 

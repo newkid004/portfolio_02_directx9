@@ -402,7 +402,7 @@ void patternMesh::setBoneBoundSphere(void)
 	case type::survivor:
 	{
 		setBoundingSphere(gFunc::createBoundingSphere(D3DXVECTOR3(0.0f, 5.4f, 0.0f), 1300),
-			D3DXVECTOR3(0.0f, 5.4f, 0.0f));
+			D3DXVECTOR3(0.0f, 6.0f, 0.0f));
 
 		break;
 	}

@@ -66,8 +66,12 @@ void bulletManager::update(void)
 		{
 			if (gunCollision(*_gunIter))
 			{
+				// UNVISIBLE BULLET DELETE
 				SAFE_DELETE((*_gunIter));
 				_gunIter = _vGunBulletList.erase(_gunIter);
+				if (_gunIter == _vGunBulletList.end()) continue;
+
+				// VISIBLE BULLET DELETE
 				SAFE_DELETE((*_gunIter));
 				_gunIter = _vGunBulletList.erase(_gunIter);
 				if (_gunIter == _vGunBulletList.end()) continue;
@@ -75,13 +79,19 @@ void bulletManager::update(void)
 		
 			if (gFunc::Vec3Distance(D3DXVECTOR3(0, 0, 0), (*_gunIter)->getPosition()) > 200)
 			{
+				// UNVISIBLE BULLET DELETE
 				SAFE_DELETE((*_gunIter));
 				_gunIter = _vGunBulletList.erase(_gunIter);
+				if (_gunIter == _vGunBulletList.end()) continue;
+
+				// VISIBLE BULLET DELETE
 				SAFE_DELETE((*_gunIter));
 				_gunIter = _vGunBulletList.erase(_gunIter);
+				if (_gunIter == _vGunBulletList.end()) continue;
 			}
 			else ++_gunIter;
 		}
+		else ++_gunIter;
 	}
 
 	for (; _fistIter != _vFistBulletList.end();)
@@ -114,7 +124,8 @@ void bulletManager::draw(void)
 
 	for (; gunIter != _vGunBulletList.end(); ++gunIter)
 	{
-		(*gunIter)->draw();
+		if((*gunIter)->getBulletType() == bulletBase::TYPE::VISIBLE)
+			(*gunIter)->draw();
 	}
 }
 
@@ -203,8 +214,8 @@ bool bulletManager::gunCollision(gunBullet * bullet)
 bool bulletManager::fistCollision(fistBullet * bullet)
 {	
 	if (_bindPlayer == nullptr) return false;
-
 	auto player = _bindPlayer->getOriginMesh();
+
 	// 주체 : ENEMY, 대상 : PLAYER
 	if (bullet->getWeaponType() == weapon_set::type::zombie)
 	{
@@ -219,22 +230,10 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 		if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
 			bullet->getSpeed(), mSphere))
 		{
-			//for (auto rValue : mBoundSphereSet)
-			//{
-			//	auto sphere = rValue.second.sphere;
-			//	sphere.center = rValue.second.drawPosition;
-			//	sphere.radius *= _bindPlayer->getScale().x * 40;
-			//
-			//	if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
-			//		bullet->getSpeed(), sphere))
-			//	{
-			//		D3DXVECTOR3 zom2Player = _bindPlayer->getPosition() - bullet->getRay().origin;
-			//		float cosAngle = D3DXVec3Dot(&bullet->getRay().direction, &zom2Player);
-			//		
-			//if (cosAngle < 0.0f)
-			//{
-			//	return false;
-			//}
+			D3DXVECTOR3 zombie2Player = _bindPlayer->getPosition() - bullet->getRay().origin;
+			float cosAngle = D3DXVec3Dot(&bullet->getRay().direction, &zombie2Player);
+					
+			if (cosAngle < 0.0f) return false;
 
 			printf("피격!! 피격 대상 : %d     %d\n", 
 			bullet->getWeaponType(),
@@ -246,8 +245,6 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 			// }
 
 			return true;
-				//}
-			//}
 		}
 	}
 	else
@@ -265,7 +262,7 @@ bool bulletManager::fistCollision(fistBullet * bullet)
 
 			mSphere.center += enemy->getBoundingSphereOffset();
 			mSphere.radius *= enemy->getScale().x;
-			//gFunc::
+
 			D3DXVECTOR3 intersect;
 
 			if (pick::isLine2Sphere(&bullet->getRay(), &intersect,
@@ -313,7 +310,7 @@ void bulletManager::addBullet(const D3DXVECTOR3 & position, const D3DXVECTOR3 & 
 
 	case weapon_set::type::shotgun:
 	{
-		for (int i = 0; i < BULLET_MAX; ++i)
+		for (int i = 0; i < SHOTGUN_MAX; ++i)
 		{
 			gunBullet* bullet = new gunBullet(speed, bind);
 			D3DXVECTOR3 dir = D3DXVECTOR3(forwardDir.x + gFunc::rndFloat(-0.13f, 0.13f),
