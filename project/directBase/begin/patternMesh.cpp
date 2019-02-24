@@ -192,6 +192,7 @@ void patternMesh::updateBoneMatrix(LPD3DXFRAME a_pstFrame, const D3DXMATRIXA16 &
 	{
 		if (_mBoneInfoList.find(pstBone->Name) != _mBoneInfoList.end())
 		{
+			_mBoneInfoList.find(pstBone->Name)->second.matrix = pstBone->TransformationMatrix;
 			_mBoneInfoList.find(pstBone->Name)->second.combineMatrix = pstBone->combineMatrix;
 
 			setBoundingBoxMatrix(pstBone->Name, _mBoneInfoList.find(pstBone->Name)->second.combineMatrix);

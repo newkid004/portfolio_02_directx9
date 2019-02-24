@@ -87,12 +87,16 @@ void gameSystem::initAirPlane(void)
 	auto & airPlane = _set.airPlane;
 
 	patternMesh::mParam param;
-	param.effectFilePath = "resource/effect/zombie.fx";
+	param.effectFilePath = "resource/effect/airPlane.fx";
 	param.filePath = "resource/mesh/L4D1/c130/c130.X";
 
-	airPlane = new patternMeshDup(MN_SRC->getPatternMesh("airPlane", &param));
+	auto sourceAirPlane = MN_SRC->getPatternMesh("airPlane", &param);
+	sourceAirPlane->rotateZ(180.0f);
+	sourceAirPlane->setScale(0.004 * 0.7);
+	sourceAirPlane->calMatrixFinal();
+
+	airPlane = new patternMeshDup(sourceAirPlane);
 	airPlane->setPosition(D3DXVECTOR3(0, 0, 0));
-	airPlane->setScale(0.04f);
 	airPlane->getNextBit() =
 		ATYPE_AIRPLANE |
 		AIRPLANE_IDLE |

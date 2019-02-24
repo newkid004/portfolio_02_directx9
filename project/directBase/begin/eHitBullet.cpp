@@ -20,13 +20,10 @@ eHitCharacterBullet::eHitCharacterBullet(bulletBase * bullet, characterBase * ta
 		EVENT::CALL::BULLET_COLLISION_TO::CHARACTER,
 		0.3f)
 {
-	auto viewBullet = static_cast<bulletBase*>(bullet);
-	auto viewTake = static_cast<characterBase*>(take);
+	putDigitStatus(bullet, take, hitPart);
+	putValue(bullet, take, hitPart);
 
-	putDigitStatus(viewBullet, viewTake, hitPart);
-	putValue(viewBullet, viewTake, hitPart);
-
-	_particle = createParticle(bullet->getIntersect(), -viewBullet->getRay().direction);
+	_particle = createParticle(bullet->getIntersect(), -bullet->getRay().direction);
 	_particle->particleEmitStart(0.01f);
 }
 

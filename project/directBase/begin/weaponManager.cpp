@@ -22,7 +22,7 @@ void weaponManager::CreateParam(void)
 	staticMesh::mParam stParam =
 	{
 		"resource/mesh/L4D1/items/rifle.x",
-		"resource/effect/example_15.fx"
+		"resource/effect/staticMesh.fx"
 	};
 	_vWeaponParam.push_back(stParam);
 	_vWeaponParam.push_back(stParam);

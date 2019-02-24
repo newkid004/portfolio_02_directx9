@@ -6,8 +6,20 @@
 
 sceneUI::sceneUI()
 {
-	initResource();
-	initUI();
+	_number[0] = new spriteBase("resource/texture/UI/number.png");
+	_number[1] = new spriteBase("resource/texture/UI/number2.png");
+	_itemSlot[0] = new spriteBase("resource/texture/UI/itemSlot_gun.png");
+	_itemSlot[1] = new spriteBase("resource/texture/UI/itemSlot_healkit.png");
+	_m16[0] = new spriteBase("resource/texture/UI/m16.png");
+	_m16[1] = new spriteBase("resource/texture/UI/m16_off.png");
+	_shotGun[0] = new spriteBase("resource/texture/UI/shotGun.png");
+	_shotGun[1] = new spriteBase("resource/texture/UI/shotGun_off.png");
+	_healKit[0] = new spriteBase("resource/texture/UI/healKit.png");
+	_healKit[1] = new spriteBase("resource/texture/UI/healKit_off.png");
+	_hpBarBg = new spriteBase("resource/texture/UI/hpBar.png");
+	_hpBar = new spriteBase("resource/texture/UI/hp_full.png");
+	_hpFont = new spriteBase("resource/texture/UI/hp.png");
+	_profile = new spriteBase("resource/texture/UI/survivor.tga");
 }
 
 sceneUI::~sceneUI()

@@ -16,6 +16,7 @@ protected:
 	ACInfo _controlInfo;
 	D3DXMATRIXA16 _finalHandMatrix[2];
 	D3DXMATRIXA16 _finalNeckMatrix;
+	weaponBase* _weapon;
 
 public:
 	virtual void update(void) override;
@@ -27,6 +28,7 @@ protected:
 
 private:
 	void calcurateHandMatrix(void);
+	void calcurateBoundSphereMatrix(void);
 
 public:
 	int &getNextBit() { return _controlInfo.NextMotionBit; }

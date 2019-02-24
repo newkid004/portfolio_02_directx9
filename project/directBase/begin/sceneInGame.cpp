@@ -25,7 +25,6 @@
 #include "mapObject.h"
 #include "wallMesh.h"
 #include "soundManager.h"
-#include "sceneUI.h"
 
 
 sceneInGame::~sceneInGame()
@@ -184,6 +183,16 @@ void sceneInGame::initEvent(void)
 		EK_CHARACTER_PLAYER |
 		EA_CHARACTER_WALK |
 		EC_PLAYER_STATE_CHANGE_DECREASE);
+
+	eC[2] = new eventCatcher(
+		EVENT::TYPE::CHARACTER |
+		EVENT::KIND::CHARACTER::PLAYER |
+		EVENT::ACT::CHARACTER::DEATH,
+		[](eventBase* e)->void {
+
+	},
+		[](eventBase*)->void {}
+	);
 
 	initEventTrigger();
 	initEventWeapon();

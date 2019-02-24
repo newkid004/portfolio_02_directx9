@@ -102,7 +102,7 @@ enemyBase * enemyFactory::recycleEnemy(int type)
 		recycleable->setPosition(viewSpawner->getPosition() +
 			D3DXVECTOR3(
 				gFunc::rndFloat(-viewSpawner->getPlaneRadius(), viewSpawner->getPlaneRadius()),
-				gFunc::rndFloat(-viewSpawner->getPlaneRadius(), viewSpawner->getPlaneRadius()),
+				0.0f,
 				gFunc::rndFloat(-viewSpawner->getPlaneRadius(), viewSpawner->getPlaneRadius()))
 		);
 		recycleable->getInfoCharacter().nowHp = recycleable->getInfoCharacter().maxHp;
