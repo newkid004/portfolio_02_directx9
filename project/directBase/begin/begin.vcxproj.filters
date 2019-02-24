@@ -631,6 +631,9 @@
     <Filter Include="main\classes\event\04_enemySpawner">
       <UniqueIdentifier>{5310167d-4db3-418b-81b5-15bfb5e2bf12}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\classes\scene\03_menu">
+      <UniqueIdentifier>{9e2170cb-0023-4952-9919-9c7034f660df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kGlobalDefine.h">
@@ -1083,9 +1086,6 @@
     <ClInclude Include="enemyBase.h">
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy\_base</Filter>
     </ClInclude>
-    <ClInclude Include="menuScene.h">
-      <Filter>main\classes\scene\02_inGame</Filter>
-    </ClInclude>
     <ClInclude Include="enemyFactory.h" />
     <ClInclude Include="eShootWeapon.h">
       <Filter>main\classes\event\02_shootWeapon</Filter>
@@ -1110,6 +1110,9 @@
     </ClInclude>
     <ClInclude Include="sceneUI.h">
       <Filter>main\classes\scene\02_inGame</Filter>
+    </ClInclude>
+    <ClInclude Include="menuScene.h">
+      <Filter>main\classes\scene\03_menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1492,9 +1495,6 @@
       <Filter>main\classes\scene\02_inGame\classes\object\character\enemy\_base</Filter>
     </ClCompile>
     <ClCompile Include="enemyFactory.cpp" />
-    <ClCompile Include="menuScene.cpp">
-      <Filter>main\classes\scene\02_inGame</Filter>
-    </ClCompile>
     <ClCompile Include="eShootWeapon.cpp">
       <Filter>main\classes\event\02_shootWeapon</Filter>
     </ClCompile>
@@ -1518,6 +1518,9 @@
     </ClCompile>
     <ClCompile Include="sceneUI.cpp">
       <Filter>main\classes\scene\02_inGame</Filter>
+    </ClCompile>
+    <ClCompile Include="menuScene.cpp">
+      <Filter>main\classes\scene\03_menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

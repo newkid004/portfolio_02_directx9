@@ -137,9 +137,6 @@ void sceneInGame::initSystem(void)
 	// camera
 	_camera = new inGameCamera(pCharacter);
 
-	// cursur
-	ShowCursor(NULL);
-
 	// status
 	auto & sysStatus = SGT_GAME->getStatus();
 

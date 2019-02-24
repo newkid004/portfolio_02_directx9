@@ -33,18 +33,24 @@ void menuScene::update(void)
 	{
 		// 메인게임으로 scene 전환
 		printf("mainGame\n");
+		ShowCursor(FALSE);
+		MN_SCENE->change("sceneInGame");
 		MN_SND->find("menu_accept")->play();
 	}
 	else if (MN_KEY->mouseUp() && intersectMouseToRect(mapToolButton.rc))
 	{
 		// 맵툴로 scene 전환
 		printf("mapTool\n");
+		ShowCursor(TRUE);
+		MN_SCENE->change("sceneMapTool");
 		MN_SND->find("menu_accept")->play();
 	}
 	else if (MN_KEY->mouseUp() && intersectMouseToRect(exitButton.rc))
 	{
 		// 나가기
 		printf("exit\n");
+		ShowCursor(TRUE);
+		PostMessage(MN_WIN->getHWnd(), WM_DESTROY, 0, 0);
 		MN_SND->find("menu_accept")->play();
 	}
 }
