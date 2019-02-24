@@ -47,7 +47,6 @@ void sceneInGame::init(void)
 	initSound();
 	initUI();
 
-	MN_SND->find("inGameB")->play(0.5f);
 }
 
 void sceneInGame::update(void)

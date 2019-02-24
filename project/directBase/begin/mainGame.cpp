@@ -46,7 +46,7 @@ void mainGame::init(void)
 
 	//*/
 
-	MN_SCENE->change("deadScene");
+	MN_SCENE->change("menuScene");
 }
 
 void mainGame::update(void)

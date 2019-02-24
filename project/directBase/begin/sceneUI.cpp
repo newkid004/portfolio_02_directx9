@@ -6,20 +6,8 @@
 
 sceneUI::sceneUI()
 {
-	_number[0] = new spriteBase("resource/texture/UI/number.png");
-	_number[1] = new spriteBase("resource/texture/UI/number2.png");
-	_itemSlot[0] = new spriteBase("resource/texture/UI/itemSlot_gun.png");
-	_itemSlot[1] = new spriteBase("resource/texture/UI/itemSlot_healkit.png");
-	_m16[0] = new spriteBase("resource/texture/UI/m16.png");
-	_m16[1] = new spriteBase("resource/texture/UI/m16_off.png");
-	_shotGun[0] = new spriteBase("resource/texture/UI/shotGun.png");
-	_shotGun[1] = new spriteBase("resource/texture/UI/shotGun_off.png");
-	_healKit[0] = new spriteBase("resource/texture/UI/healKit.png");
-	_healKit[1] = new spriteBase("resource/texture/UI/healKit_off.png");
-	_hpBarBg = new spriteBase("resource/texture/UI/hpBar.png");
-	_hpBar = new spriteBase("resource/texture/UI/hp_full.png");
-	_hpFont = new spriteBase("resource/texture/UI/hp.png");
-	_profile = new spriteBase("resource/texture/UI/survivor.tga");
+	initResource();
+	initUI();
 }
 
 sceneUI::~sceneUI()
@@ -85,14 +73,17 @@ void sceneUI::draw(void)
 
 	//체력 퍼센트
 	float persent = (float)SGT_GAME->getSet().player->getInfoCharacter().nowHp / (float)SGT_GAME->getSet().player->getInfoCharacter().maxHp;
+	persent = max(0, persent);
 	LPDIRECT3DTEXTURE9 hp;
+	int cHp = max(0, SGT_GAME->getSet().player->getInfoCharacter().nowHp);
+
 
 	//체력 숫자
 	if (persent < 0.3f)		hp = _number[4];
 	else if (persent <0.6f)	hp = _number[3];
 	else					hp = _number[2];
 	position = D3DXVECTOR2(winCen.x + 420.0f, winCen.y + 280.0f);
-	drawNumber(hp, SGT_GAME->getSet().player->getInfoCharacter().nowHp,position,D3DXVECTOR2(1.3f,1.3f));
+	drawNumber(hp, cHp,position,D3DXVECTOR2(1.3f,1.3f));
 
 	//체력 바
 	D3DXVECTOR2 size;

@@ -35,6 +35,7 @@ void menuScene::update(void)
 		ShowCursor(FALSE);
 		MN_SCENE->change("sceneInGame");
 		MN_SND->find("menu_accept")->play();
+		MN_SND->find("inGameB")->play();
 	}
 	else if (MN_KEY->mouseUp() && intersectMouseToRect(mapToolButton.rc))
 	{
