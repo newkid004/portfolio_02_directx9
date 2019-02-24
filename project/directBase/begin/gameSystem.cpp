@@ -35,7 +35,6 @@ gameSystem::gameSystem()
 	initAirPlane();
 	_skyBox = createSkyBox();
 	_skyBox->setScale(D3DXVECTOR3(10, 10, 10));
-	_skyBox->getIsCull() = false;
 }
 
 gameSystem::~gameSystem()
@@ -51,15 +50,8 @@ void gameSystem::update(void)
 	GET_CAMERA()->putOffsetPosition();
 	_set.map->update();
 	_skyBox->update();
+	_skyBox->getIsCull() = false;
 
-	//if (MN_KEY->keyPress(DIK_1))
-	//{
-	//	setDebugEnable(true);
-	//}
-	//else if (MN_KEY->keyPress(DIK_2))
-	//{
-	//	setDebugEnable(false);
-	//}
 }
 
 void gameSystem::draw(void)
