@@ -118,6 +118,8 @@ void sceneInGame::initSystem(void)
 
 
 	pCharacter->getWeapon() = MN_WEAPON->createWeapon(weapon_set::type::rifle);
+	pCharacter->getInfoCharacter().maxHp = 100;
+	pCharacter->getInfoCharacter().nowHp = 100;
 
 	SAFE_DELETE(_camera);
 	SAFE_DELETE(_grid);
