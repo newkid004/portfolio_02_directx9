@@ -53,7 +53,7 @@ inline void inGame_grape::pickData(T & data, int listInterval, D3DXVECTOR3 & pos
 			for (; iter != viewList->end();)
 			{
 				if (data == *iter)
-					viewList->erase(iter);
+					iter = viewList->erase(iter);
 
 				else
 					++iter;

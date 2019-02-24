@@ -183,6 +183,7 @@ void enemyController::update2bit(void)
 			if (_bindCharacter->getAControllInfo().persent >= 0.8f)
 			{
 				gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
+				return;
 			}
 		}
 		else
@@ -460,6 +461,8 @@ float enemyController::getDistance2player(void)
 
 	auto placedNode = _bindCharacter->getPlacedNode();
 	auto playerNode = viewPlayer->getPlacedNode();
+
+	if (!_path) return 10000.0f;
 
 	auto & path = _path->unpack();
 

@@ -27,10 +27,10 @@ protected :
 	virtual void updateFootPrint(void);
 
 private :
-	void createPath2Player(void);
 	void findPath2Player(void);
 
 public :
+	void createPath2Player(void);
 
 
 public :
