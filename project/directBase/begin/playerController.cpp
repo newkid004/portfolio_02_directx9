@@ -85,12 +85,4 @@ void playerController::updateAnimation(void)
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::MAIN, AMAIN_IDLE);
 		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::SUB, AIDLE_STANDING);
 	}
-
-	int index = _bindCharacter->getNextBit();
-	if (_bindCharacter->getInfoCharacter().maxHp > _bindCharacter->getInfoCharacter().nowHp)
-	{
-		CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::CONDITION, ACONDITION_INJURED);
-	}
-	else CHANGE_BIT(_bindCharacter->getNextBit(), aniDefine::ANIBIT::CONDITION, ACONDITION_NORMAL);
-
 }
