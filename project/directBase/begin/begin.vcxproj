@@ -173,7 +173,6 @@
     <ClInclude Include="AnimationDef.h" />
     <ClInclude Include="AnimationTester.h" />
     <ClInclude Include="baseObject.h" />
-    <ClInclude Include="boxObject.h" />
     <ClInclude Include="bulletManager.h" />
     <ClInclude Include="buttonBase.h" />
     <ClInclude Include="buttonItem.h" />
@@ -271,7 +270,6 @@
     <ClInclude Include="renderObject.h" />
     <ClInclude Include="resourceManager.h" />
     <ClInclude Include="sceneBase.h" />
-    <ClInclude Include="sceneCollisionTest.h" />
     <ClInclude Include="sceneEnding.h" />
     <ClInclude Include="sceneInGame.h" />
     <ClInclude Include="sceneManager.h" />
@@ -299,7 +297,6 @@
     <ClInclude Include="triggerMesh.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="uiManager.h" />
-    <ClInclude Include="wallCollision.h" />
     <ClInclude Include="wallMesh.h" />
     <ClInclude Include="weaponBase.h" />
     <ClInclude Include="weaponHealkit.h" />
@@ -333,7 +330,6 @@
     <ClCompile Include="aStar_path.cpp" />
     <ClCompile Include="aStar_runner.cpp" />
     <ClCompile Include="baseObject.cpp" />
-    <ClCompile Include="boxObject.cpp" />
     <ClCompile Include="bulletBase.cpp" />
     <ClCompile Include="bulletManager.cpp" />
     <ClCompile Include="buttonBase.cpp" />
@@ -417,7 +413,6 @@
     <ClCompile Include="renderObject.cpp" />
     <ClCompile Include="resourceManager.cpp" />
     <ClCompile Include="sceneBase.cpp" />
-    <ClCompile Include="sceneCollisionTest.cpp" />
     <ClCompile Include="sceneEnding.cpp" />
     <ClCompile Include="sceneInGame.cpp" />
     <ClCompile Include="sceneManager.cpp" />
@@ -444,7 +439,6 @@
     <ClCompile Include="triggerMesh.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="uiManager.cpp" />
-    <ClCompile Include="wallCollision.cpp" />
     <ClCompile Include="wallMesh.cpp" />
     <ClCompile Include="weaponBase.cpp" />
     <ClCompile Include="weaponHealkit.cpp" />
