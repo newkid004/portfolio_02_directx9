@@ -99,6 +99,7 @@ void enemyController::update2bit(void)
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT))
 	{
 		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 
 
 		if (_soundT.effectSoundStart < MN_TIME->getRunningTime())
@@ -179,6 +180,7 @@ void enemyController::update2bit(void)
 	// 피격 상태(밀쳐진)
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED))
 	{
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 		//밀쳐진 애니메이션이 끝났을 경우
 		if ((_bindCharacter->getAControllInfo().CurrentMotionBit& GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
 			== MALE_SHOVED)
@@ -213,7 +215,8 @@ void enemyController::update2bit(void)
 	}
 
 	// 공격
-	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT))
+	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT)||
+		gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK))
 	{
 		_delay = VALUE::delayMove;
 		return;
