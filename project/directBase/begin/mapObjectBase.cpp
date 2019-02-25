@@ -80,6 +80,7 @@ void mapObjectBase::addMapObject(string key, string meshFilePath, string effectF
 	stParameters.effectFilePath = effectFilePath;
 
 	wallMesh* wall = new wallMesh(stParameters, textureFilePath, normalTextureFilePath);
+	wall->setDebugEnable(true, EDebugDrawType::WALL);
 	m_oMapObjectList.insert(MAPLIST::value_type(key, wall));
 	m_vMapList.push_back(wall);
 }
