@@ -87,6 +87,7 @@ void weaponNormal::normalPost(void)
 bool weaponNormal::isNormalPossible(void)
 {
 	return (MN_TIME->getRunningTime() > _infoWeapon.nextFireTime) &&
-		(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ADJACENT)
-			&&!(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::DEAD)));
+		(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ADJACENT))
+			&& !(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::DEAD)) &&
+				!(gDigit::chk(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::BESHOT));
 }
