@@ -79,6 +79,7 @@ void sceneMapTool::update(void)
 	_window->update();
 	_field->update();
 	_skybox->update();
+	_skybox->getIsCull() = false;
 }
 
 void sceneMapTool::draw(void)
@@ -93,7 +94,7 @@ void sceneMapTool::draw(void)
 
 void sceneMapTool::drawUI(void)
 {
-	sceneBase::drawUI();
+	// sceneBase::drawUI();
 
 	MN_UI->drawUI();	// window
 

@@ -22,7 +22,7 @@
     <ProjectGuid>{FC406838-DD7D-49EF-964D-DD2DB800D4DD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>begin</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>directBase</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -37,7 +37,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -74,8 +74,8 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\WorkSpace\L4DGame\project\directBase\begin\include;D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;C:\Users\ChoiSY\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\WorkSpace\L4DGame\project\directBase\begin\include;D:\Include;D:\WorkSpace\L4DCompile\project\directBase\begin\include;C:\Users\newki\Source\Repos\portfolio_02_directx9\project\directBase\begin\include;C:\Users\msc20\source\repos\portfolio_02_directx9\project\directBase\begin\include;C:\Users\ChoiSY\source\repos\portfolio_02_directx9\project\directBase\begin\include;C:\Users\김민철\source\repos\portfolio_02_directx9\project\directBase\begin\inc;C:\Users\김민철\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;C:\Users\김민철\source\repos\portfolio_02_directx9\project\directBase\begin\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -84,8 +84,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;C:\Users\김민철\source\repos\portfolio_02_directx9\project\directBase\begin\inc;C:\Users\김민철\source\repos\portfolio_02_directx9\project\directBase\begin\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;C:\Users\김민철\source\repos\portfolio_02_directx9\project\directBase\begin\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

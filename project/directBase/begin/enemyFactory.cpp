@@ -80,6 +80,7 @@ enemyBase * enemyFactory::createEnemy(int type)
 	{
 		result->refEnemyType() = type;
 		result->getInfoMove().maximumSpeed = 0.32f;
+		result->getInfoMove().maximumSpeed += gFunc::rndFloat(-0.02f, 0.02F);
 	}
 
 	return result;
