@@ -118,7 +118,7 @@ return &_instance;						\
 #define STR_MAP(arg) std::unordered_map<std::string, arg>
 
 // ----- Ã¢ ¼³Á¤ ----- //
-#define WINNAME				"winDirect"
+#define WINNAME				"L4D"
 #define WINSIZEX			1280
 #define WINSIZEY			720
 #define BACK_COLOR			COLOR_GRAY

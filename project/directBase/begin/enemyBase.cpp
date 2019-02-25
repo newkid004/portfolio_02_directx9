@@ -52,6 +52,9 @@ void enemyBase::update(void)
 	if (gDigit::chk(charStatus, DIGIT_CHAR::DEAD))
 		return;
 
+	if (gDigit::chk(charStatus, DIGIT_CHAR::ATTACK))
+		return;
+
 	// Á¢±Ù
 	if (gDigit::chk(charStatus, DIGIT_CHAR::APPROACH))
 		updateApproach();
@@ -65,7 +68,7 @@ void enemyBase::updateApproach(void)
 	gDigit::put(charStatus, DIGIT_CHAR::APPROACH);
 
 	float distance = gFunc::Vec3Distance(refPlayer->getPosition(), _position);
-	if (distance < 5.0f)
+	if (distance < 10.0f)
 		gDigit::put(charStatus, DIGIT_CHAR::ADJACENT);
 	else
 	{

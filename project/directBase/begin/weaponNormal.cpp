@@ -36,7 +36,6 @@ void weaponNormal::updateWeapon(D3DXMATRIXA16 combineMatrix[], bool isCull)
 
 void weaponNormal::normalPre(void)
 {
-	gDigit::pick(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 	int currentBit = _bindPMesh->getAControllInfo().CurrentMotionBit;
 
 	switch (_bindPMesh->getOriginMesh()->getOriginType())
@@ -51,8 +50,9 @@ void weaponNormal::normalPre(void)
 				D3DXVECTOR3 stNeckPosition = _bindPMesh->getPosition();
 				stNeckPosition.y += 9.0f;
 				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 
-					inGame_value::bullet::speed, this);
+					10.0f, this);
 				MN_SND->find("claw_miss")->play(-1.0f, gFunc::rndFloat(0.8f, 1.0f));
+				gDigit::pick(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 			}
 		}
 	}

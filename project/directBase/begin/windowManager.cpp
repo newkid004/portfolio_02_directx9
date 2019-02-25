@@ -59,8 +59,8 @@ HWND windowManager::createWindow(HINSTANCE hInstance, const SIZE & windowSize)
 	// 윈도우 생성
 	return CreateWindow(winClass.lpszClassName, winClass.lpszClassName,
 		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
+		10,
+		10,
 		winRect.right - winRect.left,
 		winRect.bottom - winRect.top,
 		GetDesktopWindow(),
