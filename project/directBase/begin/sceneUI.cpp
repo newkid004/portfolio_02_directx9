@@ -3,6 +3,8 @@
 #include "player.h"
 #include "weaponBase.h"
 #include "gFunc.h"
+#include "gDigit.h"
+
 
 sceneUI::sceneUI()
 {
@@ -99,6 +101,26 @@ void sceneUI::draw(void)
 		D3DXVECTOR2(winCen.x + 380, winCen.y + 326),
 		size,
 		scale);
+
+	gFunc::getTextureSize(&size, _timer[0]);
+	if (gDigit::chk(SGT_GAME->getStatus().digitActive, sysDigit::wave))
+	{
+		position = D3DXVECTOR2(winCen.x -150, 20);
+		gFunc::drawSprite(_timer[0],
+			position,
+			size,
+			D3DXVECTOR2(1.0f, 1.0f));
+
+		gFunc::getTextureSize(&size, _timer[1]);
+		position += D3DXVECTOR2(10.0f,11.0f);
+		float persent = 1.0f - SGT_GAME->getStatus().timeLeftWave/ SGT_GAME->getStatus().timeTotalWave;
+		scale = D3DXVECTOR2(1.0f*(persent+0.1f), 0.95f);
+
+		gFunc::drawSprite(_timer[1],
+			position,
+			D3DXVECTOR2(size.x*scale.x, size.y),
+			scale);
+	}
 }
 
 void sceneUI::initResource(void)
@@ -124,6 +146,9 @@ void sceneUI::initResource(void)
 	_hpBar[0] = MN_SRC->getSpriteTexture("resource/texture/UI/hp_full.png");
 	_hpBar[1] = MN_SRC->getSpriteTexture("resource/texture/UI/hp_full2.png");
 	_hpBar[2] = MN_SRC->getSpriteTexture("resource/texture/UI/hp_full3.png");
+
+	_timer[0] = MN_SRC->getSpriteTexture("resource/texture/UI/waveBar.png");
+	_timer[1] = MN_SRC->getSpriteTexture("resource/texture/UI/waveBarIn.png");
 }
 
 void sceneUI::initUI(void)
