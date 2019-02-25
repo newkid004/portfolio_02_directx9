@@ -102,9 +102,10 @@ void sceneUI::draw(void)
 		size,
 		scale);
 
-	gFunc::getTextureSize(&size, _timer[0]);
+	//wave
 	if (gDigit::chk(SGT_GAME->getStatus().digitActive, sysDigit::wave))
 	{
+		gFunc::getTextureSize(&size, _timer[0]);
 		position = D3DXVECTOR2(winCen.x -150, 20);
 		gFunc::drawSprite(_timer[0],
 			position,
@@ -114,12 +115,22 @@ void sceneUI::draw(void)
 		gFunc::getTextureSize(&size, _timer[1]);
 		position += D3DXVECTOR2(10.0f,11.0f);
 		float persent = 1.0f - SGT_GAME->getStatus().timeLeftWave/ SGT_GAME->getStatus().timeTotalWave;
-		scale = D3DXVECTOR2(1.0f*(persent+0.1f), 0.95f);
+		scale = D3DXVECTOR2(1.0f*(persent), 0.95f);
 
 		gFunc::drawSprite(_timer[1],
 			position,
 			D3DXVECTOR2(size.x*scale.x, size.y),
 			scale);
+
+		D3DXVECTOR2 scaleA = D3DXVECTOR2(0.25f, 0.25f);
+		D3DXVECTOR2 sizeA;
+		gFunc::getTextureSize(&sizeA, _airplane);
+		position = D3DXVECTOR2(position.x - 25.0f,position.y - 13.0f);
+		
+		gFunc::drawSprite(_airplane,
+			D3DXVECTOR2(position.x + size.x*scale.x,position.y),
+			D3DXVECTOR2(sizeA.x*scaleA.x, sizeA.y * scaleA.y),
+			scaleA);
 	}
 }
 
@@ -149,6 +160,8 @@ void sceneUI::initResource(void)
 
 	_timer[0] = MN_SRC->getSpriteTexture("resource/texture/UI/waveBar.png");
 	_timer[1] = MN_SRC->getSpriteTexture("resource/texture/UI/waveBarIn.png");
+
+	_airplane = MN_SRC->getSpriteTexture("resource/texture/UI/airplane.png");
 }
 
 void sceneUI::initUI(void)
