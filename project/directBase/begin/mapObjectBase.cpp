@@ -70,11 +70,6 @@ void mapObjectBase::init(void)
 	setMeshUVOffset("floor3RightWall", 8, 1.0f);
 	setMeshUVOffset("floor3BottomWall", 8, 1.0f);
 	setMeshUVOffset("floor3Wall_1", 4, 1.0f);
-
-	for (auto rValue : m_vMapList)
-	{
-		rValue->setDebugEnable(true, EDebugDrawType::NONE);
-	}
 }
 
 void mapObjectBase::addMapObject(string key, string meshFilePath, string effectFilePath, 

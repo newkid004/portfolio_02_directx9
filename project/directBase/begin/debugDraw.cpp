@@ -9,15 +9,24 @@ debugDraw::debugDraw(renderObject * bind, EDebugDrawType drawType) :
 	_bindObject(bind),
 	_drawType(drawType)
 {
-	//switch (drawType)
-	//{
-	//case EDebugDrawType::BOX:		createBoundingBox(bind->getBoundingBoxSetList()); break;
-	//case EDebugDrawType::SPHERE:	createBoundingSphere(bind->getBoundingSphereSetList()); break;
-	//}
-	_meshBoundingSphere = createBoundingSphere(bind->getBoundingSphere());
-	createBoundingBox(bind->getBoundingBoxList());
-	createBoundingBox(bind->getBoundingBoxSetList());
-	createBoundingSphere(bind->getBoundingSphereSetList());
+	switch (drawType)
+	{
+	case EDebugDrawType::NONE:
+	case EDebugDrawType::BOX:		
+	case EDebugDrawType::SPHERE:
+	{
+		_meshBoundingSphere = createBoundingSphere(bind->getBoundingSphere());
+		createBoundingBox(bind->getBoundingBoxList());
+		createBoundingBox(bind->getBoundingBoxSetList());
+		createBoundingSphere(bind->getBoundingSphereSetList());
+	} break;
+	case EDebugDrawType::PROP:
+	case EDebugDrawType::WALL:
+	{
+		createBoundingBox(bind->getBoundingBoxList());
+	} break;
+	}
+	
 }
 
 debugDraw::~debugDraw()

@@ -143,26 +143,6 @@ enemyBase * gameSystem::addEnemy(int enemyType)
 	return result;
 }
 
-void gameSystem::setDebugEnable(bool value)
-{
-	if (value)
-	{
-		_set.player->setDebugEnable(value, EDebugDrawType::SPHERE);
-		for (auto rValue : _set.field->getList().vEnemy)
-		{
-			rValue->setDebugEnable(value, EDebugDrawType::SPHERE);
-		}
-	}
-	else
-	{
-		_set.player->setDebugEnable(value);
-		for (auto rValue : _set.field->getList().vEnemy)
-		{
-			rValue->setDebugEnable(value);
-		}
-	}
-}
-
 skyBox * gameSystem::createSkyBox(void)
 {
 	skyBox::mParam stParameters = {
