@@ -24,6 +24,7 @@ debugDraw::debugDraw(renderObject * bind, EDebugDrawType drawType) :
 	case EDebugDrawType::WALL:
 	{
 		createBoundingBox(bind->getBoundingBoxList());
+		createBoundingBox(bind->getBoundingBoxSetList());
 	} break;
 	}
 	
@@ -434,7 +435,7 @@ void debugDraw::getMatrixBound(int index, D3DXMATRIXA16 * outMat, EDebugDrawType
 			(_vbBox[index].min.y + _vbBox[index].max.y) / 2.0f,
 			(_vbBox[index].min.z + _vbBox[index].max.z) / 2.0f);
 
-		*outMat = mTranslate * _bindObject->getMatrixFinal();
+		*outMat = _bindObject->getMatrixFinal() * mTranslate;
 	} break;
 
 	case EDebugDrawType::SPHERE: {
@@ -445,7 +446,7 @@ void debugDraw::getMatrixBound(int index, D3DXMATRIXA16 * outMat, EDebugDrawType
 			_vbSphere[index].center.y,
 			_vbSphere[index].center.z);
 
-		*outMat = mTranslate * _bindObject->getMatrixFinal();
+		*outMat = _bindObject->getMatrixFinal() * mTranslate;
 	} break;
 	}
 }
