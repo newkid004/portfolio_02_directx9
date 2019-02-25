@@ -14,19 +14,25 @@ sceneUI::sceneUI()
 
 sceneUI::~sceneUI()
 {
-	SAFE_DELETE(_number[0]);
-	SAFE_DELETE(_number[1]);
-	SAFE_DELETE(_m16[0]);
-	SAFE_DELETE(_m16[1]);
-	SAFE_DELETE(_shotGun[0]);
-	SAFE_DELETE(_shotGun[1]);
-	SAFE_DELETE(_healKit[0]);
-	SAFE_DELETE(_healKit[1]);
-	SAFE_DELETE(_itemSlot[0]);
-	SAFE_DELETE(_itemSlot[1]);
+	for (int i = 0; i < 5; i++)
+	{
+		SAFE_DELETE(_number[i]);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		SAFE_DELETE(_m16[i]);
+		SAFE_DELETE(_shotGun[i]);
+		SAFE_DELETE(_healKit[i]);
+		SAFE_DELETE(_itemSlot[i]);
+		SAFE_DELETE(_crosshair[i]);
+		SAFE_DELETE(_timer[i]);
+	}
+
 	SAFE_DELETE(_hpBarBg);
 	SAFE_DELETE(_hpFont);
 	SAFE_DELETE(_profile);
+	SAFE_DELETE(_airplane);
 }
 
 void sceneUI::update(void)

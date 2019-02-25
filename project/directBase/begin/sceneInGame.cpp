@@ -93,12 +93,21 @@ void sceneInGame::initResource(void)
 	// player
 	patternMesh::mParam param;
 	param.effectFilePath = "resource/effect/Survivor.fx";
-	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";	MN_SRC->getPatternMesh("test", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/Teenangst/teenangst.x";		MN_SRC->getPatternMesh("test", &param)->setScale(0.004f);
 
 	// enemy
 	param.effectFilePath = "resource/effect/zombie.fx";
-	param.filePath = "resource/mesh/L4D1/male/male.X";				MN_SRC->getPatternMesh("enemy_male_0", &param)->setScale(0.004f);
-	param.filePath = "resource/mesh/L4D1/female/female.X";			MN_SRC->getPatternMesh("enemy_female_0", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/male/1/male.X";				MN_SRC->getPatternMesh("enemy_male_0", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/male/2/male2.X";				MN_SRC->getPatternMesh("enemy_male_1", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/male/3/male3.X";				MN_SRC->getPatternMesh("enemy_male_2", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/male/4/male4.X";				MN_SRC->getPatternMesh("enemy_male_3", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/male/5/male5.X";				MN_SRC->getPatternMesh("enemy_male_4", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/female/1/female.X";				MN_SRC->getPatternMesh("enemy_female_0", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/female/2/female2.X";				MN_SRC->getPatternMesh("enemy_female_1", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/female/3/female3.X";				MN_SRC->getPatternMesh("enemy_female_2", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/female/4/female4.X";				MN_SRC->getPatternMesh("enemy_female_3", &param)->setScale(0.004f);
+	param.filePath = "resource/mesh/L4D1/female/5/female5.X";				MN_SRC->getPatternMesh("enemy_female_4", &param)->setScale(0.004f);
+	//param.filePath = "resource/mesh/L4D1/female/female2.X";			MN_SRC->getPatternMesh("enemy_female_0", &param)->setScale(0.004f);
 
 	//UI
 	_crosshair[0]	= new spriteBase("resource/texture/UI/crosshair.png");

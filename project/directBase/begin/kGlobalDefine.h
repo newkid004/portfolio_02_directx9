@@ -154,6 +154,8 @@ enum class EDebugDrawType
 {
 	BOX,
 	SPHERE,
+	WALL,
+	PROP,
 	NONE
 };
 
