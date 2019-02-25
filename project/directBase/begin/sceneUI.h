@@ -17,6 +17,8 @@ private:
 
 	LPDIRECT3DTEXTURE9 _number[5];
 	LPDIRECT3DTEXTURE9 _hpBar[3];
+
+	LPDIRECT3DTEXTURE9 _timer[2];
 public:
 	void update(void);
 	void draw(void);
