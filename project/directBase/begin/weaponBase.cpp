@@ -171,8 +171,8 @@ void weaponBase::normalPre(void)
 	if ((_bindPMesh->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX))
 		== AMIX_ATTACK)
 	{
-		if (_bindPMesh->getAControllInfo().persent >= 0.7f)
-		//if(_bindPMesh->getAControllInfo().isEnd)
+		//if (_bindPMesh->getAControllInfo().persent >= 0.7f)
+		if(_bindPMesh->getAControllInfo().isEnd)
 		{
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);
 		}
@@ -183,9 +183,6 @@ void weaponBase::normalDo(void)
 {
 	gDigit::put(_infoWeapon.status, DIGIT::WEAPON::ATTACK);
 	CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_ATTACK);
-	//D3DXVECTOR3 stNeckPosition = _position;
-	//D3DXVec3TransformCoord(&stNeckPosition, &stNeckPosition, &_bindPMesh->getFinalNeckMatrix());
-
 	// 공격 타입 보존
 	int preType = _infoWeapon.type;
 	_infoWeapon.type = weapon_set::type::none;

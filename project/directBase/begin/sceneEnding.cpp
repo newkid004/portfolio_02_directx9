@@ -8,6 +8,7 @@
 #include "patternMeshDup.h"
 #include "player.h"
 #include "skyBox.h"
+#include "debugGrid.h"
 
 sceneEnding::sceneEnding()
 {
@@ -36,6 +37,7 @@ void sceneEnding::update(void)
 {
 	sceneBase::update();
 
+	getGrid()->setVisible(false);
 	if (!_isInit)
 	{
 		_camera->setAspect(MN_WIN->getAspect(), 60.0f, 3000.0f);

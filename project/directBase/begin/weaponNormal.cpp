@@ -51,7 +51,9 @@ void weaponNormal::normalPre(void)
 				stNeckPosition.y += 9.0f;
 				MN_BULLET->addBullet(stNeckPosition, _bindPMesh->getDirectForward(), 
 					10.0f, this);
-				MN_SND->find("claw_miss")->play(-1.0f, gFunc::rndFloat(0.8f, 1.0f));
+				if (gDigit::chk(SGT_GAME->getStatus().digitActive, sysDigit::wave) &&
+					SGT_GAME->getStatus().timeLeftWave <= 0);
+				else MN_SND->find("claw_miss")->play(-1.0f, gFunc::rndFloat(0.8f, 1.0f));
 				gDigit::pick(_bindPMesh->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 			}
 		}

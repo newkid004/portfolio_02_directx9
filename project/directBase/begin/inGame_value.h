@@ -19,8 +19,8 @@ struct inGame_value
 		globalReal delayAlert				= 0.5f;		// 경고 상태	( 탐색 활성화 )
 		globalReal delayMove				= 0.05f;	// 이동 상태	( 짧은 탐색주기 )
 
-		globalReal aletyDistance			= 70.0f;
-		globalReal findSomthingDistance		= 50.0f;
+		globalReal aletyDistance			= 100.0f;
+		globalReal findSomthingDistance		= 80.0f;
 		
 		//globalReal delayAttack		= 1.25f;	// 공격 간격
 	};

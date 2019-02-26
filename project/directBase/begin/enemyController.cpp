@@ -62,6 +62,10 @@ void enemyController::update2bit(void)
 	// 넘어지는 상태(죽음)
 	if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::DEAD))
 	{
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED);
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT);
+
 		changeBindBit(ANIBIT::WEAPON, AWEAPON_NONE);
 		if (_isFemale)
 		{
@@ -180,6 +184,7 @@ void enemyController::update2bit(void)
 	// 피격 상태(밀쳐진)
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::SHOVED))
 	{
+		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::BESHOT);
 		gDigit::pick(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK);
 		//밀쳐진 애니메이션이 끝났을 경우
 		if ((_bindCharacter->getAControllInfo().CurrentMotionBit& GET_ANIBITMASK(aniDefine::ANIBIT::MAIN))
@@ -215,8 +220,8 @@ void enemyController::update2bit(void)
 	}
 
 	// 공격
-	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT)||
-		gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK))
+	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT))
+		//||		gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK))
 	{
 		_delay = VALUE::delayMove;
 		return;

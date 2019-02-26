@@ -54,6 +54,7 @@ public :
 	lightBase* getLight(void) { return _light; }
 	labelBase* getLabel(void) { return _label; }
 	LPD3DXSPRITE getSprite(void) { return _sprite; }
+	debugGrid* getGrid(void) { return _grid; }
 
 	void setWindowSize(const SIZE & input) override;
 
