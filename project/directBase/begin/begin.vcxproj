@@ -471,7 +471,6 @@
     <None Include="resource\mesh\L4D1\smoker\smoker.X" />
     <None Include="resource\mesh\L4D1\Teenangst\teenangst.X" />
     <None Include="resource\mesh\L4D1\male\male1.X" />
-    <None Include="resource\mesh\WitchApprentice\WitchApprentice.x" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\Desktop\Max Projects\export\items\uzi.tga" />
@@ -522,8 +521,6 @@
     <Image Include="resource\mesh\L4D1\Teenangst\zoey_head.tga" />
     <Image Include="resource\mesh\L4D1\Teenangst\zoey_head_normal.tga" />
     <Image Include="resource\mesh\L4D1\Teenangst\zoey_normal.tga" />
-    <Image Include="resource\mesh\WitchApprentice\WitchApprentice_diff.bmp" />
-    <Image Include="resource\mesh\WitchApprentice\WitchApprentice_w_diff.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
