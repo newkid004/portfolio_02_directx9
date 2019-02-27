@@ -91,9 +91,6 @@ void deadScene::initSetting(void)
 	 gFunc::getTextureSize(&backSize, texture);
 	 _died->setPosition(D3DXVECTOR3(windowCenter.x,
 		 windowCenter.y, 0.0f));
-	// _died->setScale(D3DXVECTOR3(MN_WIN->getWindowSize().cx / backSize.x,
-	//	 MN_WIN->getWindowSize().cy / backSize.y, 0.0f));
-
 
 	for (int i = 0; i < 2; ++i)
 	{

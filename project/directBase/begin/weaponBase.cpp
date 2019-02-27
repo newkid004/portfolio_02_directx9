@@ -171,7 +171,6 @@ void weaponBase::normalPre(void)
 	if ((_bindPMesh->getAControllInfo().CurrentMotionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX))
 		== AMIX_ATTACK)
 	{
-		//if (_bindPMesh->getAControllInfo().persent >= 0.7f)
 		if(_bindPMesh->getAControllInfo().isEnd)
 		{
 			CHANGE_BIT(_bindPMesh->getNextBit(), aniDefine::ANIBIT::MIX, AMIX_NONE);

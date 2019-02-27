@@ -8,8 +8,6 @@ charaterArea::charaterArea(int length)
 {
 	_vertexBuffer = createVertexBuffer();
 	_texture = MN_SRC->getTexture("resource/texture/maptool/nodeRange.png");
-	//_texture = MN_SRC->getTexture("resource/texture/textureGradiant.png");
-	int a = 0;
 }
 
 charaterArea::~charaterArea()

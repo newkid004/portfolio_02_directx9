@@ -221,7 +221,6 @@ void enemyController::update2bit(void)
 
 	// АјАн
 	else if (gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ADJACENT))
-		//||		gDigit::chk(_bindCharacter->getInfoCharacter().status, DIGIT::CHAR::ATTACK))
 	{
 		_delay = VALUE::delayMove;
 		return;

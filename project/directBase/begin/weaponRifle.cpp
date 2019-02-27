@@ -18,11 +18,6 @@ weaponRifle::weaponRifle(staticMesh::mParam param , characterBase* linkPatternDu
 	_infoWeapon = MN_WEAPON->getWeaponInfo(weapon_set::type::rifle);
 	_infoWeapon.damage = damage;
 
-	/*¿Þ¼Õ
-	D3DXMatrixRotationYawPitchRoll(&stRotation,
-		D3DXToRadian(70.0f), D3DXToRadian(205.0f), D3DXToRadian(180.0f));
-	D3DXMatrixTranslation(&stTranslation, -15.0f, 3.0f, -8.0f);
-	*/
 	D3DXMATRIXA16 stRotation;
 	D3DXMATRIXA16 stTranslation;
 
@@ -47,10 +42,6 @@ void weaponRifle::firePre(void)
 void weaponRifle::fireDo(void)
 {
 	weaponBase::fireDo();
-	/*
-	¿À·ù³ª¼­ ÁÖ¼®ÃÆ½À´Ï´Ù <¹ÚÀçÈ«>
-	¤·¤»
-	*/
 	MN_SND->find("rifleShoot")->play(-1.0f, gFunc::rndFloat(0.5f,1.0f));
 }
 

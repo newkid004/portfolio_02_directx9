@@ -59,7 +59,6 @@ void animationControllerDigit::drawPre(ACInfo & acInfo)
 			PatternManager::AniInfo check = checkAnimationOut(acInfo.CurrentMotionBit);
 			acInfo.nextMotionVector = check.motionArray;
 			acInfo.nextTimeScale = check.timeScale;
-			//acInfo.isNextCancel = check.cancel;
 			acInfo.maxMixTime = 0.4f / (acInfo.timeScale + acInfo.nextTimeScale);
 			acInfo.leftMixTime = acInfo.maxMixTime;
 			acInfo.trackPositionB = 0.0f;
@@ -173,7 +172,6 @@ void animationControllerDigit::changeAnimationControll(ACInfo& acInfo)
 		PatternManager::AniInfo check = checkAnimationOut(acInfo.CurrentMotionBit);
 		acInfo.motionVector = check.motionArray;
 		acInfo.timeScale = check.timeScale;
-		//acInfo.isCancel = check.cancel;
 		acInfo.trackWeightA = 1.0f;
 
 		m_pAnimationSet = findAnimationSet(m_oAnimationNameList[acInfo.motionVector[acInfo.aniCount]]);
@@ -261,9 +259,6 @@ PatternManager::AniInfo animationControllerDigit::checkAnimationOut(const int mo
 			motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE) |
 			motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX) |
 			motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::WEAPON);
-		//int type = motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::TYPE);
-		//int mix = motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::MIX);
-		//int weapon = motionBit & GET_ANIBITMASK(aniDefine::ANIBIT::WEAPON);
 		cOInfo = GET_PATTERN->getPattern(mixMask);
 	}
 	else

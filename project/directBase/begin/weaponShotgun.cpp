@@ -46,9 +46,6 @@ void weaponShotgun::firePre(void)
 void weaponShotgun::fireDo(void)
 {
 	weaponBase::fireDo();
-	/*
-	오류나서 주석쳤습니다 <박재홍>
-	*/
 	MN_SND->find("shotgunShoot")->play(-1.0f,gFunc::rndFloat( 0.8f, 1.0f));
 }
 

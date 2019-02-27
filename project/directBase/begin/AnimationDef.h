@@ -17,8 +17,6 @@ struct ACInfo
 	float nextTimeScale;
 	float persent;
 	bool isEnd;
-	//bool isCancel;
-	//bool isNextCancel;
 	std::vector<int> motionVector;
 	std::vector<int> nextMotionVector;
 };
@@ -122,7 +120,6 @@ enum ANIMATION_CMAINMOTION
 	AMAIN_BE_ATTACKED		= 0x9 * (int)aniDefine::SHIFTBIT::MAIN, // ÇÇ°Ý
 	AMAIN_DEAD				= 0xA * (int)aniDefine::SHIFTBIT::MAIN,
 	AMAIN_TONGUE			= 0xB * (int)aniDefine::SHIFTBIT::MAIN
-	//AMAIN_TURN				= 0xC * (int)aniDefine::SHIFTBIT::MAIN
 };
 
 enum ANIMATION_CMIXMOTION
@@ -134,13 +131,6 @@ enum ANIMATION_CMIXMOTION
 	AMIX_NONE				= 0	  * (int)aniDefine::SHIFTBIT::MIX
 };
 
-//enum ANIMATINO_TONGUE_DIRECTION
-//{
-//	ADIRECTION_FORWARD		= 0x0 * (int)aniDefine::SHIFTBIT::MIX,
-//	ADIRECTION_BACKWARD		= 0x1 * (int)aniDefine::SHIFTBIT::MIX,
-//	ADIRECTION_LEFT			= 0x2 * (int)aniDefine::SHIFTBIT::MIX,
-//	ADIRECTION_RIGHT		= 0x3 * (int)aniDefine::SHIFTBIT::MIX
-//};
 
 enum ANIMATION_IDLE
 {

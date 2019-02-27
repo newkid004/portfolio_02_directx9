@@ -909,9 +909,6 @@
     <ClInclude Include="PatternManager.h">
       <Filter>classes\global\utility\manager\common\pattern</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationTester.h">
-      <Filter>main\classes\scene\test</Filter>
-    </ClInclude>
     <ClInclude Include="animationController.h">
       <Filter>classes\global\utility\animation\controller</Filter>
     </ClInclude>
@@ -1340,9 +1337,6 @@
     </ClCompile>
     <ClCompile Include="PatternManager.cpp">
       <Filter>classes\global\utility\manager\common\pattern</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationTester.cpp">
-      <Filter>main\classes\scene\test</Filter>
     </ClCompile>
     <ClCompile Include="animationController.cpp">
       <Filter>classes\global\utility\animation\controller</Filter>

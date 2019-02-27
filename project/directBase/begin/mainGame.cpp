@@ -31,23 +31,6 @@ void mainGame::init(void)
 	MN_SCENE->add("deadScene", new deadScene());
 	MN_SCENE->add("sceneEnding", new sceneEnding());
 
-	/*/ // test complete
-	MN_SCENE->add("scene1", new sceneTest1);			// json
-	MN_SCENE->add("scene2", new sceneTest2);			// a* node
-	MN_SCENE->add("scene3", new sceneTest3);			// character
-	MN_SCENE->add("scene4", new sceneTest4());			// particle
-
-	/*/ // test current
-
-	/*/ // test save
-	MN_SCENE->add("sceneCollisionTest", new sceneCollisionTest);
-	MN_SCENE->add("animation", new AnimationTester);
-	MN_SCENE->add("wallC", new wallCollision);
-
-	MN_SCENE->add("weaponT", new weaponTest);
-
-	//*/
-
 	MN_SCENE->change("menuScene");
 }
 

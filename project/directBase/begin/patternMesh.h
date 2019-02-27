@@ -98,7 +98,6 @@ private:
 	// 정보 출력
 	void drawBone(LPD3DXFRAME frame);
 	void drawMeshContainer(LPD3DXFRAME frame, LPD3DXMESHCONTAINER meshContainer);
-	//void drawBox(void);
 
 	// 본
 	void setupBone(LPD3DXFRAME frame);

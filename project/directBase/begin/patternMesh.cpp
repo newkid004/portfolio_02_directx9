@@ -299,16 +299,8 @@ void patternMesh::setupBoneOnMeshContainer(LPD3DXFRAME a_pstFrame, LPD3DXMESHCON
 		int nNumBones = pstMeshContainer->pSkinInfo->GetNumBones();
 
 		for (int i = 0; i < nNumBones; ++i) {
-			/*
-			GetBoneName 함수는 본의 식별자를 이용해서 해당 본의 이름을
-			반환하는 역할을 한다.
-			*/
 			auto pszBoneName = pstMeshContainer->pSkinInfo->GetBoneName(i);
 
-			/*
-			D3DXFrameFind 함수는 루트 본과 본의 이름을 이용해서 특정 본을
-			탐색하는 역할을 한다.
-			*/
 			auto pstBone = D3DXFrameFind(_rootBone, pszBoneName);
 			pstMeshContainer->vBoneList.push_back((allocateHierarchy::boneFrame *)pstBone);
 		}
@@ -426,14 +418,6 @@ void patternMesh::setBoneBoundSphere(void)
 
 LPD3DXMESH patternMesh::createSkinnedMeshFromX(const std::string & a_rFilepath)
 {
-	/*
-	std::bind 객체를 생성 할 때는 기본적으로 함수 호출 시 넘겨지는 매개 변수를 같이
-	명시하는 것이 원칙이다. (즉, 해당 방식으로 생성 된 std::bind 객체는 함수 호출 시
-	항상 동일한 값이 매개 변수로 넘겨진다.)
-
-	반면, 함수 호출 시 다른 값을 매개 변수로 넘기기 위해서는 std::bind 객체를 생성 할 때
-	std::placehlders 를 이용해서 매개 변수의 자리를 가상으로 채워주어야한다.
-	*/
 	allocateHierarchy::mParam stParameters = {
 		_basePath,
 		std::bind(&patternMesh::createSkinnedMesh, this, std::placeholders::_1, std::placeholders::_2)
@@ -457,13 +441,6 @@ LPD3DXMESH patternMesh::createSkinnedMeshFromX(const std::string & a_rFilepath)
 	// 애니메이션 컨트롤러를 생성한다
 	_aniControllerDigit = new animationControllerDigit(pAnimationController);
 
-	/*
-	모델링 파일의 구조에 따라서 MeshContainer 는 N 개 이상이 생성 될 수 있기 때문에
-	해당 MeshContainer 중에서 가장 첫번째 객체가 지니고 있는 메시 정보를 반환한다.
-
-	(즉, 일반적으로 가장 처음에 해당하는 MeshContainer 가 모델링 정보의 본체에
-	해당한다.)
-	*/
 	return _vMeshContainerList.front()->pSkinndMesh;
 }
 
@@ -497,11 +474,6 @@ LPD3DXMESH patternMesh::createSkinnedMesh(LPD3DXMESHCONTAINER a_pstMeshContainer
 		0, 24, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BINORMAL, 0,
 		0, 36, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TANGENT, 0,
 		0, 48, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0,
-
-		/*
-		스키닝 애니메이션을 처리하기 위해서는 정점 정보에 반드시 뼈대 가중치 정보에
-		해당하는 BLENDWEIGHT 시멘틱이 반드시 포함되어있어야한다.
-		*/
 		0, 56, D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_BLENDWEIGHT, 0,
 		D3DDECL_END()
 	};

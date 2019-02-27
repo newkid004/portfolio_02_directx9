@@ -392,7 +392,7 @@ void PatternManager::initMotionSurvivor(void)
 		AMAIN_HEAL |
 		AMIX_NONE |
 		AHEAL_SELF_STANDING,
-		arr, 1, 0.8f, false); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		arr, 1, 0.8f, false);
 
 	//±¸±Þ»óÀÚ, --, Ä¡·á, ¹Í½ºx, ½º½º·Î|¾É¾Æ¼­
 	arr[0] = 27;
@@ -427,7 +427,7 @@ void PatternManager::initMotionSurvivor(void)
 
 	// --, --, Á×´Ù, ¹Í½ºx, --
 	arr[0] = 10;
-	arr[1] = 6; // Á¤È®ÇÑ ¸ð¼Ç ÇÊ¿ä //DEAD_POS?
+	arr[1] = 6; 
 	this->CreateMotion(
 		ATYPE_SURVIVOR |
 		AMAIN_DEAD |
@@ -448,14 +448,6 @@ void PatternManager::initMotionSurvivor(void)
 		AMAIN_TONGUE |
 		AMIX_NONE |
 		ATONGUE_DRAG, arr, 1, 0.8f, true);
-
-	//// --, --, ½ºÅäÄ¿, ¹Í½ºx, ¹­ÀÎ
-	//arr[0] = 4;
-	//this->CreateMotion(
-	//	ATYPE_SURVIVOR |
-	//	AMAIN_TRIP |
-	//	AMIX_NONE |
-	//	ATRIP_LEFTWARD, arr, 1);
 
 	// ¼¦°Ç, --, --, ¹ß»ç, --
 	arr[0] = 80;
